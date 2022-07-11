@@ -5,9 +5,10 @@ export default {
   title: 'BldnPrivRequest',
   component: 'bldn-priv-request',
   argTypes: {
-    title: { control: 'text' },
-    counter: { control: 'number' },
-    textColor: { control: 'color' },
+    excludeActions: {
+      control: 'text',
+      description: 'Comma-seperated list of actions to exclude from the menu',
+    },
   },
 };
 
@@ -18,37 +19,21 @@ interface Story<T> {
 }
 
 interface ArgTypes {
-  title?: string;
-  counter?: number;
-  textColor?: string;
+  excludeActions?: string;
   slot?: TemplateResult;
 }
 
-const Template: Story<ArgTypes> = ({
-  title = 'Hello world',
-  counter = 5,
-  textColor,
-  slot,
-}: ArgTypes) => html`
-  <bldn-priv-request
-    style="--bldn-priv-request-text-color: ${textColor || 'black'}"
-    .title=${title}
-    .counter=${counter}
-  >
+const Template: Story<ArgTypes> = ({ excludeActions, slot }: ArgTypes) => html`
+  <bldn-priv-request exclude-actions="${excludeActions || ''}">
     ${slot}
   </bldn-priv-request>
 `;
 
 export const Regular = Template.bind({});
 
-export const CustomTitle = Template.bind({});
-CustomTitle.args = {
-  title: 'My title',
-};
-
-export const CustomCounter = Template.bind({});
-CustomCounter.args = {
-  counter: 123456,
+export const CustomExcludeActions = Template.bind({});
+CustomExcludeActions.args = {
+  excludeActions: 'access',
 };
 
 export const SlottedContent = Template.bind({});
