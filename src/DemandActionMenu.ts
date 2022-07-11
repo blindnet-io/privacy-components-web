@@ -7,16 +7,29 @@ import './TestElement.js';
 
 @customElement('demand-action-menu')
 export class DemandActionMenu extends LitElement {
-  @property({ type: String }) heading1 = 'My privacy request';
+  @property({ type: String }) title = 'My privacy request';
 
-  @property({ type: String }) heading2 = 'Type of demand I want to submit';
+  @property({ type: String }) description = 'Type of demand I want to submit';
 
   static styles = css`
     .actions-container {
       display: grid;
-      gap: 10px;
+      gap: 20px;
+      grid-template-columns: repeat(3, 1fr);
+    }
 
-      grid-template-columns: var(--dmnd-actions-menu-columns, 1fr 1fr 1fr);
+    /* TODO: Which of these do we want to expose through variables? */
+    .title-heading {
+      color: var(--dmnd-actions-menu-title-color, #000);
+      font-weight: bold;
+      font-size: 24px;
+      text-align: center;
+    }
+
+    /* TODO: Which of these do we want to expose through variables? */
+    .description-heading {
+      color: var(--dmd-actions-menu-decription-color, #000);
+      text-align: left;
     }
   `;
 
@@ -24,11 +37,15 @@ export class DemandActionMenu extends LitElement {
 
   render() {
     return html`
-      <h1>${this.heading1}</h1>
-      <h2>${this.heading2}</h2>
+      <p class="title-heading">${this.title}</p>
+      <p class="description-heading">${this.description}</p>
       <div class="actions-container">
         ${this.actions.map(
-          a => html`<action-item action-name=${a}></action-item>`
+          a =>
+            html`<action-item
+              action-name=${a.NAME}
+              action-description=${a.DESCRIPTION}
+            ></action-item>`
         )}
       </div>
     `;
