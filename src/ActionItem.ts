@@ -21,9 +21,16 @@ export class ActionItem extends LitElement {
   @property({ type: String, attribute: 'action-description' })
   actionDescription = '';
 
-  /* eslint-disable */
-  handleClick() {}
-  /* eslint-enable */
+  handleClick() {
+    const event = new CustomEvent('demand-action-menu-click', {
+      bubbles: true,
+      composed: true,
+      detail: {
+        actionName: this.actionName,
+      },
+    });
+    this.dispatchEvent(event);
+  }
 
   render() {
     return html`
