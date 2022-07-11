@@ -1,9 +1,12 @@
 import { html, css, LitElement } from 'lit';
+import { property } from 'lit/decorators.js';
 
 import './DemandActionMenu.js';
 import './TestElement.js';
 
 export class BldnPrivRequest extends LitElement {
+  @property({ type: String, attribute: 'exclude-actions' }) excludeActions = '';
+
   static styles = css`
     :host {
       display: block;
@@ -13,6 +16,10 @@ export class BldnPrivRequest extends LitElement {
   `;
 
   render() {
-    return html` <demand-action-menu></demand-action-menu> `;
+    return html`
+      <demand-action-menu
+        exclude-actions=${this.excludeActions}
+      ></demand-action-menu>
+    `;
   }
 }

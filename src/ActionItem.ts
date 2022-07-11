@@ -2,6 +2,9 @@ import { html, css, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
 @customElement('action-item')
+/**
+ * Button element representing a single demand request action
+ */
 export class ActionItem extends LitElement {
   static styles = css`
     .action-button {
