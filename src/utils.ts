@@ -1,6 +1,8 @@
 import { action } from './priv.js';
 
-export function getAllowedActions(excludedActions: string) {
+export function getAllowedActions(
+  excludedActions: string
+): { NAME: string; DESCRIPTION: string }[] {
   const exclActions = excludedActions
     .split(',')
     .map(s => s.toLocaleLowerCase());

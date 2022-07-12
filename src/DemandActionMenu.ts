@@ -1,10 +1,8 @@
 import { html, css, LitElement } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
-import { action } from './priv.js';
+import { customElement, property } from 'lit/decorators.js';
 
 import './ActionItem.js';
 import './TestElement.js';
-import { getAllowedActions } from './utils.js';
 
 /**
  * Grid menu of demand action types
@@ -15,9 +13,10 @@ export class DemandActionMenu extends LitElement {
 
   @property({ type: String }) description = 'Type of demand I want to submit';
 
-  @property({ type: String, attribute: 'exclude-actions' }) excludeActions = '';
-
-  @state() allowedActions = Object.values(action);
+  @property({ type: Array }) includedActions: {
+    NAME: string;
+    DESCRIPTION: string;
+  }[] = [];
 
   static styles = css`
     .actions-container {
@@ -42,14 +41,11 @@ export class DemandActionMenu extends LitElement {
   `;
 
   render() {
-    // Filter allowed actions
-    this.allowedActions = getAllowedActions(this.excludeActions);
-
     return html`
       <p class="title-heading">${this.title}</p>
       <p class="description-heading">${this.description}</p>
       <div class="actions-container">
-        ${this.allowedActions.map(
+        ${this.includedActions.map(
           a =>
             html`<action-item
               action-name=${a.NAME}

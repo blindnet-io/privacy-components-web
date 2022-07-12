@@ -24,7 +24,7 @@ interface ArgTypes {
 }
 
 const Template: Story<ArgTypes> = ({ excludeActions, slot }: ArgTypes) => html`
-  <bldn-priv-request exclude-actions="${excludeActions || ''}">
+  <bldn-priv-request excluded-actions="${excludeActions || ''}">
     ${slot}
   </bldn-priv-request>
 `;

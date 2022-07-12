@@ -28,7 +28,6 @@ export class DemandBuilder extends LitElement {
   `;
 
   render() {
-    console.log(this.includedActions);
     return html`
       <demand-builder-sidebar
         .includedActions=${this.includedActions}
