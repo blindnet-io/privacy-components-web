@@ -8,7 +8,10 @@ import './DemandBuilderTextElement.js';
 
 @customElement('demand-builder')
 export class DemandBuilder extends LitElement {
-  @property({ type: String, attribute: 'exclude-actions' }) excludeActions = '';
+  @property({ type: Array }) includedActions: {
+    NAME: string;
+    DESCRIPTION: string;
+  }[] = [];
 
   @state() selectedAction = action.TRANSPARENCY;
 
@@ -25,8 +28,11 @@ export class DemandBuilder extends LitElement {
   `;
 
   render() {
+    console.log(this.includedActions);
     return html`
-      <demand-builder-sidebar></demand-builder-sidebar>
+      <demand-builder-sidebar
+        .includedActions=${this.includedActions}
+      ></demand-builder-sidebar>
       <div class="demand-elements">
         <demand-builder-dropdown-element></demand-builder-dropdown-element>
         <demand-builder-text-element></demand-builder-text-element>
