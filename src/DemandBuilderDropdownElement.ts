@@ -18,7 +18,6 @@ export class DemandBuilderDropdownElement extends LitElement {
     }
 
     .element-prompt {
-      /* padding: 0px 20px; */
       display: flex;
       align-items: center;
       margin: 0px 20px;
@@ -26,7 +25,7 @@ export class DemandBuilderDropdownElement extends LitElement {
 
     .dropdown-element-collapse-button {
       margin: 20px;
-      /* padding: 20px; */
+      height: 30px;
     }
 
     .content {
@@ -37,7 +36,6 @@ export class DemandBuilderDropdownElement extends LitElement {
       grid-template-columns: 1fr;
       margin: 0px 20px;
       row-gap: 5px;
-      /* background-color: red; */
     }
   `;
 

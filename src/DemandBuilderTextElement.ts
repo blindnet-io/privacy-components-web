@@ -10,14 +10,11 @@ export class DemandBuilderTextElement extends LitElement {
       display: grid;
       grid-template-columns: 7fr 1fr;
       grid-template-rows: 75px;
-      /* background-color: blue; */
-      height: 75px;
       border: 2px solid #000;
       border-radius: 10px;
     }
 
     .element-prompt {
-      /* padding: 0px 20px; */
       display: flex;
       align-items: center;
       margin: 0px 20px;
@@ -25,18 +22,19 @@ export class DemandBuilderTextElement extends LitElement {
 
     .text-element-write-button {
       margin: 20px;
-      /* padding: 20px; */
+      height: 30px;
     }
 
     .content {
       display: none;
       overflow: hidden;
       grid-column: 1/3;
-      /* grid-template-rows: 75px; */
       grid-template-columns: 1fr;
       margin: 0px 20px;
-      /* row-gap: 5px; */
-      background-color: red;
+    }
+
+    .text-element-input-area {
+      margin: 0px 0px 20px 0px;
     }
   `;
 
@@ -46,10 +44,9 @@ export class DemandBuilderTextElement extends LitElement {
     if (textInputBox) {
       if (textInputBox.style.display !== 'grid') {
         textInputBox.style.display = 'grid';
-        // textInputBox.style.gridTemplateRows = `repeat(${this.choices.length}, 45px)`
       } else {
         textInputBox.style.display = 'none';
-        this.style.gridTemplateRows = '75px 75px';
+        this.style.gridTemplateRows = '75px';
       }
     }
   }
@@ -62,7 +59,12 @@ export class DemandBuilderTextElement extends LitElement {
         @click=${this.handleTextButtonClick}
       ></button>
       <div id="text-element-input" class="content">
-        <textarea name="paragraph_text" cols="50" rows="10"></textarea>
+        <textarea
+          class="text-element-input-area"
+          name="paragraph_text"
+          cols="50"
+          rows="5"
+        ></textarea>
       </div>
     `;
   }
