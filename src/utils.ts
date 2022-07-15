@@ -1,4 +1,4 @@
-import { action } from './priv.js';
+import { action } from './dictionary.js';
 
 export function getAllowedActions(
   excludedActions: string

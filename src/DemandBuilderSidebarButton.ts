@@ -33,7 +33,6 @@ export class DemandBuilderSidebarButton extends LitElement {
   }
 
   render() {
-    console.log('rendering sidebar button');
     return html`
       <button class="action-button" @click="${this.handleClick}">
         <strong>${this.actionName}:</strong> ${this.actionDescription}

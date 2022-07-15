@@ -1,6 +1,6 @@
 import { html, css, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { TRANSPARENCY } from './priv.js';
+import { TRANSPARENCY } from './dictionary.js';
 
 @customElement('demand-builder-dropdown-element')
 export class DemandBuilderDropdownElement extends LitElement {
