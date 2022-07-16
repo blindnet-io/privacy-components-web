@@ -22,6 +22,11 @@ export enum ACTION {
   OTHER_DEMAND = 'OTHER-DEMAND',
 }
 
-export interface privacyRequest {
+export interface Demand {
   action: ACTION;
+  message?: string;
+}
+
+export interface PrivacyRequest {
+  demands: Demand[];
 }
