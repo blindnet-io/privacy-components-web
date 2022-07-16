@@ -51,6 +51,17 @@ export class DemandBuilderTextElement extends LitElement {
     }
   }
 
+  handleInput(e: Event) {
+    const event = new CustomEvent('text-element-change', {
+      bubbles: true,
+      composed: true,
+      detail: {
+        text: (e.target as HTMLTextAreaElement).value,
+      },
+    });
+    this.dispatchEvent(event);
+  }
+
   render() {
     return html`
       <div class="element-prompt">${this.prompt}</div>
@@ -64,6 +75,7 @@ export class DemandBuilderTextElement extends LitElement {
           name="paragraph_text"
           cols="50"
           rows="5"
+          @input=${this.handleInput}
         ></textarea>
       </div>
     `;

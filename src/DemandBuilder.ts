@@ -2,11 +2,19 @@ import { html, css, LitElement } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
 
-import { action } from './dictionary.js';
+import { ACTION, Demand } from './priv.js';
 import './DemandBuilderActionMenu.js';
 import './DemandBuilderSidebar.js';
 import './DemandBuilderDropdownElement.js';
 import './DemandBuilderTextElement.js';
+import './demand-forms/TransparencyForm.js';
+
+/**
+ * REFACTORING TODO:
+ *  - Define several demand content components for each type of demand. This will replace
+ *    the #demand-elements-container ID
+ *  - Each should produce a demand or array of demands (for the transparency request)
+ */
 
 enum demandBuilderState {
   SELECT_ACTION,
@@ -24,14 +32,28 @@ export class DemandBuilder extends LitElement {
   @state() _demandBuilderState: demandBuilderState =
     demandBuilderState.SELECT_ACTION;
 
-  @state() _selectedAction = action.TRANSPARENCY;
+  @state() _selectedAction = ACTION.TRANSPARENCY;
+
+  private _demand: Demand = {
+    action: this._selectedAction,
+  };
+
+  // The transparency demand interface requires a special case of the demand builder with multiple demands at once
+  private _multiDemand = new Map<string, Demand>();
+
+  @state() _sidebarSelectedIndex = 0;
 
   constructor() {
     super();
+
     this.addEventListener('demand-action-menu-click', () => {
       // FIXME: Once we support more than one action type, will need to get the action out of event here
-      this._selectedAction = action.TRANSPARENCY;
+      this._selectedAction = ACTION.TRANSPARENCY;
       this._demandBuilderState = demandBuilderState.BUILD_DEMAND;
+    });
+
+    this.addEventListener('demand-update-multiple', e => {
+      this._multiDemand = (e as CustomEvent).detail?.demands;
     });
   }
 
@@ -46,13 +68,11 @@ export class DemandBuilder extends LitElement {
     #demand-elements-container {
       display: grid;
       grid-column: 2/5;
-      grid-template-columns: 1fr;
-      row-gap: 20px;
       align-content: flex-start;
       border: 2px solid #000;
       border-radius: 20px;
       padding: 20px 20px;
-      margin: 0px 0px 0px 20px;
+      margin: 0px 0px 0px 0px;
     }
 
     .demand-builder-back-btn {
@@ -68,6 +88,31 @@ export class DemandBuilder extends LitElement {
     .demand-contents-header {
       font-weight: bold;
       height: 30px;
+    }
+
+    #sidebar {
+      display: grid;
+    }
+
+    .sidebar-element {
+      display: flex;
+      height: 100px;
+      align-items: center;
+      border: 2px solid #fafafa;
+      border-right-width: 0px;
+      padding-left: 10px;
+      z-index: 1;
+    }
+
+    .sidebar-radio {
+      margin: 0px 7.5px 0px 0px;
+    }
+
+    .sidebar-border {
+      border: 2px solid #000;
+      border-right-color: #fafafa;
+      border-right-width: 3px;
+      margin-right: -2px;
     }
 
     #new-demand-option-container {
@@ -153,16 +198,39 @@ export class DemandBuilder extends LitElement {
   `;
 
   handleReviewClick() {
+    this.formDemandEvent();
     this._demandBuilderState = demandBuilderState.REVIEW_DEMAND;
-    // const event = new CustomEvent("demands-complete-click", {
-    //   bubbles: true,
-    //   composed: true,
-    //   // Need to pass demand here
-    //   // detail: {
-    //   //   actionName: this.actionName,
-    //   // },
-    // });
-    // this.dispatchEvent(event);
+  }
+
+  handleNewDemandClick() {
+    this.formDemandEvent();
+    this._demandBuilderState = demandBuilderState.SELECT_ACTION;
+  }
+
+  formDemandEvent() {
+    const event = new CustomEvent('add-demand', {
+      bubbles: true,
+      composed: true,
+      detail: {
+        demand: this._demand,
+      },
+    });
+    this.dispatchEvent(event);
+  }
+
+  handleSidebarElementClick(e: Event) {
+    const label = e.target as HTMLLabelElement;
+    if (label && this.shadowRoot) {
+      // Get all elements in the list and index of the one clicked
+      const elements = Array.from(
+        [...[this.shadowRoot.querySelectorAll('label')]][0]
+      );
+      const newIndex = elements.indexOf(label);
+
+      if (newIndex > -1 && newIndex !== this._sidebarSelectedIndex) {
+        this._sidebarSelectedIndex = newIndex;
+      }
+    }
   }
 
   render() {
@@ -180,15 +248,28 @@ export class DemandBuilder extends LitElement {
         [
           demandBuilderState.BUILD_DEMAND,
           () => html`
-            <demand-builder-sidebar
-              .includedActions=${this.includedActions}
-            ></demand-builder-sidebar>
+            <div id="sidebar">
+              <p id="sidebar-title">Type of demand:</p>
+              ${this.includedActions.map(
+                (a, i) => html`
+                  <button
+                    class="sidebar-element ${i === this._sidebarSelectedIndex
+                      ? 'sidebar-border'
+                      : ''}"
+                    @click=${this.handleSidebarElementClick}
+                  >
+                    <input class="sidebar-radio" type="radio" name="radio" />
+                    ${a.NAME}: ${a.DESCRIPTION}
+                  </button>
+                `
+              )}
+            </div>
             <div id="demand-elements-container">
               <p class="demand-contents-header">
-                Details of my ${this._selectedAction.NAME} demand:
+                Details of my ${this._selectedAction} demand:
+                <!-- FIXME: Should reference dictionary/do translation here instead -->
               </p>
-              <demand-builder-dropdown-element></demand-builder-dropdown-element>
-              <demand-builder-text-element></demand-builder-text-element>
+              <transparency-form></transparency-form>
             </div>
             <div id="new-demand-option-container">
               <p class="new-demand-option-text">I want to add another demand</p>
@@ -204,7 +285,8 @@ export class DemandBuilder extends LitElement {
           () => html`
             <div id="demand-review-container">
               <p id="demand-review-heading-1">
-                ${this._selectedAction.NAME} demand
+                ${this._selectedAction} demand
+                <!-- FIXME: Should reference dictionary/do translation here instead -->
               </p>
               <p id="demand-review-heading-2">I want to know</p>
               <ul id="demand-review-list">

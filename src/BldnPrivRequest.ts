@@ -35,6 +35,31 @@ export class BldnPrivRequest extends LitElement {
     :host {
       display: grid;
 
+      @font-face {
+        font-family: 'NeueHaasDisplay-Roman';
+        src: url('./assets/fonts/NeueHaasDisplay-Bold.woff') format('woff')
+          url('/assets/fonts/NeueHaasDisplay-Bold.woff') format('woff');
+        font-weight: normal;
+        font-style: italic;
+        font-size: 48;
+      }
+
+      @font-face {
+        font-family: 'NeueHaasDisplay-Mediu';
+        src: url('./assets/fonts/NeueHaasDisplay-Mediu.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+      }
+
+      @font-face {
+        font-family: 'NeueHaasDisplay-Bold';
+        src: url('./assets/fonts/NeueHaasDisplay-Bold.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+      }
+
+      font-family: 'NeueHaasDisplay-Roman';
+
       /* Variables? */
       /* max-width: 1000px; */
       /* max-height: 750px; */
@@ -46,7 +71,8 @@ export class BldnPrivRequest extends LitElement {
     }
 
     .request-header {
-      color: var(--dmnd-actions-menu-title-color, #000);
+      /* color: var(--dmnd-actions-menu-title-color, #000); */
+      font-family: 'NeueHaasDisplay-Roman';
       font-weight: bold;
       font-size: 24px;
       text-align: center;

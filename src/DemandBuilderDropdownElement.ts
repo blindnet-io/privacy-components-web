@@ -2,11 +2,15 @@ import { html, css, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { TRANSPARENCY } from './dictionary.js';
 
+import './DropdownElementSelection.js';
+
 @customElement('demand-builder-dropdown-element')
 export class DemandBuilderDropdownElement extends LitElement {
   @property({ type: String }) prompt = 'What would you like to know?';
 
-  @property({ type: Array }) choices = Object.values(TRANSPARENCY);
+  @property({ type: Array }) choices = Object.values(TRANSPARENCY); // TODO: Use only TRANSPARENCY enum here
+
+  private _selectedChoices = new Set<string>();
 
   static styles = css`
     :host {
@@ -28,7 +32,7 @@ export class DemandBuilderDropdownElement extends LitElement {
       height: 30px;
     }
 
-    .content {
+    #choices-container {
       display: none;
       overflow: hidden;
       grid-column: 1/3;
@@ -40,7 +44,7 @@ export class DemandBuilderDropdownElement extends LitElement {
   `;
 
   handleCollapseButtonClick() {
-    const content = this.shadowRoot?.getElementById('test-id');
+    const content = this.shadowRoot?.getElementById('choices-container');
 
     if (content) {
       if (content.style.display !== 'grid') {
@@ -60,15 +64,14 @@ export class DemandBuilderDropdownElement extends LitElement {
         class="dropdown-element-collapse-button"
         @click=${this.handleCollapseButtonClick}
       ></button>
-      <div id="test-id" class="content">
+      <div id="choices-container">
         ${this.choices.map(
-          c =>
-            html`
-              <div>
-                <input type="checkbox" />
-                <label>${c.DESCRIPTION}</label>
-              </div>
-            `
+          c => html`
+            <dropdown-element-selection
+              id=${c.NAME}
+              description=${c.DESCRIPTION}
+            ></dropdown-element-selection>
+          `
         )}
       </div>
     `;
