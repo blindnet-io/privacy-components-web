@@ -8,8 +8,8 @@ import { Demand, TRANSPARENCY_ACTION } from '../priv.js';
 import { descriptions } from '../dictionary.js';
 
 enum FormState {
-  CREATE,
-  REVIEW,
+  EDIT = 'edit',
+  REVIEW = 'review',
 }
 
 /**
@@ -18,13 +18,12 @@ enum FormState {
  */
 @customElement('transparency-form')
 export class TransparencyForm extends LitElement {
-  @property({ type: Number, attribute: false }) formState: FormState =
-    FormState.CREATE;
+  @property({ type: String }) formState: FormState = FormState.EDIT;
 
   @property({ type: Array, attribute: false })
   transparencyActions: TRANSPARENCY_ACTION[] = [];
 
-  private _demands = new Map<string, Demand>();
+  @property({ attribute: false }) demands = new Map<string, Demand>();
 
   private _selectedActions = new Set<string>();
 
@@ -37,7 +36,7 @@ export class TransparencyForm extends LitElement {
       const actionId = (e as CustomEvent).detail?.selectionId;
       if (details?.isChecked) {
         // Add a new demand and dispatch event if first selection
-        this._demands.set(actionId, {
+        this.demands.set(actionId, {
           action: actionId,
           message: this._extraMessage,
         });
@@ -57,7 +56,7 @@ export class TransparencyForm extends LitElement {
     this.addEventListener('text-element-change', e => {
       this._extraMessage = (e as CustomEvent).detail?.text;
       // Update existing demands
-      this._demands.forEach(d => {
+      this.demands.forEach(d => {
         const demand = d;
         demand.message = this._extraMessage;
       });
@@ -98,7 +97,7 @@ export class TransparencyForm extends LitElement {
       bubbles: true,
       composed: true,
       detail: {
-        demands: this._demands,
+        demands: this.demands,
       },
     });
     this.dispatchEvent(event);
@@ -108,7 +107,7 @@ export class TransparencyForm extends LitElement {
     return html`
       ${choose(this.formState, [
         [
-          FormState.CREATE,
+          FormState.EDIT,
           () => html`
             <demand-builder-dropdown-element
               .choices=${this.transparencyActions.map(a => ({
@@ -122,6 +121,7 @@ export class TransparencyForm extends LitElement {
         [
           FormState.REVIEW,
           () => html`
+            ${console.log('in-review')} ${console.log(this.demands.values())}
             <div id="transparency-demand-review-container">
               <p id="transparency-demand-review-heading-1">
                 TRANSPARENCY demand
@@ -129,7 +129,12 @@ export class TransparencyForm extends LitElement {
               </p>
               <p id="transparency-demand-review-heading-2">I want to know:</p>
               <ul id="transparency-demand-review-list">
-                ${this.transparencyActions.map(a => html` <li>${a}</li> `)}
+                ${Array.from(this.demands.values()).map(
+                  (a: Demand) => html`
+                    ${console.log(a)}
+                    <li>${descriptions[a.action]}</li>
+                  `
+                )}
               </ul>
               ${this._extraMessage
                 ? html`

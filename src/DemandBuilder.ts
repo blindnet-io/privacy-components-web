@@ -18,7 +18,7 @@ import './demand-forms/TransparencyForm.js';
  *  - Each should produce a demand or array of demands (for the transparency request)
  */
 
-enum demandBuilderState {
+enum DemandBuilderState {
   SELECT_ACTION,
   BUILD_DEMAND,
   REVIEW_DEMAND,
@@ -28,8 +28,8 @@ enum demandBuilderState {
 export class DemandBuilder extends LitElement {
   @property({ type: Array }) includedActions: ACTION[] = [];
 
-  @state() _demandBuilderState: demandBuilderState =
-    demandBuilderState.SELECT_ACTION;
+  @state() _demandBuilderState: DemandBuilderState =
+    DemandBuilderState.SELECT_ACTION;
 
   @state() _selectedAction = ACTION.TRANSPARENCY;
 
@@ -48,7 +48,7 @@ export class DemandBuilder extends LitElement {
     this.addEventListener('demand-action-menu-click', () => {
       // FIXME: Once we support more than one action type, will need to get the action out of event here
       this._selectedAction = ACTION.TRANSPARENCY;
-      this._demandBuilderState = demandBuilderState.BUILD_DEMAND;
+      this._demandBuilderState = DemandBuilderState.BUILD_DEMAND;
     });
 
     this.addEventListener('demand-update-multiple', e => {
@@ -178,12 +178,12 @@ export class DemandBuilder extends LitElement {
 
   handleReviewClick() {
     this.formDemandEvent();
-    this._demandBuilderState = demandBuilderState.REVIEW_DEMAND;
+    this._demandBuilderState = DemandBuilderState.REVIEW_DEMAND;
   }
 
   handleNewDemandClick() {
     this.formDemandEvent();
-    this._demandBuilderState = demandBuilderState.SELECT_ACTION;
+    this._demandBuilderState = DemandBuilderState.SELECT_ACTION;
   }
 
   formDemandEvent() {
@@ -220,11 +220,12 @@ export class DemandBuilder extends LitElement {
   }
 
   render() {
+    console.log(this._multiDemand);
     return html`
       <!-- <button class="demand-builder-back-btn">Back</button> -->
       ${choose(this._demandBuilderState, [
         [
-          demandBuilderState.SELECT_ACTION,
+          DemandBuilderState.SELECT_ACTION,
           () => html`
             <demand-builder-action-menu
               .includedActions=${this.includedActions}
@@ -232,8 +233,9 @@ export class DemandBuilder extends LitElement {
           `,
         ],
         [
-          demandBuilderState.BUILD_DEMAND,
+          DemandBuilderState.BUILD_DEMAND,
           () => html`
+            ${console.log('build')}
             <div id="sidebar">
               <p id="sidebar-title">Type of demand:</p>
               ${this.includedActions.map(
@@ -261,6 +263,7 @@ export class DemandBuilder extends LitElement {
                 <!-- FIXME: Should reference dictionary/do translation here instead -->
               </p>
               <transparency-form
+                formState="edit"
                 .transparencyActions=${Object.values(TRANSPARENCY_ACTION)}
               ></transparency-form>
             </div>
@@ -274,20 +277,13 @@ export class DemandBuilder extends LitElement {
           `,
         ],
         [
-          demandBuilderState.REVIEW_DEMAND,
+          DemandBuilderState.REVIEW_DEMAND,
           () => html`
-            <div id="demand-review-container">
-              <p id="demand-review-heading-1">
-                ${this._selectedAction} demand
-                <!-- FIXME: Should reference dictionary/do translation here instead -->
-              </p>
-              <p id="demand-review-heading-2">I want to know</p>
-              <ul id="demand-review-list">
-                <li>Test 1</li>
-                <li>Test 2</li>
-                <li>Test 3</li>
-              </ul>
-            </div>
+            ${console.log('review')}
+            <transparency-form
+              formState="review"
+              .demands=${this._multiDemand}
+            ></transparency-form>
           `,
         ],
       ])}
