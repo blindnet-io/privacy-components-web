@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { html, css, LitElement } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
@@ -98,6 +99,7 @@ export class DemandBuilder extends LitElement {
       display: flex;
       height: 100px;
       align-items: center;
+      text-align: left;
       border: 2px solid #fafafa;
       border-right-width: 0px;
       padding-left: 10px;
@@ -229,6 +231,13 @@ export class DemandBuilder extends LitElement {
 
       if (newIndex > -1 && newIndex !== this._sidebarSelectedIndex) {
         this._sidebarSelectedIndex = newIndex;
+
+        // Manually sets the radio button to checked. This is in response to an issue I noticed where the
+        // radio button would sometimes not change even when the component re-renders.
+        const input = label.lastElementChild as HTMLInputElement;
+        if (input) {
+          input.checked = true;
+        }
       }
     }
   }
@@ -252,15 +261,20 @@ export class DemandBuilder extends LitElement {
               <p id="sidebar-title">Type of demand:</p>
               ${this.includedActions.map(
                 (a, i) => html`
-                  <button
+                  <label
                     class="sidebar-element ${i === this._sidebarSelectedIndex
                       ? 'sidebar-border'
                       : ''}"
                     @click=${this.handleSidebarElementClick}
                   >
-                    <input class="sidebar-radio" type="radio" name="radio" />
+                    <input
+                      class="sidebar-radio"
+                      type="radio"
+                      name="radio"
+                      ?checked=${i === this._sidebarSelectedIndex}
+                    />
                     ${a.NAME}: ${a.DESCRIPTION}
-                  </button>
+                  </label>
                 `
               )}
             </div>
