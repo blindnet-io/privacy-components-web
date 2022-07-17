@@ -3,7 +3,8 @@ import { html, css, LitElement } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
 
-import { ACTION, Demand } from './priv.js';
+import { ACTION, TRANSPARENCY_ACTION, Demand } from './priv.js';
+import { descriptions } from './dictionary.js';
 import './DemandBuilderActionMenu.js';
 import './DemandBuilderSidebar.js';
 import './DemandBuilderDropdownElement.js';
@@ -25,10 +26,7 @@ enum demandBuilderState {
 
 @customElement('demand-builder')
 export class DemandBuilder extends LitElement {
-  @property({ type: Array }) includedActions: {
-    NAME: string;
-    DESCRIPTION: string;
-  }[] = [];
+  @property({ type: Array }) includedActions: ACTION[] = [];
 
   @state() _demandBuilderState: demandBuilderState =
     demandBuilderState.SELECT_ACTION;
@@ -172,27 +170,6 @@ export class DemandBuilder extends LitElement {
       padding: 20px 20px 20px 20px;
     }
 
-    #demand-review-container ul {
-      margin: 0;
-    }
-
-    #demand-review-container li:not(:last-child) {
-      margin-bottom: 15px;
-    }
-
-    #demand-review-heading-1 {
-      font-weight: bold;
-      grid-column: 1/2;
-    }
-
-    #demand-review-heading-2 {
-      grid-column: 1/2;
-    }
-
-    #demand-review-list {
-      grid-column: 1/3;
-    }
-
     p {
       padding: 0px;
       margin: 0px;
@@ -273,7 +250,7 @@ export class DemandBuilder extends LitElement {
                       name="radio"
                       ?checked=${i === this._sidebarSelectedIndex}
                     />
-                    ${a.NAME}: ${a.DESCRIPTION}
+                    ${a}: ${descriptions[a]}
                   </label>
                 `
               )}
@@ -283,7 +260,9 @@ export class DemandBuilder extends LitElement {
                 Details of my ${this._selectedAction} demand:
                 <!-- FIXME: Should reference dictionary/do translation here instead -->
               </p>
-              <transparency-form></transparency-form>
+              <transparency-form
+                .transparencyActions=${Object.values(TRANSPARENCY_ACTION)}
+              ></transparency-form>
             </div>
             <div id="new-demand-option-container">
               <p class="new-demand-option-text">I want to add another demand</p>

@@ -1,6 +1,5 @@
 import { html, css, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { TRANSPARENCY } from './dictionary.js';
 
 import './DropdownElementSelection.js';
 
@@ -8,7 +7,7 @@ import './DropdownElementSelection.js';
 export class DemandBuilderDropdownElement extends LitElement {
   @property({ type: String }) prompt = 'What would you like to know?';
 
-  @property({ type: Array }) choices = Object.values(TRANSPARENCY); // TODO: Use only TRANSPARENCY enum here
+  @property({ type: Array }) choices: { id: string; desc: string }[] = [];
 
   private _selectedChoices = new Set<string>();
 
@@ -68,8 +67,8 @@ export class DemandBuilderDropdownElement extends LitElement {
         ${this.choices.map(
           c => html`
             <dropdown-element-selection
-              id=${c.NAME}
-              description=${c.DESCRIPTION}
+              id=${c.id}
+              description=${c.desc}
             ></dropdown-element-selection>
           `
         )}

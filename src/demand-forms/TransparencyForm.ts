@@ -1,9 +1,16 @@
 import { html, css, LitElement } from 'lit';
-import { customElement } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
+import { choose } from 'lit/directives/choose.js';
 
 import '../DemandBuilderDropdownElement.js';
 import '../DemandBuilderTextElement.js';
-import { Demand } from '../priv.js';
+import { Demand, TRANSPARENCY_ACTION } from '../priv.js';
+import { descriptions } from '../dictionary.js';
+
+enum FormState {
+  CREATE,
+  REVIEW,
+}
 
 /**
  * Could either do it where this component waits for notice of demand completion button click
@@ -11,9 +18,15 @@ import { Demand } from '../priv.js';
  */
 @customElement('transparency-form')
 export class TransparencyForm extends LitElement {
+  @property({ type: Number, attribute: false }) formState: FormState =
+    FormState.CREATE;
+
+  @property({ type: Array, attribute: false })
+  transparencyActions: TRANSPARENCY_ACTION[] = [];
+
   private _demands = new Map<string, Demand>();
 
-  private _actions = new Set<string>();
+  private _selectedActions = new Set<string>();
 
   private _extraMessage = undefined;
 
@@ -28,14 +41,14 @@ export class TransparencyForm extends LitElement {
           action: actionId,
           message: this._extraMessage,
         });
-        if (this._actions.size === 1) {
-          console.log('First selection');
+        // eslint-disable-next-line no-empty
+        if (this._selectedActions.size === 1) {
         }
       } else {
         // Remove selection and dispatch event if last unselection
-        this._actions.delete(actionId);
-        if (this._actions.size === 0) {
-          console.log('Last selection');
+        this._selectedActions.delete(actionId);
+        // eslint-disable-next-line no-empty
+        if (this._selectedActions.size === 0) {
         }
       }
       this.updateDemandBuilder();
@@ -57,6 +70,27 @@ export class TransparencyForm extends LitElement {
       display: grid;
       row-gap: 20px;
     }
+
+    #transparency-demand-review-container ul {
+      margin: 0;
+    }
+
+    #transparency-demand-review-container li:not(:last-child) {
+      margin-bottom: 15px;
+    }
+
+    #transparency-demand-review-heading-1 {
+      font-weight: bold;
+      grid-column: 1/2;
+    }
+
+    #transparency-demand-review-heading-2 {
+      grid-column: 1/2;
+    }
+
+    #transparency-demand-review-list {
+      grid-column: 1/3;
+    }
   `;
 
   updateDemandBuilder() {
@@ -72,8 +106,43 @@ export class TransparencyForm extends LitElement {
 
   render() {
     return html`
-      <demand-builder-dropdown-element></demand-builder-dropdown-element>
-      <demand-builder-text-element></demand-builder-text-element>
+      ${choose(this.formState, [
+        [
+          FormState.CREATE,
+          () => html`
+            <demand-builder-dropdown-element
+              .choices=${this.transparencyActions.map(a => ({
+                id: a,
+                desc: descriptions[a],
+              }))}
+            ></demand-builder-dropdown-element>
+            <demand-builder-text-element></demand-builder-text-element>
+          `,
+        ],
+        [
+          FormState.REVIEW,
+          () => html`
+            <div id="transparency-demand-review-container">
+              <p id="transparency-demand-review-heading-1">
+                TRANSPARENCY demand
+                <!-- FIXME: Should reference dictionary/do translation here instead -->
+              </p>
+              <p id="transparency-demand-review-heading-2">I want to know:</p>
+              <ul id="transparency-demand-review-list">
+                ${this.transparencyActions.map(a => html` <li>${a}</li> `)}
+              </ul>
+              ${this._extraMessage
+                ? html`
+                    <p id="transparency-demand-review-heading-2">
+                      Plus additional info:
+                    </p>
+                    ${this._extraMessage}
+                  `
+                : null}
+            </div>
+          `,
+        ],
+      ])}
     `;
   }
 }

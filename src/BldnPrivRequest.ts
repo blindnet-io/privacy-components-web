@@ -6,8 +6,8 @@ import './DemandBuilder.js';
 import './RequestProgressIndicator.js';
 import './FrequentRequestsMenu.js';
 import './RequestReview.js';
-import { action } from './dictionary.js';
 import { getAllowedActions } from './utils.js';
+import { ACTION, PrivacyRequest } from './priv.js';
 
 enum requestState {
   DEMAND_BUILDER,
@@ -18,11 +18,13 @@ export class BldnPrivRequest extends LitElement {
   @property({ type: String, attribute: 'excluded-actions' }) excludedActions =
     '';
 
-  @state() _includedActions = Object.values(action);
+  @state() _includedActions = Object.values(ACTION).filter(
+    a => !a.includes('TRANSPARENCY.')
+  );
 
   @state() _requestState: requestState = requestState.DEMAND_BUILDER;
 
-  private _privacyRequest: {} = {}; // FIXME: Add PrivacyRequest type here
+  private _privacyRequest: PrivacyRequest = { demands: [] };
 
   constructor() {
     super();

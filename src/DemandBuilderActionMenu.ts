@@ -2,6 +2,8 @@ import { html, css, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
 import './ActionItem.js';
+import { ACTION } from './priv.js';
+import { descriptions } from './dictionary.js';
 
 /**
  * Grid menu of demand action types
@@ -10,10 +12,7 @@ import './ActionItem.js';
 export class DemandBuilerActionMenu extends LitElement {
   @property({ type: String }) description = 'Type of demand I want to submit';
 
-  @property({ type: Array }) includedActions: {
-    NAME: string;
-    DESCRIPTION: string;
-  }[] = [];
+  @property({ type: Array }) includedActions: ACTION[] = [];
 
   static styles = css`
     :host {
@@ -41,8 +40,8 @@ export class DemandBuilerActionMenu extends LitElement {
         ${this.includedActions.map(
           a =>
             html`<action-item
-              action-name=${a.NAME}
-              action-description=${a.DESCRIPTION}
+              action-name=${a}
+              action-description=${descriptions[a]}
             ></action-item>`
         )}
       </div>
