@@ -24,7 +24,7 @@ export class BldnPrivRequest extends LitElement {
 
   @state() _requestState: requestState = requestState.DEMAND_BUILDER;
 
-  private _privacyRequest: PrivacyRequest = { demands: [] };
+  @state() _privacyRequest: PrivacyRequest = { demands: [] };
 
   constructor() {
     super();
