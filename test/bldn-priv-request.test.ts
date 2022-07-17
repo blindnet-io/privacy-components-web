@@ -2,8 +2,9 @@
 import { expect } from '@open-wc/testing';
 // import { BldnPrivRequest } from '../src/BldnPrivRequest.js';
 import '../src/bldn-priv-request.js';
-import { ACTION, PrivacyRequest } from '../src/priv.js';
-import { sendPrivacyRequest } from '../src/PrivacyRequestApi.js';
+import { ACTION } from '../src/models/priv-terms.js';
+import { PrivacyRequest } from '../src/models/privacy-request.js';
+import { sendPrivacyRequest } from '../src/utils/PrivacyRequestApi.js';
 
 describe('Mock API Tests', () => {
   it('test single demand', async () => {

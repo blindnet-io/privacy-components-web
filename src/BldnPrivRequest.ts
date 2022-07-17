@@ -6,8 +6,8 @@ import './DemandBuilder.js';
 import './RequestProgressIndicator.js';
 import './FrequentRequestsMenu.js';
 import './RequestReview.js';
-import { getAllowedActions } from './utils.js';
-import { ACTION, PrivacyRequest } from './priv.js';
+import { ACTION } from './models/priv-terms.js';
+import { PrivacyRequest } from './models/privacy-request.js';
 
 enum requestState {
   DEMAND_BUILDER,
@@ -91,8 +91,23 @@ export class BldnPrivRequest extends LitElement {
     }
   `;
 
+  /**
+   * Filter the list of actions to exclude certain ones
+   * @returns List of not excluded actions
+   */
+  getAllowedActions(): ACTION[] {
+    const exclActions = this.excludedActions
+      .split(',')
+      .map(s => s.toLocaleLowerCase());
+    return Object.values(ACTION).filter(
+      a =>
+        !exclActions.includes(a.toLocaleLowerCase()) &&
+        !a.includes('TRANSPARENCY.')
+    );
+  }
+
   render() {
-    this._includedActions = getAllowedActions(this.excludedActions);
+    this._includedActions = this.getAllowedActions();
 
     return html`
       <div class="request-header">My Privacy Request</div>

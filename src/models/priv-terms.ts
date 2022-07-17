@@ -36,12 +36,3 @@ export enum TRANSPARENCY_ACTION {
   TRANSPARENCY_WHERE = 'TRANSPARENCY.WHERE',
   TRANSPARENCY_WHO = 'TRANSPARENCY.WHO',
 }
-
-export interface Demand {
-  action: ACTION;
-  message?: string;
-}
-
-export interface PrivacyRequest {
-  demands: Demand[];
-}

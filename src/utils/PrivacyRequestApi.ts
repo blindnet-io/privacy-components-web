@@ -1,4 +1,4 @@
-import { PrivacyRequest } from './priv.js';
+import { PrivacyRequest } from '../models/privacy-request.js';
 
 export function sendPrivacyRequest(
   request: PrivacyRequest,

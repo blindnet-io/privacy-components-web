@@ -4,8 +4,9 @@ import { choose } from 'lit/directives/choose.js';
 
 import '../DemandBuilderDropdownElement.js';
 import '../DemandBuilderTextElement.js';
-import { Demand, TRANSPARENCY_ACTION } from '../priv.js';
-import { descriptions } from '../dictionary.js';
+import { TRANSPARENCY_ACTION } from '../models/priv-terms.js';
+import { Demand } from '../models/demand.js';
+import { descriptions } from '../utils/dictionary.js';
 
 enum FormState {
   EDIT = 'edit',
@@ -121,7 +122,6 @@ export class TransparencyForm extends LitElement {
         [
           FormState.REVIEW,
           () => html`
-            ${console.log('in-review')} ${console.log(this.demands.values())}
             <div id="transparency-demand-review-container">
               <p id="transparency-demand-review-heading-1">
                 TRANSPARENCY demand
@@ -130,10 +130,7 @@ export class TransparencyForm extends LitElement {
               <p id="transparency-demand-review-heading-2">I want to know:</p>
               <ul id="transparency-demand-review-list">
                 ${Array.from(this.demands.values()).map(
-                  (a: Demand) => html`
-                    ${console.log(a)}
-                    <li>${descriptions[a.action]}</li>
-                  `
+                  (a: Demand) => html` <li>${descriptions[a.action]}</li> `
                 )}
               </ul>
               ${this._extraMessage

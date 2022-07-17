@@ -3,8 +3,9 @@ import { html, css, LitElement } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
 
-import { ACTION, TRANSPARENCY_ACTION, Demand } from './priv.js';
-import { descriptions } from './dictionary.js';
+import { ACTION, TRANSPARENCY_ACTION } from './models/priv-terms.js';
+import { Demand } from './models/demand.js';
+import { descriptions } from './utils/dictionary.js';
 import './DemandBuilderActionMenu.js';
 import './DemandBuilderSidebar.js';
 import './DemandBuilderDropdownElement.js';

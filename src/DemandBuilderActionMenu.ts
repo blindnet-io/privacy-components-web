@@ -2,8 +2,8 @@ import { html, css, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
 import './ActionItem.js';
-import { ACTION } from './priv.js';
-import { descriptions } from './dictionary.js';
+import { ACTION } from './models/priv-terms.js';
+import { descriptions } from './utils/dictionary.js';
 
 /**
  * Grid menu of demand action types
