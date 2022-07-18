@@ -1,18 +1,18 @@
 import { html, css, LitElement } from 'lit';
 import { property, state } from 'lit/decorators.js';
-import { choose } from 'lit/directives/choose.js';
+import { when } from 'lit/directives/when.js';
+import { map } from 'lit/directives/map.js';
 
 import './DemandBuilder.js';
 import './RequestProgressIndicator.js';
 import './FrequentRequestsMenu.js';
 import './RequestReview.js';
+import './ResponseView.js';
 import { ACTION } from './models/priv-terms.js';
 import { PrivacyRequest } from './models/privacy-request.js';
-
-enum requestState {
-  DEMAND_BUILDER,
-  REVIEW_SUBMIT,
-}
+import { sendPrivacyRequest } from './utils/PrivacyRequestApi.js';
+import { PrivacyResponse } from './models/privacy-response.js';
+import { RequestState } from './utils/states.js';
 
 export class BldnPrivRequest extends LitElement {
   @property({ type: String, attribute: 'excluded-actions' }) excludedActions =
@@ -22,14 +22,25 @@ export class BldnPrivRequest extends LitElement {
     a => !a.includes('TRANSPARENCY.')
   );
 
-  @state() _requestState: requestState = requestState.DEMAND_BUILDER;
+  @state() _requestState: RequestState = RequestState.BUILD;
 
   @state() _privacyRequest: PrivacyRequest = { demands: [] };
 
+  @state() _privacyResponse: PrivacyResponse = {
+    responseId: '',
+    inResponseTo: '',
+    date: '',
+    system: '',
+    status: '',
+  };
+
   constructor() {
     super();
-    this.addEventListener('demands-complete-click', () => {
-      this._requestState = requestState.REVIEW_SUBMIT;
+    this.addEventListener('submit-request', () => {
+      sendPrivacyRequest(this._privacyRequest).then(response => {
+        this._privacyResponse = response;
+      });
+      this._requestState = RequestState.REVIEW;
     });
   }
 
@@ -112,23 +123,21 @@ export class BldnPrivRequest extends LitElement {
     return html`
       <div class="request-header">My Privacy Request</div>
       <request-progress-indicator></request-progress-indicator>
-      ${choose(
-        this._requestState,
-        [
-          [
-            requestState.DEMAND_BUILDER,
-            () => html`
-              <demand-builder
-                .includedActions=${this._includedActions}
-              ></demand-builder>
-            `,
-          ],
-          [
-            requestState.REVIEW_SUBMIT,
-            () => html` <request-review></request-review> `,
-          ],
-        ],
-        () => html`<h1>Error: Invalid request state</h1>`
+      ${map(
+        this._privacyRequest.demands,
+        d => html`
+          <demand-builder
+            .includedActions=${this._includedActions}
+            .demand=${d}
+          ></demand-builder>
+          <!-- TODO: Handle bundling of transparency demands into one -->
+        `
+      )}
+      ${when(
+        this._requestState === RequestState.SENT,
+        () => html`
+          <response-view .response=${this._privacyResponse}></response-view>
+        `
       )}
     `;
   }

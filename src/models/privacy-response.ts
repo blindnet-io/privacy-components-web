@@ -7,7 +7,7 @@ export interface PrivacyResponse {
   inResponseTo: string;
   date: string;
   system: string;
-  requestedAction?: ACTION;
+  'requested-action'?: ACTION;
   dataSubject?: string[];
   status: string;
   motive?: string[];

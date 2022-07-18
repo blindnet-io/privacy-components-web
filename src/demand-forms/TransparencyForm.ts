@@ -7,11 +7,7 @@ import '../DemandBuilderTextElement.js';
 import { TRANSPARENCY_ACTION } from '../models/priv-terms.js';
 import { Demand } from '../models/demand.js';
 import { descriptions } from '../utils/dictionary.js';
-
-enum FormState {
-  EDIT = 'edit',
-  REVIEW = 'review',
-}
+import { DemandState } from '../utils/states.js';
 
 /**
  * Could either do it where this component waits for notice of demand completion button click
@@ -19,7 +15,7 @@ enum FormState {
  */
 @customElement('transparency-form')
 export class TransparencyForm extends LitElement {
-  @property({ type: String }) formState: FormState = FormState.EDIT;
+  @property({ attribute: false }) demandState: DemandState = DemandState.EDIT;
 
   @property({ type: Array, attribute: false })
   transparencyActions: TRANSPARENCY_ACTION[] = [];
@@ -104,46 +100,48 @@ export class TransparencyForm extends LitElement {
     this.dispatchEvent(event);
   }
 
+  getEditTemplate() {
+    return html`
+      <demand-builder-dropdown-element
+        .choices=${this.transparencyActions.map(a => ({
+          id: a,
+          desc: descriptions[a],
+        }))}
+      ></demand-builder-dropdown-element>
+      <demand-builder-text-element></demand-builder-text-element>
+    `;
+  }
+
+  getReviewTemplate() {
+    return html`
+      <div id="transparency-demand-review-container">
+        <p id="transparency-demand-review-heading-1">
+          TRANSPARENCY demand
+          <!-- FIXME: Should reference dictionary/do translation here instead -->
+        </p>
+        <p id="transparency-demand-review-heading-2">I want to know:</p>
+        <ul id="transparency-demand-review-list">
+          ${Array.from(this.demands.values()).map(
+            (a: Demand) => html` <li>${descriptions[a.action]}</li> `
+          )}
+        </ul>
+        ${this._extraMessage
+          ? html`
+              <p id="transparency-demand-review-heading-2">
+                Plus additional info:
+              </p>
+              ${this._extraMessage}
+            `
+          : null}
+      </div>
+    `;
+  }
+
   render() {
     return html`
-      ${choose(this.formState, [
-        [
-          FormState.EDIT,
-          () => html`
-            <demand-builder-dropdown-element
-              .choices=${this.transparencyActions.map(a => ({
-                id: a,
-                desc: descriptions[a],
-              }))}
-            ></demand-builder-dropdown-element>
-            <demand-builder-text-element></demand-builder-text-element>
-          `,
-        ],
-        [
-          FormState.REVIEW,
-          () => html`
-            <div id="transparency-demand-review-container">
-              <p id="transparency-demand-review-heading-1">
-                TRANSPARENCY demand
-                <!-- FIXME: Should reference dictionary/do translation here instead -->
-              </p>
-              <p id="transparency-demand-review-heading-2">I want to know:</p>
-              <ul id="transparency-demand-review-list">
-                ${Array.from(this.demands.values()).map(
-                  (a: Demand) => html` <li>${descriptions[a.action]}</li> `
-                )}
-              </ul>
-              ${this._extraMessage
-                ? html`
-                    <p id="transparency-demand-review-heading-2">
-                      Plus additional info:
-                    </p>
-                    ${this._extraMessage}
-                  `
-                : null}
-            </div>
-          `,
-        ],
+      ${choose(this.demandState, [
+        [DemandState.EDIT, () => this.getEditTemplate()],
+        [DemandState.REVIEW, () => this.getReviewTemplate()],
       ])}
     `;
   }

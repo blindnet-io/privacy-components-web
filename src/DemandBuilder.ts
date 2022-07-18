@@ -6,11 +6,13 @@ import { choose } from 'lit/directives/choose.js';
 import { ACTION, TRANSPARENCY_ACTION } from './models/priv-terms.js';
 import { Demand } from './models/demand.js';
 import { descriptions } from './utils/dictionary.js';
+import { DemandState } from './utils/states.js';
 import './DemandBuilderActionMenu.js';
 import './DemandBuilderSidebar.js';
 import './DemandBuilderDropdownElement.js';
 import './DemandBuilderTextElement.js';
 import './demand-forms/TransparencyForm.js';
+import { when } from 'lit/directives/when.js';
 
 /**
  * REFACTORING TODO:
@@ -18,28 +20,22 @@ import './demand-forms/TransparencyForm.js';
  *    the #demand-elements-container ID
  *  - Each should produce a demand or array of demands (for the transparency request)
  */
-
-enum DemandBuilderState {
-  SELECT_ACTION,
-  BUILD_DEMAND,
-  REVIEW_DEMAND,
-}
-
 @customElement('demand-builder')
 export class DemandBuilder extends LitElement {
   @property({ type: Array }) includedActions: ACTION[] = [];
 
-  @state() _demandBuilderState: DemandBuilderState =
-    DemandBuilderState.SELECT_ACTION;
+  @property({ attribute: false }) demandState: DemandState =
+    DemandState.SELECT_ACTION;
 
   @state() _selectedAction = ACTION.TRANSPARENCY;
 
-  private _demand: Demand = {
+  // TODO: Check if this.demand.action actually changes when we switch options in sidebar
+  @property({ attribute: false }) demand: Demand = {
     action: this._selectedAction,
   };
 
   // The transparency demand interface requires a special case of the demand builder with multiple demands at once
-  private _multiDemand = new Map<string, Demand>();
+  @property({ attribute: false }) multiDemand = new Map<string, Demand>();
 
   @state() _sidebarSelectedIndex = 0;
 
@@ -49,11 +45,11 @@ export class DemandBuilder extends LitElement {
     this.addEventListener('demand-action-menu-click', () => {
       // FIXME: Once we support more than one action type, will need to get the action out of event here
       this._selectedAction = ACTION.TRANSPARENCY;
-      this._demandBuilderState = DemandBuilderState.BUILD_DEMAND;
+      this.demandState = DemandState.EDIT;
     });
 
     this.addEventListener('demand-update-multiple', e => {
-      this._multiDemand = (e as CustomEvent).detail?.demands;
+      this.multiDemand = (e as CustomEvent).detail?.demands;
     });
   }
 
@@ -146,11 +142,17 @@ export class DemandBuilder extends LitElement {
       margin-bottom: -50px;
     }
 
-    .review-request-btn {
+    #review-request-btn {
       height: 20px;
       width: fit-content;
+    }
 
-      /* Position on grid border */
+    #submit-request-btn {
+      height: 20px;
+      width: fit-content;
+    }
+
+    .centered-on-border {
       z-index: 1;
       grid-row: 3/4;
       grid-column: 2/4;
@@ -177,14 +179,25 @@ export class DemandBuilder extends LitElement {
     }
   `;
 
+  // TODO: Move this to BldnPrivRequest
   handleReviewClick() {
     this.formDemandEvent();
-    this._demandBuilderState = DemandBuilderState.REVIEW_DEMAND;
+    this.demandState = DemandState.REVIEW;
   }
 
+  // TODO: Move this to BldnPrivRequest
   handleNewDemandClick() {
     this.formDemandEvent();
-    this._demandBuilderState = DemandBuilderState.SELECT_ACTION;
+    this.demandState = DemandState.SELECT_ACTION;
+  }
+
+  // TODO: Move this to BldnPrivRequest
+  handleSubmitClick() {
+    const event = new CustomEvent('submit-request', {
+      bubbles: true,
+      composed: true,
+    });
+    this.dispatchEvent(event);
   }
 
   formDemandEvent() {
@@ -192,7 +205,7 @@ export class DemandBuilder extends LitElement {
       bubbles: true,
       composed: true,
       detail: {
-        demand: this._demand,
+        demand: this.demand,
       },
     });
     this.dispatchEvent(event);
@@ -220,74 +233,136 @@ export class DemandBuilder extends LitElement {
     }
   }
 
-  render() {
-    console.log(this._multiDemand);
+  getSidebarTemplate() {
     return html`
-      <!-- <button class="demand-builder-back-btn">Back</button> -->
-      ${choose(this._demandBuilderState, [
-        [
-          DemandBuilderState.SELECT_ACTION,
-          () => html`
-            <demand-builder-action-menu
-              .includedActions=${this.includedActions}
-            ></demand-builder-action-menu>
-          `,
-        ],
-        [
-          DemandBuilderState.BUILD_DEMAND,
-          () => html`
-            ${console.log('build')}
-            <div id="sidebar">
-              <p id="sidebar-title">Type of demand:</p>
-              ${this.includedActions.map(
-                (a, i) => html`
-                  <label
-                    class="sidebar-element ${i === this._sidebarSelectedIndex
-                      ? 'sidebar-border'
-                      : ''}"
-                    @click=${this.handleSidebarElementClick}
-                  >
-                    <input
-                      class="sidebar-radio"
-                      type="radio"
-                      name="radio"
-                      ?checked=${i === this._sidebarSelectedIndex}
-                    />
-                    ${a}: ${descriptions[a]}
-                  </label>
-                `
-              )}
-            </div>
-            <div id="demand-elements-container">
-              <p class="demand-contents-header">
-                Details of my ${this._selectedAction} demand:
-                <!-- FIXME: Should reference dictionary/do translation here instead -->
-              </p>
-              <transparency-form
-                formState="edit"
-                .transparencyActions=${Object.values(TRANSPARENCY_ACTION)}
-              ></transparency-form>
-            </div>
-            <div id="new-demand-option-container">
+      <div id="sidebar">
+        <p id="sidebar-title">Type of demand:</p>
+        ${this.includedActions.map(
+          (a, i) => html`
+            <label
+              class="sidebar-element ${i === this._sidebarSelectedIndex
+                ? 'sidebar-border'
+                : ''}"
+              @click=${this.handleSidebarElementClick}
+            >
+              <input
+                class="sidebar-radio"
+                type="radio"
+                name="radio"
+                ?checked=${i === this._sidebarSelectedIndex}
+              />
+              ${a}: ${descriptions[a]}
+            </label>
+          `
+        )}
+      </div>
+    `;
+  }
+
+  getSelectedFormTemplate() {
+    return html`
+      <div id="demand-elements-container">
+        <!-- TODO: Move this to ActionForm -->
+        <p class="demand-contents-header">
+          <!-- TODO: Move this to ActionForm -->
+          Details of my ${this._selectedAction} demand:
+          <!-- FIXME: Should reference dictionary/do translation here instead -->
+        </p>
+        ${choose(this._selectedAction, [
+          [
+            ACTION.TRANSPARENCY,
+            () => html`<transparency-form
+              formState=${DemandState.EDIT}
+              .transparencyActions=${Object.values(TRANSPARENCY_ACTION)}
+            ></transparency-form>`,
+          ],
+        ])}
+      </div>
+    `;
+  }
+
+  render() {
+    console.log(this.multiDemand);
+
+    if (this.demandState === DemandState.SELECT_ACTION) {
+    } else {
+      return html`
+        <!-- Include sidebar in edit mode -->
+        ${when(this.demandState === DemandState.EDIT, () =>
+          this.getSidebarTemplate()
+        )}
+        <!-- Display selected form -->
+        ${this.getSelectedFormTemplate()}
+
+        <!-- <div id="new-demand-option-container"> TODO: Move this to BldnPrivRequest
               <p class="new-demand-option-text">I want to add another demand</p>
               <button class="new-demand-option-button">+</button>
             </div>
-            <button class="review-request-btn" @click=${this.handleReviewClick}>
+            <button id="review-request-btn" class="centered-on-border" @click=${this
+          .handleReviewClick}>
               Review Request
-            </button>
-          `,
-        ],
-        [
-          DemandBuilderState.REVIEW_DEMAND,
-          () => html`
-            ${console.log('review')}
-            <transparency-form
-              formState="review"
-              .demands=${this._multiDemand}
-            ></transparency-form>
-          `,
-        ],
-      ])}
-    `;
+            </button> -->
+
+        <!-- TODO: Move this to BldnPrivRequest -->
+        <!-- <button id="submit-request-btn" class="centered-on-border" @click=${this
+          .handleSubmitClick}>
+              Submit Privacy Request
+            </button> -->
+      `;
+    }
+
+    // return html`
+    //   <!-- <button class="demand-builder-back-btn">Back</button> -->
+    //   ${choose(this._demandBuilderState, [
+    //     [
+    //       DemandBuilderState.SELECT_ACTION,
+    //       () => html`
+    //         <demand-builder-action-menu
+    //           .includedActions=${this.includedActions}
+    //         ></demand-builder-action-menu>
+    //       `,
+    //     ],
+    //     [
+    //       DemandBuilderState.BUILD_DEMAND,
+    //       () => html`
+    //         ${console.log('build')}
+    //         <div id="sidebar">
+    //           <p id="sidebar-title">Type of demand:</p>
+    //           ${this.includedActions.map(
+    //             (a, i) => html`
+    //               <label
+    //                 class="sidebar-element ${i === this._sidebarSelectedIndex
+    //                   ? 'sidebar-border'
+    //                   : ''}"
+    //                 @click=${this.handleSidebarElementClick}
+    //               >
+    //                 <input
+    //                   class="sidebar-radio"
+    //                   type="radio"
+    //                   name="radio"
+    //                   ?checked=${i === this._sidebarSelectedIndex}
+    //                 />
+    //                 ${a}: ${descriptions[a]}
+    //               </label>
+    //             `
+    //           )}
+    //         </div>
+    //       `,
+    //     ],
+    //     [
+    //       DemandBuilderState.REVIEW_DEMAND,
+    //       () => html`
+    //         ${console.log('review')}
+    //         <transparency-form
+    //           formState="review"
+    //           .demands=${this._multiDemand}
+    //         ></transparency-form>
+    //         <!-- <button id="submit-request-btn" class="centered-on-border" @click=${this.handleSubmitClick}>
+    //           Submit Privacy Request
+    //         </button> -->
+    //       `,
+    //     ],
+    //   ])}
+    // `;
   }
 }
