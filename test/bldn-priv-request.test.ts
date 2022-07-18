@@ -12,9 +12,9 @@ describe('Mock API Tests', () => {
       demands: [{ action: ACTION.TRANSPARENCY_DPO }],
     };
 
-    sendPrivacyRequest(request)
-      .then(resp => resp.json())
-      .then(data => expect(data.data).to.equal({}));
+    sendPrivacyRequest(request).then(privacyResponse =>
+      expect(privacyResponse.data).to.equal({})
+    );
   });
 });
 
