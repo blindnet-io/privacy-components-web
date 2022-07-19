@@ -6,7 +6,8 @@ export const descriptions = {
   PORTABILITY: 'Take my data and have it transfered somewhere else',
   RESTRICT: 'Restrict processing of my data to a particular scope',
   'REVOKE-CONSENT': 'Revoke previously given consent for data processing',
-  TRANSPARENCY: 'Demand information related to data processing practices',
+  TRANSPARENCY:
+    'Demand information related to data processing practices and know if the system has data on me',
   'OTHER-DEMAND': 'Do or know something else',
   'TRANSPARENCY.DATA-CATEGORIES':
     'I want to know the categories of the data the organization has on me',
