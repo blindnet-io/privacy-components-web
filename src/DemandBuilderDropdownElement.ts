@@ -7,69 +7,88 @@ import './DropdownElementSelection.js';
 export class DemandBuilderDropdownElement extends LitElement {
   @property({ type: String }) prompt = 'What would you like to know?';
 
-  @property({ type: Array }) choices: { id: string; desc: string }[] = [];
+  @property({ type: Array }) choices: { id: string; description: string }[] =
+    [];
+
+  @property({ type: Boolean, reflect: true }) open: boolean = true;
 
   private _selectedChoices = new Set<string>();
 
   static styles = css`
     :host {
       display: grid;
-      grid-template-columns: 7fr 1fr;
-      grid-template-rows: 75px;
+      grid-template-columns: repeat(8, 1fr);
       border: 2px solid #000;
       border-radius: 10px;
+      padding: 20px 40px 40px 40px;
     }
 
-    .element-prompt {
+    :host([open]) #choices-list {
+      display: grid;
+    }
+
+    #prompt {
       display: flex;
+      grid-column: 1/8;
       align-items: center;
-      margin: 0px 20px;
     }
 
-    .dropdown-element-collapse-button {
-      margin: 20px;
+    #drpdwn-collapse-btn {
+      grid-column: 8/9;
       height: 30px;
     }
 
-    #choices-container {
+    #choices-list {
       display: none;
       overflow: hidden;
-      grid-column: 1/3;
-      grid-template-rows: 75px;
+      grid-column: 1/9;
       grid-template-columns: 1fr;
-      margin: 0px 20px;
-      row-gap: 5px;
+      row-gap: 35px;
+      padding: 25px 0px 0px 0px;
+    }
+
+    #choice-ctr {
+      padding: 0px 30px;
     }
   `;
 
-  handleCollapseButtonClick() {
-    const content = this.shadowRoot?.getElementById('choices-container');
-
-    if (content) {
-      if (content.style.display !== 'grid') {
-        content.style.display = 'grid';
-        content.style.gridTemplateRows = `repeat(${this.choices.length}, 45px)`;
-      } else {
-        content.style.display = 'none';
-        this.style.gridTemplateRows = '75px';
+  handleCheckboxClick(e: Event) {
+    const { id, checked } = e.target as HTMLInputElement;
+    if (checked) {
+      this._selectedChoices.add(id);
+      // Fire event indicating the first selection
+      if (this._selectedChoices.size === 1) {
+        this.dispatchEvent(new Event('first-selection'));
+      }
+    } else {
+      this._selectedChoices.delete(id);
+      // Fire event indicating no choices are selected
+      if (this._selectedChoices.size === 0) {
+        this.dispatchEvent(new Event('no-selection'));
       }
     }
   }
 
   render() {
     return html`
-      <div class="element-prompt">${this.prompt}</div>
+      <div id="prompt">${this.prompt}</div>
       <button
-        class="dropdown-element-collapse-button"
-        @click=${this.handleCollapseButtonClick}
+        id="drpdwn-collapse-btn"
+        @click=${() => {
+          this.open = !this.open;
+        }}
       ></button>
-      <div id="choices-container">
+      <div id="choices-list">
         ${this.choices.map(
           c => html`
-            <dropdown-element-selection
-              id=${c.id}
-              description=${c.desc}
-            ></dropdown-element-selection>
+            <div id="choice-ctr">
+              <input
+                id=${c.id}
+                type="checkbox"
+                @click=${this.handleCheckboxClick}
+              />
+              <label>${c.description}</label>
+            </div>
           `
         )}
       </div>
