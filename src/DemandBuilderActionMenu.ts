@@ -10,7 +10,7 @@ import { descriptions } from './utils/dictionary.js';
  */
 @customElement('demand-builder-action-menu')
 export class DemandBuilerActionMenu extends LitElement {
-  @property({ type: String }) description = 'Type of demand I want to submit';
+  @property({ type: String }) description = 'Type of demand I want to submit:';
 
   @property({ type: Array }) includedActions: ACTION[] = [];
 
@@ -21,15 +21,15 @@ export class DemandBuilerActionMenu extends LitElement {
 
     .actions-container {
       display: grid;
-      gap: 20px;
       grid-template-columns: repeat(3, 1fr);
+      gap: 50px;
+      padding: 30px 40px 10px 40px;
     }
 
-    /* TODO: Which of these do we want to expose through variables? */
     .description-heading {
-      color: var(--dmd-actions-menu-decription-color, #000);
+      font-size: 18px;
       text-align: left;
-      padding-bottom: 20px;
+      padding: 0px 0px 0px 10px;
     }
   `;
 

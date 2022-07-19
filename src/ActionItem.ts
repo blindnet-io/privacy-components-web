@@ -7,12 +7,23 @@ import { customElement, property } from 'lit/decorators.js';
  */
 export class ActionItem extends LitElement {
   static styles = css`
+    :host button {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+        Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      font-size: 16px;
+    }
+
     .action-button {
-      border-radius: 5px;
-      padding: 20px;
+      border-radius: 15px;
+      background-color: #fafafa;
+      padding: 0px 40px;
       height: 120px;
       width: 100%;
       text-align: left;
+    }
+
+    .bolder {
+      font-weight: 700;
     }
   `;
 
