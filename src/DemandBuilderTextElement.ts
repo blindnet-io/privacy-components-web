@@ -5,51 +5,41 @@ import { customElement, property } from 'lit/decorators.js';
 export class DemandBuilderTextElement extends LitElement {
   @property({ type: String }) prompt = 'Additional Message (optional)';
 
+  @property({ type: Boolean, reflect: true }) open = false;
+
   static styles = css`
     :host {
       display: grid;
       grid-template-columns: 7fr 1fr;
-      grid-template-rows: 75px;
       border: 2px solid #000;
       border-radius: 10px;
+      padding: 20px 40px 20px 40px;
     }
 
-    .element-prompt {
+    :host([open]) #text-input {
+      display: grid;
+    }
+
+    #element-prompt {
       display: flex;
       align-items: center;
-      margin: 0px 20px;
     }
 
-    .text-element-write-button {
-      margin: 20px;
+    #text-element-write-button {
       height: 30px;
     }
 
-    .content {
+    #text-input {
       display: none;
       overflow: hidden;
       grid-column: 1/3;
-      grid-template-columns: 1fr;
-      margin: 0px 20px;
+      margin: 25px 0px 0px 0px;
     }
 
-    .text-element-input-area {
-      margin: 0px 0px 20px 0px;
+    p {
+      margin: 0px;
     }
   `;
-
-  handleTextButtonClick() {
-    const textInputBox = this.shadowRoot?.getElementById('text-element-input');
-
-    if (textInputBox) {
-      if (textInputBox.style.display !== 'grid') {
-        textInputBox.style.display = 'grid';
-      } else {
-        textInputBox.style.display = 'none';
-        this.style.gridTemplateRows = '75px';
-      }
-    }
-  }
 
   handleInput(e: Event) {
     const event = new CustomEvent('text-element-change', {
@@ -64,20 +54,20 @@ export class DemandBuilderTextElement extends LitElement {
 
   render() {
     return html`
-      <div class="element-prompt">${this.prompt}</div>
+      <p id="element-prompt">${this.prompt}</p>
       <button
-        class="text-element-write-button"
-        @click=${this.handleTextButtonClick}
+        id="text-element-write-button"
+        @click=${() => {
+          this.open = !this.open;
+        }}
       ></button>
-      <div id="text-element-input" class="content">
-        <textarea
-          class="text-element-input-area"
-          name="paragraph_text"
-          cols="50"
-          rows="5"
-          @input=${this.handleInput}
-        ></textarea>
-      </div>
+      <textarea
+        id="text-input"
+        name="paragraph_text"
+        cols="50"
+        rows="5"
+        @input=${this.handleInput}
+      ></textarea>
     `;
   }
 }
