@@ -2,6 +2,7 @@ import { html, css, LitElement } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 import { map } from 'lit/directives/map.js';
+import { choose } from 'lit/directives/choose.js';
 
 import './DemandBuilder.js';
 import './RequestProgressIndicator.js';
@@ -12,7 +13,7 @@ import { ACTION } from './models/priv-terms.js';
 import { PrivacyRequest } from './models/privacy-request.js';
 import { sendPrivacyRequest } from './utils/PrivacyRequestApi.js';
 import { PrivacyResponse } from './models/privacy-response.js';
-import { RequestState } from './utils/states.js';
+import { RequestState, DemandState } from './utils/states.js';
 
 export class BldnPrivRequest extends LitElement {
   @property({ type: String, attribute: 'excluded-actions' }) excludedActions =
@@ -24,7 +25,9 @@ export class BldnPrivRequest extends LitElement {
 
   @state() _requestState: RequestState = RequestState.BUILD;
 
-  @state() _privacyRequest: PrivacyRequest = { demands: [] };
+  @state() _privacyRequest: PrivacyRequest = {
+    demands: [{ action: ACTION.TRANSPARENCY }],
+  };
 
   @state() _privacyResponse: PrivacyResponse = {
     responseId: '',
@@ -34,58 +37,67 @@ export class BldnPrivRequest extends LitElement {
     status: '',
   };
 
+  @state() _showButtons: boolean = false;
+
   constructor() {
     super();
-    this.addEventListener('submit-request', () => {
-      sendPrivacyRequest(this._privacyRequest).then(response => {
-        this._privacyResponse = response;
-      });
-      this._requestState = RequestState.REVIEW;
+
+    // Privacy request update listeners - TODO: I think we can combine these events, in demand builder too
+    this.addEventListener('demand-update', e => {
+      this._privacyRequest.demands.push((e as CustomEvent).detail.demand);
+    });
+    this.addEventListener('demand-update-multiple', e => {
+      this._privacyRequest.demands.push((e as CustomEvent).detail?.demands);
+    });
+
+    // Listeners for events indicating if the new demand, review, and submit buttons should be visible/clickable
+    this.addEventListener('demand-validated', () => {});
+    this.addEventListener('demand-invalidated', () => {});
+    this.addEventListener('menu-done', () => {
+      this._showButtons = true;
     });
   }
 
   static styles = css`
     :host {
       display: grid;
-
-      @font-face {
-        font-family: 'NeueHaasDisplay-Roman';
-        src: url('./assets/fonts/NeueHaasDisplay-Bold.woff') format('woff')
-          url('/assets/fonts/NeueHaasDisplay-Bold.woff') format('woff');
-        font-weight: normal;
-        font-style: italic;
-        font-size: 48;
-      }
-
-      @font-face {
-        font-family: 'NeueHaasDisplay-Mediu';
-        src: url('./assets/fonts/NeueHaasDisplay-Mediu.woff') format('woff');
-        font-weight: normal;
-        font-style: normal;
-      }
-
-      @font-face {
-        font-family: 'NeueHaasDisplay-Bold';
-        src: url('./assets/fonts/NeueHaasDisplay-Bold.woff') format('woff');
-        font-weight: normal;
-        font-style: normal;
-      }
-
-      font-family: 'NeueHaasDisplay-Roman';
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+        Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      font-size: 16;
 
       /* Variables? */
-      /* max-width: 1000px; */
+      max-width: 1350px;
       /* max-height: 750px; */
-
-      border: 2px solid #000;
-      border-radius: 20px;
-      padding: 20px;
-      margin: 0px 0px 20px 0px;
     }
 
-    .request-header {
+    #priv-req-ctr {
+      display: grid;
+      border: 2px solid #000;
+      border-radius: 20px;
+      padding: 30px;
+    }
+
+    #new-dmd-ctr {
+      display: flex;
+      column-gap: 10px;
+      margin: 20px 0px 0px 0px;
+      padding: 20px;
+      border: 2px solid #000;
+      border-radius: 20px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #request-progress-indicator {
+      background-color: red;
+    }
+
+    #frequent-requests {
+      background-color: green;
+    }
+
+    .req-hdr {
       /* color: var(--dmnd-actions-menu-title-color, #000); */
-      font-family: 'NeueHaasDisplay-Roman';
       font-weight: bold;
       font-size: 24px;
       text-align: center;
@@ -93,16 +105,38 @@ export class BldnPrivRequest extends LitElement {
       /* background-color: blue; */
     }
 
-    .request-progress-indicator {
-      background-color: red;
+    .new-dmd-btn {
+      width: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
     }
 
-    .frequent-requests {
-      background-color: green;
+    .nav-btn {
+      height: 20px;
+      width: fit-content;
+      margin: 10px 0px -30px 0px;
+      padding: 0px 0px 0px 0px;
+      justify-self: center;
+    }
+
+    .demand-builder-next-btn {
+      grid-column: 2/3;
+      padding-bottom: -50px;
+      margin-bottom: -50px;
     }
   `;
 
-  /**
+  handleSubmitClick() {
+    sendPrivacyRequest(this._privacyRequest).then(response => {
+      this._privacyResponse = response;
+    });
+    // TODO: Validate request success here
+    this._requestState = RequestState.SENT;
+  }
+
+  /** TODO: Move this to one of the lifecycle methods
    * Filter the list of actions to exclude certain ones
    * @returns List of not excluded actions
    */
@@ -117,22 +151,72 @@ export class BldnPrivRequest extends LitElement {
     );
   }
 
+  handleReviewClick() {
+    // Need some kind of validation here?
+    this._requestState = RequestState.REVIEW;
+  }
+
+  handleNewDemandClick() {
+    this._privacyRequest.demands.push({
+      action: ACTION.TRANSPARENCY,
+    });
+  }
+
   render() {
     this._includedActions = this.getAllowedActions();
 
     return html`
-      <div class="request-header">My Privacy Request</div>
-      <request-progress-indicator></request-progress-indicator>
-      ${map(
-        this._privacyRequest.demands,
-        d => html`
-          <demand-builder
-            .includedActions=${this._includedActions}
-            .demand=${d}
-          ></demand-builder>
-          <!-- TODO: Handle bundling of transparency demands into one -->
-        `
-      )}
+      <div id="priv-req-ctr">
+        <div class="req-hdr">My Privacy Request</div>
+        <request-progress-indicator></request-progress-indicator>
+        ${map(
+          this._privacyRequest.demands,
+          d => html`
+            <demand-builder
+              .includedActions=${this._includedActions}
+              .demand=${d}
+              .demandState=${this._requestState === RequestState.REVIEW
+                ? DemandState.REVIEW
+                : DemandState.SELECT_ACTION}
+            ></demand-builder>
+            <!-- TODO: Handle bundling of transparency demands into one -->
+          `
+        )}
+        ${when(
+          this._showButtons,
+          () => html`
+            ${choose(this._requestState, [
+              [
+                RequestState.BUILD,
+                () => html`
+                  <!-- TODO: Uncomment this once multiple demands are supported -->
+                  <!-- <div id="new-dmd-ctr">
+                <p><strong>I want to add another demand</strong></p>
+                <button id="new-dmd-btn">+</button>
+              </div> -->
+                  <button
+                    class="nav-btn center-on-border"
+                    @click=${this.handleReviewClick}
+                  >
+                    Review Request
+                  </button>
+                `,
+              ],
+              [
+                RequestState.REVIEW,
+                () => html`
+                  <button
+                    class="nav-btn center-on-border"
+                    @click=${this.handleSubmitClick}
+                  >
+                    Submit Privacy Request
+                  </button>
+                `,
+              ],
+            ])}
+          `
+        )}
+      </div>
       ${when(
         this._requestState === RequestState.SENT,
         () => html`
