@@ -20,6 +20,10 @@ export class DemandBuilderDropdownElement extends LitElement {
       grid-template-columns: repeat(8, 1fr);
       border: 2px solid #000;
       border-radius: 10px;
+      padding: 20px 40px 20px 40px;
+    }
+
+    :host([open]) {
       padding: 20px 40px 40px 40px;
     }
 
@@ -50,6 +54,10 @@ export class DemandBuilderDropdownElement extends LitElement {
     #choice-ctr {
       padding: 0px 30px;
     }
+
+    p {
+      margin: 0px;
+    }
   `;
 
   handleCheckboxClick(e: Event) {
@@ -71,7 +79,7 @@ export class DemandBuilderDropdownElement extends LitElement {
 
   render() {
     return html`
-      <div id="prompt">${this.prompt}</div>
+      <p id="prompt">${this.prompt}</p>
       <button
         id="drpdwn-collapse-btn"
         @click=${() => {
