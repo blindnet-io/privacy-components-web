@@ -62,16 +62,28 @@ export class DemandBuilderDropdownElement extends LitElement {
     const { id, checked } = e.target as HTMLInputElement;
     if (checked) {
       this._selectedChoices.add(id);
-      // Fire event indicating the first selection
-      if (this._selectedChoices.size === 1) {
-        this.dispatchEvent(new Event('first-selection'));
-      }
+      // Fire add event
+      const event = new CustomEvent('dropdown-element-add', {
+        bubbles: true,
+        composed: true,
+        detail: {
+          id,
+          'first-selection': this._selectedChoices.size === 1,
+        },
+      });
+      this.dispatchEvent(event);
     } else {
       this._selectedChoices.delete(id);
-      // Fire event indicating no choices are selected
-      if (this._selectedChoices.size === 0) {
-        this.dispatchEvent(new Event('no-selection'));
-      }
+      // Fire delete event
+      const event = new CustomEvent('dropdown-element-delete', {
+        bubbles: true,
+        composed: true,
+        detail: {
+          id,
+          'none-selected': this._selectedChoices.size === 0,
+        },
+      });
+      this.dispatchEvent(event);
     }
   }
 

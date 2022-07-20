@@ -13,6 +13,7 @@ import { PrivacyRequest } from './models/privacy-request.js';
 import { sendPrivacyRequest } from './utils/PrivacyRequestApi.js';
 import { PrivacyResponse } from './models/privacy-response.js';
 import { RequestState, DemandState } from './utils/states.js';
+import { Demand } from './models/demand.js';
 
 export class BldnPrivRequest extends LitElement {
   @property({ type: String, attribute: 'excluded-actions' }) excludedActions =
@@ -27,6 +28,8 @@ export class BldnPrivRequest extends LitElement {
   @state() _privacyRequest: PrivacyRequest = {
     demands: [{ action: ACTION.TRANSPARENCY }],
   };
+
+  @state() _demands: Map<string, Demand> = new Map<string, Demand>();
 
   @state() _privacyResponse: PrivacyResponse = {
     responseId: '',
@@ -43,11 +46,19 @@ export class BldnPrivRequest extends LitElement {
 
     // Privacy request update listeners - TODO: I think we can combine these events, in demand builder too
     this.addEventListener('demand-update', e => {
-      this._privacyRequest.demands.push((e as CustomEvent).detail.demand);
+      const updatedDemands = (e as CustomEvent).detail.demands as Map<
+        string,
+        Demand
+      >;
+      this._demands = new Map([...updatedDemands, ...this._demands]);
+      // console.log("top level got demand update")
+      // console.log(this._demands)
     });
-    this.addEventListener('demand-update-multiple', e => {
-      this._privacyRequest.demands.push((e as CustomEvent).detail?.demands);
-    });
+    // this.addEventListener('demand-update-multiple', e => {
+    //   console.log("top level got demand update multiple")
+    //   this._privacyRequest.demands.push((e as CustomEvent).detail?.demands);
+    //   console.log(this._privacyRequest)
+    // });
 
     // Listeners for events indicating if the new demand, review, and submit buttons should be visible/clickable
     this.addEventListener('demand-validated', () => {});
@@ -162,6 +173,7 @@ export class BldnPrivRequest extends LitElement {
   }
 
   render() {
+    // console.log(this._privacyRequest)
     this._includedActions = this.getAllowedActions();
 
     return html`

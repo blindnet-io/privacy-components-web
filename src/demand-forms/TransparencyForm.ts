@@ -1,6 +1,7 @@
 import { html, css, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
+import { v4 as uuidv4 } from 'uuid';
 
 import '../DemandBuilderDropdownElement.js';
 import '../DemandBuilderTextElement.js';
@@ -28,25 +29,26 @@ export class TransparencyForm extends LitElement {
 
   constructor() {
     super();
-    this.addEventListener('dropdown-element-selection-click', e => {
-      const details = (e as CustomEvent).detail;
-      const actionId = (e as CustomEvent).detail?.selectionId;
-      if (details?.isChecked) {
-        // Add a new demand and dispatch event if first selection
-        this.demands.set(actionId, {
-          action: actionId,
-          message: this._extraMessage,
+
+    this.addEventListener('dropdown-element-add', e => {
+      const action = (e as CustomEvent).detail.id;
+      this.demands.set(uuidv4(), {
+        action,
+        message: this._extraMessage,
+      });
+      this.updateDemandBuilder();
+    });
+
+    this.addEventListener('dropdown-element-delete', e => {
+      const action = (e as CustomEvent).detail.id;
+      // Delete demands for the unchecked action
+      Array.from(this.demands)
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        .filter(([_, d]) => d.action === action)
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        .forEach(([s, _]) => {
+          this.demands.delete(s);
         });
-        // eslint-disable-next-line no-empty
-        if (this._selectedActions.size === 1) {
-        }
-      } else {
-        // Remove selection and dispatch event if last unselection
-        this._selectedActions.delete(actionId);
-        // eslint-disable-next-line no-empty
-        if (this._selectedActions.size === 0) {
-        }
-      }
       this.updateDemandBuilder();
     });
 
@@ -101,7 +103,7 @@ export class TransparencyForm extends LitElement {
   `;
 
   updateDemandBuilder() {
-    const event = new CustomEvent('demand-update-multiple', {
+    const event = new CustomEvent('demand-update', {
       bubbles: true,
       composed: true,
       detail: {

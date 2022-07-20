@@ -22,6 +22,22 @@ import { when } from 'lit/directives/when.js';
  *    the #demand-elements-container ID
  *  - Each should produce a demand or array of demands (for the transparency request)
  */
+
+/**
+ * REFACTORING TODO 2.0:
+ *  - For each demand in the component there should be a unique ID
+ *  - Demand builder keeps a map of IDs to Demands
+ *  - For most action types, there is one demand so the demand builder map has one element
+ *
+ * - But for transparency, the map has multiple IDs
+ *    - For the form selection box, it should work to have id be a demand-id, action pair
+ *    - Possible solution: when transparency form is selected, generate uuid for number of possible demands and
+ *      add to map, then pass this to transparency form
+ *    - Possible solution #2: when transparency form is selected, don't generate any uuids initially. As list elements are
+ *      selected/unselected, update the demand builder/priv request. This has the downside of being a bit slower as we must
+ *      do a linear search when deleting a certain action
+ * - New problem: must handle add vs delete vs update seperately
+ */
 @customElement('demand-builder')
 export class DemandBuilder extends LitElement {
   @property({ type: Array }) includedActions: ACTION[] = [];
@@ -32,12 +48,12 @@ export class DemandBuilder extends LitElement {
   @state() _selectedAction = ACTION.TRANSPARENCY;
 
   // TODO: Check if this.demand.action actually changes when we switch options in sidebar
-  @property({ attribute: false }) demand: Demand = {
-    action: this._selectedAction,
-  };
+  // @property({ attribute: false }) demands: Demand = {
+  //   action: this._selectedAction,
+  // };
 
   // The transparency demand interface requires a special case of the demand builder with multiple demands at once
-  @property({ attribute: false }) multiDemand = new Map<string, Demand>();
+  @property({ attribute: false }) demands = new Map<string, Demand>();
 
   @state() _sidebarSelectedIndex = 7; // TODO: Calculate this in lifecycle method based on property input
 
@@ -57,13 +73,15 @@ export class DemandBuilder extends LitElement {
     });
 
     this.addEventListener('demand-update', e => {
-      this.demand = (e as CustomEvent).detail.demand;
+      console.log('demand builder got demand update');
+      this.demands = (e as CustomEvent).detail.demands;
+      console.log(this.demands);
     });
 
-    this.addEventListener('demand-update-multiple', e => {
-      console.log(this.multiDemand);
-      this.multiDemand = (e as CustomEvent).detail?.demands;
-    });
+    // this.addEventListener('demand-update-multiple', e => {
+    //   console.log("demand builder got demand update multiple");
+    //   this.multiDemand = (e as CustomEvent).detail?.demands;
+    // });
   }
 
   static styles = css`
@@ -126,12 +144,12 @@ export class DemandBuilder extends LitElement {
     }
   `;
 
-  formDemandEvent() {
+  updatePrivacyRequest() {
     const event = new CustomEvent('add-demand', {
       bubbles: true,
       composed: true,
       detail: {
-        demand: this.demand,
+        demand: this.demands,
       },
     });
     this.dispatchEvent(event);
@@ -191,7 +209,7 @@ export class DemandBuilder extends LitElement {
   }
 
   render() {
-    console.log(this.multiDemand);
+    // console.log(this.multiDemand);
 
     if (this.demandState === DemandState.SELECT_ACTION) {
       // TODO: Move demand-builder-action-menu into this class
