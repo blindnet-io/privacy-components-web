@@ -1,8 +1,6 @@
 import { html, css, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
-import './DropdownElementSelection.js';
-
 @customElement('demand-builder-dropdown-element')
 export class DemandBuilderDropdownElement extends LitElement {
   @property({ type: String }) prompt = 'What would you like to know?';

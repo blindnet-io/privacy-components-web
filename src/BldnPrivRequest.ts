@@ -7,7 +7,6 @@ import { choose } from 'lit/directives/choose.js';
 import './DemandBuilder.js';
 import './RequestProgressIndicator.js';
 import './FrequentRequestsMenu.js';
-import './RequestReview.js';
 import './ResponseView.js';
 import { ACTION } from './models/priv-terms.js';
 import { PrivacyRequest } from './models/privacy-request.js';

@@ -4,6 +4,7 @@ import { customElement, property, state } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
 
 import { ACTION, TRANSPARENCY_ACTION } from './models/priv-terms.js';
+import { enabledActions } from './utils/conf.js';
 import { Demand } from './models/demand.js';
 import { descriptions } from './utils/dictionary.js';
 import { DemandState } from './utils/states.js';
@@ -12,6 +13,7 @@ import './DemandBuilderSidebar.js';
 import './DemandBuilderDropdownElement.js';
 import './DemandBuilderTextElement.js';
 import './demand-forms/TransparencyForm.js';
+import './DemandBuilderSidebarItem.js';
 import { when } from 'lit/directives/when.js';
 
 /**
@@ -37,7 +39,7 @@ export class DemandBuilder extends LitElement {
   // The transparency demand interface requires a special case of the demand builder with multiple demands at once
   @property({ attribute: false }) multiDemand = new Map<string, Demand>();
 
-  @state() _sidebarSelectedIndex = 0;
+  @state() _sidebarSelectedIndex = 7; // TODO: Calculate this in lifecycle method based on property input
 
   constructor() {
     super();
@@ -46,6 +48,12 @@ export class DemandBuilder extends LitElement {
       // FIXME: Once we support more than one action type, will need to get the action out of event here
       this._selectedAction = ACTION.TRANSPARENCY;
       this.demandState = DemandState.EDIT;
+    });
+
+    this.addEventListener('sidebar-click', e => {
+      this._sidebarSelectedIndex = this.includedActions.indexOf(
+        (e as CustomEvent).detail.id
+      );
     });
 
     this.addEventListener('demand-update', e => {
@@ -130,25 +138,10 @@ export class DemandBuilder extends LitElement {
   }
 
   handleSidebarElementClick(e: Event) {
-    const label = e.target as HTMLLabelElement;
-    if (label && this.shadowRoot) {
-      // Get all elements in the list and index of the one clicked
-      const elements = Array.from(
-        [...[this.shadowRoot.querySelectorAll('label')]][0]
-      );
-      const newIndex = elements.indexOf(label);
+    console.log('in sidebar click handler');
 
-      if (newIndex > -1 && newIndex !== this._sidebarSelectedIndex) {
-        this._sidebarSelectedIndex = newIndex;
-
-        // Manually sets the radio button to checked. This is in response to an issue I noticed where the
-        // radio button would sometimes not change even when the component re-renders.
-        const input = label.lastElementChild as HTMLInputElement;
-        if (input) {
-          input.checked = true;
-        }
-      }
-    }
+    const div = e.target as HTMLDivElement;
+    console.log(div);
   }
 
   getSidebarTemplate() {
@@ -157,25 +150,13 @@ export class DemandBuilder extends LitElement {
         <p id="sidebar-title">Type of demand:</p>
         ${this.includedActions.map(
           (a, i) => html`
-            <div
-              class="sidebar-element-ctr ${i === this._sidebarSelectedIndex
-                ? 'sidebar-border'
-                : ''}"
-            >
-              <label
-                class="sidebar-element"
-                @click=${this.handleSidebarElementClick}
-              >
-                <input
-                  class="sidebar-radio"
-                  type="radio"
-                  name="radio"
-                  ?checked=${i === this._sidebarSelectedIndex}
-                />
-                ${a}: ${descriptions[a]}
-                <!-- <span>${a}:</span><span>${descriptions[a]}</span> -->
-              </label>
-            </div>
+            <demand-builder-sidebar-item
+              id=${a}
+              title=${a}
+              description=${descriptions[a]}
+              ?disabled=${!enabledActions.get(a)}
+              ?checked=${i === this._sidebarSelectedIndex}
+            ></demand-builder-sidebar-item>
           `
         )}
       </div>
