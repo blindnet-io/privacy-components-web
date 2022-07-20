@@ -1,4 +1,4 @@
-import { ACTION } from '../models/priv-terms.ts';
+import { ACTION } from '../models/priv-terms.js';
 
 export const enabledActions = new Map<ACTION, boolean>([
   [ACTION.ACCESS, false],
