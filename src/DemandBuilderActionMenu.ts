@@ -4,6 +4,7 @@ import { customElement, property } from 'lit/decorators.js';
 import './ActionItem.js';
 import { ACTION } from './models/priv-terms.js';
 import { descriptions } from './utils/dictionary.js';
+import { enabledActions } from './utils/conf.js';
 
 /**
  * Grid menu of demand action types
@@ -12,7 +13,7 @@ import { descriptions } from './utils/dictionary.js';
 export class DemandBuilerActionMenu extends LitElement {
   @property({ type: String }) description = 'Type of demand I want to submit:';
 
-  @property({ type: Array }) includedActions: ACTION[] = [];
+  @property({ attribute: false }) includedActions: ACTION[] = [];
 
   static styles = css`
     :host {
@@ -42,6 +43,7 @@ export class DemandBuilerActionMenu extends LitElement {
             html`<action-item
               action-name=${a}
               action-description=${descriptions[a]}
+              ?disabled=${!enabledActions.get(a)}
             ></action-item>`
         )}
       </div>
