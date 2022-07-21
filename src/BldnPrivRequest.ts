@@ -21,6 +21,7 @@ import { Demand } from './models/demand.js';
  * more DemandBuilder elements, each for a single demand action type.
  */
 export class BldnPrivRequest extends LitElement {
+  // JSON string of actions to include from all valid actions
   @property({ type: Array, attribute: 'included-actions' }) includedActions =
     Object.values(ACTION).filter(a => !a.includes('TRANSPARENCY.'));
 
@@ -66,21 +67,27 @@ export class BldnPrivRequest extends LitElement {
       );
     });
 
-    // UI element listeners
+    // Event indicating a demand builder has a valid action form
     this.addEventListener('demand-validated', e => {
       const { demandBuilderId } = (e as CustomEvent).detail;
       this._demandBuilders.set(demandBuilderId, true);
+      // Check if review/submit buttons should be enabled
       this._buttonsClickable = Array.from(this._demandBuilders.values()).every(
         b => b === true
       );
     });
+
+    // Event indicating a demand builder has an invalid action form
     this.addEventListener('demand-invalidated', e => {
       const { demandBuilderId } = (e as CustomEvent).detail;
       this._demandBuilders.set(demandBuilderId, false);
+      // Check if review/submit buttons should be disabled
       this._buttonsClickable = Array.from(this._demandBuilders.values()).every(
         b => b === true
       );
     });
+
+    // Unhide review and submit buttons when demand builder has passed the action menu
     this.addEventListener('menu-done', () => {
       this._showButtons = true;
     });
