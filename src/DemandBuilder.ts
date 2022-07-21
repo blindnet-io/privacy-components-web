@@ -17,71 +17,50 @@ import './DemandBuilderSidebarItem.js';
 import { when } from 'lit/directives/when.js';
 
 /**
- * REFACTORING TODO:
- *  - Define several demand content components for each type of demand. This will replace
- *    the #demand-elements-container ID
- *  - Each should produce a demand or array of demands (for the transparency request)
- */
-
-/**
- * REFACTORING TODO 2.0:
- *  - For each demand in the component there should be a unique ID
- *  - Demand builder keeps a map of IDs to Demands
- *  - For most action types, there is one demand so the demand builder map has one element
- *
- * - But for transparency, the map has multiple IDs
- *    - For the form selection box, it should work to have id be a demand-id, action pair
- *    - Possible solution: when transparency form is selected, generate uuid for number of possible demands and
- *      add to map, then pass this to transparency form
- *    - Possible solution #2: when transparency form is selected, don't generate any uuids initially. As list elements are
- *      selected/unselected, update the demand builder/priv request. This has the downside of being a bit slower as we must
- *      do a linear search when deleting a certain action
- * - New problem: must handle add vs delete vs update seperately
+ * Handles creation and review of a single demand. Uses one of the ActionForm
+ * components to display different options for each action type.
  */
 @customElement('demand-builder')
 export class DemandBuilder extends LitElement {
   @property({ type: Array }) includedActions: ACTION[] = [];
 
-  @property({ attribute: false }) demandState: DemandState =
-    DemandState.SELECT_ACTION;
+  @property({ type: Number, attribute: 'demand-state' })
+  demandState: DemandState = DemandState.SELECT_ACTION;
 
   @state() _selectedAction = ACTION.TRANSPARENCY;
 
-  // TODO: Check if this.demand.action actually changes when we switch options in sidebar
-  // @property({ attribute: false }) demands: Demand = {
-  //   action: this._selectedAction,
-  // };
-
-  // The transparency demand interface requires a special case of the demand builder with multiple demands at once
   @property({ attribute: false }) demands = new Map<string, Demand>();
 
-  @state() _sidebarSelectedIndex = 7; // TODO: Calculate this in lifecycle method based on property input
+  @state() _sidebarSelectedIndex = 0;
 
   constructor() {
     super();
 
+    // Demand update listeners
+    this.addEventListener('demand-set', e => {
+      const { id, demand } = (e as CustomEvent).detail;
+      this.demands.set(id, demand);
+    });
+    this.addEventListener('demand-delete', e => {
+      const { id } = (e as CustomEvent).detail;
+      this.demands.delete(id);
+    });
+    this.addEventListener('demand-set-multiple', e => {
+      ((e as CustomEvent).detail.demands as Map<string, Demand>).forEach(
+        (demand, id) => this.demands.set(id, demand)
+      );
+    });
+
+    // UI element listeners
     this.addEventListener('demand-action-menu-click', () => {
-      // FIXME: Once we support more than one action type, will need to get the action out of event here
       this._selectedAction = ACTION.TRANSPARENCY;
       this.demandState = DemandState.EDIT;
     });
-
     this.addEventListener('sidebar-click', e => {
       this._sidebarSelectedIndex = this.includedActions.indexOf(
         (e as CustomEvent).detail.id
       );
     });
-
-    this.addEventListener('demand-update', e => {
-      console.log('demand builder got demand update');
-      this.demands = (e as CustomEvent).detail.demands;
-      console.log(this.demands);
-    });
-
-    // this.addEventListener('demand-update-multiple', e => {
-    //   console.log("demand builder got demand update multiple");
-    //   this.multiDemand = (e as CustomEvent).detail?.demands;
-    // });
   }
 
   static styles = css`
@@ -127,41 +106,17 @@ export class DemandBuilder extends LitElement {
       margin-right: -2px;
     }
 
-    #demand-review-container {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      grid-column: 1/5;
-      row-gap: 15px;
-      border: 2px solid #000;
-      border-radius: 20px;
-      margin: 20px 0px 0px 0px;
-      padding: 20px 20px 20px 20px;
-    }
-
     p {
       padding: 0px;
       margin: 0px;
     }
   `;
 
-  updatePrivacyRequest() {
-    const event = new CustomEvent('add-demand', {
-      bubbles: true,
-      composed: true,
-      detail: {
-        demand: this.demands,
-      },
-    });
-    this.dispatchEvent(event);
-  }
-
-  handleSidebarElementClick(e: Event) {
-    console.log('in sidebar click handler');
-
-    const div = e.target as HTMLDivElement;
-    console.log(div);
-  }
-
+  /**
+   * Get a HTML template for the demand builder sidebar, with each PRIV action
+   * included in this DemandBuilder as an option.
+   * @returns HTML template for sidebar display
+   */
   getSidebarTemplate() {
     return html`
       <div id="sidebar">
@@ -181,20 +136,30 @@ export class DemandBuilder extends LitElement {
     `;
   }
 
+  /**
+   * Get an HTML template for the form corresponding to the selected action type.
+   * @returns HTML template for action form
+   */
   getSelectedFormTemplate() {
     return html`
       ${choose(this._selectedAction, [
         [
           ACTION.TRANSPARENCY,
           () => html`<transparency-form
-            formState=${DemandState.EDIT}
+            demand-state=${this.demandState}
             .transparencyActions=${Object.values(TRANSPARENCY_ACTION)}
+            .demands=${this.demands}
           ></transparency-form>`,
         ],
       ])}
     `;
   }
 
+  /**
+   * Hook into update to fire an event letting the top level component know the user
+   * has navigated past the action menu screen.
+   * @param changedProperties Map of changed values to their previous value
+   */
   update(changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>) {
     super.update(changedProperties);
 
@@ -208,11 +173,21 @@ export class DemandBuilder extends LitElement {
     }
   }
 
-  render() {
-    // console.log(this.multiDemand);
+  /**
+   * Hook into firstUpdated to include an initial calculation of the sidebar index
+   * @param _changedProperties
+   */
+  protected firstUpdated(
+    _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
+  ): void {
+    super.firstUpdated(_changedProperties);
+    this._sidebarSelectedIndex = this.includedActions.indexOf(
+      this._selectedAction
+    );
+  }
 
+  render() {
     if (this.demandState === DemandState.SELECT_ACTION) {
-      // TODO: Move demand-builder-action-menu into this class
       return html`<demand-builder-action-menu
         .includedActions=${this.includedActions}
       ></demand-builder-action-menu>`;
