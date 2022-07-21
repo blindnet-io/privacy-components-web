@@ -73,7 +73,6 @@ export class BldnPrivRequest extends LitElement {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
         Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
       font-size: 16;
-
       max-width: 1350px;
       /* max-height: 750px; */
     }
@@ -83,6 +82,7 @@ export class BldnPrivRequest extends LitElement {
       border: 2px solid #000;
       border-radius: 20px;
       padding: 30px;
+      margin: 0px 0px 30px 0px;
     }
 
     #new-dmd-ctr {
@@ -120,11 +120,26 @@ export class BldnPrivRequest extends LitElement {
     }
 
     .nav-btn {
-      height: 20px;
+      height: 50px;
+      background-color: #18a0fb;
+      border-width: 0px;
+      border-radius: 6px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+        Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      font-size: 18px;
+      color: #ffffff;
       width: fit-content;
-      margin: 10px 0px -30px 0px;
-      padding: 0px 0px 0px 0px;
+      margin: 20px 0px -55px 0px;
+      padding: 0px 25px;
+    }
+
+    .ctr-btn {
       justify-self: center;
+    }
+
+    .right-btn {
+      justify-self: flex-end;
+      margin: 20px 60px -55px 0px;
     }
 
     .demand-builder-next-btn {
@@ -181,10 +196,10 @@ export class BldnPrivRequest extends LitElement {
                 <button id="new-dmd-btn">+</button>
               </div> -->
                   <button
-                    class="nav-btn center-on-border"
+                    class="nav-btn right-btn"
                     @click=${this.handleReviewClick}
                   >
-                    Review Request
+                    Continue to submit Privacy Request >
                   </button>
                 `,
               ],
@@ -192,7 +207,7 @@ export class BldnPrivRequest extends LitElement {
                 RequestState.REVIEW,
                 () => html`
                   <button
-                    class="nav-btn center-on-border"
+                    class="nav-btn ctr-btn"
                     @click=${this.handleSubmitClick}
                   >
                     Submit Privacy Request
