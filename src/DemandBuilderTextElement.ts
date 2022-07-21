@@ -1,6 +1,9 @@
 import { html, css, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
+/**
+ * Collapsable element displaying a prompt and text input field.
+ */
 @customElement('demand-builder-text-element')
 export class DemandBuilderTextElement extends LitElement {
   @property({ type: String }) prompt = 'Additional Message (optional)';
@@ -27,6 +30,11 @@ export class DemandBuilderTextElement extends LitElement {
 
     #text-element-write-button {
       height: 30px;
+      background: url('/src/assets/icons/edit_fill.svg');
+      height: 24px;
+      width: 24px;
+      border: none;
+      justify-self: right;
     }
 
     #text-input {
