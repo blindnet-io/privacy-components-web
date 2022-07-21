@@ -4,12 +4,12 @@ import '../src/bldn-priv-request.js';
 export default {
   title: 'BldnPrivRequest',
   component: 'bldn-priv-request',
-  argTypes: {
-    excludeActions: {
-      control: 'text',
-      description: 'Comma-seperated list of actions to exclude from the menu',
-    },
-  },
+  // argTypes: {
+  //   includeActions: {
+  //     control: 'text',
+  //     description: 'Comma-seperated list of actions to include in the component.',
+  //   },
+  // },
 };
 
 interface Story<T> {
@@ -19,27 +19,18 @@ interface Story<T> {
 }
 
 interface ArgTypes {
-  excludeActions?: string;
-  slot?: TemplateResult;
+  includeActions?: string;
 }
 
-const Template: Story<ArgTypes> = ({ excludeActions, slot }: ArgTypes) => html`
-  <bldn-priv-request excluded-actions="${excludeActions || ''}">
-    ${slot}
-  </bldn-priv-request>
+const Template: Story<ArgTypes> = ({ includeActions }: ArgTypes) => html`
+  <bldn-priv-request
+    .included-actions="${includeActions || ''}"
+  ></bldn-priv-request>
 `;
 
 export const Regular = Template.bind({});
 
-export const CustomExcludeActions = Template.bind({});
-CustomExcludeActions.args = {
-  excludeActions: 'access',
-};
-
-export const SlottedContent = Template.bind({});
-SlottedContent.args = {
-  slot: html`<p>Slotted content</p>`,
-};
-SlottedContent.argTypes = {
-  slot: { table: { disable: true } },
-};
+// export const CustomIncludeActions = Template.bind({});
+// CustomIncludeActions.args = {
+//   includeActions: '[access]',
+// };
