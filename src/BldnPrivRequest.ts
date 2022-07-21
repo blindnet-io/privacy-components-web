@@ -16,12 +16,8 @@ import { RequestState, DemandState } from './utils/states.js';
 import { Demand } from './models/demand.js';
 
 export class BldnPrivRequest extends LitElement {
-  @property({ type: String, attribute: 'excluded-actions' }) excludedActions =
-    '';
-
-  @state() _includedActions = Object.values(ACTION).filter(
-    a => !a.includes('TRANSPARENCY.')
-  );
+  @property({ type: Array, attribute: 'included-actions' }) includedActions =
+    Object.values(ACTION).filter(a => !a.includes('TRANSPARENCY.'));
 
   @state() _requestState: RequestState = RequestState.BUILD;
 
@@ -44,23 +40,22 @@ export class BldnPrivRequest extends LitElement {
   constructor() {
     super();
 
-    // Privacy request update listeners - TODO: I think we can combine these events, in demand builder too
-    this.addEventListener('demand-update', e => {
-      const updatedDemands = (e as CustomEvent).detail.demands as Map<
-        string,
-        Demand
-      >;
-      this._demands = new Map([...updatedDemands, ...this._demands]);
-      // console.log("top level got demand update")
-      // console.log(this._demands)
+    // Demand update listeners
+    this.addEventListener('demand-set', e => {
+      const { id, demand } = (e as CustomEvent).detail;
+      this._demands.set(id, demand);
     });
-    // this.addEventListener('demand-update-multiple', e => {
-    //   console.log("top level got demand update multiple")
-    //   this._privacyRequest.demands.push((e as CustomEvent).detail?.demands);
-    //   console.log(this._privacyRequest)
-    // });
+    this.addEventListener('demand-delete', e => {
+      const { id } = (e as CustomEvent).detail;
+      this._demands.delete(id);
+    });
+    this.addEventListener('demand-set-multiple', e => {
+      ((e as CustomEvent).detail.demands as Map<string, Demand>).forEach(
+        (demand, id) => this._demands.set(id, demand)
+      );
+    });
 
-    // Listeners for events indicating if the new demand, review, and submit buttons should be visible/clickable
+    // UI element listeners
     this.addEventListener('demand-validated', () => {});
     this.addEventListener('demand-invalidated', () => {});
     this.addEventListener('menu-done', () => {
@@ -146,23 +141,7 @@ export class BldnPrivRequest extends LitElement {
     this._requestState = RequestState.SENT;
   }
 
-  /** TODO: Move this to one of the lifecycle methods
-   * Filter the list of actions to exclude certain ones
-   * @returns List of not excluded actions
-   */
-  getAllowedActions(): ACTION[] {
-    const exclActions = this.excludedActions
-      .split(',')
-      .map(s => s.toLocaleLowerCase());
-    return Object.values(ACTION).filter(
-      a =>
-        !exclActions.includes(a.toLocaleLowerCase()) &&
-        !a.includes('TRANSPARENCY.')
-    );
-  }
-
   handleReviewClick() {
-    // Need some kind of validation here?
     this._requestState = RequestState.REVIEW;
   }
 
@@ -173,9 +152,6 @@ export class BldnPrivRequest extends LitElement {
   }
 
   render() {
-    // console.log(this._privacyRequest)
-    this._includedActions = this.getAllowedActions();
-
     return html`
       <div id="priv-req-ctr">
         <div class="req-hdr">My Privacy Request</div>
@@ -184,13 +160,12 @@ export class BldnPrivRequest extends LitElement {
           this._privacyRequest.demands,
           d => html`
             <demand-builder
-              .includedActions=${this._includedActions}
+              .includedActions=${this.includedActions}
               .demand=${d}
-              .demandState=${this._requestState === RequestState.REVIEW
+              demand-state=${this._requestState === RequestState.REVIEW
                 ? DemandState.REVIEW
                 : DemandState.SELECT_ACTION}
             ></demand-builder>
-            <!-- TODO: Handle bundling of transparency demands into one -->
           `
         )}
         ${when(
