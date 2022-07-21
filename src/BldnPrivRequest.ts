@@ -40,7 +40,7 @@ export class BldnPrivRequest extends LitElement {
 
   @state() _buttonsClickable: boolean = false;
 
-  private _privacyResponse: PrivacyResponse = {
+  @state() _privacyResponse: PrivacyResponse = {
     responseId: '',
     inResponseTo: '',
     date: '',
@@ -53,8 +53,8 @@ export class BldnPrivRequest extends LitElement {
 
     // Demand update listeners
     this.addEventListener('demand-set', e => {
-      const { id, demand } = (e as CustomEvent).detail;
-      this._demands.set(id, demand);
+      const { demandId, demand } = (e as CustomEvent).detail;
+      this._demands.set(demandId, demand);
     });
     this.addEventListener('demand-delete', e => {
       const { id } = (e as CustomEvent).detail;
@@ -96,6 +96,11 @@ export class BldnPrivRequest extends LitElement {
       /* max-height: 750px; */
     }
 
+    :host button {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+        Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+
     #priv-req-ctr {
       display: grid;
       border: 2px solid #000;
@@ -123,6 +128,19 @@ export class BldnPrivRequest extends LitElement {
       background-color: green;
     }
 
+    #restart-btn {
+      background: #fafafa;
+      border: none;
+      width: fit-content;
+      height: fit-content;
+      text-decoration: underline;
+      margin: 20px 0px;
+    }
+
+    #req-sent-hdr {
+      padding: 40px 0px;
+    }
+
     .req-hdr {
       font-weight: bold;
       font-size: 24px;
@@ -143,8 +161,6 @@ export class BldnPrivRequest extends LitElement {
       background-color: #18a0fb;
       border-width: 0px;
       border-radius: 6px;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-        Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
       font-size: 18px;
       color: #ffffff;
       width: fit-content;
@@ -171,12 +187,17 @@ export class BldnPrivRequest extends LitElement {
       padding-bottom: -50px;
       margin-bottom: -50px;
     }
+
+    .ctr-txt {
+      text-align: center;
+    }
   `;
 
   handleSubmitClick() {
     // Form privacy request
     this._privacyRequest.demands = Array.from(this._demands.values());
     sendPrivacyRequest(this._privacyRequest).then(response => {
+      console.log(response);
       this._privacyResponse = response;
     });
     this._requestState = RequestState.SENT;
@@ -186,57 +207,105 @@ export class BldnPrivRequest extends LitElement {
     this._requestState = RequestState.REVIEW;
   }
 
+  /**
+   * Reset most states
+   */
+  handleRestartClick() {
+    this._requestState = RequestState.BUILD;
+    this._privacyRequest = {
+      demands: [{ action: ACTION.TRANSPARENCY }],
+    };
+    this._demands = new Map<string, Demand>();
+    this._demandBuilders = new Map<string, boolean>([[uuidv4(), false]]);
+    this._showButtons = false;
+    this._buttonsClickable = false;
+    this._privacyResponse = {
+      responseId: '',
+      inResponseTo: '',
+      date: '',
+      system: '',
+      status: '',
+    };
+  }
+
   render() {
     return html`
       <div id="priv-req-ctr">
         <div class="req-hdr">My Privacy Request</div>
         <request-progress-indicator></request-progress-indicator>
-        ${map(
-          this._demandBuilders.entries(),
-          ([id]) => html`
-            <demand-builder
-              id=${id}
-              .includedActions=${this.includedActions}
-              demand-state=${this._requestState === RequestState.REVIEW
-                ? DemandState.REVIEW
-                : DemandState.SELECT_ACTION}
-            ></demand-builder>
+
+        <!-- BUILD AND REVIEW STATE -->
+        ${when(
+          this._requestState === RequestState.BUILD ||
+            this._requestState === RequestState.REVIEW,
+          () => html`
+            ${map(
+              this._demandBuilders.entries(),
+              ([id]) => html`
+                <demand-builder
+                  id=${id}
+                  .includedActions=${this.includedActions}
+                  demand-state=${this._requestState === RequestState.REVIEW
+                    ? DemandState.REVIEW
+                    : DemandState.SELECT_ACTION}
+                ></demand-builder>
+              `
+            )}
+            ${when(
+              this._showButtons,
+              () => html`
+                ${choose(this._requestState, [
+                  [
+                    RequestState.BUILD,
+                    () => html`
+                      <!-- TODO: Uncomment this once multiple demands are supported -->
+                      <!-- <div id="new-dmd-ctr">
+                  <p><strong>I want to add another demand</strong></p>
+                  <button id="new-dmd-btn">+</button>
+                </div> -->
+                      <button
+                        class="nav-btn right-btn"
+                        ?disabled=${!this._buttonsClickable}
+                        @click=${this.handleReviewClick}
+                      >
+                        Continue to submit Privacy Request >
+                      </button>
+                    `,
+                  ],
+                  [
+                    RequestState.REVIEW,
+                    () => html`
+                      <button
+                        class="nav-btn ctr-btn"
+                        ?disabled=${!this._buttonsClickable}
+                        @click=${this.handleSubmitClick}
+                      >
+                        Submit Privacy Request
+                      </button>
+                    `,
+                  ],
+                ])}
+              `
+            )}
           `
         )}
+
+        <!-- Sent state -->
         ${when(
-          this._showButtons,
+          this._requestState === RequestState.SENT,
           () => html`
-            ${choose(this._requestState, [
-              [
-                RequestState.BUILD,
-                () => html`
-                  <!-- TODO: Uncomment this once multiple demands are supported -->
-                  <!-- <div id="new-dmd-ctr">
-                <p><strong>I want to add another demand</strong></p>
-                <button id="new-dmd-btn">+</button>
-              </div> -->
-                  <button
-                    class="nav-btn right-btn"
-                    ?disabled=${!this._buttonsClickable}
-                    @click=${this.handleReviewClick}
-                  >
-                    Continue to submit Privacy Request >
-                  </button>
-                `,
-              ],
-              [
-                RequestState.REVIEW,
-                () => html`
-                  <button
-                    class="nav-btn ctr-btn"
-                    ?disabled=${!this._buttonsClickable}
-                    @click=${this.handleSubmitClick}
-                  >
-                    Submit Privacy Request
-                  </button>
-                `,
-              ],
-            ])}
+            <strong id="req-sent-hdr" class="ctr-txt"
+              >Your privacy request has been sent!</strong
+            >
+            <p class="ctr-txt">You may view the response below.</p>
+            <button
+              id="restart-btn"
+              class="ctr-txt ctr-btn"
+              href=""
+              @click=${this.handleRestartClick}
+            >
+              Submit a new Privacy Request.
+            </button>
           `
         )}
       </div>

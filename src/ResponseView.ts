@@ -56,7 +56,7 @@ export class ResponseView extends LitElement {
         </div>
       `;
     }
-    return html`Error: No action in response`;
+    return html`Error: No requested-action in response`;
   }
 
   render() {
@@ -67,6 +67,8 @@ export class ResponseView extends LitElement {
       this.response.includes && this.response.includes[0]
         ? this.response.includes
         : [this.response];
+
+    console.log(response);
 
     return html`
       <h1>Requested Information</h1>

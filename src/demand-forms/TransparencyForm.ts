@@ -37,19 +37,19 @@ export class TransparencyForm extends LitElement {
 
     this.addEventListener('dropdown-element-add', e => {
       const details = (e as CustomEvent).detail;
-      const newDemandId = uuidv4();
+      const demandId = uuidv4();
       const demand: Demand = {
         action: details.id,
         message: this._extraMessage,
       };
-      this.demands.set(newDemandId, demand);
+      this.demands.set(demandId, demand);
 
       // Fire event to set a single demand
       const setEvent = new CustomEvent('demand-set', {
         bubbles: true,
         composed: true,
         detail: {
-          newDemandId,
+          demandId,
           demand,
         },
       });

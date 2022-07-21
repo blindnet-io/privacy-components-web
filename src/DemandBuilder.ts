@@ -27,9 +27,9 @@ export class DemandBuilder extends LitElement {
   @property({ type: Number, attribute: 'demand-state' })
   demandState: DemandState = DemandState.SELECT_ACTION;
 
-  @state() _selectedAction = ACTION.TRANSPARENCY;
-
   @property({ attribute: false }) demands = new Map<string, Demand>();
+
+  @state() _selectedAction = ACTION.TRANSPARENCY;
 
   @state() _sidebarSelectedIndex = 0;
 
@@ -38,8 +38,8 @@ export class DemandBuilder extends LitElement {
 
     // Demand update listeners
     this.addEventListener('demand-set', e => {
-      const { id, demand } = (e as CustomEvent).detail;
-      this.demands.set(id, demand);
+      const { demandId, demand } = (e as CustomEvent).detail;
+      this.demands.set(demandId, demand);
     });
     this.addEventListener('demand-delete', e => {
       const { id } = (e as CustomEvent).detail;
