@@ -150,6 +150,8 @@ export class BldnPrivRequest extends LitElement {
   `;
 
   handleSubmitClick() {
+    // Form privacy request
+    this._privacyRequest.demands = Array.from(this._demands.values());
     sendPrivacyRequest(this._privacyRequest).then(response => {
       this._privacyResponse = response;
     });
