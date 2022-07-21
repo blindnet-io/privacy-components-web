@@ -11,19 +11,21 @@ import { descriptions } from '../utils/dictionary.js';
 import { DemandState } from '../utils/states.js';
 
 /**
- * Could either do it where this component waits for notice of demand completion button click
- * to send the full demand, or sends a new demand to demand builder each time there is a change
+ * ActionForm for the Transparency PRIV action. Includes a dropdown and text element.
+ *
+ * The transparency form follows a different pattern than the other actions, as each
+ * TRANSPARENCY.* actually represents a completely separate demand, but we display them
+ * all in one DemandBuilder element.
  */
 @customElement('transparency-form')
 export class TransparencyForm extends LitElement {
-  @property({ attribute: false }) demandState: DemandState = DemandState.EDIT;
+  @property({ type: Number, attribute: 'demand-state' })
+  demandState: DemandState = DemandState.EDIT;
 
   @property({ type: Array, attribute: false })
   transparencyActions: TRANSPARENCY_ACTION[] = [];
 
   @property({ attribute: false }) demands = new Map<string, Demand>();
-
-  private _selectedActions = new Set<string>();
 
   private _extraMessage = undefined;
 
@@ -32,11 +34,23 @@ export class TransparencyForm extends LitElement {
 
     this.addEventListener('dropdown-element-add', e => {
       const action = (e as CustomEvent).detail.id;
-      this.demands.set(uuidv4(), {
+      const id = uuidv4();
+      const demand: Demand = {
         action,
         message: this._extraMessage,
+      };
+      this.demands.set(id, demand);
+
+      // Fire event to set a single demand
+      const event = new CustomEvent('demand-set', {
+        bubbles: true,
+        composed: true,
+        detail: {
+          id,
+          demand,
+        },
       });
-      this.updateDemandBuilder();
+      this.dispatchEvent(event);
     });
 
     this.addEventListener('dropdown-element-delete', e => {
@@ -46,10 +60,19 @@ export class TransparencyForm extends LitElement {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         .filter(([_, d]) => d.action === action)
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        .forEach(([s, _]) => {
-          this.demands.delete(s);
+        .forEach(([id, _]) => {
+          this.demands.delete(id);
+
+          // Fire event to delete a single demand
+          const event = new CustomEvent('demand-delete', {
+            bubbles: true,
+            composed: true,
+            detail: {
+              id,
+            },
+          });
+          this.dispatchEvent(event);
         });
-      this.updateDemandBuilder();
     });
 
     this.addEventListener('text-element-change', e => {
@@ -59,7 +82,16 @@ export class TransparencyForm extends LitElement {
         const demand = d;
         demand.message = this._extraMessage;
       });
-      this.updateDemandBuilder();
+
+      // Fire event to set multiple demands
+      const event = new CustomEvent('demand-set-multiple', {
+        bubbles: true,
+        composed: true,
+        detail: {
+          demands: this.demands,
+        },
+      });
+      this.dispatchEvent(event);
     });
   }
 
@@ -71,8 +103,18 @@ export class TransparencyForm extends LitElement {
       align-content: flex-start;
       border: 2px solid #000;
       border-radius: 20px;
-      padding: 40px 60px 60px 60px;
-      margin: 0px 0px 0px 0px;
+      padding: 40px 60px 40px 60px;
+      margin: 0px;
+    }
+
+    :host([demand-state='2']) {
+      padding: 30px;
+      grid-column: 1/5;
+    }
+
+    #dmd-ctr {
+      display: grid;
+      row-gap: 20px;
     }
 
     #dmd-ctr ul {
@@ -83,18 +125,19 @@ export class TransparencyForm extends LitElement {
       margin-bottom: 15px;
     }
 
-    #dmd-heading-1 {
+    #edit-heading-1 {
       font-weight: bold;
       grid-column: 1/2;
       padding: 0px 0px 0px 10px;
     }
 
-    #dmd-heading-2 {
-      grid-column: 1/2;
+    #review-heading-1 {
+      font-weight: bold;
+      /* padding: 0px; */
     }
 
-    #transparency-demand-review-list {
-      grid-column: 1/3;
+    #extra-msg-txt {
+      padding: 0px 0px 0px 20px;
     }
 
     p {
@@ -102,38 +145,34 @@ export class TransparencyForm extends LitElement {
     }
   `;
 
-  updateDemandBuilder() {
-    const event = new CustomEvent('demand-update', {
-      bubbles: true,
-      composed: true,
-      detail: {
-        demands: this.demands,
-      },
-    });
-    this.dispatchEvent(event);
-  }
-
+  /**
+   * Get the edit display for a transparency demand
+   * @returns HTML template for edit display
+   */
   getEditTemplate() {
+    const selectedActions = Object.values(this.demands).map(d => d.action);
     return html`
-      <p id="dmd-heading-1"><b>Details of my TRANSPARENCY Demand</b></p>
+      <p id="edit-heading-1"><b>Details of my TRANSPARENCY Demand</b></p>
       <demand-builder-dropdown-element
         .choices=${this.transparencyActions.map(a => ({
           id: a,
           description: descriptions[a],
+          checked: selectedActions.includes(a),
         }))}
       ></demand-builder-dropdown-element>
       <demand-builder-text-element></demand-builder-text-element>
     `;
   }
 
+  /**
+   * Get the review display for a transparency demand
+   * @returns HTML template for review display
+   */
   getReviewTemplate() {
     return html`
       <div id="dmd-ctr">
-        <p id="dmd-heading-1">
-          TRANSPARENCY demand
-          <!-- FIXME: Should reference dictionary/do translation here instead -->
-        </p>
-        <p id="transparency-demand-review-heading-2">I want to know:</p>
+        <p id="review-hd-1"><b>TRANSPARENCY demand</b></p>
+        <p>I want to know:</p>
         <ul id="transparency-demand-review-list">
           ${Array.from(this.demands.values()).map(
             (a: Demand) => html` <li>${descriptions[a.action]}</li> `
@@ -141,10 +180,8 @@ export class TransparencyForm extends LitElement {
         </ul>
         ${this._extraMessage
           ? html`
-              <p id="transparency-demand-review-heading-2">
-                Plus additional info:
-              </p>
-              ${this._extraMessage}
+              <p>Plus additional info:</p>
+              <p id="extra-msg-txt"><i>${this._extraMessage}</i></p>
             `
           : null}
       </div>
