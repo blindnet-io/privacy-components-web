@@ -28,38 +28,52 @@ export class TransparencyForm extends LitElement {
 
   @property({ attribute: false }) demands = new Map<string, Demand>();
 
+  @property({ attribute: false }) demandBuilderId: string = '';
+
   private _extraMessage = undefined;
 
   constructor() {
     super();
 
     this.addEventListener('dropdown-element-add', e => {
-      const action = (e as CustomEvent).detail.id;
-      const id = uuidv4();
+      const details = (e as CustomEvent).detail;
+      const newDemandId = uuidv4();
       const demand: Demand = {
-        action,
+        action: details.id,
         message: this._extraMessage,
       };
-      this.demands.set(id, demand);
+      this.demands.set(newDemandId, demand);
 
       // Fire event to set a single demand
-      const event = new CustomEvent('demand-set', {
+      const setEvent = new CustomEvent('demand-set', {
         bubbles: true,
         composed: true,
         detail: {
-          id,
+          newDemandId,
           demand,
         },
       });
-      this.dispatchEvent(event);
+      this.dispatchEvent(setEvent);
+
+      // Fire event indicating the demand builder is in a valid state once one choice is selected
+      if (details['first-selection']) {
+        const dmdValidEvent = new CustomEvent('demand-validated', {
+          bubbles: true,
+          composed: true,
+          detail: {
+            demandBuilderId: this.demandBuilderId,
+          },
+        });
+        this.dispatchEvent(dmdValidEvent);
+      }
     });
 
     this.addEventListener('dropdown-element-delete', e => {
-      const action = (e as CustomEvent).detail.id;
+      const details = (e as CustomEvent).detail;
       // Delete demands for the unchecked action
       Array.from(this.demands)
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        .filter(([_, d]) => d.action === action)
+        .filter(([_, d]) => d.action === details.action)
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         .forEach(([id, _]) => {
           this.demands.delete(id);
@@ -74,6 +88,18 @@ export class TransparencyForm extends LitElement {
           });
           this.dispatchEvent(event);
         });
+
+      // Fire event indicating the demand builder for this form is in an invalid state
+      if (details['none-selected']) {
+        const event = new CustomEvent('demand-invalidated', {
+          bubbles: true,
+          composed: true,
+          detail: {
+            demandBuilderId: this.demandBuilderId,
+          },
+        });
+        this.dispatchEvent(event);
+      }
     });
 
     this.addEventListener('text-element-change', e => {

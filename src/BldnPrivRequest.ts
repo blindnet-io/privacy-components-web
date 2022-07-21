@@ -3,6 +3,7 @@ import { property, state } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 import { map } from 'lit/directives/map.js';
 import { choose } from 'lit/directives/choose.js';
+import { v4 as uuidv4 } from 'uuid';
 
 import './DemandBuilder.js';
 import './RequestProgressIndicator.js';
@@ -31,15 +32,21 @@ export class BldnPrivRequest extends LitElement {
 
   @state() _demands: Map<string, Demand> = new Map<string, Demand>();
 
-  @state() _privacyResponse: PrivacyResponse = {
+  @state() _demandBuilders: Map<string, boolean> = new Map<string, boolean>([
+    [uuidv4(), false],
+  ]);
+
+  @state() _showButtons: boolean = false;
+
+  @state() _buttonsClickable: boolean = false;
+
+  private _privacyResponse: PrivacyResponse = {
     responseId: '',
     inResponseTo: '',
     date: '',
     system: '',
     status: '',
   };
-
-  @state() _showButtons: boolean = false;
 
   constructor() {
     super();
@@ -60,8 +67,20 @@ export class BldnPrivRequest extends LitElement {
     });
 
     // UI element listeners
-    this.addEventListener('demand-validated', () => {});
-    this.addEventListener('demand-invalidated', () => {});
+    this.addEventListener('demand-validated', e => {
+      const { demandBuilderId } = (e as CustomEvent).detail;
+      this._demandBuilders.set(demandBuilderId, true);
+      this._buttonsClickable = Array.from(this._demandBuilders.values()).every(
+        b => b === true
+      );
+    });
+    this.addEventListener('demand-invalidated', e => {
+      const { demandBuilderId } = (e as CustomEvent).detail;
+      this._demandBuilders.set(demandBuilderId, false);
+      this._buttonsClickable = Array.from(this._demandBuilders.values()).every(
+        b => b === true
+      );
+    });
     this.addEventListener('menu-done', () => {
       this._showButtons = true;
     });
@@ -133,6 +152,11 @@ export class BldnPrivRequest extends LitElement {
       padding: 0px 25px;
     }
 
+    button:disabled {
+      /* opacity: 0.8; */
+      background-color: #d9d9d9;
+    }
+
     .ctr-btn {
       justify-self: center;
     }
@@ -162,23 +186,17 @@ export class BldnPrivRequest extends LitElement {
     this._requestState = RequestState.REVIEW;
   }
 
-  handleNewDemandClick() {
-    this._privacyRequest.demands.push({
-      action: ACTION.TRANSPARENCY,
-    });
-  }
-
   render() {
     return html`
       <div id="priv-req-ctr">
         <div class="req-hdr">My Privacy Request</div>
         <request-progress-indicator></request-progress-indicator>
         ${map(
-          this._privacyRequest.demands,
-          d => html`
+          this._demandBuilders.entries(),
+          ([id]) => html`
             <demand-builder
+              id=${id}
               .includedActions=${this.includedActions}
-              .demand=${d}
               demand-state=${this._requestState === RequestState.REVIEW
                 ? DemandState.REVIEW
                 : DemandState.SELECT_ACTION}
@@ -199,6 +217,7 @@ export class BldnPrivRequest extends LitElement {
               </div> -->
                   <button
                     class="nav-btn right-btn"
+                    ?disabled=${!this._buttonsClickable}
                     @click=${this.handleReviewClick}
                   >
                     Continue to submit Privacy Request >
@@ -210,6 +229,7 @@ export class BldnPrivRequest extends LitElement {
                 () => html`
                   <button
                     class="nav-btn ctr-btn"
+                    ?disabled=${!this._buttonsClickable}
                     @click=${this.handleSubmitClick}
                   >
                     Submit Privacy Request
