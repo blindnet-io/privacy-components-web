@@ -60,15 +60,11 @@ export class ResponseView extends LitElement {
   }
 
   render() {
-    console.log(this.response);
-
     // Extract array of one or more privacy responses
     const response: PrivacyResponse[] =
       this.response.includes && this.response.includes[0]
         ? this.response.includes
         : [this.response];
-
-    console.log(response);
 
     return html`
       <h1>Requested Information</h1>
