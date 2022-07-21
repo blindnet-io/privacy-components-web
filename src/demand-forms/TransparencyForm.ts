@@ -73,11 +73,10 @@ export class TransparencyForm extends LitElement {
       // Delete demands for the unchecked action
       Array.from(this.demands)
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        .filter(([_, d]) => d.action === details.action)
+        .filter(([_, d]) => d.action === details.id)
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         .forEach(([id, _]) => {
           this.demands.delete(id);
-
           // Fire event to delete a single demand
           const event = new CustomEvent('demand-delete', {
             bubbles: true,
