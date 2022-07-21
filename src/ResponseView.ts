@@ -5,6 +5,10 @@ import { descriptions } from './utils/dictionary.js';
 
 // Question - are there types of responses other than transparency that give an immediate response?
 // just wondering how generic this component needs to be.
+
+/**
+ * View the response to a privacy request.
+ */
 @customElement('response-view')
 export class ResponseView extends LitElement {
   @property({ attribute: false }) response: PrivacyResponse = {

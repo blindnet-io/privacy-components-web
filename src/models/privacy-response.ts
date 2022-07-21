@@ -1,7 +1,5 @@
 import { ACTION } from './priv-terms.js';
 
-// TODO: Export open API to interface and use here
-
 export interface PrivacyResponse {
   responseId: string;
   inResponseTo: string;

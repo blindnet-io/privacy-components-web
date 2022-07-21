@@ -3,14 +3,17 @@ import { customElement, property } from 'lit/decorators.js';
 
 @customElement('action-item')
 /**
- * Button element representing a single demand request action
+ * Button element representing a single demand action. Used in the action menu.
  */
 export class ActionItem extends LitElement {
+  // Name of the action, displayed in bold
   @property({ type: String, attribute: 'action-name' }) actionName = '';
 
+  // Description of the action, displayed after the actionName
   @property({ type: String, attribute: 'action-description' })
   actionDescription = '';
 
+  // Boolean mapping to the disabled attribute of the HTMLButtonElement
   @property({ type: Boolean }) disabled: boolean = false;
 
   static styles = css`

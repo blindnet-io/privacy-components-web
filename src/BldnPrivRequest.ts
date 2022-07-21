@@ -15,6 +15,10 @@ import { PrivacyResponse } from './models/privacy-response.js';
 import { RequestState, DemandState } from './utils/states.js';
 import { Demand } from './models/demand.js';
 
+/**
+ * Top level component encapsulating a single PrivacyRequest. Contains one or
+ * more DemandBuilder elements, each for a single demand action type.
+ */
 export class BldnPrivRequest extends LitElement {
   @property({ type: Array, attribute: 'included-actions' }) includedActions =
     Object.values(ACTION).filter(a => !a.includes('TRANSPARENCY.'));
@@ -70,7 +74,6 @@ export class BldnPrivRequest extends LitElement {
         Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
       font-size: 16;
 
-      /* Variables? */
       max-width: 1350px;
       /* max-height: 750px; */
     }
@@ -102,12 +105,10 @@ export class BldnPrivRequest extends LitElement {
     }
 
     .req-hdr {
-      /* color: var(--dmnd-actions-menu-title-color, #000); */
       font-weight: bold;
       font-size: 24px;
       text-align: center;
       padding-bottom: 20px;
-      /* background-color: blue; */
     }
 
     .new-dmd-btn {
@@ -137,7 +138,6 @@ export class BldnPrivRequest extends LitElement {
     sendPrivacyRequest(this._privacyRequest).then(response => {
       this._privacyResponse = response;
     });
-    // TODO: Validate request success here
     this._requestState = RequestState.SENT;
   }
 

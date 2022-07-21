@@ -1,6 +1,12 @@
 import { PrivacyRequest } from '../models/privacy-request.js';
 import { PrivacyResponse } from '../models/privacy-response.js';
 
+/**
+ * Send a PrivacyRequest to the privacy-request API
+ * @param {PrivacyRequest} request Request body to send
+ * @param {boolean} mock Flag indicating if the mock endpoint should be used
+ * @returns
+ */
 export async function sendPrivacyRequest(
   request: PrivacyRequest,
   mock: boolean = true
@@ -21,11 +27,4 @@ export async function sendPrivacyRequest(
     }
     return response.json() as Promise<PrivacyResponse>;
   });
-  // .then(response => response.json())
-  // .then(data => {
-  //   console.log('Success:', data);
-  // })
-  // .catch((error) => {
-  //   console.error('Error:', error);
-  // });
 }

@@ -1,3 +1,7 @@
+/**
+ * Mapping of PRIV Actions to corresponding descriptions.
+ */
+
 export const descriptions = {
   ACCESS: 'Access my data',
   DELETE: 'Have my data deleted',

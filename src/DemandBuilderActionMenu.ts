@@ -7,12 +7,14 @@ import { descriptions } from './utils/dictionary.js';
 import { enabledActions } from './utils/conf.js';
 
 /**
- * Grid menu of demand action types
+ * Menu of clickable action types
  */
 @customElement('demand-builder-action-menu')
 export class DemandBuilerActionMenu extends LitElement {
-  @property({ type: String }) description = 'Type of demand I want to submit:';
+  // Text displayed above menu
+  @property({ type: String }) prompt = 'Type of demand I want to submit:';
 
+  // Actions to be displayed in the menu, each corresponding to an ActionItem.
   @property({ attribute: false }) includedActions: ACTION[] = [];
 
   static styles = css`
@@ -27,7 +29,7 @@ export class DemandBuilerActionMenu extends LitElement {
       padding: 30px 40px 10px 40px;
     }
 
-    .description-heading {
+    .prompt-heading {
       font-size: 18px;
       text-align: left;
       padding: 0px 0px 0px 10px;
@@ -36,7 +38,7 @@ export class DemandBuilerActionMenu extends LitElement {
 
   render() {
     return html`
-      <div class="description-heading">${this.description}</div>
+      <div class="prompt-heading">${this.prompt}</div>
       <div class="actions-container">
         ${this.includedActions.map(
           a =>

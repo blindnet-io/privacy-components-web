@@ -2,16 +2,26 @@ import { html, css, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { ACTION } from './models/priv-terms.js';
 
+/**
+ * A single item on the DemandBuilder sidebar.
+ */
 @customElement('demand-builder-sidebar-item')
 export class DemandBuilderSidebarItem extends LitElement {
+  // Checked attribute mapping to the checked attribute of the HTMLInputElement
+  // for this sidebar item
   @property({ type: Boolean }) checked: boolean = false;
 
+  // Disabled attribute mapping to the disabled attribute of the HTMLButtonElement and
+  // HTMLInputElement for this sidebar item
   @property({ type: Boolean }) disabled: boolean = false;
 
+  // Unique identifier for this sidebar item
   @property({}) id: ACTION = ACTION.ACCESS;
 
+  // Title string for this sidebar item
   @property({ type: String }) title: string = '';
 
+  // Description string for this sidebar item
   @property({ type: String }) description: string = '';
 
   static styles = css`
