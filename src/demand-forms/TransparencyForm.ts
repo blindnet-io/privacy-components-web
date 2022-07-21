@@ -5,10 +5,11 @@ import { v4 as uuidv4 } from 'uuid';
 
 import '../DemandBuilderDropdownElement.js';
 import '../DemandBuilderTextElement.js';
-import { TRANSPARENCY_ACTION } from '../models/priv-terms.js';
+import { ACTION } from '../models/priv-terms.js';
 import { Demand } from '../models/demand.js';
 import { descriptions } from '../utils/dictionary.js';
 import { DemandState } from '../utils/states.js';
+import { enabledActions } from '../utils/conf.js';
 
 /**
  * ActionForm for the Transparency PRIV action. Includes a dropdown and text element.
@@ -23,7 +24,7 @@ export class TransparencyForm extends LitElement {
   demandState: DemandState = DemandState.EDIT;
 
   @property({ type: Array, attribute: false })
-  transparencyActions: TRANSPARENCY_ACTION[] = [];
+  transparencyActions: ACTION[] = [];
 
   @property({ attribute: false }) demands = new Map<string, Demand>();
 
@@ -158,6 +159,7 @@ export class TransparencyForm extends LitElement {
           id: a,
           description: descriptions[a],
           checked: selectedActions.includes(a),
+          disabled: !enabledActions.get(a) ?? true,
         }))}
       ></demand-builder-dropdown-element>
       <demand-builder-text-element></demand-builder-text-element>

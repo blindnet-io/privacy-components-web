@@ -15,6 +15,7 @@ export class DemandBuilderDropdownElement extends LitElement {
     id: string;
     description: string;
     checked: boolean;
+    disabled: boolean;
   }[] = [];
 
   // Boolean indicating if the choices should be displayed initially
@@ -123,6 +124,7 @@ export class DemandBuilderDropdownElement extends LitElement {
                 type="checkbox"
                 @click=${this.handleCheckboxClick}
                 ?checked=${c.checked}
+                ?disabled=${c.disabled}
               />
               <label>${c.description}</label>
             </div>

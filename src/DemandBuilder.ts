@@ -147,7 +147,9 @@ export class DemandBuilder extends LitElement {
           ACTION.TRANSPARENCY,
           () => html`<transparency-form
             demand-state=${this.demandState}
-            .transparencyActions=${Object.values(TRANSPARENCY_ACTION)}
+            .transparencyActions=${Object.values(ACTION).filter(a =>
+              a.includes('TRANSPARENCY.')
+            )}
             .demands=${this.demands}
           ></transparency-form>`,
         ],
