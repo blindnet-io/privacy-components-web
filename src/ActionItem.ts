@@ -25,7 +25,7 @@ export class ActionItem extends LitElement {
     }
 
     .action-button:not([disabled]):hover {
-      border: 2px solid #dc4c87;
+      border: 2px solid #18a0fb;
       overflow: visible;
     }
 
