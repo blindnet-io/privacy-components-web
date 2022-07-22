@@ -7,7 +7,7 @@ import { customElement, property } from 'lit/decorators.js';
 @customElement('demand-builder-dropdown-element')
 export class DemandBuilderDropdownElement extends LitElement {
   // String displayed at the top of the element, in both open and closed state
-  @property({ type: String }) prompt = 'What would you like to know?';
+  @property({ type: String }) prompt = 'I want to know:';
 
   // List of choices to be displayed with a unique identifier, description string (displayed),
   // and checked boolean indicating if the option should be checked initially
