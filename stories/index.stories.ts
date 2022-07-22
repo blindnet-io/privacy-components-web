@@ -4,12 +4,13 @@ import '../src/bldn-priv-request.js';
 export default {
   title: 'BldnPrivRequest',
   component: 'bldn-priv-request',
-  // argTypes: {
-  //   includeActions: {
-  //     control: 'text',
-  //     description: 'Comma-seperated list of actions to include in the component.',
-  //   },
-  // },
+  argTypes: {
+    actions: {
+      control: 'text',
+      description:
+        'JSON list of [actions](https://github.com/blindnet-io/product-management/blob/main/refs/schemas/priv/json-schema/priv-terms.schema.json) to include in the component.',
+    },
+  },
 };
 
 interface Story<T> {
@@ -19,18 +20,16 @@ interface Story<T> {
 }
 
 interface ArgTypes {
-  includeActions?: string;
+  actions?: string;
 }
 
-const Template: Story<ArgTypes> = ({ includeActions }: ArgTypes) => html`
-  <bldn-priv-request
-    .included-actions="${includeActions || ''}"
-  ></bldn-priv-request>
+const Template: Story<ArgTypes> = ({ actions }: ArgTypes) => html`
+  <bldn-priv-request actions="${actions || ''}"></bldn-priv-request>
 `;
 
 export const Regular = Template.bind({});
 
-// export const CustomIncludeActions = Template.bind({});
-// CustomIncludeActions.args = {
-//   includeActions: '[access]',
-// };
+export const CustomActions = Template.bind({});
+CustomActions.args = {
+  actions: '["ACCESS","DELETE","TRANSPARENCY"]',
+};
