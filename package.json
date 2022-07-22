@@ -27,12 +27,14 @@
     "bundle": "rimraf build && copyfiles -u 1 -a -E \"storybook-static/*\" \"storybook-static/**/*\" build && copyfiles -a -E \"demo/*\" \"demo/**/*\" \"dist/*\" \"dist/**/*\" build"
   },
   "dependencies": {
-    "lit": "^2.0.2"
+    "lit": "^2.0.2",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@custom-elements-manifest/analyzer": "^0.4.17",
     "@open-wc/eslint-config": "^4.3.0",
     "@open-wc/testing": "next",
+    "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
     "@web/dev-server": "^0.1.28",
@@ -61,6 +63,7 @@
     ],
     "rules": {
       "no-unused-vars": "off",
+      "class-methods-use-this": "off",
       "@typescript-eslint/no-unused-vars": [
         "error"
       ],
@@ -71,6 +74,10 @@
         {
           "ignorePackages": true
         }
+      ],
+      "no-shadow": "off",
+      "@typescript-eslint/no-shadow": [
+        "error"
       ]
     }
   },

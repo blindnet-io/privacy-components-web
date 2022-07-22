@@ -5,9 +5,11 @@ export default {
   title: 'BldnPrivRequest',
   component: 'bldn-priv-request',
   argTypes: {
-    title: { control: 'text' },
-    counter: { control: 'number' },
-    textColor: { control: 'color' },
+    actions: {
+      control: 'text',
+      description:
+        'JSON list of [actions](https://github.com/blindnet-io/product-management/blob/main/refs/schemas/priv/json-schema/priv-terms.schema.json) to include in the component.',
+    },
   },
 };
 
@@ -18,43 +20,16 @@ interface Story<T> {
 }
 
 interface ArgTypes {
-  title?: string;
-  counter?: number;
-  textColor?: string;
-  slot?: TemplateResult;
+  actions?: string;
 }
 
-const Template: Story<ArgTypes> = ({
-  title = 'Hello world',
-  counter = 5,
-  textColor,
-  slot,
-}: ArgTypes) => html`
-  <bldn-priv-request
-    style="--bldn-priv-request-text-color: ${textColor || 'black'}"
-    .title=${title}
-    .counter=${counter}
-  >
-    ${slot}
-  </bldn-priv-request>
+const Template: Story<ArgTypes> = ({ actions }: ArgTypes) => html`
+  <bldn-priv-request actions="${actions || ''}"></bldn-priv-request>
 `;
 
 export const Regular = Template.bind({});
 
-export const CustomTitle = Template.bind({});
-CustomTitle.args = {
-  title: 'My title',
-};
-
-export const CustomCounter = Template.bind({});
-CustomCounter.args = {
-  counter: 123456,
-};
-
-export const SlottedContent = Template.bind({});
-SlottedContent.args = {
-  slot: html`<p>Slotted content</p>`,
-};
-SlottedContent.argTypes = {
-  slot: { table: { disable: true } },
+export const CustomActions = Template.bind({});
+CustomActions.args = {
+  actions: '["ACCESS","DELETE","TRANSPARENCY"]',
 };
