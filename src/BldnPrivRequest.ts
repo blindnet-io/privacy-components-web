@@ -1,4 +1,4 @@
-import { html, css, LitElement } from 'lit';
+import { html, css, LitElement, PropertyValueMap } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 import { map } from 'lit/directives/map.js';
@@ -15,32 +15,40 @@ import { sendPrivacyRequest } from './utils/PrivacyRequestApi.js';
 import { PrivacyResponse } from './models/privacy-response.js';
 import { RequestState, DemandState } from './utils/states.js';
 import { Demand } from './models/demand.js';
+import { getDefaultActions } from './utils/utils.js';
 
 /**
  * Top level component encapsulating a single PrivacyRequest. Contains one or
  * more DemandBuilder elements, each for a single demand action type.
  */
 export class BldnPrivRequest extends LitElement {
-  // JSON string of actions to include from all valid actions
-  @property({ type: Array, attribute: 'included-actions' }) includedActions =
-    Object.values(ACTION).filter(a => !a.includes('TRANSPARENCY.'));
+  // JSON string of actions to display
+  @property({ type: String, attribute: 'actions' }) actions = '';
 
+  // Array of actions, given by actions attribute if a valid list was passed, otherwise includes the 9 defaults
+  @state() _includedActions: ACTION[] = getDefaultActions();
+
+  // State of the whole privacy request
   @state() _requestState: RequestState = RequestState.BUILD;
 
-  @state() _privacyRequest: PrivacyRequest = {
-    demands: [{ action: ACTION.TRANSPARENCY }],
-  };
+  // Privacy request object, empty until some demands are added
+  @state() _privacyRequest: PrivacyRequest = { demands: [] };
 
+  // Map of ids to their specific demands
   @state() _demands: Map<string, Demand> = new Map<string, Demand>();
 
+  // Map of ids to demand builder UI components
   @state() _demandBuilders: Map<string, boolean> = new Map<string, boolean>([
     [uuidv4(), false],
   ]);
 
+  // Boolean indicating if review/complete buttons should be displayed
   @state() _showButtons: boolean = false;
 
+  // Bolean indicating if review/complete buttons should be clickable
   @state() _buttonsClickable: boolean = false;
 
+  // Response to our request
   @state() _privacyResponse: PrivacyResponse = {
     responseId: '',
     inResponseTo: '',
@@ -209,6 +217,9 @@ export class BldnPrivRequest extends LitElement {
     this._requestState = RequestState.SENT;
   }
 
+  /**
+   * Switch request to the review state, causing all demand builders to switch
+   */
   handleReviewClick() {
     this._requestState = RequestState.REVIEW;
   }
@@ -234,6 +245,28 @@ export class BldnPrivRequest extends LitElement {
     };
   }
 
+  // Hook into willUpdate lifecycle method to set the included actions state if a valid list of actions is passed as an attribute
+  protected willUpdate(
+    _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
+  ): void {
+    if (_changedProperties.has('actions') && this.actions) {
+      try {
+        const actionsList = (
+          Array.from(JSON.parse(this.actions)) as string[]
+        ).map(a => a.toLocaleLowerCase());
+        const validActionsList = getDefaultActions().filter(a =>
+          actionsList.includes(a.toLocaleLowerCase())
+        );
+        // If a valid list of actions has been passed, use it
+        if (validActionsList.length > 0) {
+          this._includedActions = validActionsList;
+        }
+      } catch {
+        this._includedActions = getDefaultActions();
+      }
+    }
+  }
+
   render() {
     return html`
       <div id="priv-req-ctr">
@@ -250,7 +283,7 @@ export class BldnPrivRequest extends LitElement {
               ([id]) => html`
                 <demand-builder
                   id=${id}
-                  .includedActions=${this.includedActions}
+                  .includedActions=${this._includedActions}
                   demand-state=${this._requestState === RequestState.REVIEW
                     ? DemandState.REVIEW
                     : DemandState.SELECT_ACTION}

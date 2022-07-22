@@ -3,7 +3,7 @@ import { html, css, LitElement, PropertyValueMap } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
 
-import { ACTION, TRANSPARENCY_ACTION } from './models/priv-terms.js';
+import { ACTION } from './models/priv-terms.js';
 import { enabledActions } from './utils/conf.js';
 import { Demand } from './models/demand.js';
 import { descriptions } from './utils/dictionary.js';
