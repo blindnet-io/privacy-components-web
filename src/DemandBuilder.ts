@@ -77,33 +77,7 @@ export class DemandBuilder extends LitElement {
 
     #sidebar {
       display: grid;
-    }
-
-    .sidebar-element-ctr {
-      display: flex;
-      align-items: center;
-      height: 100px;
-      z-index: 1;
-    }
-
-    .sidebar-element {
-      display: flex;
-      align-items: flex-start;
-      text-align: left;
-      padding: 10px 20px 10px 40px;
-    }
-
-    .sidebar-radio {
-      margin: 5px 7.5px 0px 0px;
-    }
-
-    .sidebar-border {
-      border: 2px solid #000;
-      border-right-color: #fafafa;
-      border-right-width: 3px;
-      border-top-left-radius: 15px;
-      border-bottom-left-radius: 15px;
-      margin-right: -2px;
+      height: fit-content;
     }
 
     p {

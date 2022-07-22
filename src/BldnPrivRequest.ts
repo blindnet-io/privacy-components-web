@@ -108,6 +108,7 @@ export class BldnPrivRequest extends LitElement {
         Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
       font-size: 16;
       max-width: 1350px;
+      background-color: white;
       /* max-height: 750px; */
     }
 
@@ -184,8 +185,8 @@ export class BldnPrivRequest extends LitElement {
     }
 
     button:disabled {
-      /* opacity: 0.8; */
-      background-color: #d9d9d9;
+      /* background-color: #d9d9d9; */
+      background-color: #a9d1ff;
     }
 
     .ctr-btn {
@@ -307,7 +308,7 @@ export class BldnPrivRequest extends LitElement {
                         ?disabled=${!this._buttonsClickable}
                         @click=${this.handleReviewClick}
                       >
-                        Continue to submit Privacy Request >
+                        Continue to submit Privacy Request
                       </button>
                     `,
                   ],

@@ -20,23 +20,36 @@ export class ActionItem extends LitElement {
     :host button {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
         Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-      font-size: 16px;
+      /* font-size: 16px; */
+      font-size: 1rem;
     }
 
     .action-button:not([disabled]):hover {
       border: 2px solid #dc4c87;
+      overflow: visible;
     }
 
     .action-button {
       border-radius: 15px;
       background-color: #fafafa;
-      padding: 0px 40px;
+      padding: 10px 40px;
       height: 120px;
+      /* max-height: 120px; */
       width: 100%;
+      max-width: 400px;
       text-align: left;
-
       transition: 0.5s;
       -webkit-transition: 0.5s;
+
+      overflow: hidden;
+      /* white-space: nowrap; */
+      /* display: block; */
+      text-overflow: ellipsis;
+    }
+
+    .btn-txt {
+      /* text-overflow: ellipsis; */
+      overflow: hidden;
     }
 
     .bolder {
@@ -63,6 +76,7 @@ export class ActionItem extends LitElement {
         ?disabled=${this.disabled}
       >
         <strong>${this.actionName}:</strong> ${this.actionDescription}
+        <!-- <span class="btn-txt"></span> -->
       </button>
     `;
   }

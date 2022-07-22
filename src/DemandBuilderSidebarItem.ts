@@ -26,13 +26,26 @@ export class DemandBuilderSidebarItem extends LitElement {
 
   static styles = css`
     :host {
-      height: 100px;
+      min-height: 100px;
     }
 
     :host button {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
         Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
       font-size: 16px;
+      background-color: white;
+    }
+
+    :host([checked]) .sidebar-btn {
+      border: 2px solid #000;
+      border-top-left-radius: 20px;
+      border-bottom-left-radius: 20px;
+      border-right: 2px solid white;
+    }
+
+    :host([checked]) {
+      z-index: 1;
+      margin-right: -2px;
     }
 
     .sidebar-btn {
@@ -42,7 +55,7 @@ export class DemandBuilderSidebarItem extends LitElement {
       height: 100%;
       width: 100%;
       border: none;
-      background-color: #fafafa;
+      /* background-color: #fafafa; */
       text-align: left;
     }
 
