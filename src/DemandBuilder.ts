@@ -9,7 +9,6 @@ import { Demand } from './models/demand.js';
 import { descriptions } from './utils/dictionary.js';
 import { DemandState } from './utils/states.js';
 import './DemandBuilderActionMenu.js';
-import './DemandBuilderSidebar.js';
 import './DemandBuilderDropdownElement.js';
 import './DemandBuilderTextElement.js';
 import './demand-forms/TransparencyForm.js';
