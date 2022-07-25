@@ -1,0 +1,1 @@
+{"version":3,"file":"privacy-request.js","sourceRoot":"","sources":["../../../src/models/privacy-request.ts"],"names":[],"mappings":"","sourcesContent":["import { Demand } from './demand.js';\n\nexport interface PrivacyRequest {\n  demands: Demand[];\n}\n"]}

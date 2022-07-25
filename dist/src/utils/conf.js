@@ -1,0 +1,25 @@
+import { ACTION } from '../models/priv-terms.js';
+export const enabledActions = new Map([
+    [ACTION.ACCESS, false],
+    [ACTION.DELETE, false],
+    [ACTION.MODIFY, false],
+    [ACTION.OBJECT, false],
+    [ACTION.PORTABILITY, false],
+    [ACTION.RESTRICT, false],
+    [ACTION.REVOKE, false],
+    [ACTION.TRANSPARENCY, true],
+    [ACTION.TRANSPARENCY_DATA_CATEGORIES, false],
+    [ACTION.TRANSPARENCY_DPO, true],
+    [ACTION.TRANSPARENCY_KNOWN, false],
+    [ACTION.TRANSPARENCY_LEGAL_BASES, false],
+    [ACTION.TRANSPARENCY_ORGANIZATION, true],
+    [ACTION.TRANSPARENCY_POLICY, true],
+    [ACTION.TRANSPARENCY_PROCESSING_CATEGORIES, false],
+    [ACTION.TRANSPARENCY_PURPOSE, false],
+    [ACTION.TRANSPARENCY_PROVENANCE, false],
+    [ACTION.TRANSPARENCY_RETENTION, true],
+    [ACTION.TRANSPARENCY_WHERE, true],
+    [ACTION.TRANSPARENCY_WHO, true],
+    [ACTION.OTHER_DEMAND, false],
+]);
+//# sourceMappingURL=conf.js.map

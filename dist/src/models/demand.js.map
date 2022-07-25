@@ -1,0 +1,1 @@
+{"version":3,"file":"demand.js","sourceRoot":"","sources":["../../../src/models/demand.ts"],"names":[],"mappings":"","sourcesContent":["import { ACTION } from './priv-terms.js';\n\nexport interface Demand {\n  action: ACTION;\n  message?: string;\n}\n"]}
