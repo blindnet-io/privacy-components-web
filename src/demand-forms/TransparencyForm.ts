@@ -2,6 +2,7 @@ import { html, css, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
 import { v4 as uuidv4 } from 'uuid';
+import { msg } from '@lit/localize';
 
 import '../DemandBuilderDropdownElement.js';
 import '../DemandBuilderTextElement.js';
@@ -178,7 +179,9 @@ export class TransparencyForm extends LitElement {
   getEditTemplate() {
     const selectedActions = Object.values(this.demands).map(d => d.action);
     return html`
-      <p id="edit-heading-1"><b>Details of my TRANSPARENCY Demand</b></p>
+      <p id="edit-heading-1">
+        <b>${msg('Details of my TRANSPARENCY Demand')}</b>
+      </p>
       <demand-builder-dropdown-element
         .choices=${this.transparencyActions.map(a => ({
           id: a,
@@ -198,8 +201,8 @@ export class TransparencyForm extends LitElement {
   getReviewTemplate() {
     return html`
       <div id="dmd-ctr">
-        <p id="review-hd-1"><b>TRANSPARENCY demand</b></p>
-        <p>I want to know:</p>
+        <p id="review-hd-1"><b>${msg('TRANSPARENCY demand')}</b></p>
+        <p>${msg('I want to know:')}</p>
         <ul id="transparency-demand-review-list">
           ${Array.from(this.demands.values()).map(
             (a: Demand) => html` <li>${descriptions[a.action]}</li> `
@@ -207,7 +210,7 @@ export class TransparencyForm extends LitElement {
         </ul>
         ${this._extraMessage
           ? html`
-              <p>Plus additional info:</p>
+              <p>${msg('Plus additional info:')}</p>
               <p id="extra-msg-txt"><i>${this._extraMessage}</i></p>
             `
           : null}
