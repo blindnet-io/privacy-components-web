@@ -2,6 +2,7 @@
 import { html, css, LitElement, PropertyValueMap } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
+import { msg } from '@lit/localize';
 
 import { ACTION } from './models/priv-terms.js';
 import { enabledActions } from './utils/conf.js';
@@ -9,7 +10,6 @@ import { Demand } from './models/demand.js';
 import { descriptions } from './utils/dictionary.js';
 import { DemandState } from './utils/states.js';
 import './DemandBuilderActionMenu.js';
-import './DemandBuilderSidebar.js';
 import './DemandBuilderDropdownElement.js';
 import './DemandBuilderTextElement.js';
 import './demand-forms/TransparencyForm.js';
@@ -94,7 +94,7 @@ export class DemandBuilder extends LitElement {
   getSidebarTemplate() {
     return html`
       <div id="sidebar">
-        <p id="sidebar-title">Type of demand:</p>
+        <p id="sidebar-title">${msg('Type of demand:')}</p>
         ${this.includedActions.map(
           (a, i) => html`
             <demand-builder-sidebar-item
