@@ -3,7 +3,7 @@ import { property, state } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 import { map } from 'lit/directives/map.js';
 import { choose } from 'lit/directives/choose.js';
-import { msg } from '@lit/localize';
+import { localized, msg } from '@lit/localize';
 import { v4 as uuidv4 } from 'uuid';
 
 import './DemandBuilder.js';
@@ -17,11 +17,13 @@ import { PrivacyResponse } from './models/privacy-response.js';
 import { RequestState, DemandState } from './utils/states.js';
 import { Demand } from './models/demand.js';
 import { getDefaultActions } from './utils/utils.js';
+import { setLocaleToFrench } from './localization.js';
 
 /**
  * Top level component encapsulating a single PrivacyRequest. Contains one or
  * more DemandBuilder elements, each for a single demand action type.
  */
+@localized()
 export class BldnPrivRequest extends LitElement {
   // JSON string of actions to display
   @property({ type: String, attribute: 'actions' }) actions = '';
@@ -267,6 +269,10 @@ export class BldnPrivRequest extends LitElement {
         this._includedActions = getDefaultActions();
       }
     }
+  }
+
+  protected firstUpdated(): void {
+    setLocaleToFrench().then(() => {});
   }
 
   render() {

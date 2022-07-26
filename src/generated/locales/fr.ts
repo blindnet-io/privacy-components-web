@@ -5,6 +5,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 export const templates = {
+  s990061f6621b0156: `THIS IS FRENCH`,
   sbe8f4a548469f66b: `ACCESS`,
   s5cd15819e278608a: `DELETE`,
   s98d171b8d8066dc3: `MODIFY`,
@@ -52,7 +53,6 @@ export const templates = {
   sd22025af1f467374: `I want to know:`,
   s68912750a58666b8: `Plus additional info:`,
   seaa61d3b6dd8407d: `Type of demand:`,
-  s990061f6621b0156: `My Privacy Request`,
   s840bc09fd1413d12: `Continue to submit Privacy Request`,
   sca67c093da6d1c94: `Submit Privacy Request`,
   s65473e5b3805319a: `Your privacy request has been sent!`,

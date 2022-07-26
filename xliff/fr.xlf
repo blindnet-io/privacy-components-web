@@ -145,6 +145,7 @@
 </trans-unit>
 <trans-unit id="s990061f6621b0156">
   <source>My Privacy Request</source>
+  <target>THIS IS FRENCH</target>
 </trans-unit>
 <trans-unit id="s840bc09fd1413d12">
   <source>Continue to submit Privacy Request</source>
