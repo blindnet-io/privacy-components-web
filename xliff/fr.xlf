@@ -4,6 +4,7 @@
 <body>
 <trans-unit id="sbe8f4a548469f66b">
   <source>ACCESS</source>
+  <target></target>
 </trans-unit>
 <trans-unit id="s5cd15819e278608a">
   <source>DELETE</source>
@@ -145,7 +146,6 @@
 </trans-unit>
 <trans-unit id="s990061f6621b0156">
   <source>My Privacy Request</source>
-  <target>THIS IS FRENCH</target>
 </trans-unit>
 <trans-unit id="s840bc09fd1413d12">
   <source>Continue to submit Privacy Request</source>
