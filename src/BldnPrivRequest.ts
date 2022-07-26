@@ -17,7 +17,6 @@ import { PrivacyResponse } from './models/privacy-response.js';
 import { RequestState, DemandState } from './utils/states.js';
 import { Demand } from './models/demand.js';
 import { getDefaultActions } from './utils/utils.js';
-import { setLocaleToFrench } from './localization.js';
 
 /**
  * Top level component encapsulating a single PrivacyRequest. Contains one or
@@ -269,10 +268,6 @@ export class BldnPrivRequest extends LitElement {
         this._includedActions = getDefaultActions();
       }
     }
-  }
-
-  protected firstUpdated(): void {
-    setLocaleToFrench().then(() => {});
   }
 
   render() {
