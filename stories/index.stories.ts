@@ -24,7 +24,7 @@ interface ArgTypes {
 }
 
 const Template: Story<ArgTypes> = ({ actions }: ArgTypes) => html`
-  <bldn-priv-request actions="${actions || ''}"></bldn-priv-request>
+  <bldn-priv-request actions="${actions || ''}" lang="fr"></bldn-priv-request>
 `;
 
 export const Regular = Template.bind({});
