@@ -1,173 +1,76 @@
-import { msg, str } from '@lit/localize';
+import { msg } from '@lit/localize';
 
 /**
  * Mapping of PRIV Actions to corresponding titles.
  */
 export const ACTION_TITLES = {
-  ACCESS: msg('ACCESS'),
-  DELETE: msg('DELETE'),
-  MODIFY: msg('MODIFY'),
-  OBJECT: msg('OBJECT'),
-  PORTABILITY: msg('PORTABILITY'),
-  RESTRICT: msg('RESTRICT'),
-  'REVOKE-CONSENT': msg('REVOKE-CONSENT'),
-  TRANSPARENCY: msg('TRANSPARENCY'),
-  'TRANSPARENCY.DATA-CATEGORIES': msg('TRANSPARENCY.DATA-CATEGORIES'),
-  'TRANSPARENCY.DPO': msg('TRANSPARENCY.DPO'),
-  'TRANSPARENCY.KNOWN': msg('TRANSPARENCY.KNOWN'),
-  'TRANSPARENCY.LEGAL-BASES': msg('TRANSPARENCY.LEGAL-BASES'),
-  'TRANSPARENCY.ORGANIZATION': msg('TRANSPARENCY.ORGANIZATION'),
-  'TRANSPARENCY.POLICY': msg('TRANSPARENCY.POLICY'),
-  'TRANSPARENCY.PROCESSING-CATEGORIES': msg(
-    'TRANSPARENCY.PROCESSING-CATEGORIES'
-  ),
-  'TRANSPARENCY.PROVENANCE': msg('TRANSPARENCY.PROVENANCE'),
-  'TRANSPARENCY.PURPOSE': msg('TRANSPARENCY.PURPOSE'),
-  'TRANSPARENCY.RETENTION': msg('TRANSPARENCY.RETENTION'),
-  'TRANSPARENCY.WHERE': msg('TRANSPARENCY.WHERE'),
-  'TRANSPARENCY.WHO': msg('TRANSPARENCY.WHO'),
-  'OTHER-DEMAND': msg('OTHER-DEMAND'),
+  ACCESS: () => msg('ACCESS'),
+  DELETE: () => msg('DELETE'),
+  MODIFY: () => msg('MODIFY'),
+  OBJECT: () => msg('OBJECT'),
+  PORTABILITY: () => msg('PORTABILITY'),
+  RESTRICT: () => msg('RESTRICT'),
+  'REVOKE-CONSENT': () => msg('REVOKE-CONSENT'),
+  TRANSPARENCY: () => msg('TRANSPARENCY'),
+  'TRANSPARENCY.DATA-CATEGORIES': () => msg('TRANSPARENCY.DATA-CATEGORIES'),
+  'TRANSPARENCY.DPO': () => msg('TRANSPARENCY.DPO'),
+  'TRANSPARENCY.KNOWN': () => msg('TRANSPARENCY.KNOWN'),
+  'TRANSPARENCY.LEGAL-BASES': () => msg('TRANSPARENCY.LEGAL-BASES'),
+  'TRANSPARENCY.ORGANIZATION': () => msg('TRANSPARENCY.ORGANIZATION'),
+  'TRANSPARENCY.POLICY': () => msg('TRANSPARENCY.POLICY'),
+  'TRANSPARENCY.PROCESSING-CATEGORIES': () =>
+    msg('TRANSPARENCY.PROCESSING-CATEGORIES'),
+  'TRANSPARENCY.PROVENANCE': () => msg('TRANSPARENCY.PROVENANCE'),
+  'TRANSPARENCY.PURPOSE': () => msg('TRANSPARENCY.PURPOSE'),
+  'TRANSPARENCY.RETENTION': () => msg('TRANSPARENCY.RETENTION'),
+  'TRANSPARENCY.WHERE': () => msg('TRANSPARENCY.WHERE'),
+  'TRANSPARENCY.WHO': () => msg('TRANSPARENCY.WHO'),
+  'OTHER-DEMAND': () => msg('OTHER-DEMAND'),
 };
-
-export const ACTION_TITLES_2 = {
-  ACCESS: 'ACCESS',
-  DELETE: 'DELETE',
-  MODIFY: 'MODIFY',
-  OBJECT: 'OBJECT',
-  PORTABILITY: 'PORTABILITY',
-  RESTRICT: 'RESTRICT',
-  'REVOKE-CONSENT': 'REVOKE-CONSENT',
-  TRANSPARENCY: 'TRANSPARENCY',
-  'TRANSPARENCY.DATA-CATEGORIES': 'TRANSPARENCY.DATA-CATEGORIES',
-  'TRANSPARENCY.DPO': 'TRANSPARENCY.DPO',
-  'TRANSPARENCY.KNOWN': 'TRANSPARENCY.KNOWN',
-  'TRANSPARENCY.LEGAL-BASES': 'TRANSPARENCY.LEGAL-BASES',
-  'TRANSPARENCY.ORGANIZATION': 'TRANSPARENCY.ORGANIZATION',
-  'TRANSPARENCY.POLICY': 'TRANSPARENCY.POLICY',
-  'TRANSPARENCY.PROCESSING-CATEGORIES': 'TRANSPARENCY.PROCESSING-CATEGORIES',
-  'TRANSPARENCY.PROVENANCE': 'TRANSPARENCY.PROVENANCE',
-  'TRANSPARENCY.PURPOSE': 'TRANSPARENCY.PURPOSE',
-  'TRANSPARENCY.RETENTION': 'TRANSPARENCY.RETENTION',
-  'TRANSPARENCY.WHERE': 'TRANSPARENCY.WHERE',
-  'TRANSPARENCY.WHO': 'TRANSPARENCY.WHO',
-  'OTHER-DEMAND': 'OTHER-DEMAND',
-};
-
-export const ACTION_TITLES_3: Map<string, string> = new Map<string, string>([
-  ['ACCESS', 'ACCESS'],
-  ['DELETE', 'DELETE'],
-  ['MODIFY', 'MODIFY'],
-  ['OBJECT', 'OBJECT'],
-  ['PORTABILITY', 'PORTABILITY'],
-  ['RESTRICT', 'RESTRICT'],
-  ['REVOKE-CONSENT', 'REVOKE-CONSENT'],
-  ['TRANSPARENCY', 'TRANSPARENCY'],
-  ['TRANSPARENCY.DATA-CATEGORIES', 'TRANSPARENCY.DATA-CATEGORIES'],
-  ['TRANSPARENCY.DPO', 'TRANSPARENCY.DPO'],
-  ['TRANSPARENCY.KNOWN', 'TRANSPARENCY.KNOWN'],
-  ['TRANSPARENCY.LEGAL-BASES', 'TRANSPARENCY.LEGAL-BASES'],
-  ['TRANSPARENCY.ORGANIZATION', 'TRANSPARENCY.ORGANIZATION'],
-  ['TRANSPARENCY.POLICY', 'TRANSPARENCY.POLICY'],
-  ['TRANSPARENCY.PROCESSING-CATEGORIES', 'TRANSPARENCY.PROCESSING-CATEGORIES'],
-  ['TRANSPARENCY.PROVENANCE', 'TRANSPARENCY.PROVENANCE'],
-  ['TRANSPARENCY.PURPOSE', 'TRANSPARENCY.PURPOSE'],
-  ['TRANSPARENCY.RETENTION', 'TRANSPARENCY.RETENTION'],
-  ['TRANSPARENCY.WHERE', 'TRANSPARENCY.WHERE'],
-  ['TRANSPARENCY.WHO', 'TRANSPARENCY.WHO'],
-  ['OTHER-DEMAND', 'OTHER-DEMAND'],
-]);
-
-export const ACTION_TITLES_4 = {
-  ACCESS: str`${msg('ACCESS')}`,
-  DELETE: str`${msg('DELETE')}`,
-  MODIFY: str`${msg('MODIFY')}`,
-  OBJECT: str`${msg('OBJECT')}`,
-  PORTABILITY: str`${msg('PORTABILITY')}`,
-  RESTRICT: str`${msg('RESTRICT')}`,
-  'REVOKE-CONSENT': str`${msg('REVOKE-CONSENT')}`,
-  TRANSPARENCY: str`${msg('TRANSPARENCY')}`,
-  'TRANSPARENCY.DATA-CATEGORIES': str`${msg('TRANSPARENCY.DATA-CATEGORIES')}`,
-  'TRANSPARENCY.DPO': str`${msg('TRANSPARENCY.DPO')}`,
-  'TRANSPARENCY.KNOWN': str`${msg('TRANSPARENCY.KNOWN')}`,
-  'TRANSPARENCY.LEGAL-BASES': str`${msg('TRANSPARENCY.LEGAL-BASES')}`,
-  'TRANSPARENCY.ORGANIZATION': str`${msg('TRANSPARENCY.ORGANIZATION')}`,
-  'TRANSPARENCY.POLICY': str`${msg('TRANSPARENCY.POLICY')}`,
-  'TRANSPARENCY.PROCESSING-CATEGORIES': str`${msg(
-    'TRANSPARENCY.PROCESSING-CATEGORIES'
-  )}`,
-  'TRANSPARENCY.PROVENANCE': str`${msg('TRANSPARENCY.PROVENANCE')}`,
-  'TRANSPARENCY.PURPOSE': str`${msg('TRANSPARENCY.PURPOSE')}`,
-  'TRANSPARENCY.RETENTION': str`${msg('TRANSPARENCY.RETENTION')}`,
-  'TRANSPARENCY.WHERE': str`${msg('TRANSPARENCY.WHERE')}`,
-  'TRANSPARENCY.WHO': str`${msg('TRANSPARENCY.WHO')}`,
-  'OTHER-DEMAND': str`${msg('OTHER-DEMAND')}`,
-};
-
-export const ACTION_TITLES_5: Map<string, string> = new Map<string, string>([
-  ['ACCESS', 'ACCESS'],
-  ['DELETE', 'DELETE'],
-  ['MODIFY', 'MODIFY'],
-  ['OBJECT', 'OBJECT'],
-  ['PORTABILITY', 'PORTABILITY'],
-  ['RESTRICT', 'RESTRICT'],
-  ['REVOKE-CONSENT', 'REVOKE-CONSENT'],
-  ['TRANSPARENCY', 'TRANSPARENCY'],
-  ['TRANSPARENCY.DATA-CATEGORIES', 'TRANSPARENCY.DATA-CATEGORIES'],
-  ['TRANSPARENCY.DPO', 'TRANSPARENCY.DPO'],
-  ['TRANSPARENCY.KNOWN', 'TRANSPARENCY.KNOWN'],
-  ['TRANSPARENCY.LEGAL-BASES', 'TRANSPARENCY.LEGAL-BASES'],
-  ['TRANSPARENCY.ORGANIZATION', 'TRANSPARENCY.ORGANIZATION'],
-  ['TRANSPARENCY.POLICY', 'TRANSPARENCY.POLICY'],
-  ['TRANSPARENCY.PROCESSING-CATEGORIES', 'TRANSPARENCY.PROCESSING-CATEGORIES'],
-  ['TRANSPARENCY.PROVENANCE', 'TRANSPARENCY.PROVENANCE'],
-  ['TRANSPARENCY.PURPOSE', 'TRANSPARENCY.PURPOSE'],
-  ['TRANSPARENCY.RETENTION', 'TRANSPARENCY.RETENTION'],
-  ['TRANSPARENCY.WHERE', 'TRANSPARENCY.WHERE'],
-  ['TRANSPARENCY.WHO', 'TRANSPARENCY.WHO'],
-  ['OTHER-DEMAND', 'OTHER-DEMAND'],
-]);
 
 /**
  * Mapping of PRIV Actions to corresponding descriptions.
  */
-export const descriptions = {
-  ACCESS: msg('Access my data'),
-  DELETE: msg('Have my data deleted'),
-  MODIFY: msg('Modify or complement my data'),
-  OBJECT: msg('Object to processing of my data'),
-  PORTABILITY: msg('Take my data and have it transfered somewhere else'),
-  RESTRICT: msg('Restrict processing of my data to a particular scope'),
-  'REVOKE-CONSENT': msg('Revoke previously given consent for data processing'),
-  TRANSPARENCY: msg(
-    'Demand information related to data processing practices and know if the system has data on me'
-  ),
-  'OTHER-DEMAND': msg('Do or know something else'),
-  'TRANSPARENCY.DATA-CATEGORIES': msg(
-    'The categories of the data the organization has on me'
-  ),
-  'TRANSPARENCY.DPO': msg('The contact details of the data protection officer'),
-  'TRANSPARENCY.KNOWN': msg('If the organization has data on me'),
-  'TRANSPARENCY.LEGAL-BASES': msg(
-    'The legal bases for processing my data (including legitimate interests)'
-  ),
-  'TRANSPARENCY.ORGANIZATION': msg(
-    'The identity and contact details of the organization processing my data'
-  ),
-  'TRANSPARENCY.POLICY': msg(
-    'The policies applied to processing of data concerning me'
-  ),
-  'TRANSPARENCY.PROCESSING-CATEGORIES': msg(
-    'The cateogories of processing being done on the data the organization has on me'
-  ),
-  'TRANSPARENCY.PROVENANCE': msg(
-    'The sources that the data concerning me come from'
-  ),
-  'TRANSPARENCY.PURPOSE': msg(
-    'The purpose of the processing o the data the organization has on me'
-  ),
-  'TRANSPARENCY.RETENTION': msg('For how long the data concerning me kept'),
-  'TRANSPARENCY.WHERE': msg('Where the data about me is stored'),
-  'TRANSPARENCY.WHO': msg(
-    'Who can access the data that the organization has on me'
-  ),
+export const ACTION_DESCRIPTIONS = {
+  ACCESS: () => msg('Access my data'),
+  DELETE: () => msg('Have my data deleted'),
+  MODIFY: () => msg('Modify or complement my data'),
+  OBJECT: () => msg('Object to processing of my data'),
+  PORTABILITY: () => msg('Take my data and have it transfered somewhere else'),
+  RESTRICT: () => msg('Restrict processing of my data to a particular scope'),
+  'REVOKE-CONSENT': () =>
+    msg('Revoke previously given consent for data processing'),
+  TRANSPARENCY: () =>
+    msg(
+      'Demand information related to data processing practices and know if the system has data on me'
+    ),
+  'OTHER-DEMAND': () => msg('Do or know something else'),
+  'TRANSPARENCY.DATA-CATEGORIES': () =>
+    msg('The categories of the data the organization has on me'),
+  'TRANSPARENCY.DPO': () =>
+    msg('The contact details of the data protection officer'),
+  'TRANSPARENCY.KNOWN': () => msg('If the organization has data on me'),
+  'TRANSPARENCY.LEGAL-BASES': () =>
+    msg(
+      'The legal bases for processing my data (including legitimate interests)'
+    ),
+  'TRANSPARENCY.ORGANIZATION': () =>
+    msg(
+      'The identity and contact details of the organization processing my data'
+    ),
+  'TRANSPARENCY.POLICY': () =>
+    msg('The policies applied to processing of data concerning me'),
+  'TRANSPARENCY.PROCESSING-CATEGORIES': () =>
+    msg(
+      'The cateogories of processing being done on the data the organization has on me'
+    ),
+  'TRANSPARENCY.PROVENANCE': () =>
+    msg('The sources that the data concerning me come from'),
+  'TRANSPARENCY.PURPOSE': () =>
+    msg('The purpose of the processing o the data the organization has on me'),
+  'TRANSPARENCY.RETENTION': () =>
+    msg('For how long the data concerning me kept'),
+  'TRANSPARENCY.WHERE': () => msg('Where the data about me is stored'),
+  'TRANSPARENCY.WHO': () =>
+    msg('Who can access the data that the organization has on me'),
 };
