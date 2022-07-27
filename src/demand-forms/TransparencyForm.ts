@@ -205,7 +205,8 @@ export class TransparencyForm extends LitElement {
         <p>${msg('I want to know:')}</p>
         <ul id="transparency-demand-review-list">
           ${Array.from(this.demands.values()).map(
-            (a: Demand) => html` <li>${ACTION_DESCRIPTIONS[a.action]}</li> `
+            (a: Demand) =>
+              html` <li><b>${ACTION_DESCRIPTIONS[a.action]}</b></li> `
           )}
         </ul>
         ${this._extraMessage
