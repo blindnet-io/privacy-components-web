@@ -1,6 +1,6 @@
 import { html, TemplateResult } from 'lit';
 import '../src/bldn-priv-request.js';
-import { targetLocales } from '../src/generated/locale-codes.js';
+import { sourceLocale, targetLocales } from '../src/generated/locale-codes.js';
 import { setLocale } from '../src/utils/localization.js';
 
 export default {
@@ -15,7 +15,7 @@ export default {
     locale: {
       control: 'select',
       description: 'Language code for the component',
-      options: targetLocales,
+      options: [sourceLocale, ...targetLocales],
     },
   },
 };

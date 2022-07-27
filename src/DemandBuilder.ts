@@ -2,12 +2,12 @@
 import { html, css, LitElement, PropertyValueMap } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
-import { msg } from '@lit/localize';
+import { localized, msg, str } from '@lit/localize';
 
 import { ACTION } from './models/priv-terms.js';
 import { enabledActions } from './utils/conf.js';
 import { Demand } from './models/demand.js';
-import { descriptions } from './utils/dictionary.js';
+import { descriptions, ACTION_TITLES } from './utils/dictionary.js';
 import { DemandState } from './utils/states.js';
 import './DemandBuilderActionMenu.js';
 import './DemandBuilderDropdownElement.js';
@@ -21,6 +21,7 @@ import { when } from 'lit/directives/when.js';
  * components to display different options for each action type.
  */
 @customElement('demand-builder')
+@localized()
 export class DemandBuilder extends LitElement {
   @property({ type: Array }) includedActions: ACTION[] = [];
 
@@ -99,7 +100,7 @@ export class DemandBuilder extends LitElement {
           (a, i) => html`
             <demand-builder-sidebar-item
               id=${a}
-              title=${a}
+              title=${ACTION_TITLES[a]}
               description=${descriptions[a]}
               ?disabled=${!enabledActions.get(a)}
               ?checked=${i === this._sidebarSelectedIndex}

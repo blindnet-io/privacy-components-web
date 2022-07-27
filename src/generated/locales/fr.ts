@@ -1,12 +1,14 @@
 // Do not modify this file by hand!
 // Re-generate this file by running lit-localize
 
+import { str } from '@lit/localize';
+
 /* eslint-disable no-irregular-whitespace */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 export const templates = {
-  s990061f6621b0156: `THIS IS FRENCH`,
-  sbe8f4a548469f66b: `ACCESS`,
+  s990061f6621b0156: `THIS IS FRENCH!!!`,
+  sbe8f4a548469f66b: `ACCÉDER`,
   s5cd15819e278608a: `DELETE`,
   s98d171b8d8066dc3: `MODIFY`,
   sa1b69a3b54f266ba: `OBJECT`,
@@ -48,11 +50,14 @@ export const templates = {
   sd1c189abaf754629: `For how long the data concerning me kept`,
   sa7ee6646f0fd7ced: `Where the data about me is stored`,
   s255eaeef4249ebf2: `Who can access the data that the organization has on me`,
+  se598917055a5c556: `My privacy request`,
+  saf63d34c8601dd41: str`${0}`,
   sac5b43e0e39b86c1: `Details of my TRANSPARENCY Demand`,
   sd7393654f595374e: `TRANSPARENCY demand`,
   sd22025af1f467374: `I want to know:`,
   s68912750a58666b8: `Plus additional info:`,
   seaa61d3b6dd8407d: `Type of demand:`,
+  s5c8f17d8e66db019: `My Privacy Rsequest`,
   s840bc09fd1413d12: `Continue to submit Privacy Request`,
   sca67c093da6d1c94: `Submit Privacy Request`,
   s65473e5b3805319a: `Your privacy request has been sent!`,
