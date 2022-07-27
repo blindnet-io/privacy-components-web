@@ -129,12 +129,6 @@
 <trans-unit id="s255eaeef4249ebf2">
   <source>Who can access the data that the organization has on me</source>
 </trans-unit>
-<trans-unit id="se598917055a5c556">
-  <source>My privacy request</source>
-</trans-unit>
-<trans-unit id="saf63d34c8601dd41">
-  <source><x id="0" equiv-text="${a}"/></source>
-</trans-unit>
 <trans-unit id="sac5b43e0e39b86c1">
   <source>Details of my TRANSPARENCY Demand</source>
 </trans-unit>
@@ -150,12 +144,8 @@
 <trans-unit id="seaa61d3b6dd8407d">
   <source>Type of demand:</source>
 </trans-unit>
-<trans-unit id="s5c8f17d8e66db019">
-  <source>My Privacy Rsequest</source>
-</trans-unit>
 <trans-unit id="s990061f6621b0156">
   <source>My Privacy Request</source>
-  <target>THIS IS FRENCH!!!</target>
 </trans-unit>
 <trans-unit id="s840bc09fd1413d12">
   <source>Continue to submit Privacy Request</source>
