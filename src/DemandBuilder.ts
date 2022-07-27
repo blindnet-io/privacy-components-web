@@ -7,7 +7,7 @@ import { localized, msg, str } from '@lit/localize';
 import { ACTION } from './models/priv-terms.js';
 import { enabledActions } from './utils/conf.js';
 import { Demand } from './models/demand.js';
-import { descriptions, ACTION_TITLES } from './utils/dictionary.js';
+import { ACTION_TITLES, ACTION_DESCRIPTIONS } from './utils/dictionary.js';
 import { DemandState } from './utils/states.js';
 import './DemandBuilderActionMenu.js';
 import './DemandBuilderDropdownElement.js';
@@ -100,8 +100,8 @@ export class DemandBuilder extends LitElement {
           (a, i) => html`
             <demand-builder-sidebar-item
               id=${a}
-              title=${ACTION_TITLES[a]}
-              description=${descriptions[a]}
+              title=${ACTION_TITLES[a]()}
+              description=${ACTION_DESCRIPTIONS[a]()}
               ?disabled=${!enabledActions.get(a)}
               ?checked=${i === this._sidebarSelectedIndex}
             ></demand-builder-sidebar-item>

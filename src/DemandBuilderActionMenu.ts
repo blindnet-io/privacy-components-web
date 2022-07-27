@@ -1,9 +1,11 @@
 import { html, css, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { localized, msg } from '@lit/localize';
+import { localized } from '@lit/localize';
+import { ACTION_TITLES, ACTION_DESCRIPTIONS } from './utils/dictionary.js';
 
 import './ActionItem.js';
 import { ACTION } from './models/priv-terms.js';
+import { enabledActions } from './utils/conf.js';
 
 /**
  * Menu of clickable action types
@@ -37,21 +39,15 @@ export class DemandBuilerActionMenu extends LitElement {
   `;
 
   render() {
-    const actions = {
-      ACCESS: () => msg('ACCESS'),
-      DELETE: () => msg('DELETE'),
-      MODIFY: () => msg('MODIFY'),
-    };
-
     return html`
       <div class="prompt-heading">${this.prompt}</div>
       <div class="actions-container">
-        ${Object.values(actions).map(
+        ${this.includedActions.map(
           a =>
             html`<action-item
-              action-name=${a()}
-              action-description=""
-              ?disabled=${true}
+              action-name=${ACTION_TITLES[a]()}
+              action-description=${ACTION_DESCRIPTIONS[a]()}
+              ?disabled=${!enabledActions.get(a)}
             ></action-item>`
         )}
       </div>

@@ -8,7 +8,7 @@ import '../DemandBuilderDropdownElement.js';
 import '../DemandBuilderTextElement.js';
 import { ACTION } from '../models/priv-terms.js';
 import { Demand } from '../models/demand.js';
-import { descriptions } from '../utils/dictionary.js';
+import { ACTION_DESCRIPTIONS } from '../utils/dictionary.js';
 import { DemandState } from '../utils/states.js';
 import { enabledActions } from '../utils/conf.js';
 
@@ -185,7 +185,7 @@ export class TransparencyForm extends LitElement {
       <demand-builder-dropdown-element
         .choices=${this.transparencyActions.map(a => ({
           id: a,
-          description: descriptions[a],
+          description: ACTION_DESCRIPTIONS[a](),
           checked: selectedActions.includes(a),
           disabled: !enabledActions.get(a) ?? true,
         }))}
@@ -205,7 +205,7 @@ export class TransparencyForm extends LitElement {
         <p>${msg('I want to know:')}</p>
         <ul id="transparency-demand-review-list">
           ${Array.from(this.demands.values()).map(
-            (a: Demand) => html` <li>${descriptions[a.action]}</li> `
+            (a: Demand) => html` <li>${ACTION_DESCRIPTIONS[a.action]}</li> `
           )}
         </ul>
         ${this._extraMessage
