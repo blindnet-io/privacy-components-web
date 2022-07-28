@@ -1,17 +1,21 @@
+/* eslint-disable camelcase */
 import { ACTION } from './priv-terms.js';
 
 export interface PrivacyResponse {
-  responseId: string;
-  inResponseTo: string;
+  response_id: string;
+  request_id: string;
   date: string;
-  system: string;
-  'requested-action'?: ACTION;
-  dataSubject?: string[];
-  status: string;
-  motive?: string[];
-  answers?: string[];
-  message?: string;
-  lang?: string;
-  includes?: PrivacyResponse[];
-  data?: object[];
+  demands: [
+    {
+      demand_id: string;
+      date: string;
+      action: ACTION;
+      status?: string;
+      answer?: Object;
+      message?: string;
+      lang?: string;
+      includes?: PrivacyResponse[];
+      data?: Object;
+    }
+  ];
 }
