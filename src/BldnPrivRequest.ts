@@ -13,7 +13,7 @@ import './FrequentRequestsMenu.js';
 import './ResponseView.js';
 import { ACTION } from './models/priv-terms.js';
 import { PrivacyRequest } from './models/privacy-request.js';
-import { sendPrivacyRequest } from './utils/privacyRequestApi.js';
+import { sendPrivacyRequest } from './utils/privacy-request-api.js';
 import { PrivacyResponse } from './models/privacy-response.js';
 import { RequestState, DemandState } from './utils/states.js';
 import { Demand } from './models/demand.js';
