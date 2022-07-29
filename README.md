@@ -110,6 +110,14 @@ To automatically fix linting and formatting errors, run
 npm run format
 ```
 
+### Localization
+
+To generate translation files for each locale in [/xliff](/xliff/), run
+
+```bash
+npm run localize
+```
+
 ### Testing with Web Test Runner
 
 To execute a single test run:

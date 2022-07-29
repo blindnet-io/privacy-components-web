@@ -1,3 +1,4 @@
+import { localized } from '@lit/localize';
 import { html, css, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
@@ -5,6 +6,7 @@ import { customElement, property } from 'lit/decorators.js';
 /**
  * Button element representing a single demand action. Used in the action menu.
  */
+@localized()
 export class ActionItem extends LitElement {
   // Name of the action, displayed in bold
   @property({ type: String, attribute: 'action-name' }) actionName = '';
@@ -76,7 +78,6 @@ export class ActionItem extends LitElement {
         ?disabled=${this.disabled}
       >
         <strong>${this.actionName}:</strong> ${this.actionDescription}
-        <!-- <span class="btn-txt"></span> -->
       </button>
     `;
   }
