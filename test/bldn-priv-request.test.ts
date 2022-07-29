@@ -4,17 +4,24 @@ import { expect } from '@open-wc/testing';
 import '../src/bldn-priv-request.js';
 import { ACTION } from '../src/models/priv-terms.js';
 import { PrivacyRequest } from '../src/models/privacy-request.js';
-import { sendPrivacyRequest } from '../src/utils/PrivacyRequestApi.js';
+import { sendPrivacyRequest } from '../src/utils/privacyRequestApi.js';
 
 describe('Mock API Tests', () => {
   it('test single demand', async () => {
     const request: PrivacyRequest = {
-      demands: [{ action: ACTION.TRANSPARENCY_DPO }],
+      demands: [{ id: '1', action: ACTION['TRANSPARENCY.DPO'] }],
+      data_subject: [
+        {
+          id: '4f04dbb4-d77d-49df-ae57-52aae9d6f3b5',
+          schema: 'dsid',
+        },
+      ],
     };
 
-    sendPrivacyRequest(request).then(privacyResponse =>
-      expect(privacyResponse.data).to.equal({})
-    );
+    sendPrivacyRequest(request, false).then(privacyResponse => {
+      console.log(privacyResponse);
+      expect(privacyResponse.demands).to.equal({});
+    });
   });
 });
 
