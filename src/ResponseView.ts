@@ -1,11 +1,12 @@
-import { html, css, LitElement } from 'lit';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { msg, str } from '@lit/localize';
+import { html, css, LitElement, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { choose } from 'lit/directives/choose.js';
 import { map } from 'lit/directives/map.js';
-import { PrivacyResponse } from './models/privacy-response.js';
-import { descriptions } from './utils/dictionary.js';
-
-// Question - are there types of responses other than transparency that give an immediate response?
-// just wondering how generic this component needs to be.
+import { ACTION } from './models/priv-terms.js';
+import { DemandResponse, PrivacyResponse } from './models/privacy-response.js';
+import { ACTION_DESCRIPTIONS } from './utils/dictionary.js';
 
 /**
  * View the response to a privacy request.
@@ -13,11 +14,16 @@ import { descriptions } from './utils/dictionary.js';
 @customElement('response-view')
 export class ResponseView extends LitElement {
   @property({ attribute: false }) response: PrivacyResponse = {
-    responseId: '',
-    inResponseTo: '',
+    response_id: '',
+    request_id: '',
     date: '',
-    system: '',
-    status: '',
+    demands: [
+      {
+        demand_id: '',
+        date: '',
+        requested_action: ACTION.TRANSPARENCY,
+      },
+    ],
   };
 
   static styles = css`
@@ -46,40 +52,171 @@ export class ResponseView extends LitElement {
     }
   `;
 
-  transparencyTemplate(response: PrivacyResponse) {
-    // TODO: Change this to handle response.message or response.data
-    if (response['requested-action']) {
-      return html`
-        <div class="transparency-rsp-ctr">
-          <li><b>${descriptions[response['requested-action']]}</b></li>
-          ${response.message}
-        </div>
-      `;
-    }
-    return html`Error: No requested-action in response`;
+  accessTemplate(demand: DemandResponse): TemplateResult {
+    return html``;
+  }
+
+  deleteTemplate(demand: DemandResponse): TemplateResult {
+    return html``;
+  }
+
+  modifyTemplate(demand: DemandResponse): TemplateResult {
+    return html``;
+  }
+
+  objectTemplate(demand: DemandResponse): TemplateResult {
+    return html``;
+  }
+
+  revokeTemplate(demand: DemandResponse): TemplateResult {
+    return html``;
+  }
+
+  restrictTemplate(demand: DemandResponse): TemplateResult {
+    return html``;
+  }
+
+  portabilityTemplate(demand: DemandResponse): TemplateResult {
+    return html``;
+  }
+
+  transparencyStandardTemplate(demand: DemandResponse) {
+    return html`
+      <div class="transparency-rsp-ctr">
+        <li>
+          <b>${ACTION_DESCRIPTIONS[demand.requested_action]()}</b> -
+          ${demand.status}
+        </li>
+        ${JSON.stringify(demand.answer)}
+      </div>
+    `;
+  }
+
+  transparencyAllTemplate(demand: DemandResponse): TemplateResult {
+    return this.transparencyStandardTemplate(demand);
+  }
+
+  transparencyDataCatTemplate(demand: DemandResponse): TemplateResult {
+    return this.transparencyStandardTemplate(demand);
+  }
+
+  transparencyDpoTemplate(demand: DemandResponse) {
+    return this.transparencyStandardTemplate(demand);
+  }
+
+  transparencyKnownTemplate(demand: DemandResponse): TemplateResult {
+    return this.transparencyStandardTemplate(demand);
+  }
+
+  transparencyLegalTemplate(demand: DemandResponse): TemplateResult {
+    return this.transparencyStandardTemplate(demand);
+  }
+
+  transparencyOrgTemplate(demand: DemandResponse): TemplateResult {
+    return this.transparencyStandardTemplate(demand);
+  }
+
+  transparencyPolicyTemplate(demand: DemandResponse): TemplateResult {
+    return this.transparencyStandardTemplate(demand);
+  }
+
+  transparencyProcessTemplate(demand: DemandResponse): TemplateResult {
+    return this.transparencyStandardTemplate(demand);
+  }
+
+  transparencyProvTemplate(demand: DemandResponse): TemplateResult {
+    return this.transparencyStandardTemplate(demand);
+  }
+
+  transparencyPurposeTemplate(demand: DemandResponse): TemplateResult {
+    return this.transparencyStandardTemplate(demand);
+  }
+
+  transparencyRetentionTemplate(demand: DemandResponse): TemplateResult {
+    return this.transparencyStandardTemplate(demand);
+  }
+
+  transparencyWhoTemplate(demand: DemandResponse): TemplateResult {
+    return this.transparencyStandardTemplate(demand);
+  }
+
+  transparencyWhereTemplate(demand: DemandResponse): TemplateResult {
+    return this.transparencyStandardTemplate(demand);
+  }
+
+  otherDemandTemplate(demand: DemandResponse): TemplateResult {
+    return html``;
   }
 
   render() {
-    // Extract array of one or more privacy responses
-    const response: PrivacyResponse[] =
-      this.response.includes && this.response.includes[0]
-        ? this.response.includes
-        : [this.response];
-
     return html`
       <h1>Requested Information</h1>
       <div id="responses-ctr">
-        ${map(response, r => {
-          if (r['requested-action']) {
-            if (
-              r['requested-action'].toLocaleLowerCase().includes('transparency')
-            ) {
-              return this.transparencyTemplate(r);
-            }
-            return html`Error: No HTML template defined for action type
-            ${r['requested-action']}`;
-          }
-          return html`Error: No action in response`;
+        ${map(this.response.demands, d => {
+          console.log(d);
+          return choose(
+            d.requested_action,
+            [
+              [ACTION.ACCESS, () => this.accessTemplate(d)],
+              [ACTION.DELETE, () => this.deleteTemplate(d)],
+              [ACTION.MODIFY, () => this.modifyTemplate(d)],
+              [ACTION.OBJECT, () => this.objectTemplate(d)],
+              [ACTION.REVOKE, () => this.revokeTemplate(d)],
+              [ACTION.RESTRICT, () => this.restrictTemplate(d)],
+              [ACTION.PORTABILITY, () => this.portabilityTemplate(d)],
+              [ACTION.TRANSPARENCY, () => this.transparencyAllTemplate(d)],
+              [
+                ACTION['TRANSPARENCY.DATA.CATEGORIES'],
+                () => this.transparencyDataCatTemplate(d),
+              ],
+              [
+                ACTION['TRANSPARENCY.DPO'],
+                () => this.transparencyDpoTemplate(d),
+              ],
+              [
+                ACTION['TRANSPARENCY.KNOWN'],
+                () => this.transparencyKnownTemplate(d),
+              ],
+              [
+                ACTION['TRANSPARENCY.LEGAL.BASES'],
+                () => this.transparencyLegalTemplate(d),
+              ],
+              [
+                ACTION['TRANSPARENCY.ORGANIZATION'],
+                () => this.transparencyOrgTemplate(d),
+              ],
+              [
+                ACTION['TRANSPARENCY.POLICY'],
+                () => this.transparencyPolicyTemplate(d),
+              ],
+              [
+                ACTION['TRANSPARENCY.PROCESSING.CATEGORIES'],
+                () => this.transparencyProcessTemplate(d),
+              ],
+              [
+                ACTION['TRANSPARENCY.PROVENANCE'],
+                () => this.transparencyProvTemplate(d),
+              ],
+              [
+                ACTION['TRANSPARENCY.PURPOSE'],
+                () => this.transparencyPurposeTemplate(d),
+              ],
+              [
+                ACTION['TRANSPARENCY.RETENTION'],
+                () => this.transparencyRetentionTemplate(d),
+              ],
+              [
+                ACTION['TRANSPARENCY.WHERE'],
+                () => this.transparencyWhereTemplate(d),
+              ],
+              [
+                ACTION['TRANSPARENCY.WHO'],
+                () => this.transparencyWhoTemplate(d),
+              ],
+              [ACTION['OTHER.DEMAND'], () => this.otherDemandTemplate(d)],
+            ],
+            () => html`${msg('ERROR: Invalid Action')}`
+          );
         })}
       </div>
     `;

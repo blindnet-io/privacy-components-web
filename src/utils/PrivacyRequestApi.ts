@@ -34,7 +34,7 @@ export async function sendPrivacyRequest(
 ): Promise<PrivacyResponse> {
   const url = mock
     ? 'https://stoplight.io/mocks/blindnet/product-management:open-api/74767654/privacy-request'
-    : 'http://localhost:3000/privacy-request';
+    : 'https://devkit-pce-staging.azurewebsites.net/v0/privacy-request';
   const headers: any = mock
     ? {
         'Content-Type': 'application/json',
@@ -42,7 +42,10 @@ export async function sendPrivacyRequest(
       }
     : {
         'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
       };
+
+  console.log(JSON.stringify(request));
 
   return fetch(url, {
     method: 'POST',

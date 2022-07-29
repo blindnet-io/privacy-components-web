@@ -1,8 +1,10 @@
+/* eslint-disable no-param-reassign */
 import { html, css, LitElement, PropertyValueMap } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 import { map } from 'lit/directives/map.js';
 import { choose } from 'lit/directives/choose.js';
+import { localized, msg } from '@lit/localize';
 import { v4 as uuidv4 } from 'uuid';
 
 import './DemandBuilder.js';
@@ -11,7 +13,7 @@ import './FrequentRequestsMenu.js';
 import './ResponseView.js';
 import { ACTION } from './models/priv-terms.js';
 import { PrivacyRequest } from './models/privacy-request.js';
-import { sendPrivacyRequest } from './utils/PrivacyRequestApi.js';
+import { sendPrivacyRequest } from './utils/privacyRequestApi.js';
 import { PrivacyResponse } from './models/privacy-response.js';
 import { RequestState, DemandState } from './utils/states.js';
 import { Demand } from './models/demand.js';
@@ -21,6 +23,7 @@ import { getDefaultActions } from './utils/utils.js';
  * Top level component encapsulating a single PrivacyRequest. Contains one or
  * more DemandBuilder elements, each for a single demand action type.
  */
+@localized()
 export class BldnPrivRequest extends LitElement {
   // JSON string of actions to display
   @property({ type: String, attribute: 'actions' }) actions = '';
@@ -32,7 +35,16 @@ export class BldnPrivRequest extends LitElement {
   @state() _requestState: RequestState = RequestState.BUILD;
 
   // Privacy request object, empty until some demands are added
-  @state() _privacyRequest: PrivacyRequest = { demands: [] };
+  @state() _privacyRequest: PrivacyRequest = {
+    demands: [],
+    data_subject: [
+      {
+        // FIXME: For now we hardcode this, but will come from token once auth added
+        id: '4f04dbb4-d77d-49df-ae57-52aae9d6f3b5',
+        schema: 'dsid',
+      },
+    ],
+  };
 
   // Map of ids to their specific demands
   @state() _demands: Map<string, Demand> = new Map<string, Demand>();
@@ -50,11 +62,10 @@ export class BldnPrivRequest extends LitElement {
 
   // Response to our request
   @state() _privacyResponse: PrivacyResponse = {
-    responseId: '',
-    inResponseTo: '',
+    response_id: '',
+    request_id: '',
     date: '',
-    system: '',
-    status: '',
+    demands: [],
   };
 
   constructor() {
@@ -109,7 +120,6 @@ export class BldnPrivRequest extends LitElement {
       font-size: 16;
       max-width: 1350px;
       background-color: white;
-      /* max-height: 750px; */
     }
 
     :host button {
@@ -211,8 +221,14 @@ export class BldnPrivRequest extends LitElement {
 
   handleSubmitClick() {
     // Form privacy request
-    this._privacyRequest.demands = Array.from(this._demands.values());
-    sendPrivacyRequest(this._privacyRequest).then(response => {
+    this._privacyRequest.demands = Array.from(this._demands.values()).map(
+      (d, i) => {
+        d.id = i.toString();
+        return d;
+      }
+    );
+
+    sendPrivacyRequest(this._privacyRequest, false).then(response => {
       this._privacyResponse = response;
     });
     this._requestState = RequestState.SENT;
@@ -232,17 +248,22 @@ export class BldnPrivRequest extends LitElement {
     this._requestState = RequestState.BUILD;
     this._privacyRequest = {
       demands: [{ action: ACTION.TRANSPARENCY }],
+      data_subject: [
+        {
+          id: '4f04dbb4-d77d-49df-ae57-52aae9d6f3b5',
+          schema: 'dsid',
+        },
+      ],
     };
     this._demands = new Map<string, Demand>();
     this._demandBuilders = new Map<string, boolean>([[uuidv4(), false]]);
     this._showButtons = false;
     this._buttonsClickable = false;
     this._privacyResponse = {
-      responseId: '',
-      inResponseTo: '',
+      response_id: '',
+      request_id: '',
       date: '',
-      system: '',
-      status: '',
+      demands: [],
     };
   }
 
@@ -271,7 +292,7 @@ export class BldnPrivRequest extends LitElement {
   render() {
     return html`
       <div id="priv-req-ctr">
-        <div class="req-hdr">My Privacy Request</div>
+        <div class="req-hdr">${msg('My Privacy Request')}</div>
         <request-progress-indicator></request-progress-indicator>
 
         <!-- BUILD AND REVIEW STATE -->
@@ -308,7 +329,7 @@ export class BldnPrivRequest extends LitElement {
                         ?disabled=${!this._buttonsClickable}
                         @click=${this.handleReviewClick}
                       >
-                        Continue to submit Privacy Request
+                        ${msg('Continue to submit Privacy Request')}
                       </button>
                     `,
                   ],
@@ -320,7 +341,7 @@ export class BldnPrivRequest extends LitElement {
                         ?disabled=${!this._buttonsClickable}
                         @click=${this.handleSubmitClick}
                       >
-                        Submit Privacy Request
+                        ${msg('Submit Privacy Request')}
                       </button>
                     `,
                   ],
@@ -335,16 +356,16 @@ export class BldnPrivRequest extends LitElement {
           this._requestState === RequestState.SENT,
           () => html`
             <strong id="req-sent-hdr" class="ctr-txt"
-              >Your privacy request has been sent!</strong
+              >${msg('Your privacy request has been sent!')}</strong
             >
-            <p class="ctr-txt">You may view the response below.</p>
+            <p class="ctr-txt">${msg('You may view the response below.')}</p>
             <button
               id="restart-btn"
               class="ctr-txt ctr-btn"
               href=""
               @click=${this.handleRestartClick}
             >
-              Submit a new Privacy Request.
+              ${msg('Submit a new Privacy Request.')}
             </button>
           `
         )}

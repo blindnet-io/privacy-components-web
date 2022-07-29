@@ -110,6 +110,14 @@ To automatically fix linting and formatting errors, run
 npm run format
 ```
 
+### Localization
+
+To generate translation files for each locale in [/xliff](/xliff/), run
+
+```bash
+npm run localize
+```
+
 ### Testing with Web Test Runner
 
 To execute a single test run:
@@ -144,22 +152,14 @@ For most of the tools, the configuration is in the `package.json` to reduce the 
 
 If you customize the configuration a lot, you can consider moving them to individual files.
 
-### Local Demo with `web-dev-server`
-
-```bash
-npm start
-```
-
-To run a local development server that serves the basic demo located in `demo/index.html`
-
 ## License
 
 The blindnet devkit Privacy Components for the Web project is available under [MIT][license] (and [here](https://github.com/blindnet-io/openness-framework/blob/main/docs/decision-records/DR-0001-oss-license.md) is why).
 
 <!-- project's URLs -->
 
-[new-issue]: https://github.com/blindnet-io/{project-short-name}/issues/new/choose
-[fork]: https://github.com/blindnet-io/{project-short-name}/fork
+[new-issue]: https://github.com/blindnet-io/privacy-components-web/issues/new/choose
+[fork]: https://github.com/blindnet-io/privacy-components-web/fork
 
 <!-- Tools -->
 
