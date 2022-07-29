@@ -54,6 +54,9 @@ export class BldnPrivRequest extends LitElement {
     [uuidv4(), false],
   ]);
 
+  // Boolean indicating if the back button should be displayed
+  @state() _showBackButton: boolean = false;
+
   // Boolean indicating if review/complete buttons should be displayed
   @state() _showButtons: boolean = false;
 
@@ -135,6 +138,13 @@ export class BldnPrivRequest extends LitElement {
       margin: 0px 0px 30px 0px;
     }
 
+    #nav-bar {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      align-items: center;
+      padding: 0px 0px 20px 0px;
+    }
+
     #new-dmd-ctr {
       display: flex;
       column-gap: 10px;
@@ -167,11 +177,23 @@ export class BldnPrivRequest extends LitElement {
       padding: 40px 0px;
     }
 
+    #back-btn {
+      grid-column: 1/2;
+      width: fit-content;
+      background: none;
+      border: none;
+      font-size: 18px;
+    }
+
+    #back-btn-txt:hover {
+      text-decoration: underline;
+    }
+
     .req-hdr {
       font-weight: bold;
       font-size: 24px;
       text-align: center;
-      padding-bottom: 20px;
+      grid-column: 2/3;
     }
 
     .new-dmd-btn {
@@ -292,7 +314,13 @@ export class BldnPrivRequest extends LitElement {
   render() {
     return html`
       <div id="priv-req-ctr">
-        <div class="req-hdr">${msg('My Privacy Request')}</div>
+        <div id="nav-bar">
+          <button id="back-btn">
+            <span>&lt; </span>
+            <span id="back-btn-txt">Back</span>
+          </button>
+          <div class="req-hdr">${msg('My Privacy Request')}</div>
+        </div>
         <request-progress-indicator></request-progress-indicator>
 
         <!-- BUILD AND REVIEW STATE -->
