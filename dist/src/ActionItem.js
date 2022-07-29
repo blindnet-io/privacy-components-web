@@ -1,11 +1,8 @@
 import { __decorate } from "tslib";
+import { localized } from '@lit/localize';
 import { html, css, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-let ActionItem = 
-/**
- * Button element representing a single demand action. Used in the action menu.
- */
-class ActionItem extends LitElement {
+let ActionItem = class ActionItem extends LitElement {
     constructor() {
         super(...arguments);
         // Name of the action, displayed in bold
@@ -33,7 +30,6 @@ class ActionItem extends LitElement {
         ?disabled=${this.disabled}
       >
         <strong>${this.actionName}:</strong> ${this.actionDescription}
-        <!-- <span class="btn-txt"></span> -->
       </button>
     `;
     }
@@ -92,6 +88,8 @@ ActionItem = __decorate([
     /**
      * Button element representing a single demand action. Used in the action menu.
      */
+    ,
+    localized()
 ], ActionItem);
 export { ActionItem };
 //# sourceMappingURL=ActionItem.js.map

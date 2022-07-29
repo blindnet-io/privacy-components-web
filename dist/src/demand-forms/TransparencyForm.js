@@ -3,9 +3,10 @@ import { html, css, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
 import { v4 as uuidv4 } from 'uuid';
+import { msg } from '@lit/localize';
 import '../DemandBuilderDropdownElement.js';
 import '../DemandBuilderTextElement.js';
-import { descriptions } from '../utils/dictionary.js';
+import { ACTION_DESCRIPTIONS } from '../utils/dictionary.js';
 import { DemandState } from '../utils/states.js';
 import { enabledActions } from '../utils/conf.js';
 /**
@@ -110,13 +111,15 @@ let TransparencyForm = class TransparencyForm extends LitElement {
     getEditTemplate() {
         const selectedActions = Object.values(this.demands).map(d => d.action);
         return html `
-      <p id="edit-heading-1"><b>Details of my TRANSPARENCY Demand</b></p>
+      <p id="edit-heading-1">
+        <b>${msg('Details of my TRANSPARENCY Demand')}</b>
+      </p>
       <demand-builder-dropdown-element
         .choices=${this.transparencyActions.map(a => {
             var _a;
             return ({
                 id: a,
-                description: descriptions[a],
+                description: ACTION_DESCRIPTIONS[a](),
                 checked: selectedActions.includes(a),
                 disabled: (_a = !enabledActions.get(a)) !== null && _a !== void 0 ? _a : true,
             });
@@ -132,14 +135,14 @@ let TransparencyForm = class TransparencyForm extends LitElement {
     getReviewTemplate() {
         return html `
       <div id="dmd-ctr">
-        <p id="review-hd-1"><b>TRANSPARENCY demand</b></p>
-        <p>I want to know:</p>
+        <p id="review-hd-1"><b>${msg('TRANSPARENCY demand')}</b></p>
+        <p>${msg('I want to know:')}</p>
         <ul id="transparency-demand-review-list">
-          ${Array.from(this.demands.values()).map((a) => html ` <li>${descriptions[a.action]}</li> `)}
+          ${Array.from(this.demands.values()).map((a) => html ` <li><b>${ACTION_DESCRIPTIONS[a.action]()}</b></li> `)}
         </ul>
         ${this._extraMessage
             ? html `
-              <p>Plus additional info:</p>
+              <p>${msg('Plus additional info:')}</p>
               <p id="extra-msg-txt"><i>${this._extraMessage}</i></p>
             `
             : null}

@@ -1,16 +1,17 @@
 import { ACTION } from './priv-terms.js';
-export interface PrivacyResponse {
-    responseId: string;
-    inResponseTo: string;
+export interface DemandResponse {
+    demand_id: string;
     date: string;
-    system: string;
-    'requested-action'?: ACTION;
-    dataSubject?: string[];
-    status: string;
-    motive?: string[];
-    answers?: string[];
+    requested_action: ACTION;
+    status?: string;
+    answer?: Object;
     message?: string;
     lang?: string;
-    includes?: PrivacyResponse[];
-    data?: object[];
+    data?: Object;
+}
+export interface PrivacyResponse {
+    response_id: string;
+    request_id: string;
+    date: string;
+    demands: DemandResponse[];
 }

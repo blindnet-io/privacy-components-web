@@ -3,9 +3,10 @@ import { __decorate } from "tslib";
 import { html, css, LitElement } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
+import { localized, msg } from '@lit/localize';
 import { ACTION } from './models/priv-terms.js';
 import { enabledActions } from './utils/conf.js';
-import { descriptions } from './utils/dictionary.js';
+import { ACTION_TITLES, ACTION_DESCRIPTIONS } from './utils/dictionary.js';
 import { DemandState } from './utils/states.js';
 import './DemandBuilderActionMenu.js';
 import './DemandBuilderDropdownElement.js';
@@ -54,12 +55,12 @@ let DemandBuilder = class DemandBuilder extends LitElement {
     getSidebarTemplate() {
         return html `
       <div id="sidebar">
-        <p id="sidebar-title">Type of demand:</p>
+        <p id="sidebar-title">${msg('Type of demand:')}</p>
         ${this.includedActions.map((a, i) => html `
             <demand-builder-sidebar-item
               id=${a}
-              title=${a}
-              description=${descriptions[a]}
+              title=${ACTION_TITLES[a]()}
+              description=${ACTION_DESCRIPTIONS[a]()}
               ?disabled=${!enabledActions.get(a)}
               ?checked=${i === this._sidebarSelectedIndex}
             ></demand-builder-sidebar-item>
@@ -160,7 +161,8 @@ __decorate([
     state()
 ], DemandBuilder.prototype, "_sidebarSelectedIndex", void 0);
 DemandBuilder = __decorate([
-    customElement('demand-builder')
+    customElement('demand-builder'),
+    localized()
 ], DemandBuilder);
 export { DemandBuilder };
 //# sourceMappingURL=DemandBuilder.js.map

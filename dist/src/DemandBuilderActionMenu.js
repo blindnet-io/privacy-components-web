@@ -1,8 +1,9 @@
 import { __decorate } from "tslib";
 import { html, css, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { localized } from '@lit/localize';
+import { ACTION_TITLES, ACTION_DESCRIPTIONS } from './utils/dictionary.js';
 import './ActionItem.js';
-import { descriptions } from './utils/dictionary.js';
 import { enabledActions } from './utils/conf.js';
 /**
  * Menu of clickable action types
@@ -20,8 +21,8 @@ let DemandBuilerActionMenu = class DemandBuilerActionMenu extends LitElement {
       <div class="prompt-heading">${this.prompt}</div>
       <div class="actions-container">
         ${this.includedActions.map(a => html `<action-item
-              action-name=${a}
-              action-description=${descriptions[a]}
+              action-name=${ACTION_TITLES[a]()}
+              action-description=${ACTION_DESCRIPTIONS[a]()}
               ?disabled=${!enabledActions.get(a)}
             ></action-item>`)}
       </div>
@@ -53,6 +54,7 @@ __decorate([
     property({ attribute: false })
 ], DemandBuilerActionMenu.prototype, "includedActions", void 0);
 DemandBuilerActionMenu = __decorate([
+    localized(),
     customElement('demand-builder-action-menu')
 ], DemandBuilerActionMenu);
 export { DemandBuilerActionMenu };
