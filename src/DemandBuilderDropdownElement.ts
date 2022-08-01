@@ -1,5 +1,6 @@
 import { html, css, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { DropdownState } from './utils/states.js';
 
 /**
  * Collapsable element displaying a prompt and list of choices, each with a checkbox.
@@ -19,50 +20,47 @@ export class DemandBuilderDropdownElement extends LitElement {
   }[] = [];
 
   // Boolean indicating if the choices should be displayed initially
-  @property({ type: Boolean, reflect: true }) open: boolean = true;
+  @property({ type: Number, reflect: true, attribute: 'dropdown-state' })
+  dropdownState: DropdownState = DropdownState.CLOSED;
 
   private _selectedChoices = new Set<string>();
 
   static styles = css`
     :host {
       display: grid;
-      grid-template-columns: repeat(8, 1fr);
       border: 2px solid #000;
       border-radius: 10px;
       padding: 20px 40px 20px 40px;
     }
 
-    :host([open]) {
+    :host([dropdown-state='2']) {
       padding: 20px 40px 40px 40px;
     }
 
-    :host([open]) #choices-list {
+    :host([dropdown-state='2']) #choices-list {
       display: grid;
     }
 
-    :host([open]) #drpdwn-collapse-btn {
+    :host([dropdown-state='2']) #drpdwn-collapse-btn {
       background: url('/src/assets/icons/close_container_arrow.svg');
     }
 
     #prompt {
       display: flex;
-      grid-column: 1/8;
       align-items: center;
     }
 
     #drpdwn-collapse-btn {
-      grid-column: 8/9;
       height: 24px;
       background: url('/src/assets/icons/open_container_arrow.svg');
       width: 24px;
       border: none;
-      justify-self: right;
+      justify-self: center;
     }
 
     #choices-list {
       display: none;
       overflow: hidden;
-      grid-column: 1/9;
       grid-template-columns: 1fr;
       row-gap: 35px;
       padding: 25px 0px 0px 0px;
@@ -106,15 +104,20 @@ export class DemandBuilderDropdownElement extends LitElement {
     }
   }
 
+  handleOpenClick() {
+    if (
+      this.dropdownState === DropdownState.CLOSED ||
+      this.dropdownState === DropdownState.PARTIAL
+    ) {
+      this.dropdownState = DropdownState.OPEN;
+    } else {
+      this.dropdownState = DropdownState.CLOSED;
+    }
+  }
+
   render() {
     return html`
       <p id="prompt">${this.prompt}</p>
-      <button
-        id="drpdwn-collapse-btn"
-        @click=${() => {
-          this.open = !this.open;
-        }}
-      ></button>
       <div id="choices-list">
         ${this.choices.map(
           c => html`
@@ -131,6 +134,7 @@ export class DemandBuilderDropdownElement extends LitElement {
           `
         )}
       </div>
+      <button id="drpdwn-collapse-btn" @click=${this.handleOpenClick}></button>
     `;
   }
 }

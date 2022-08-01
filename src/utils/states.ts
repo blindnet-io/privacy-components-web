@@ -15,3 +15,9 @@ export enum DemandState {
   EDIT,
   REVIEW,
 }
+
+export enum DropdownState {
+  CLOSED,
+  PARTIAL,
+  OPEN,
+}
