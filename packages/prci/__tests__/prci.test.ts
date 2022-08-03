@@ -1,7 +1,7 @@
 // import { html } from 'lit';
 import { expect } from '@open-wc/testing';
 // import { BldnPrivRequest } from '../src/BldnPrivRequest.js';
-import '../src/bldn-priv-request.js';
+import '../src/index.js';
 import { ACTION } from '../src/models/priv-terms.js';
 import { PrivacyRequest } from '../src/models/privacy-request.js';
 import { sendPrivacyRequest } from '../src/utils/privacy-request-api.js';

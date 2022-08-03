@@ -10,17 +10,16 @@
 
 ### Build ###
 
-# Open-WC
-/_site/
-/dist/
+_site/
+dist/
 /out-tsc/
 custom-elements.json
-
-# temp folders
-/.tmp/
-
-# Project specific
-/build/
+.tmp/
+*.cache/
+build/
+xliff/
+generated/
+import-map.json
 
 ### Git ###
 

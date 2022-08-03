@@ -1,22 +1,21 @@
 {
-  "name": "@blindnet/priv-request",
-  "description": "Webcomponent bldn-priv-request for data subjects to create and monitor privacy requests",
+  "name": "@blindnet/pc4w-root",
+  "description": "Collection of Web Components helping developers to execute privacy-by-design and privacy UX.",
   "license": "MIT",
-  "author": "bldn-priv-request",
-  "version": "0.0.0",
-  "main": "dist/src/index.js",
-  "module": "dist/src/index.js",
-  "exports": {
-    ".": "./dist/src/index.js",
-    "./bldn-priv-request.js": "./dist/src/bldn-priv-request.js"
-  },
+  "version": "0.3.0",
+  "private": true,
+  "type": "module",
   "scripts": {
+    "lerna": "lerna",
+    "build:imports": "lerna exec -- \"importly --host=unpkg --lookup=unpkg --semver=minor < package.json > import-map.json\"",
+    "build:localize": "lerna run localize",
+    "build:rollup": "rollup -c",
+    "build": "yarn run build:imports && yarn run build:localize && yarn run build:rollup",
     "analyze": "cem analyze --litelement",
-    "start": "tsc && concurrently -k -r \"tsc --watch --preserveWatchOutput\" \"wds\"",
-    "build": "tsc && yarn analyze --exclude \"dist\" \"build\"",
+    "start": "wds",
     "prepublish": "yarn build",
-    "lint": "eslint --ext .ts,.html . --ignore-path .gitignore && prettier \"**/*.ts\" --check --ignore-path .gitignore",
-    "format": "eslint --ext .ts,.html . --fix --ignore-path .gitignore && prettier \"**/*.ts\" --write --ignore-path .gitignore",
+    "lint": "eslint --ext .ts,.js,.html . --ignore-path .gitignore && prettier \"**/*.{ts,js,json,md}\" --check --ignore-path .gitignore",
+    "format": "eslint --ext .ts,.js,.html . --fix --ignore-path .gitignore && prettier \"**/*.{ts,js,json,md}\" --write --ignore-path .gitignore",
     "test": "tsc && wtr --coverage",
     "test:watch": "tsc && concurrently -k -r \"tsc --watch --preserveWatchOutput\" \"wtr --watch\"",
     "prestorybook": "yarn build",
@@ -24,37 +23,55 @@
     "prestorybook:build": "yarn build",
     "storybook:build": "build-storybook",
     "prebundle": "yarn storybook:build",
-    "bundle": "rimraf build && copyfiles -u 1 -a -E \"storybook-static/*\" \"storybook-static/**/*\" build && copyfiles -a -E \"dist/*\" \"dist/**/*\" build",
-    "localize": "lit-localize extract && lit-localize build"
+    "bundle": "rimraf build && copyfiles -u 1 -a -E \"storybook-static/*\" \"storybook-static/**/*\" build && copyfiles -a -E \"dist/*\" \"dist/**/*\" build"
   },
   "dependencies": {
     "@lit/localize": "^0.11.3",
+    "@rollup/plugin-alias": "^3.1.9",
     "lit": "^2.0.2",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@custom-elements-manifest/analyzer": "^0.4.17",
+    "@lerna/batch-packages": "^3.16.0",
     "@lit/localize-tools": "^0.6.5",
     "@open-wc/eslint-config": "^4.3.0",
     "@open-wc/testing": "next",
+    "@rollup/plugin-node-resolve": "^13.3.0",
+    "@rollup/plugin-typescript": "^8.3.4",
     "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
     "@web/dev-server": "^0.1.28",
     "@web/dev-server-storybook": "next",
+    "@web/rollup-plugin-import-meta-assets": "^1.0.7",
     "@web/test-runner": "next",
     "concurrently": "^5.3.0",
     "copyfiles": "^2.4.1",
+    "deepmerge": "^4.2.2",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
+    "estree-walker": "^3.0.1",
+    "execa": "^6.1.0",
+    "glob": "^8.0.3",
     "husky": "^4.3.8",
+    "importly": "^0.2.0",
+    "lerna": "^4.0.0",
     "lint-staged": "^10.5.4",
+    "magic-string": "^0.26.2",
+    "minimist": "^1.2.6",
     "prettier": "^2.4.1",
+    "read-pkg": "^7.1.0",
     "rimraf": "^3.0.2",
+    "rollup": "^2.77.2",
+    "rollup-plugin-delete": "^2.0.0",
+    "rollup-plugin-filesize": "^9.1.2",
+    "rollup-plugin-import-map": "^2.2.2",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-unpkg": "^0.1.0",
     "tslib": "^2.3.1",
-    "typescript": "^4.5.2"
+    "typescript": "^4.7.4"
   },
-  "customElements": "custom-elements.json",
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
     "extends": [
@@ -97,6 +114,16 @@
     "*.ts": [
       "eslint --fix",
       "prettier --write"
+    ]
+  },
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ],
+    "nohoist": [
+      "@lit/**",
+      "lit",
+      "uuid"
     ]
   }
 }
