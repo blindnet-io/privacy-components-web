@@ -1,7 +1,7 @@
-import { html, TemplateResult } from 'lit';
-import '../packages/prci/src/index.ts';
-import { allLocales } from '../packages/prci/src/generated/locale-codes.js';
-import { setLocale } from '../packages/prci/src/utils/localization.js';
+import { html } from 'lit';
+import '../packages/prci/dist/index.js';
+import { allLocales } from '../packages/prci/dist/generated/locale-codes.js';
+import { setLocale } from '../packages/prci/dist/utils/localization.js';
 
 export default {
   title: 'BldnPrivRequest',
@@ -20,22 +20,11 @@ export default {
   },
 };
 
-interface Story<T> {
-  (args: T): TemplateResult;
-  args?: Partial<T>;
-  argTypes?: Record<string, unknown>;
-}
-
-interface ArgTypes {
-  actions?: string;
-  locale?: string;
-}
-
-const Template: Story<ArgTypes> = ({ actions }: ArgTypes) => html`
+const Template = ({ actions }) => html`
   <bldn-priv-request actions="${actions || ''}"></bldn-priv-request>
 `;
 
-const LocaleTemplate: Story<ArgTypes> = ({ locale }: ArgTypes) => {
+const LocaleTemplate = ({ locale }) => {
   setLocale(locale || 'fr');
   return html` <bldn-priv-request></bldn-priv-request> `;
 };
