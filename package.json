@@ -15,8 +15,8 @@
     "analyze": "lerna exec -- \"cem analyze --litelement\"",
     "start": "wds",
     "prepublish": "yarn build",
-    "lint": "eslint --ext .ts,.js,.html . --ignore-path .gitignore && prettier \"**/*.{ts,js,json,md}\" --check --ignore-path .gitignore",
-    "format": "eslint --ext .ts,.js,.html . --fix --ignore-path .gitignore && prettier \"**/*.{ts,js,json,md}\" --write --ignore-path .gitignore",
+    "lint": "eslint --ext .ts,.js,.cjs,.mjs,.html . --ignore-path .gitignore && prettier \"**/*.{ts,js,cjs,mjs,json,md}\" --check --ignore-path .gitignore",
+    "format": "eslint --ext .ts,.js,.cjs,.mjs,.html . --fix --ignore-path .gitignore && prettier \"**/*.{ts,js,cjs,mjs,json,md}\" --write --ignore-path .gitignore",
     "typecheck": "tsc --noEmit",
     "test": "wtr --coverage",
     "test:watch": "wtr --watch",
@@ -41,7 +41,7 @@
     "@lerna/project": "^5.3.0",
     "@lit/localize-tools": "^0.6.5",
     "@open-wc/eslint-config": "^4.3.0",
-    "@open-wc/testing": "next",
+    "@open-wc/testing": "^3.1.6",
     "@rollup/plugin-node-resolve": "^13.3.0",
     "@rollup/plugin-typescript": "^8.3.4",
     "@types/uuid": "^8.3.4",
@@ -60,6 +60,7 @@
     "eslint-config-prettier": "^8.3.0",
     "estree-walker": "^3.0.1",
     "execa": "^6.1.0",
+    "fast-glob": "^3.2.11",
     "glob": "^8.0.3",
     "husky": "^4.3.8",
     "importly": "^0.2.0",
@@ -79,39 +80,6 @@
     "rollup-plugin-unpkg": "^0.1.0",
     "tslib": "^2.3.1",
     "typescript": "^4.7.4"
-  },
-  "eslintConfig": {
-    "parser": "@typescript-eslint/parser",
-    "extends": [
-      "@open-wc",
-      "prettier"
-    ],
-    "plugins": [
-      "@typescript-eslint"
-    ],
-    "rules": {
-      "no-unused-vars": "off",
-      "class-methods-use-this": "off",
-      "@typescript-eslint/no-unused-vars": [
-        "error"
-      ],
-      "import/no-unresolved": "off",
-      "import/extensions": [
-        "error",
-        "always",
-        {
-          "ignorePackages": true
-        }
-      ],
-      "no-shadow": "off",
-      "@typescript-eslint/no-shadow": [
-        "error"
-      ]
-    }
-  },
-  "prettier": {
-    "singleQuote": true,
-    "arrowParens": "avoid"
   },
   "husky": {
     "hooks": {
