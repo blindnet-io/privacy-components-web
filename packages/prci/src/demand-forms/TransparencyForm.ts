@@ -1,7 +1,6 @@
 import { html, css, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
-import { v4 as uuidv4 } from 'uuid';
 import { msg } from '@lit/localize';
 
 import '../DemandBuilderDropdownElement.js';
@@ -38,7 +37,7 @@ export class TransparencyForm extends LitElement {
 
     this.addEventListener('dropdown-element-add', e => {
       const details = (e as CustomEvent).detail;
-      const demandId = uuidv4();
+      const demandId = self.crypto.randomUUID();
       const demand: Demand = {
         action: details.id,
         message: this._extraMessage,

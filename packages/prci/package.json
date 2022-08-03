@@ -31,7 +31,6 @@
   "homepage": "https://github.com/blindnet-io/wc-priv-request#readme",
   "dependencies": {
     "@lit/localize": "^0.11.3",
-    "lit": "^2.2.8",
-    "uuid": "^8.3.2"
+    "lit": "^2.2.8"
   }
 }
