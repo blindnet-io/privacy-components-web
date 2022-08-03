@@ -37,7 +37,7 @@ export class TransparencyForm extends LitElement {
 
     this.addEventListener('dropdown-element-add', e => {
       const details = (e as CustomEvent).detail;
-      const demandId = self.crypto.randomUUID();
+      const demandId = crypto.randomUUID();
       const demand: Demand = {
         action: details.id,
         message: this._extraMessage,

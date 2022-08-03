@@ -51,7 +51,7 @@ export class BldnPrivRequest extends LitElement {
 
   // Map of ids to demand builder UI components
   @state() _demandBuilders: Map<string, boolean> = new Map<string, boolean>([
-    [self.crypto.randomUUID(), false],
+    [crypto.randomUUID(), false],
   ]);
 
   // Boolean indicating if review/complete buttons should be displayed
@@ -256,7 +256,9 @@ export class BldnPrivRequest extends LitElement {
       ],
     };
     this._demands = new Map<string, Demand>();
-    this._demandBuilders = new Map<string, boolean>([[self.crypto.randomUUID(), false]]);
+    this._demandBuilders = new Map<string, boolean>([
+      [crypto.randomUUID(), false],
+    ]);
     this._showButtons = false;
     this._buttonsClickable = false;
     this._privacyResponse = {

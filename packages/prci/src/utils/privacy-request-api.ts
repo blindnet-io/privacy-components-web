@@ -45,8 +45,6 @@ export async function sendPrivacyRequest(
         'Access-Control-Allow-Origin': '*',
       };
 
-  console.log(JSON.stringify(request));
-
   return fetch(url, {
     method: 'POST',
     headers,
