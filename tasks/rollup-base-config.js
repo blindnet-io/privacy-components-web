@@ -6,6 +6,8 @@ import filesizePlugin from 'rollup-plugin-filesize';
 import { terser } from 'rollup-plugin-terser';
 import typescript from '@rollup/plugin-typescript';
 import del from 'rollup-plugin-delete';
+import minifyHTML from 'rollup-plugin-minify-html-literals';
+
 
 export const directories = {
   output: 'dist',
@@ -123,6 +125,7 @@ export function genBaseBundleConfig(basePath) {
       terser({
         output: { comments: false },
       }),
+      minifyHTML(),
       filesize(),
     ],
   };
