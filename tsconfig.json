@@ -15,6 +15,16 @@
     "rootDir": "./",
     "declaration": true,
     "incremental": true,
+    "allowJs": true,
+    "checkJs": true
   },
-  "include": ["**/*.ts"]
+  "include": ["**/*.ts", "**/*.js"],
+  "exclude": [
+    "**/dist/**/*",
+    "build/**/*",
+    "storybook-static/**/*",
+    "**/node_modules/**/*",
+    "**/stories-build/**",
+    "**/coverage/**"
+  ]
 }

@@ -8,6 +8,10 @@ import typescript from '@rollup/plugin-typescript';
 import del from 'rollup-plugin-delete';
 import minifyHTML from 'rollup-plugin-minify-html-literals';
 
+/**
+ * @typedef {import("rollup").RollupOptions} RollupOptions
+ */
+
 
 export const directories = {
   output: 'dist',
@@ -15,6 +19,11 @@ export const directories = {
   reports: 'stats',
 };
 
+/**
+ *
+ * @param {{ basePath: string, forceSkypack?: boolean}} param0
+ * @returns
+ */
 export function configFromImportMaps({ basePath, forceSkypack = false }) {
   const { imports } = JSON.parse(
     fs.readFileSync(path.join(basePath, 'import-map.json'), 'utf8')
@@ -96,15 +105,17 @@ export function filesize() {
 
 /**
  * clean output directory (only run for the first build)
+ * @param {string} basePath
  */
 export function clean(basePath) {
   return del({ targets: `${basePath}/${directories.output}/*` });
 }
 
 /**
- * base config for bundled esm build for CDN
+ * base config for bundled esm build for CDN$
  *
- * @type {RollupOptions}
+ * @param {string} basePath
+ * @returns {RollupOptions}
  */
 export function genBaseBundleConfig(basePath) {
   return {

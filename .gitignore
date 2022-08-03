@@ -20,6 +20,7 @@ build/
 xliff/
 generated/
 import-map.json
+stories-build/
 
 ### Git ###
 

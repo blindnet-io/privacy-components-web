@@ -14,9 +14,12 @@ import {
 
 /**
  * @typedef {import("rollup").RollupOptions} RollupOptions
+ * @typedef {import("yargs-parser").Arguments} CommandLineArgs
  */
 
 /**
+ * @param {CommandLineArgs} commandLineArgs
+ *
  * @return {Promise<RollupOptions[]>}
  */
 async function main(commandLineArgs) {
@@ -89,6 +92,7 @@ async function main(commandLineArgs) {
               external,
               output: [
                 {
+                  // @ts-ignore
                   ...baseBundleConfig.output[0],
                   file: path.join(
                     basePath,
@@ -104,6 +108,7 @@ async function main(commandLineArgs) {
               ...baseBundleConfig,
               output: [
                 {
+                  // @ts-ignore
                   ...baseBundleConfig.output[0],
                   file: path.join(
                     basePath,
@@ -112,7 +117,11 @@ async function main(commandLineArgs) {
                   ),
                 },
               ],
-              plugins: [nodeResolve(), ...baseBundleConfig.plugins],
+              plugins: [
+                nodeResolve(),
+                // @ts-ignore
+                ...baseBundleConfig.plugins
+              ],
             },
             // bundle with external dependencies pointing to unpkg
             // can be used as an alternative to unpkg's very experimental ?module option, or when self hosting the bundle
@@ -121,6 +130,7 @@ async function main(commandLineArgs) {
               external,
               output: [
                 {
+                  // @ts-ignore
                   ...baseBundleConfig.output[0],
                   file: path.join(
                     basePath,

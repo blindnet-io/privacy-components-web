@@ -1,0 +1,13 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "allowJs": false,
+    "checkJs": false,
+    "rootDir": ".",
+    "outDir": "../stories-build",
+    "sourceMap": false,
+    "inlineSources": false,
+    "declaration": false,
+  },
+  "include": ["**/*.ts"],
+}

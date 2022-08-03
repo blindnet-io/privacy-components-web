@@ -1,10 +1,11 @@
 // import { playwrightLauncher } from '@web/test-runner-playwright';
+import { esbuildPlugin } from '@web/dev-server-esbuild';
 
 const filteredLogs = ['Running in dev mode', 'lit-html is in dev mode'];
 
 export default /** @type {import("@web/test-runner").TestRunnerConfig} */ ({
   /** Test files to run */
-  files: 'dist/test/**/*.test.js',
+  files: ['packages/*/__tests__/**/*.{test,spec}.ts'],
 
   /** Resolve bare module imports */
   nodeResolve: {
@@ -38,4 +39,9 @@ export default /** @type {import("@web/test-runner").TestRunnerConfig} */ ({
   // ],
 
   // See documentation for all available options
+
+  plugins: [
+    // directly use typescript, but without any type checking
+    // see https://modern-web.dev/guides/test-runner/typescript/
+    esbuildPlugin({ ts: true })],
 });
