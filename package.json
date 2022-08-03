@@ -23,7 +23,9 @@
     "prestorybook:build": "yarn build",
     "storybook:build": "build-storybook",
     "prebundle": "yarn storybook:build",
-    "bundle": "rimraf build && copyfiles -u 1 -a -E \"storybook-static/*\" \"storybook-static/**/*\" build && copyfiles -a -E \"dist/*\" \"dist/**/*\" build"
+    "bundle:clean": "rimraf build",
+    "bundle:copy": "copyfiles -u 1 -a -E \"storybook-static/*\" \"storybook-static/**/*\" build && copyfiles -a -E \"demo/*\" \"demo/**/*\" \"packages/**/dist/*\" \"packagfes/**/dist/**/*\" build",
+    "bundle": "yarn bundle:clean && yarn bundle:copy"
   },
   "dependencies": {
     "@lit/localize": "^0.11.3",
