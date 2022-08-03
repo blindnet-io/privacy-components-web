@@ -1,1 +1,0 @@
-const localizer = makeLocalizer(config);
