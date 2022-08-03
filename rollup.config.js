@@ -120,7 +120,7 @@ async function main(commandLineArgs) {
               plugins: [
                 nodeResolve(),
                 // @ts-ignore
-                ...baseBundleConfig.plugins
+                ...baseBundleConfig.plugins,
               ],
             },
             // bundle with external dependencies pointing to unpkg

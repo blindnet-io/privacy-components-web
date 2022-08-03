@@ -43,5 +43,6 @@ export default /** @type {import("@web/test-runner").TestRunnerConfig} */ ({
   plugins: [
     // directly use typescript, but without any type checking
     // see https://modern-web.dev/guides/test-runner/typescript/
-    esbuildPlugin({ ts: true })],
+    esbuildPlugin({ ts: true }),
+  ],
 });

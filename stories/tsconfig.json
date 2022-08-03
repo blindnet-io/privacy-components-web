@@ -7,7 +7,7 @@
     "outDir": "../stories-build",
     "sourceMap": false,
     "inlineSources": false,
-    "declaration": false,
+    "declaration": false
   },
-  "include": ["**/*.ts"],
+  "include": ["**/*.ts"]
 }

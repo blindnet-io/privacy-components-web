@@ -12,7 +12,6 @@ import minifyHTML from 'rollup-plugin-minify-html-literals';
  * @typedef {import("rollup").RollupOptions} RollupOptions
  */
 
-
 export const directories = {
   output: 'dist',
   source: 'src',

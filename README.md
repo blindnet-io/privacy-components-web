@@ -32,7 +32,7 @@ The Privacy Components for the web are implemented as a collection of web compon
 | Component             | Npm Package            | Purpose               |
 | --------------------- | ---------------------- | --------------------- |
 | `<bldn-priv-request>` | @blindnet/priv-request | Make privacy requests |
-| 🚧 👷                 | _and more soon..._        |                       |
+| 🚧 👷                 | _and more soon..._     |                       |
 
 <!-- FIXME: ## Get Started
 
