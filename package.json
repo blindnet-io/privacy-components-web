@@ -14,7 +14,6 @@
     "watch": "yarn run build:rollup --configKeep --watch",
     "analyze": "lerna exec -- \"cem analyze --litelement\"",
     "start": "wds",
-    "prepublish": "yarn build",
     "lint": "eslint --ext .ts,.js,.cjs,.mjs,.html . --ignore-path .gitignore && prettier \"**/*.{ts,js,cjs,mjs,json,md}\" --check --ignore-path .gitignore",
     "format": "eslint --ext .ts,.js,.cjs,.mjs,.html . --fix --ignore-path .gitignore && prettier \"**/*.{ts,js,cjs,mjs,json,md}\" --write --ignore-path .gitignore",
     "typecheck": "tsc --noEmit",
@@ -25,6 +24,10 @@
     "storybook:build-stories": "tsc -p stories",
     "storybook:build": "build-storybook",
     "prebundle": "yarn storybook:build",
+    "validate": "yarn install --check-files && yarn build && yarn lint && yarn typecheck && yarn test",
+    "prepublish:npm": "yarn validate",
+    "publish:npm": "lerna publish",
+    "publish:npm:canary": "lerna publish --canary --no-git-tag-version --no-push --dist-tag prerelease",
     "bundle:clean": "rimraf build",
     "bundle:copy": "copyfiles -u 1 -a -E \"storybook-static/*\" \"storybook-static/**/*\" build && copyfiles -a -E \"demo/*\" \"demo/**/*\" \"packages/**/dist/*\" \"packagfes/**/dist/**/*\" build",
     "bundle": "yarn bundle:clean && yarn bundle:copy"
