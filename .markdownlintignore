@@ -1,0 +1,17 @@
+node_modules/
+build/
+dist/
+refs/
+.vscode
+CHANGELOG.md
+_site/
+dist/
+/out-tsc/
+custom-elements.json
+.tmp/
+*.cache/
+build/
+xliff/
+generated/
+stories-build/
+storybook-static/
