@@ -130,6 +130,7 @@ export function genBaseBundleConfig(basePath) {
         compilerOptions: {
           declaration: false,
           declarationDir: undefined,
+          rootDir: path.join(basePath, directories.source),
         },
       }),
       terser({
