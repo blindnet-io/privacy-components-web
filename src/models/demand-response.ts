@@ -11,4 +11,5 @@ export interface DemandResponse {
   message?: string;
   lang?: string;
   includes: PrivacyResponse[];
+  system: string
 }
