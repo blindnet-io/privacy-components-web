@@ -5,7 +5,7 @@ import { PrivacyResponse } from './privacy-response.js';
 export interface DemandResponse {
   demand_id: string;
   date: string;
-  requested_action: ACTION;
+  action: ACTION;
   status?: string;
   answer?: Object;
   message?: string;
