@@ -1,10 +1,14 @@
 /* eslint-disable camelcase */
-import { DemandResponse } from './demand-response.js';
+import { ACTION, STATUS } from './priv-terms.js';
 
 export interface PrivacyResponse {
-  response_id: string;
-  request_id: string;
+  demand_id: string;
   date: string;
-  email: string;
-  demand: DemandResponse[];
+  action: ACTION;
+  status?: STATUS;
+  answer?: Object;
+  message?: string;
+  lang?: string;
+  includes: PrivacyResponse[];
+  system: string;
 }
