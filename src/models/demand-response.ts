@@ -1,12 +1,12 @@
 /* eslint-disable camelcase */
-import { ACTION } from './priv-terms.js';
+import { ACTION, STATUS } from './priv-terms.js';
 import { PrivacyResponse } from './privacy-response.js';
 
 export interface DemandResponse {
   demand_id: string;
   date: string;
-  requested_action: ACTION;
-  status?: string;
+  action: ACTION;
+  status?: STATUS;
   answer?: Object;
   message?: string;
   lang?: string;
