@@ -4,7 +4,7 @@
 
 ## Usage
 
-```
+```js
 import prci from '@blindnet/prci';
 
 // TODO: DEMONSTRATE API

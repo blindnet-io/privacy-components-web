@@ -168,13 +168,10 @@ The blindnet devkit Privacy Components for the Web project is available under [M
 
 <!-- common URLs -->
 
-[devkit]: https://github.com/blindnet-io/blindnet.dev
 [openness]: https://github.com/blindnet-io/openness-framework
 [product]: https://github.com/blindnet-io/product-management
 [request]: https://github.com/blindnet-io/devrel-management/issues/new?assignees=noelmace&labels=request%2Ctriage&template=request.yml&title=%5BRequest%5D%3A+
 [chat]: https://join.slack.com/t/blindnet/shared_invite/zt-1arqlhqt3-A8dPYXLbrnqz1ZKsz6ItOg
 [twitter]: https://twitter.com/blindnet_io
-[docs]: https://blindnet.dev/docs
-[changelog]: CHANGELOG.md
 [license]: LICENSE
 [coc]: https://github.com/blindnet-io/openness-framework/blob/main/CODE_OF_CONDUCT.md
