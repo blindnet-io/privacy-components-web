@@ -1,0 +1,53 @@
+name: Release
+on:
+  push:
+    branches:
+      - main
+      - develop
+permissions:
+  contents: write
+jobs:
+  release:
+    concurrency: ci-${{ github.ref }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Checkout all branches and tags
+
+      - name: Install dependencies 🔧
+        run: |
+          yarn install
+          yarn lerna bootstrap
+
+      - name: Build 👷‍♀
+        run: |
+          yarn build
+
+      - name: Check ✅
+        run: |
+          yarn lint
+          yarn typecheck
+          yarn test
+
+      - name: Version and publish 📦
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+        run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor}}@users.noreply.github.com"
+
+          if [ ${{ github.base_ref }} = develop ]; then
+            yarn lerna version --conventional-commits --conventional-prerelease --preid beta --yes
+            yarn lerna publish from-git --yes --dist-tag next
+          else
+            yarn lerna version --conventional-commits --conventional-graduate --yes
+            yarn lerna publish from-git --yes
+          fi
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: build
