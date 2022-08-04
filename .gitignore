@@ -80,6 +80,9 @@ node_modules/
 # Optional npm cache directory
 .npm
 
+# npm configuration (use .yarnrc instead)
+.npmrc
+
 # Optional eslint cache
 .eslintcache
 

@@ -75,7 +75,7 @@
     "glob": "^8.0.3",
     "husky": "^4.3.8",
     "importly": "^0.2.0",
-    "lerna": "^4.0.0",
+    "lerna": "^5.3.0",
     "lint-staged": "^10.5.4",
     "magic-string": "^0.26.2",
     "markdownlint-cli": "^0.32.1",
