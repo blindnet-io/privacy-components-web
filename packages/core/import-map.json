@@ -1,0 +1,7 @@
+{
+	"imports": {
+		"lit/": "https://unpkg.com/lit@~2.2.8/",
+		"lit": "https://unpkg.com/lit@~2.2.8/index.js"
+	},
+	"scopes": {}
+}

@@ -152,9 +152,8 @@ export class ResponseView extends LitElement {
     return html`
       <h1>Requested Information</h1>
       <div id="responses-ctr">
-        ${map(this.response.demands, d => {
-          console.log(d);
-          return choose(
+        ${map(this.response.demands, d =>
+          choose(
             d.requested_action,
             [
               [ACTION.ACCESS, () => this.accessTemplate(d)],
@@ -216,8 +215,8 @@ export class ResponseView extends LitElement {
               [ACTION['OTHER.DEMAND'], () => this.otherDemandTemplate(d)],
             ],
             () => html`${msg('ERROR: Invalid Action')}`
-          );
-        })}
+          )
+        )}
       </div>
     `;
   }

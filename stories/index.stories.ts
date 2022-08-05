@@ -1,7 +1,7 @@
 import { html, TemplateResult } from 'lit';
-import '../src/bldn-priv-request.js';
-import { allLocales } from '../src/generated/locale-codes.js';
-import { setLocale } from '../src/utils/localization.js';
+import '../packages/prci/dist/index.js';
+import { allLocales } from '../packages/prci/dist/generated/locale-codes.js';
+import { setLocale } from '../packages/prci/dist/utils/localization.js';
 
 export default {
   title: 'BldnPrivRequest',

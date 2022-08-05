@@ -1,0 +1,47 @@
+{
+  "name": "@blindnet/core",
+  "version": "0.4.0-alpha.1",
+  "description": "Core shared library",
+  "keywords": [],
+  "author": "blindnet <hello@blindnet.io>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blindnet-io/privacy-components-web.git",
+    "directory": "packages/prci"
+  },
+  "bugs": {
+    "url": "https://github.com/blindnet-io/privacy-components-web/issues"
+  },
+  "homepage": "https://github.com/blindnet-io/privacy-components-web#readme",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "module": "dist/index.js",
+  "unpkg": "dist/index.core.min.js",
+  "customElements": "dist/custom-elements.json",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./hello-world": {
+      "types": "./dist/hello-world/hello-world.d.ts",
+      "default": "./dist/hello-world/hello-world.js"
+    }
+  },
+  "directories": {
+    "lib": "dist",
+    "test": "test"
+  },
+  "files": [
+    "dist",
+    "import-map.json"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "lit": "^2.2.8"
+  }
+}

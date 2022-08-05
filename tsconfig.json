@@ -10,12 +10,21 @@
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "importHelpers": true,
-    "outDir": "dist",
     "sourceMap": true,
     "inlineSources": true,
     "rootDir": "./",
     "declaration": true,
-    "incremental": true
+    "incremental": true,
+    "allowJs": true,
+    "checkJs": true
   },
-  "include": ["**/*.ts"]
+  "include": ["**/*.ts", "**/*.js"],
+  "exclude": [
+    "**/dist/**/*",
+    "build/**/*",
+    "storybook-static/**/*",
+    "**/node_modules/**/*",
+    "**/stories-build/**",
+    "**/coverage/**"
+  ]
 }

@@ -1,0 +1,53 @@
+name: Validate
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+
+      - name: Install dependencies 🔧
+        run: |
+          yarn install
+
+      - name: Build 👷‍♀
+        run: |
+          yarn build
+
+      - name: Check ✅
+        run: |
+          yarn lint
+          yarn typecheck
+          yarn test
+
+      # - name: Config Github Registry
+      #   run: |
+      #     echo "@blindnet:registry=https://npm.pkg.github.com/blindnet" > .npmrc
+      #     echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> .npmrc
+
+      # The npm package's scope (@blindnet) HAS TO be the same as the GitHub organization name (blindnet-io)
+      # lerna ERR! E400 scope 'blindnet' in package name '@blindnet/core' does not match repo owner 'blindnet-io' in repository element in package.json
+      # see https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#publishing-a-package
+
+      # Lerna has several issues here:
+      # 1. Lerna canary release add the commit hash to the version number with a '+' prefix, which npm strips out
+      #    Adding the commit hash to the preid is only a temporary hack.
+      #    see https://github.com/lerna/lerna/issues/1893#issuecomment-602691974
+      # 2. Lerna does not support setting an npm auth token using an env var or cli option, so we have to add it to .npmrc
+      - name: Canary publish 📦
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+        run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor}}@users.noreply.github.com"
+          echo "//registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN" > .npmrc
+
+          yarn lerna publish --loglevel silly \
+            --canary --yes --no-git-tag-version --no-push \
+            --dist-tag pr${{ github.event.pull_request.number }} --preid pr${{ github.event.pull_request.number }}-$(git rev-parse --short HEAD)

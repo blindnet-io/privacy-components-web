@@ -1,8 +1,8 @@
 ---
-name: "Epic"
-about: "Define a placeholder for large requirements that should be broken down into specific issues"
-title: "📑 [Epic]:"
-labels: ["type: epic"]
+name: 'Epic'
+about: 'Define a placeholder for large requirements that should be broken down into specific issues'
+title: '📑 [Epic]:'
+labels: ['type: epic']
 ---
 
 ## Description

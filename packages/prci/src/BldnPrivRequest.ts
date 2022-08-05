@@ -1,11 +1,10 @@
 /* eslint-disable no-param-reassign */
 import { html, css, LitElement, PropertyValueMap } from 'lit';
-import { property, state } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 import { map } from 'lit/directives/map.js';
 import { choose } from 'lit/directives/choose.js';
 import { localized, msg } from '@lit/localize';
-import { v4 as uuidv4 } from 'uuid';
 
 import './DemandBuilder.js';
 import './RequestProgressIndicator.js';
@@ -23,6 +22,7 @@ import { getDefaultActions } from './utils/utils.js';
  * Top level component encapsulating a single PrivacyRequest. Contains one or
  * more DemandBuilder elements, each for a single demand action type.
  */
+@customElement('bldn-priv-request')
 @localized()
 export class BldnPrivRequest extends LitElement {
   // JSON string of actions to display
@@ -51,7 +51,7 @@ export class BldnPrivRequest extends LitElement {
 
   // Map of ids to demand builder UI components
   @state() _demandBuilders: Map<string, boolean> = new Map<string, boolean>([
-    [uuidv4(), false],
+    [crypto.randomUUID(), false],
   ]);
 
   // Boolean indicating if review/complete buttons should be displayed
@@ -256,7 +256,9 @@ export class BldnPrivRequest extends LitElement {
       ],
     };
     this._demands = new Map<string, Demand>();
-    this._demandBuilders = new Map<string, boolean>([[uuidv4(), false]]);
+    this._demandBuilders = new Map<string, boolean>([
+      [crypto.randomUUID(), false],
+    ]);
     this._showButtons = false;
     this._buttonsClickable = false;
     this._privacyResponse = {

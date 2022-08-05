@@ -10,17 +10,17 @@
 
 ### Build ###
 
-# Open-WC
-/_site/
-/dist/
+_site/
+dist/
 /out-tsc/
 custom-elements.json
-
-# temp folders
-/.tmp/
-
-# Project specific
-/build/
+.tmp/
+*.cache/
+build/
+xliff/
+generated/
+import-map.json
+stories-build/
 
 ### Git ###
 
@@ -80,6 +80,9 @@ node_modules/
 # Optional npm cache directory
 .npm
 
+# npm configuration (use .yarnrc instead)
+.npmrc
+
 # Optional eslint cache
 .eslintcache
 
@@ -101,6 +104,7 @@ node_modules/
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+package-lock.json
 
 ### StorybookJs ###
 # gitignore template for the Storybook, UI guide for front apps
