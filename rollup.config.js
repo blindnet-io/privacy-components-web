@@ -34,7 +34,7 @@ async function main(commandLineArgs) {
 --configHelp      Print this help message.                                            [boolean]
 --configScope     (Lerna) Include only packages with names matching the given glob.   [string]
 --configIgnore    (Lerna) Exclude packages with names matching the given glob.        [string]
---configRaw       Only run raw (no-blundling) build.                                  [boolean]
+--configRaw       Only run raw (no-bundling) build.                                  [boolean]
 --configKeep      Skip output directory cleaning before build.                        [boolean]
 `);
     process.exit(0);
