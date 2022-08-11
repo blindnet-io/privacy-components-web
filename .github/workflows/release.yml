@@ -25,6 +25,7 @@ jobs:
       - name: Build 👷‍♀
         run: |
           yarn build
+          yarn bundle
 
       - name: Check ✅
         run: |
