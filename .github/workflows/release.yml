@@ -15,7 +15,10 @@ jobs:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0 # Checkout all branches and tags
+          # Checkout all branches and tags
+          fetch-depth: 0
+          # use a dedicated access token to allow bypassing branches restrictions when pushing
+          token: ${{ secrets.BOT_PAT }}
 
       - name: Install dependencies 🔧
         run: |
@@ -24,7 +27,6 @@ jobs:
 
       - name: Build 👷‍♀
         run: |
-          yarn build
           yarn bundle
 
       - name: Check ✅
@@ -40,20 +42,25 @@ jobs:
         with:
           folder: build
 
-      - name: Version and publish 📦
+      - name: Configure git and npm ⚙️
         env:
           # automation token
           # see https://github.com/lerna/lerna/issues/2788#issuecomment-1192788964
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
         run: |
-          git config user.name "${{ github.actor }}"
-          git config user.email "${{ github.actor}}@users.noreply.github.com"
+          git config --global user.name "blindnet bot"
+          git config --global user.email "dev@blindnet.io"
           echo "//registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN" > .npmrc
 
-          if [ ${{ github.base_ref }} = develop ]; then
-            yarn lerna version --conventional-commits --conventional-prerelease --preid beta --yes
-            yarn lerna publish from-git --yes --dist-tag next
-          else
-            yarn lerna version --conventional-commits --conventional-graduate --yes
-            yarn lerna publish from-git --yes
-          fi
+      - name: Version and publish (main) 📦
+        if: github.ref == 'refs/heads/main'
+        run: |
+          yarn lerna version --conventional-commits --conventional-graduate --yes
+          yarn lerna publish from-git --yes
+
+      - name: Version and publish (beta) 📦
+        if: github.ref == 'refs/heads/develop'
+        run: |
+          yarn lerna version --conventional-commits --conventional-prerelease --preid beta --yes
+          git push --follow-tags
+          yarn lerna publish from-git --yes --dist-tag next
