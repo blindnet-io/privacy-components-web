@@ -1,1 +1,0 @@
-{"version":3,"file":"data-subject.js","sourceRoot":"","sources":["../../../src/models/data-subject.ts"],"names":[],"mappings":"","sourcesContent":["export interface DataSubject {\n  id: string;\n  schema: string;\n}\n"]}

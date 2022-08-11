@@ -1,1 +1,0 @@
-{"version":3,"file":"privacy-request.js","sourceRoot":"","sources":["../../../src/models/privacy-request.ts"],"names":[],"mappings":"","sourcesContent":["/* eslint-disable camelcase */\nimport { Demand } from './demand.js';\nimport { DataSubject } from './data-subject.js';\n\nexport interface PrivacyRequest {\n  demands: Demand[];\n  data_subject: DataSubject[];\n}\n"]}
