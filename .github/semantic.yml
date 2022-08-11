@@ -1,0 +1,17 @@
+titleAndCommits: true
+types:
+  - build
+  - ci
+  - docs
+  - feat
+  - fix
+  - perf
+  - refactor
+  - release
+  - test
+  - chore
+scopes:
+  - '@blindnet/prci'
+  - '@blindnet/core'
+allowMergeCommits: true
+targetUrl: 'https://github.com/blindnet-io/privacy-components-web/blob/main/CONTRIBUTING.md#-commit-message-guidelines'
