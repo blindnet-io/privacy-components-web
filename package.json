@@ -28,7 +28,7 @@
     "test": "wtr --coverage",
     "test:watch": "wtr --watch",
     "storybook": "concurrently -k -r \"tsc --watch --preserveWatchOutput -p stories\" \"wds -c .storybook/server.mjs\"",
-    "prestorybook:build": "yarn build aa yarn storybook:build-stories",
+    "prestorybook:build": "yarn build && yarn storybook:build-stories",
     "storybook:build-stories": "tsc -p stories",
     "storybook:build": "build-storybook",
     "prebundle": "yarn storybook:build",
