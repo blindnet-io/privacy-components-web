@@ -35,6 +35,8 @@ jobs:
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
+        # only update the documentation for stable releases
+        if: github.ref == 'refs/heads/main'
         with:
           folder: build
 
