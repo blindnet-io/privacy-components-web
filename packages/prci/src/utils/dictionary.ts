@@ -74,3 +74,17 @@ export const ACTION_DESCRIPTIONS = {
   'TRANSPARENCY.WHO': () =>
     msg('Who can access the data that the organization has on me'),
 };
+
+export const PROVENANCE_DESCRIPTIONS = {
+  USER: () =>
+    msg(
+      'The data is provided by a user of the system (potentially the Data Subject)'
+    ),
+  'USER.DATA-SUBJECT': () => msg('The data is provided by the Data Subject'),
+  DERIVED: () =>
+    msg(
+      'The data is derived from users actions, extracted from other data or inferred'
+    ),
+  TRANSFERRED: () =>
+    msg('The data is obtained by transfer from another System'),
+};
