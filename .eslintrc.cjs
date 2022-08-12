@@ -11,6 +11,13 @@ const projectDirs = workspaces
     fs.existsSync(path.join(__dirname, projectPath, 'package.json'))
   );
 
+const devDependencies = [
+  '**/test/**/*.{html,js,mjs,ts}',
+  '**/stories/**/*.{html,js,mjs,ts}',
+  '**/*.config.{html,js,mjs,ts}',
+  '**/*.conf.{html,js,mjs,ts}',
+];
+
 module.exports = {
   parser: '@typescript-eslint/parser',
   extends: ['@open-wc', 'prettier'],
@@ -29,6 +36,12 @@ module.exports = {
     ],
     'no-shadow': 'off',
     '@typescript-eslint/no-shadow': ['error'],
+    'import/no-extraneous-dependencies': [
+      'error',
+      {
+        devDependencies: [...devDependencies, 'tasks/*.js'],
+      },
+    ],
   },
   // eslint-plugin-import should support yarn workspaces, but still, apparently not
   // from https://github.com/import-js/eslint-plugin-import/issues/1913#issuecomment-1034025709
@@ -39,13 +52,7 @@ module.exports = {
       'import/no-extraneous-dependencies': [
         'error',
         {
-          devDependencies: [
-            '**/test/**/*.{html,js,mjs,ts}',
-            '**/stories/**/*.{html,js,mjs,ts}',
-            '**/demo/**/*.{html,js,mjs,ts}',
-            '**/*.config.{html,js,mjs,ts}',
-            '**/*.conf.{html,js,mjs,ts}',
-          ],
+          devDependencies,
           packageDir: [__dirname, path.join(__dirname, projectDir)],
         },
       ],
