@@ -42,6 +42,5 @@
     "access": "public"
   },
   "dependencies": {
-    "lit": "^2.2.8"
   }
 }
