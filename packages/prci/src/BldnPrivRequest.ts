@@ -1,8 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { html, css, LitElement, PropertyValueMap } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import { when } from 'lit/directives/when.js';
-import { map } from 'lit/directives/map.js';
 import { choose } from 'lit/directives/choose.js';
 import { localized, msg } from '@lit/localize';
 
@@ -14,7 +12,7 @@ import { ACTION } from './models/priv-terms.js';
 import { PrivacyRequest } from './models/privacy-request.js';
 import { sendPrivacyRequest } from './utils/privacy-request-api.js';
 import { PrivacyResponse } from './models/privacy-response.js';
-import { RequestState, DemandState } from './utils/states.js';
+import { RequestState, ComponentState } from './utils/states.js';
 import { Demand } from './models/demand.js';
 import { getDefaultActions } from './utils/utils.js';
 
@@ -30,6 +28,12 @@ export class BldnPrivRequest extends LitElement {
 
   // Array of actions, given by actions attribute if a valid list was passed, otherwise includes the 9 defaults
   @state() _includedActions: ACTION[] = getDefaultActions();
+
+  // State of the PRCI component
+  @state() _componentState: ComponentState = ComponentState.MENU;
+
+  // Currently selected action
+  @state() _selectedAction: ACTION = ACTION.TRANSPARENCY;
 
   // State of the whole privacy request
   @state() _requestState: RequestState = RequestState.BUILD;
@@ -51,8 +55,12 @@ export class BldnPrivRequest extends LitElement {
 
   // Map of ids to demand builder UI components
   @state() _demandBuilders: Map<string, boolean> = new Map<string, boolean>([
-    [crypto.randomUUID(), false],
+    // eslint-disable-next-line no-restricted-globals
+    [self.crypto.randomUUID(), false],
   ]);
+
+  // Boolean indicating if the back button should be displayed
+  @state() _showBackButton: boolean = false;
 
   // Boolean indicating if review/complete buttons should be displayed
   @state() _showButtons: boolean = false;
@@ -135,6 +143,13 @@ export class BldnPrivRequest extends LitElement {
       margin: 0px 0px 30px 0px;
     }
 
+    #nav-bar {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      align-items: center;
+      padding: 0px 0px 20px 0px;
+    }
+
     #new-dmd-ctr {
       display: flex;
       column-gap: 10px;
@@ -167,11 +182,23 @@ export class BldnPrivRequest extends LitElement {
       padding: 40px 0px;
     }
 
+    #back-btn {
+      grid-column: 1/2;
+      width: fit-content;
+      background: none;
+      border: none;
+      font-size: 18px;
+    }
+
+    #back-btn-txt:hover {
+      text-decoration: underline;
+    }
+
     .req-hdr {
       font-weight: bold;
       font-size: 24px;
       text-align: center;
-      padding-bottom: 20px;
+      grid-column: 2/3;
     }
 
     .new-dmd-btn {
@@ -256,8 +283,9 @@ export class BldnPrivRequest extends LitElement {
       ],
     };
     this._demands = new Map<string, Demand>();
+    // eslint-disable-next-line no-restricted-globals
     this._demandBuilders = new Map<string, boolean>([
-      [crypto.randomUUID(), false],
+      [self.crypto.randomUUID(), false],
     ]);
     this._showButtons = false;
     this._buttonsClickable = false;
@@ -267,6 +295,26 @@ export class BldnPrivRequest extends LitElement {
       date: '',
       demands: [],
     };
+  }
+
+  actionFormFactory(action: ACTION) {
+    return html`
+      ${choose(
+        action,
+        [
+          [ACTION.ACCESS, () => html``],
+          [ACTION.DELETE, () => html``],
+          [ACTION.MODIFY, () => html``],
+          [ACTION.OBJECT, () => html``],
+          [ACTION.PORTABILITY, () => html``],
+          [ACTION.RESTRICT, () => html``],
+          [ACTION.REVOKE, () => html``],
+          [ACTION.TRANSPARENCY, () => html``],
+          [ACTION['OTHER.DEMAND'], () => html``],
+        ],
+        () => html`${msg('Error: Invalid Action')}`
+      )}
+    `;
   }
 
   // Hook into willUpdate lifecycle method to set the included actions state if a valid list of actions is passed as an attribute
@@ -294,90 +342,118 @@ export class BldnPrivRequest extends LitElement {
   render() {
     return html`
       <div id="priv-req-ctr">
-        <div class="req-hdr">${msg('My Privacy Request')}</div>
-        <request-progress-indicator></request-progress-indicator>
+        <!-- Header and navigation -->
+        <div id="nav-bar">
+          <button id="back-btn">
+            <span>&lt; </span>
+            <span id="back-btn-txt">${msg('Back')}</span>
+          </button>
+          <div class="req-hdr">${msg('My Privacy Request')}</div>
+        </div>
 
-        <!-- BUILD AND REVIEW STATE -->
-        ${when(
-          this._requestState === RequestState.BUILD ||
-            this._requestState === RequestState.REVIEW,
-          () => html`
-            ${map(
-              this._demandBuilders.entries(),
-              ([id]) => html`
-                <demand-builder
-                  id=${id}
-                  .includedActions=${this._includedActions}
-                  demand-state=${this._requestState === RequestState.REVIEW
-                    ? DemandState.REVIEW
-                    : DemandState.SELECT_ACTION}
-                ></demand-builder>
-              `
-            )}
-            ${when(
-              this._showButtons,
-              () => html`
-                ${choose(this._requestState, [
-                  [
-                    RequestState.BUILD,
-                    () => html`
-                      <!-- TODO: Uncomment this once multiple demands are supported -->
-                      <!-- <div id="new-dmd-ctr">
-                  <p><strong>I want to add another demand</strong></p>
-                  <button id="new-dmd-btn">+</button>
-                </div> -->
-                      <button
-                        class="nav-btn right-btn"
-                        ?disabled=${!this._buttonsClickable}
-                        @click=${this.handleReviewClick}
-                      >
-                        ${msg('Continue to submit Privacy Request')}
-                      </button>
-                    `,
-                  ],
-                  [
-                    RequestState.REVIEW,
-                    () => html`
-                      <button
-                        class="nav-btn ctr-btn"
-                        ?disabled=${!this._buttonsClickable}
-                        @click=${this.handleSubmitClick}
-                      >
-                        ${msg('Submit Privacy Request')}
-                      </button>
-                    `,
-                  ],
-                ])}
-              `
-            )}
-          `
-        )}
-
-        <!-- Sent state -->
-        ${when(
-          this._requestState === RequestState.SENT,
-          () => html`
-            <strong id="req-sent-hdr" class="ctr-txt"
-              >${msg('Your privacy request has been sent!')}</strong
-            >
-            <p class="ctr-txt">${msg('You may view the response below.')}</p>
-            <button
-              id="restart-btn"
-              class="ctr-txt ctr-btn"
-              href=""
-              @click=${this.handleRestartClick}
-            >
-              ${msg('Submit a new Privacy Request.')}
-            </button>
-          `
-        )}
+        ${choose(this._componentState, [
+          [
+            ComponentState.MENU,
+            () => html`
+              <demand-builder-action-menu></demand-builder-action-menu>
+            `,
+          ],
+          // I think actually we should make action-form the factory, then we can better handle the buttons
+          [
+            ComponentState.EDIT,
+            () => this.actionFormFactory(this._selectedAction),
+          ],
+          [ComponentState.REVIEW, () => html` <review-view></review-view> `],
+          [
+            ComponentState.REQUESTS,
+            () => html` <requests-view></requests-view> `,
+          ],
+          [ComponentState.STATUS, () => html` <status-view></status-view> `],
+          [ComponentState.AUTH, () => html` <auth-view></auth-view> `],
+        ])}
       </div>
-      ${when(
-        this._requestState === RequestState.SENT,
-        () => html`
-          <response-view .response=${this._privacyResponse}></response-view>
-        `
-      )}
     `;
+    //     <!-- BUILD AND REVIEW STATE -->
+    //     ${when(
+    //       this._requestState === RequestState.BUILD ||
+    //         this._requestState === RequestState.REVIEW,
+    //       () => html`
+    //         ${map(
+    //           this._demandBuilders.entries(),
+    //           ([id]) => html`
+    //             <demand-builder
+    //               id=${id}
+    //               .includedActions=${this._includedActions}
+    //               demand-state=${this._requestState === RequestState.REVIEW
+    //                 ? DemandState.REVIEW
+    //                 : DemandState.SELECT_ACTION}
+    //             ></demand-builder>
+    //           `
+    //         )}
+    //         ${when(
+    //           this._showButtons,
+    //           () => html`
+    //             ${choose(this._requestState, [
+    //               [
+    //                 RequestState.BUILD,
+    //                 () => html`
+    //                   <!-- TODO: Uncomment this once multiple demands are supported -->
+    //                   <!-- <div id="new-dmd-ctr">
+    //               <p><strong>I want to add another demand</strong></p>
+    //               <button id="new-dmd-btn">+</button>
+    //             </div> -->
+    //                   <button
+    //                     class="nav-btn right-btn"
+    //                     ?disabled=${!this._buttonsClickable}
+    //                     @click=${this.handleReviewClick}
+    //                   >
+    //                     ${msg('Review Privacy Request')}
+    //                   </button>
+    //                 `,
+    //               ],
+    //               [
+    //                 RequestState.REVIEW,
+    //                 () => html`
+    //                   <button
+    //                     class="nav-btn ctr-btn"
+    //                     ?disabled=${!this._buttonsClickable}
+    //                     @click=${this.handleSubmitClick}
+    //                   >
+    //                     ${msg('Submit Privacy Request')}
+    //                   </button>
+    //                 `,
+    //               ],
+    //             ])}
+    //           `
+    //         )}
+    //       `
+    //     )}
+
+    //     <!-- Sent state -->
+    //     ${when(
+    //       this._requestState === RequestState.SENT,
+    //       () => html`
+    //         <strong id="req-sent-hdr" class="ctr-txt"
+    //           >${msg('Your privacy request has been sent!')}</strong
+    //         >
+    //         <p class="ctr-txt">${msg('You may view the response below.')}</p>
+    //         <button
+    //           id="restart-btn"
+    //           class="ctr-txt ctr-btn"
+    //           href=""
+    //           @click=${this.handleRestartClick}
+    //         >
+    //           ${msg('Submit a new Privacy Request.')}
+    //         </button>
+    //       `
+    //     )}
+    //   </div>
+    //   ${when(
+    //     this._requestState === RequestState.SENT,
+    //     () => html`
+    //       <response-view .response=${this._privacyResponse}></response-view>
+    //     `
+    //   )}
+    // `;
   }
 }
