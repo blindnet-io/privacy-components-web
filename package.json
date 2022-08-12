@@ -14,7 +14,7 @@
     "watch": "yarn run build:rollup --configKeep --watch",
     "analyze": "lerna exec -- \"cem analyze --litelement\"",
     "start": "wds",
-    "preinstall": "node -e \"if(process.env.npm_execpath.indexOf('yarn') === -1) throw new Error('Use Yarn')\"",
+    "preinstall": "node -e \"if(process.env.npm_execpath.indexOf('yarn') === -1) throw new Error('Use yarn')\"",
     "prettier": "prettier \"**/*.{js,css,sass,scss,ts,mjs,cjs,jsx,tsx,html,yml,vue,styl,md,mdx,json}\" --ignore-path .gitignore",
     "lint:md": "markdownlint .",
     "lint:es": "eslint --ext .ts,.js,.tsx,.jsx,.cjs,.mjs,.html . --ignore-path .gitignore",
