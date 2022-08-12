@@ -37,7 +37,7 @@
     "publish:npm:canary": "lerna publish --canary --no-git-tag-version --no-push --dist-tag prerelease",
     "ignore-sync": "ignore-sync .",
     "bundle:clean": "rimraf build",
-    "bundle:copy": "copyfiles -u 1 -a -E \"storybook-static/*\" \"storybook-static/**/*\" build && copyfiles -a -E \"demo/*\" \"demo/**/*\" \"packages/**/dist/*\" \"packages/**/dist/**/*\" build",
+    "bundle:copy": "copyfiles -u 1 -a -E \"storybook-static/*\" \"storybook-static/**/*\" build && copyfiles -a -E \"demos/static/*\" \"demos/static/**/*\" \"packages/**/dist/*\" \"packages/**/dist/**/*\" build",
     "bundle": "yarn bundle:clean && yarn bundle:copy"
   },
   "dependencies": {
@@ -114,7 +114,8 @@
   },
   "workspaces": {
     "packages": [
-      "packages/*"
+      "packages/*",
+      "demos/*"
     ],
     "nohoist": [
       "@lit/**",

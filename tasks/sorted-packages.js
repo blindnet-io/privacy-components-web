@@ -15,7 +15,7 @@ import batchPackages from '@lerna/batch-packages';
  *
  * @returns {Promise<any[]>} - sorted list of Package objects that represent packages to be built.
  */
-export async function getSortedPackages(scope, ignore) {
+export async function getSortedPackages(scope = '@blindnet/*', ignore) {
   const packages = await getPackages(__dirname);
   const filtered = filterPackages(packages, scope, ignore, false);
 
