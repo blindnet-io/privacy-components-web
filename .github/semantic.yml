@@ -14,5 +14,7 @@ scopes:
   - '@blindnet/dci'
   - '@blindnet/prci'
   - '@blindnet/core'
+  - '@blindnet-demos/devkit-simple-tutorial'
+  - '@blindnet-demos/static'
 allowMergeCommits: true
 targetUrl: 'https://github.com/blindnet-io/privacy-components-web/blob/main/CONTRIBUTING.md#-commit-message-guidelines'

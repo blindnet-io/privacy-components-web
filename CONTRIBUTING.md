@@ -10,9 +10,19 @@ This guide is here to help you master all parts of our development workflow, so 
 >
 > Just [open an issue][new-issue] or a simple informal [DevRel Request][request] anytime you have a suggestion to make or a discussion to start, and we'll make sure to quickly find the best solution for you.
 
-## Get Started
+## Prerequisites
 
 This project only requires Git, [classic Yarn (v1)](https://classic.yarnpkg.com/en/docs/install#debian-stable) and [Node.js v16](https://nodejs.org/).
+
+> **Note**
+>
+> We recommend using [nvm](https://github.com/nvm-sh/nvm) to install and use Node.js with this project.
+>
+> Just run `nvm install` (without any other option) at the root of this repository to install the recommended version of Node.js, then `nvm use` to use it.
+>
+> You can then the run `npm i -g yarn` to install classic Yarn in this specific version of Node.js.
+
+## Get Started
 
 You first need to [fork this repository](https://github.com/blindnet-io/privacy-components-web/fork) and clone your fork locally:
 
@@ -20,7 +30,7 @@ You first need to [fork this repository](https://github.com/blindnet-io/privacy-
 git clone git@github.com:{{your-username}}/privacy-components-web.git
 ```
 
-Then, go to the root directory of your local clone, and install the dependencies **with classic Yarn** (_Yarn 2+ and npm and aren't supported_), and link local packages together [using Lerna](https://github.com/lerna/lerna/tree/main/commands/bootstrap):
+Then, go to the root directory of your local clone, install the dependencies **with classic Yarn** (_Yarn 2+ and npm aren't supported_), and link local packages together [using Lerna](https://github.com/lerna/lerna/tree/main/commands/bootstrap):
 
 > Lerna is part of this project's development dependencies, so you don't need to install it yourself.
 
@@ -32,7 +42,7 @@ yarn lerna bootstrap
 
 > **Note**
 >
-> We also recommend using VS Code and provide a [recommend list of extensions](https://code.visualstudio.com/docs/editor/extension-marketplace#_workspace-recommended-extensions) for it, but you can use any IDE or editor to contribute to this project.
+> We also recommend using VS Code and provide a [recommended list of extensions](https://code.visualstudio.com/docs/editor/extension-marketplace#_workspace-recommended-extensions) for it, but you can use any IDE or editor to contribute to this project.
 
 ## Storybook
 
@@ -131,10 +141,6 @@ For the complete list of options, run: `yarn build:rollup --configHelp`
 > This project only supports and provides [ESM](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) packages for web browsers.<br/>
 > No [CJS](https://nodejs.org/docs/latest/api/modules.html), [AMD](https://github.com/amdjs/amdjs-api/blob/master/AMD.md) or Node.js specific code/package can be used as a dependency.
 
-## Tooling configs
-
-For most of the tools, the configuration is in the `package.json` to reduce the amount of files in your project.
-
 ## <a name="workflow"></a> Workflow & Releases
 
 This project follows a "permissive" [gitflow](https://danielkummer.github.io/git-flow-cheatsheet/), with:
@@ -211,6 +217,8 @@ The following is the list of supported scopes:
 - **@blindnet/core**
 - **@blindnet/prci**
 - **@blindnet/dci**
+- **@blindnet-demos/devkit-simple-tutorial**
+- **@blindnet-demos/static**
 
 ### Subject
 
