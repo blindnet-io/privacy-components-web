@@ -64,11 +64,19 @@ To execute a single test run:
 npm run test
 ```
 
-To run the tests in interactive watch mode run:
+To run the tests on packages in interactive watch mode run:
 
 ```bash
-npm run test:watch
+npm run test:packages:watch
 ```
+
+> **Note**
+>
+> As our demos needs to be self-sufficient, we run their tests using their own "test" npm scripts in parallel using `lerna run`.
+> However, web-test-runner [can't run in watch mode in a non-interactive (TTY) terminal](https://github.com/modernweb-dev/web/issues/19).
+> This mean you can't run both packages and demos tests simultaneously in watch mode.
+>
+> Instead, you should go to the directory where the demo you want to contribute to is developed (e.g. `/demos/devkit-simple-tutorial`) and directly run all the specific npm scripts you want their (including `test:watch` if it exists).
 
 ## <a name="linting"></a> Linting & Formatting
 
