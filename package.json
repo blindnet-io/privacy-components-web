@@ -2,7 +2,6 @@
   "name": "@blindnet/pc4w-root",
   "description": "Collection of Web Components helping developers to execute privacy-by-design and privacy UX.",
   "license": "MIT",
-  "version": "0.3.0",
   "private": true,
   "type": "module",
   "scripts": {
