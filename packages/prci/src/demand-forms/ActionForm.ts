@@ -4,7 +4,7 @@ import { property } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
 import { Demand } from '../models/demand.js';
 import { buttonStyles } from '../styles.js';
-import { DemandState } from '../utils/states.js';
+import { ComponentState, DemandState } from '../utils/states.js';
 
 export abstract class ActionForm extends LitElement {
   @property({ type: Number, attribute: 'demand-state' })
@@ -81,7 +81,28 @@ export abstract class ActionForm extends LitElement {
 
   handleBackClick() {}
 
-  handleAddClick() {}
+  /**
+   * On add click validate and add data then move to review
+   */
+  handleAddClick() {
+    if (this.validate()) {
+      this.setMultipleDemands(this.demands);
+      this.dispatchEvent(
+        new CustomEvent('component-state-change', {
+          bubbles: true,
+          composed: true,
+          detail: {
+            newState: ComponentState.REVIEW,
+          },
+        })
+      );
+    }
+  }
+
+  /**
+   * Validate data entered before adding to Privacy Request
+   */
+  abstract validate(): boolean;
 
   /**
    * Get the edit template for this action

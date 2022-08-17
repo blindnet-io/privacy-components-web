@@ -148,6 +148,10 @@ export class TransparencyForm extends ActionForm {
 
   handleAdditionalMessageInput() {}
 
+  validate(): boolean {
+    return true;
+  }
+
   getEditTemplate(): TemplateResult<1 | 2> {
     const selectedActions = Object.values(this.demands).map(d => d.action);
     return html`

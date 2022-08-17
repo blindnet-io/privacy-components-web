@@ -63,10 +63,18 @@ export class BldnPrivRequest extends LitElement {
   constructor() {
     super();
 
-    // Action menu listener
-    this.addEventListener('action-menu-click', () => {
-      this._selectedAction = ACTION.TRANSPARENCY;
-      this._componentState = ComponentState.EDIT;
+    // State change listener
+    this.addEventListener('component-state-change', e => {
+      const details = (e as CustomEvent).detail;
+      this._componentState = details.newState;
+
+      switch (this._componentState) {
+        case ComponentState.EDIT:
+          this._selectedAction = details.action;
+          break;
+        default:
+          break;
+      }
     });
 
     // Demand update listeners
