@@ -60,7 +60,7 @@ export class ActionItem extends LitElement {
   `;
 
   handleClick() {
-    const event = new CustomEvent('demand-action-menu-click', {
+    const event = new CustomEvent('action-menu-click', {
       bubbles: true,
       composed: true,
       detail: {
