@@ -55,11 +55,11 @@ jobs:
       - name: Version and publish (main) 📦
         if: github.ref == 'refs/heads/main'
         run: |
-          yarn lerna version --conventional-commits --conventional-graduate --yes
+          yarn lerna version --conventional-graduate --force-publish --yes
           yarn lerna publish from-git --yes
 
       - name: Version and publish (beta) 📦
         if: github.ref == 'refs/heads/develop'
         run: |
-          yarn lerna version --conventional-commits --conventional-prerelease --preid beta --yes
+          yarn lerna version --conventional-prerelease --preid beta --yes
           yarn lerna publish from-git --yes --dist-tag next

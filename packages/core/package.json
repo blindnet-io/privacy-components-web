@@ -1,6 +1,6 @@
 {
   "name": "@blindnet/core",
-  "version": "0.4.0-beta.0",
+  "version": "0.4.0-beta.1",
   "description": "Core shared library",
   "keywords": [],
   "author": "blindnet <hello@blindnet.io>",
@@ -40,8 +40,5 @@
   ],
   "publishConfig": {
     "access": "public"
-  },
-  "dependencies": {
-    "lit": "^2.2.8"
   }
 }
