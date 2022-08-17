@@ -91,6 +91,7 @@ export class TransparencyForm extends ActionForm {
       .additional-msg-ctr {
         display: grid;
         row-gap: 20px;
+        margin: 0px 0px 25px 0px;
       }
     `,
   ];
@@ -117,7 +118,6 @@ export class TransparencyForm extends ActionForm {
         .filter(([_, d]) => d.action === details.id)
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         .forEach(([demandId, _]) => {
-          // this.demands.delete(demandId); // NOTE: Disabling this so state flows down components
           // Fire event to delete a single demand
           this.deleteDemand(demandId);
         });
@@ -183,7 +183,10 @@ export class TransparencyForm extends ActionForm {
           component-mode=${FormComponentState.OPEN}
         ></all-checklist>
       </slotted-dropdown>
-      <slotted-dropdown header=${msg('Additional message (optional)')}>
+      <slotted-dropdown
+        header=${msg('Additional message (optional)')}
+        include-buttons
+      >
         <div class="additional-msg-ctr">
           <span class="">${msg('My additional message:')}</span>
           <span class="italic"
@@ -192,10 +195,11 @@ export class TransparencyForm extends ActionForm {
             )}</span
           >
           <textarea
+            id="additional-msg"
             class="std-txt-area"
             name="paragraph_text"
             cols="50"
-            rows="5"
+            rows="10"
             @input=${this.handleAdditionalMessageInput}
           ></textarea>
         </div>
