@@ -10,7 +10,7 @@ import {
 import { FormComponentState } from './utils/states.js';
 
 /**
- * Collapsable element displaying a prompt and list of choices, each with a checkbox.
+ * Collapsable element with slots for children
  */
 @customElement('slotted-dropdown')
 export class SlottedDropdown extends LitElement {
@@ -49,6 +49,9 @@ export class SlottedDropdown extends LitElement {
     `,
   ];
 
+  /**
+   * Decide the next state when dropdown button is clicked
+   */
   handleButtonClick() {
     if (
       this.dropdownState === FormComponentState.CLOSED ||
