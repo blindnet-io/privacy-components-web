@@ -1,8 +1,6 @@
 import { html, css, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { localized } from '@lit/localize';
-import { ACTION_TITLES, ACTION_DESCRIPTIONS } from './utils/dictionary.js';
-
 import './ActionItem.js';
 import { ACTION } from './models/priv-terms.js';
 import { enabledActions } from './utils/conf.js';
@@ -43,8 +41,7 @@ export class ActionMenu extends LitElement {
           .map(
             a =>
               html`<action-item
-                action-name=${ACTION_TITLES[a]()}
-                action-description=${ACTION_DESCRIPTIONS[a]()}
+                .action=${a}
                 ?disabled=${!enabledActions.get(a)}
               ></action-item>`
           )}

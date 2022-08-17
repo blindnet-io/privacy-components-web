@@ -1,6 +1,9 @@
 import { localized } from '@lit/localize';
 import { html, css, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { ACTION } from './models/priv-terms.js';
+import { ACTION_DESCRIPTIONS, ACTION_TITLES } from './utils/dictionary.js';
+import { ComponentState } from './utils/states.js';
 
 @customElement('action-item')
 /**
@@ -8,12 +11,7 @@ import { customElement, property } from 'lit/decorators.js';
  */
 @localized()
 export class ActionItem extends LitElement {
-  // Name of the action, displayed in bold
-  @property({ type: String, attribute: 'action-name' }) actionName = '';
-
-  // Description of the action, displayed after the actionName
-  @property({ type: String, attribute: 'action-description' })
-  actionDescription = '';
+  @property({ attribute: false }) action: ACTION = ACTION.ACCESS;
 
   // Boolean mapping to the disabled attribute of the HTMLButtonElement
   @property({ type: Boolean }) disabled: boolean = false;
@@ -60,11 +58,12 @@ export class ActionItem extends LitElement {
   `;
 
   handleClick() {
-    const event = new CustomEvent('action-menu-click', {
+    const event = new CustomEvent('component-state-change', {
       bubbles: true,
       composed: true,
       detail: {
-        actionName: this.actionName,
+        newState: ComponentState.EDIT,
+        action: this.action,
       },
     });
     this.dispatchEvent(event);
@@ -77,7 +76,9 @@ export class ActionItem extends LitElement {
         @click="${this.handleClick}"
         ?disabled=${this.disabled}
       >
-        <strong>${this.actionName}:</strong> ${this.actionDescription}
+        <strong>${ACTION_TITLES[this.action]()}:</strong> ${ACTION_DESCRIPTIONS[
+          this.action
+        ]()}
       </button>
     `;
   }
