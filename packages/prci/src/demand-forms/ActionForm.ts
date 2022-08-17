@@ -79,7 +79,20 @@ export abstract class ActionForm extends LitElement {
     );
   }
 
-  handleBackClick() {}
+  /**
+   * Go back to the action menu
+   */
+  handleBackClick() {
+    this.dispatchEvent(
+      new CustomEvent('component-state-change', {
+        bubbles: true,
+        composed: true,
+        detail: {
+          newState: ComponentState.MENU,
+        },
+      })
+    );
+  }
 
   /**
    * On add click validate and add data then move to review
