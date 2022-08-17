@@ -12,15 +12,10 @@ export abstract class ActionForm extends LitElement {
 
   @property({ attribute: false }) demands = new Map<string, Demand>();
 
-  // DELETE?
-  @property({ attribute: false }) demandBuilderId: string = '';
-
   static styles = [
     buttonStyles,
     css`
       :host {
-        /* display: grid;
-        grid-template-columns: repeat(2, 1fr); */
         margin: 0px 0px 0px 0px;
       }
 
@@ -43,37 +38,39 @@ export abstract class ActionForm extends LitElement {
   ];
 
   setDemand(demandId: string, demand: Demand) {
-    this.dispatchEvent(
-      new CustomEvent('demand-set', {
-        bubbles: true,
-        composed: true,
-        detail: {
-          demandId,
-          demand,
-        },
-      })
-    );
+    this.demands.set(demandId, demand);
+    // this.dispatchEvent(
+    //   new CustomEvent('demand-set', {
+    //     bubbles: true,
+    //     composed: true,
+    //     detail: {
+    //       demandId,
+    //       demand,
+    //     },
+    //   })
+    // );
   }
 
-  setMultipleDemands(demands: Map<string, Demand>) {
+  deleteDemand(demandId: string) {
+    this.demands.delete(demandId);
+    // this.dispatchEvent(
+    //   new CustomEvent('demand-delete', {
+    //     bubbles: true,
+    //     composed: true,
+    //     detail: {
+    //       demandId,
+    //     },
+    //   })
+    // );
+  }
+
+  addToPrivacyRequest(demands: Map<string, Demand>) {
     this.dispatchEvent(
       new CustomEvent('demand-set-multiple', {
         bubbles: true,
         composed: true,
         detail: {
           demands,
-        },
-      })
-    );
-  }
-
-  deleteDemand(demandId: string) {
-    this.dispatchEvent(
-      new CustomEvent('demand-delete', {
-        bubbles: true,
-        composed: true,
-        detail: {
-          demandId,
         },
       })
     );
@@ -99,7 +96,7 @@ export abstract class ActionForm extends LitElement {
    */
   handleAddClick() {
     if (this.validate()) {
-      this.setMultipleDemands(this.demands);
+      this.addToPrivacyRequest(this.demands);
       this.dispatchEvent(
         new CustomEvent('component-state-change', {
           bubbles: true,
