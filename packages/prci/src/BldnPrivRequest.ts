@@ -2,19 +2,21 @@
 import { html, css, LitElement, PropertyValueMap } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
+import { when } from 'lit/directives/when.js';
 import { localized, msg } from '@lit/localize';
 
-import './DemandBuilder.js';
-import './RequestProgressIndicator.js';
 import './FrequentRequestsMenu.js';
 import './ResponseView.js';
+import './ActionMenu.js';
+import './demand-forms/TransparencyForm.js';
 import { ACTION } from './models/priv-terms.js';
 import { PrivacyRequest } from './models/privacy-request.js';
 import { sendPrivacyRequest } from './utils/privacy-request-api.js';
 import { PrivacyResponse } from './models/privacy-response.js';
-import { RequestState, ComponentState } from './utils/states.js';
+import { ComponentState } from './utils/states.js';
 import { Demand } from './models/demand.js';
 import { getDefaultActions } from './utils/utils.js';
+import { buttonStyles, containerStyles, textStyles } from './styles.js';
 
 /**
  * Top level component encapsulating a single PrivacyRequest. Contains one or
@@ -35,9 +37,6 @@ export class BldnPrivRequest extends LitElement {
   // Currently selected action
   @state() _selectedAction: ACTION = ACTION.TRANSPARENCY;
 
-  // State of the whole privacy request
-  @state() _requestState: RequestState = RequestState.BUILD;
-
   // Privacy request object, empty until some demands are added
   @state() _privacyRequest: PrivacyRequest = {
     demands: [],
@@ -53,21 +52,6 @@ export class BldnPrivRequest extends LitElement {
   // Map of ids to their specific demands
   @state() _demands: Map<string, Demand> = new Map<string, Demand>();
 
-  // Map of ids to demand builder UI components
-  @state() _demandBuilders: Map<string, boolean> = new Map<string, boolean>([
-    // eslint-disable-next-line no-restricted-globals
-    [self.crypto.randomUUID(), false],
-  ]);
-
-  // Boolean indicating if the back button should be displayed
-  @state() _showBackButton: boolean = false;
-
-  // Boolean indicating if review/complete buttons should be displayed
-  @state() _showButtons: boolean = false;
-
-  // Bolean indicating if review/complete buttons should be clickable
-  @state() _buttonsClickable: boolean = false;
-
   // Response to our request
   @state() _privacyResponse: PrivacyResponse = {
     response_id: '',
@@ -79,172 +63,154 @@ export class BldnPrivRequest extends LitElement {
   constructor() {
     super();
 
+    // Action menu listener
+    this.addEventListener('action-menu-click', () => {
+      this._selectedAction = ACTION.TRANSPARENCY;
+      this._componentState = ComponentState.EDIT;
+    });
+
     // Demand update listeners
     this.addEventListener('demand-set', e => {
       const { demandId, demand } = (e as CustomEvent).detail;
       this._demands.set(demandId, demand);
     });
     this.addEventListener('demand-delete', e => {
-      const { id } = (e as CustomEvent).detail;
-      this._demands.delete(id);
+      const { demandId } = (e as CustomEvent).detail;
+      this._demands.delete(demandId);
     });
     this.addEventListener('demand-set-multiple', e => {
       ((e as CustomEvent).detail.demands as Map<string, Demand>).forEach(
         (demand, id) => this._demands.set(id, demand)
       );
     });
-
-    // Event indicating a demand builder has a valid action form
-    this.addEventListener('demand-validated', e => {
-      const { demandBuilderId } = (e as CustomEvent).detail;
-      this._demandBuilders.set(demandBuilderId, true);
-      // Check if review/submit buttons should be enabled
-      this._buttonsClickable = Array.from(this._demandBuilders.values()).every(
-        b => b === true
-      );
-    });
-
-    // Event indicating a demand builder has an invalid action form
-    this.addEventListener('demand-invalidated', e => {
-      const { demandBuilderId } = (e as CustomEvent).detail;
-      this._demandBuilders.set(demandBuilderId, false);
-      // Check if review/submit buttons should be disabled
-      this._buttonsClickable = Array.from(this._demandBuilders.values()).every(
-        b => b === true
-      );
-    });
-
-    // Unhide review and submit buttons when demand builder has passed the action menu
-    this.addEventListener('menu-done', () => {
-      this._showButtons = true;
-    });
   }
 
-  static styles = css`
-    :host {
-      display: grid;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-        Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-      font-size: 16;
-      max-width: 1350px;
-      background-color: white;
-    }
+  static styles = [
+    buttonStyles,
+    textStyles,
+    containerStyles,
+    css`
+      :host {
+        display: grid;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+          Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        font-size: 16;
+        max-width: 1350px;
+        background-color: white;
+        padding: 30px;
+      }
 
-    :host button {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-        Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    }
+      :host button {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+          Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      }
 
-    #priv-req-ctr {
-      display: grid;
-      border: 2px solid #000;
-      border-radius: 20px;
-      padding: 30px;
-      margin: 0px 0px 30px 0px;
-    }
+      :host p {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+          Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      }
 
-    #nav-bar {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      align-items: center;
-      padding: 0px 0px 20px 0px;
-    }
+      :host span {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+          Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      }
 
-    #new-dmd-ctr {
-      display: flex;
-      column-gap: 10px;
-      margin: 20px 0px 0px 0px;
-      padding: 20px;
-      border: 2px solid #000;
-      border-radius: 20px;
-      align-items: center;
-      justify-content: center;
-    }
+      #content-ctr {
+        display: grid;
+        padding: 40px 60px 40px 60px;
+      }
 
-    #request-progress-indicator {
-      background-color: red;
-    }
+      #nav-bar {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        align-items: center;
+        padding: 0px 0px 20px 0px;
+      }
 
-    #frequent-requests {
-      background-color: green;
-    }
+      #new-dmd-ctr {
+        display: flex;
+        column-gap: 10px;
+        margin: 20px 0px 0px 0px;
+        padding: 20px;
+        border: 2px solid #000;
+        border-radius: 20px;
+        align-items: center;
+        justify-content: center;
+      }
 
-    #restart-btn {
-      background: #fafafa;
-      border: none;
-      width: fit-content;
-      height: fit-content;
-      text-decoration: underline;
-      margin: 20px 0px;
-    }
+      #request-progress-indicator {
+        background-color: red;
+      }
 
-    #req-sent-hdr {
-      padding: 40px 0px;
-    }
+      #frequent-requests {
+        background-color: green;
+      }
 
-    #back-btn {
-      grid-column: 1/2;
-      width: fit-content;
-      background: none;
-      border: none;
-      font-size: 18px;
-    }
+      #restart-btn {
+        background: #fafafa;
+        border: none;
+        width: fit-content;
+        height: fit-content;
+        text-decoration: underline;
+        margin: 20px 0px;
+      }
 
-    #back-btn-txt:hover {
-      text-decoration: underline;
-    }
+      #req-sent-hdr {
+        padding: 40px 0px;
+      }
 
-    .req-hdr {
-      font-weight: bold;
-      font-size: 24px;
-      text-align: center;
-      grid-column: 2/3;
-    }
+      #back-btn {
+        grid-column: 1/2;
+        width: fit-content;
+        background: none;
+        border: none;
+        font-size: 18px;
+      }
 
-    .new-dmd-btn {
-      width: 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-    }
+      #back-btn-txt:hover {
+        text-decoration: underline;
+      }
 
-    .nav-btn {
-      height: 50px;
-      background-color: #18a0fb;
-      border-width: 0px;
-      border-radius: 6px;
-      font-size: 18px;
-      color: #ffffff;
-      width: fit-content;
-      margin: 20px 0px -55px 0px;
-      padding: 0px 25px;
-    }
+      #other-dmd-btn {
+        margin: 20px 0px 0px 0px;
+        float: right;
+      }
 
-    button:disabled {
-      /* background-color: #d9d9d9; */
-      background-color: #a9d1ff;
-    }
+      .req-hdr {
+        font-weight: bold;
+        font-size: 24px;
+        text-align: center;
+        grid-column: 2/3;
+      }
 
-    .ctr-btn {
-      justify-self: center;
-    }
+      .new-dmd-btn {
+        width: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+      }
 
-    .right-btn {
-      justify-self: flex-end;
-      margin: 20px 60px -55px 0px;
-    }
+      button:disabled {
+        /* background-color: #d9d9d9; */
+        background-color: #a9d1ff;
+      }
 
-    .demand-builder-next-btn {
-      grid-column: 2/3;
-      padding-bottom: -50px;
-      margin-bottom: -50px;
-    }
+      .ctr-btn {
+        justify-self: center;
+      }
 
-    .ctr-txt {
-      text-align: center;
-    }
-  `;
+      .demand-builder-next-btn {
+        grid-column: 2/3;
+        padding-bottom: -50px;
+        margin-bottom: -50px;
+      }
+
+      .ctr-txt {
+        text-align: center;
+      }
+    `,
+  ];
 
   handleSubmitClick() {
     // Form privacy request
@@ -258,21 +224,12 @@ export class BldnPrivRequest extends LitElement {
     sendPrivacyRequest(this._privacyRequest, false).then(response => {
       this._privacyResponse = response;
     });
-    this._requestState = RequestState.SENT;
-  }
-
-  /**
-   * Switch request to the review state, causing all demand builders to switch
-   */
-  handleReviewClick() {
-    this._requestState = RequestState.REVIEW;
   }
 
   /**
    * Reset most states
    */
   handleRestartClick() {
-    this._requestState = RequestState.BUILD;
     this._privacyRequest = {
       demands: [{ action: ACTION.TRANSPARENCY }],
       data_subject: [
@@ -283,18 +240,22 @@ export class BldnPrivRequest extends LitElement {
       ],
     };
     this._demands = new Map<string, Demand>();
-    // eslint-disable-next-line no-restricted-globals
-    this._demandBuilders = new Map<string, boolean>([
-      [self.crypto.randomUUID(), false],
-    ]);
-    this._showButtons = false;
-    this._buttonsClickable = false;
     this._privacyResponse = {
       response_id: '',
       request_id: '',
       date: '',
       demands: [],
     };
+  }
+
+  showBackAddButtons(): boolean {
+    return [ComponentState.EDIT, ComponentState.AUTH].includes(
+      this._componentState
+    );
+  }
+
+  showSubmitButton(): boolean {
+    return this._componentState === ComponentState.REVIEW;
   }
 
   actionFormFactory(action: ACTION) {
@@ -309,7 +270,13 @@ export class BldnPrivRequest extends LitElement {
           [ACTION.PORTABILITY, () => html``],
           [ACTION.RESTRICT, () => html``],
           [ACTION.REVOKE, () => html``],
-          [ACTION.TRANSPARENCY, () => html``],
+          [
+            ACTION.TRANSPARENCY,
+            () =>
+              html`<transparency-form
+                .demands=${this._demands}
+              ></transparency-form>`,
+          ],
           [ACTION['OTHER.DEMAND'], () => html``],
         ],
         () => html`${msg('Error: Invalid Action')}`
@@ -342,118 +309,47 @@ export class BldnPrivRequest extends LitElement {
   render() {
     return html`
       <div id="priv-req-ctr">
-        <!-- Header and navigation -->
+        <!-- Heading -->
         <div id="nav-bar">
-          <button id="back-btn">
-            <span>&lt; </span>
-            <span id="back-btn-txt">${msg('Back')}</span>
-          </button>
-          <div class="req-hdr">${msg('My Privacy Request')}</div>
+          <span class="req-hdr">${msg('My Privacy Request')}</span>
         </div>
-
-        ${choose(this._componentState, [
-          [
-            ComponentState.MENU,
-            () => html`
-              <demand-builder-action-menu></demand-builder-action-menu>
-            `,
-          ],
-          // I think actually we should make action-form the factory, then we can better handle the buttons
-          [
-            ComponentState.EDIT,
-            () => this.actionFormFactory(this._selectedAction),
-          ],
-          [ComponentState.REVIEW, () => html` <review-view></review-view> `],
-          [
-            ComponentState.REQUESTS,
-            () => html` <requests-view></requests-view> `,
-          ],
-          [ComponentState.STATUS, () => html` <status-view></status-view> `],
-          [ComponentState.AUTH, () => html` <auth-view></auth-view> `],
-        ])}
+        <!-- Main View -->
+        <div id="content-ctr" class="medium-border">
+          ${choose(this._componentState, [
+            [
+              ComponentState.MENU,
+              () => html`
+                <action-menu
+                  .includedActions=${this._includedActions}
+                ></action-menu>
+              `,
+            ],
+            [
+              ComponentState.EDIT,
+              () => this.actionFormFactory(this._selectedAction),
+            ],
+            [ComponentState.REVIEW, () => html` <review-view></review-view> `],
+            [
+              ComponentState.REQUESTS,
+              () => html` <requests-view></requests-view> `,
+            ],
+            [ComponentState.STATUS, () => html` <status-view></status-view> `],
+            [ComponentState.AUTH, () => html` <auth-view></auth-view> `],
+          ])}
+        </div>
+        <!-- Other Demand Option -->
+        ${when(
+          this._componentState === ComponentState.MENU &&
+            this._includedActions.includes(ACTION['OTHER.DEMAND']),
+          () => html`
+            <button id="other-dmd-btn" class="link-btn medium-font underline">
+              ${msg(
+                'Click here if you want to make some other demand (please note that it might take longer to be answered)'
+              )}
+            </button>
+          `
+        )}
       </div>
     `;
-    //     <!-- BUILD AND REVIEW STATE -->
-    //     ${when(
-    //       this._requestState === RequestState.BUILD ||
-    //         this._requestState === RequestState.REVIEW,
-    //       () => html`
-    //         ${map(
-    //           this._demandBuilders.entries(),
-    //           ([id]) => html`
-    //             <demand-builder
-    //               id=${id}
-    //               .includedActions=${this._includedActions}
-    //               demand-state=${this._requestState === RequestState.REVIEW
-    //                 ? DemandState.REVIEW
-    //                 : DemandState.SELECT_ACTION}
-    //             ></demand-builder>
-    //           `
-    //         )}
-    //         ${when(
-    //           this._showButtons,
-    //           () => html`
-    //             ${choose(this._requestState, [
-    //               [
-    //                 RequestState.BUILD,
-    //                 () => html`
-    //                   <!-- TODO: Uncomment this once multiple demands are supported -->
-    //                   <!-- <div id="new-dmd-ctr">
-    //               <p><strong>I want to add another demand</strong></p>
-    //               <button id="new-dmd-btn">+</button>
-    //             </div> -->
-    //                   <button
-    //                     class="nav-btn right-btn"
-    //                     ?disabled=${!this._buttonsClickable}
-    //                     @click=${this.handleReviewClick}
-    //                   >
-    //                     ${msg('Review Privacy Request')}
-    //                   </button>
-    //                 `,
-    //               ],
-    //               [
-    //                 RequestState.REVIEW,
-    //                 () => html`
-    //                   <button
-    //                     class="nav-btn ctr-btn"
-    //                     ?disabled=${!this._buttonsClickable}
-    //                     @click=${this.handleSubmitClick}
-    //                   >
-    //                     ${msg('Submit Privacy Request')}
-    //                   </button>
-    //                 `,
-    //               ],
-    //             ])}
-    //           `
-    //         )}
-    //       `
-    //     )}
-
-    //     <!-- Sent state -->
-    //     ${when(
-    //       this._requestState === RequestState.SENT,
-    //       () => html`
-    //         <strong id="req-sent-hdr" class="ctr-txt"
-    //           >${msg('Your privacy request has been sent!')}</strong
-    //         >
-    //         <p class="ctr-txt">${msg('You may view the response below.')}</p>
-    //         <button
-    //           id="restart-btn"
-    //           class="ctr-txt ctr-btn"
-    //           href=""
-    //           @click=${this.handleRestartClick}
-    //         >
-    //           ${msg('Submit a new Privacy Request.')}
-    //         </button>
-    //       `
-    //     )}
-    //   </div>
-    //   ${when(
-    //     this._requestState === RequestState.SENT,
-    //     () => html`
-    //       <response-view .response=${this._privacyResponse}></response-view>
-    //     `
-    //   )}
-    // `;
   }
 }
