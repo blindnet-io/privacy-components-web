@@ -121,18 +121,6 @@ export class TransparencyForm extends ActionForm {
           // Fire event to delete a single demand
           this.deleteDemand(demandId);
         });
-
-      // Fire event indicating the demand builder for this form is in an invalid state
-      if (details['none-selected']) {
-        const event = new CustomEvent('demand-invalidated', {
-          bubbles: true,
-          composed: true,
-          detail: {
-            demandBuilderId: this.demandBuilderId,
-          },
-        });
-        this.dispatchEvent(event);
-      }
     });
 
     this.addEventListener('text-element-change', e => {
@@ -142,7 +130,6 @@ export class TransparencyForm extends ActionForm {
         const demand = d;
         demand.message = this.additionalMessage;
       });
-      this.setMultipleDemands(this.demands);
     });
   }
 
