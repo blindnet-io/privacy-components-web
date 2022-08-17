@@ -324,9 +324,9 @@ export class AllChecklist extends LitElement {
         () => html`
           <button
             @click=${this.handleButtonClick}
-            class="ctr-btn ${this.componentMode === FormComponentState.PARTIAL
-              ? 'open-btn'
-              : 'close-btn'}"
+            class="ctr-btn ${this.componentMode === FormComponentState.OPEN
+              ? 'close-btn'
+              : 'open-btn'}"
           ></button>
         `
       )}

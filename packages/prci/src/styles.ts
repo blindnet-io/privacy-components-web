@@ -38,14 +38,16 @@ export const buttonStyles = css`
 
   .open-btn {
     height: 24px;
-    background: url('packages/prci/src/src/assets/icons/open_container_arrow.svg');
+    background: url('packages/prci/src/assets/icons/open_container_arrow.svg')
+      no-repeat;
     width: 24px;
     border: none;
   }
 
   .close-btn {
     height: 24px;
-    background: url('packages/prci/src/assets/icons/close_container_arrow.svg');
+    background: url('packages/prci/src/assets/icons/close_container_arrow.svg')
+      no-repeat;
     width: 24px;
     border: none;
   }
