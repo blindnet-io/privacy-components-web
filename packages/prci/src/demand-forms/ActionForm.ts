@@ -3,6 +3,7 @@ import { css, CSSResultGroup, html, LitElement, TemplateResult } from 'lit';
 import { property } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
 import { Demand } from '../models/demand.js';
+import { ACTION } from '../models/priv-terms.js';
 import { buttonStyles } from '../styles.js';
 import { ComponentState, DemandState } from '../utils/states.js';
 
@@ -10,7 +11,10 @@ export abstract class ActionForm extends LitElement {
   @property({ type: Number, attribute: 'demand-state' })
   demandState: DemandState = DemandState.EDIT_OPEN;
 
-  @property({ attribute: false }) demands = new Map<string, Demand>();
+  @property({ attribute: false }) demands: Demand[] = [];
+
+  // eslint-disable-next-line no-restricted-globals
+  @property({ type: String }) demandGroup = self.crypto.randomUUID();
 
   static styles = [
     buttonStyles,
@@ -37,39 +41,21 @@ export abstract class ActionForm extends LitElement {
     ` as CSSResultGroup,
   ];
 
-  setDemand(demandId: string, demand: Demand) {
-    this.demands.set(demandId, demand);
-    // this.dispatchEvent(
-    //   new CustomEvent('demand-set', {
-    //     bubbles: true,
-    //     composed: true,
-    //     detail: {
-    //       demandId,
-    //       demand,
-    //     },
-    //   })
-    // );
+  setDemand(demand: Demand) {
+    this.demands.push(demand);
   }
 
-  deleteDemand(demandId: string) {
-    this.demands.delete(demandId);
-    // this.dispatchEvent(
-    //   new CustomEvent('demand-delete', {
-    //     bubbles: true,
-    //     composed: true,
-    //     detail: {
-    //       demandId,
-    //     },
-    //   })
-    // );
+  deleteDemand(action: ACTION) {
+    this.demands.filter(d => d.action !== action);
   }
 
-  addToPrivacyRequest(demands: Map<string, Demand>) {
+  addToPrivacyRequest(demandGroupId: string, demands: Demand[]) {
     this.dispatchEvent(
       new CustomEvent('demand-set-multiple', {
         bubbles: true,
         composed: true,
         detail: {
+          demandGroupId,
           demands,
         },
       })
@@ -96,7 +82,7 @@ export abstract class ActionForm extends LitElement {
    */
   handleAddClick() {
     if (this.validate()) {
-      this.addToPrivacyRequest(this.demands);
+      this.addToPrivacyRequest(this.demandGroup, this.demands);
       this.dispatchEvent(
         new CustomEvent('component-state-change', {
           bubbles: true,

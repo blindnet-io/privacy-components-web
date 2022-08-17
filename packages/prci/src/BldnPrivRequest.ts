@@ -49,8 +49,8 @@ export class BldnPrivRequest extends LitElement {
     ],
   };
 
-  // Map of ids to their specific demands
-  @state() _demands: Map<string, Demand> = new Map<string, Demand>();
+  // Map of demand group ids to sets of demands
+  @state() _demands: Map<string, Demand[]> = new Map<string, Demand[]>();
 
   // Response to our request
   @state() _privacyResponse: PrivacyResponse = {
@@ -77,19 +77,10 @@ export class BldnPrivRequest extends LitElement {
       }
     });
 
-    // Demand update listeners
-    this.addEventListener('demand-set', e => {
-      const { demandId, demand } = (e as CustomEvent).detail;
-      this._demands.set(demandId, demand);
-    });
-    this.addEventListener('demand-delete', e => {
-      const { demandId } = (e as CustomEvent).detail;
-      this._demands.delete(demandId);
-    });
+    // Demand update listener
     this.addEventListener('demand-set-multiple', e => {
-      ((e as CustomEvent).detail.demands as Map<string, Demand>).forEach(
-        (demand, id) => this._demands.set(id, demand)
-      );
+      const { demandGroupId, demands } = (e as CustomEvent).detail;
+      this._demands.set(demandGroupId, demands);
     });
   }
 
@@ -221,13 +212,13 @@ export class BldnPrivRequest extends LitElement {
   ];
 
   handleSubmitClick() {
-    // Form privacy request
-    this._privacyRequest.demands = Array.from(this._demands.values()).map(
-      (d, i) => {
-        d.id = i.toString();
-        return d;
-      }
-    );
+    // Form privacy request TODO: Flatten demand map, handle case with multiple transparency demand groups...
+    // this._privacyRequest.demands = Array.from(this._demands.values()).map(
+    //   (d, i) => {
+    //     d.id = i.toString();
+    //     return d;
+    //   }
+    // );
 
     sendPrivacyRequest(this._privacyRequest, false).then(response => {
       this._privacyResponse = response;
@@ -247,7 +238,7 @@ export class BldnPrivRequest extends LitElement {
         },
       ],
     };
-    this._demands = new Map<string, Demand>();
+    this._demands = new Map<string, Demand[]>();
     this._privacyResponse = {
       response_id: '',
       request_id: '',
@@ -280,10 +271,7 @@ export class BldnPrivRequest extends LitElement {
           [ACTION.REVOKE, () => html``],
           [
             ACTION.TRANSPARENCY,
-            () =>
-              html`<transparency-form
-                .demands=${this._demands}
-              ></transparency-form>`,
+            () => html`<transparency-form></transparency-form>`,
           ],
           [ACTION['OTHER.DEMAND'], () => html``],
         ],

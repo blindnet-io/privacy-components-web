@@ -101,26 +101,16 @@ export class TransparencyForm extends ActionForm {
 
     this.addEventListener('transparency-demand-select', e => {
       const details = (e as CustomEvent).detail;
-      // eslint-disable-next-line no-restricted-globals
-      const demandId = self.crypto.randomUUID();
       const demand: Demand = {
         action: details.id,
         message: this.additionalMessage,
       };
-      this.setDemand(demandId, demand);
+      this.setDemand(demand);
     });
 
     this.addEventListener('transparency-demand-deselect', e => {
-      const details = (e as CustomEvent).detail;
-      // Delete demands for the unchecked action
-      Array.from(this.demands)
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        .filter(([_, d]) => d.action === details.id)
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        .forEach(([demandId, _]) => {
-          // Fire event to delete a single demand
-          this.deleteDemand(demandId);
-        });
+      const { actionId } = (e as CustomEvent).detail;
+      this.deleteDemand(actionId);
     });
 
     this.addEventListener('text-element-change', e => {
