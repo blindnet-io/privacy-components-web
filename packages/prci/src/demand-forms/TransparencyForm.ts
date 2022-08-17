@@ -1,17 +1,23 @@
 import { msg } from '@lit/localize';
 import { css, html, TemplateResult } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
 import { Demand } from '../models/demand.js';
 import { ACTION, PROVENANCE } from '../models/priv-terms.js';
-import { buttonStyles, imgStyles, textStyles } from '../styles.js';
+import {
+  buttonStyles,
+  containerStyles,
+  imgStyles,
+  textStyles,
+} from '../styles.js';
 import { enabledActions } from '../utils/conf.js';
 import {
   ACTION_DESCRIPTIONS,
   PROVENANCE_DESCRIPTIONS,
 } from '../utils/dictionary.js';
 import { ActionForm } from './ActionForm.js';
+import { FormComponentState } from '../utils/states.js';
 
-import '../CheckboxDropdown.js';
+import '../SlottedDropdown.js';
 import '../AllChecklist.js';
 
 /**
@@ -24,13 +30,17 @@ import '../AllChecklist.js';
 @customElement('transparency-form')
 export class TransparencyForm extends ActionForm {
   @property({ type: Array, attribute: false })
-  transparencyActions: ACTION[] = [];
+  transparencyActions: ACTION[] = Object.values(ACTION).filter(a =>
+    a.includes('TRANSPARENCY.')
+  );
 
-  @state() _advancedSettings = [];
+  @property({ type: Array }) advancedSettings = [];
 
-  @state() _additionalMessage = undefined;
+  @property({ type: String }) additionalMessage = '';
 
   static styles = [
+    ActionForm.styles,
+    containerStyles,
     buttonStyles,
     textStyles,
     imgStyles,
@@ -38,17 +48,12 @@ export class TransparencyForm extends ActionForm {
       :host {
         display: grid;
         row-gap: 35px;
-        grid-column: 2/5;
         align-content: flex-start;
-        border: 2px solid #000;
-        border-radius: 20px;
-        padding: 40px 60px 40px 60px;
         margin: 0px;
       }
 
-      :host([demand-state='2']) {
-        padding: 30px;
-        grid-column: 1/5;
+      .transparency-options {
+        padding: 40px 40px 20px 40px;
       }
 
       #dmd-ctr {
@@ -67,7 +72,7 @@ export class TransparencyForm extends ActionForm {
       #edit-heading-1 {
         font-weight: bold;
         grid-column: 1/2;
-        padding: 0px 0px 0px 10px;
+        padding: 0px;
       }
 
       #review-heading-1 {
@@ -82,24 +87,29 @@ export class TransparencyForm extends ActionForm {
       p {
         margin: 0px;
       }
+
+      .additional-msg-ctr {
+        display: grid;
+        row-gap: 20px;
+      }
     `,
   ];
 
   constructor() {
     super();
 
-    this.addEventListener('dropdown-element-add', e => {
+    this.addEventListener('transparency-demand-select', e => {
       const details = (e as CustomEvent).detail;
       // eslint-disable-next-line no-restricted-globals
       const demandId = self.crypto.randomUUID();
       const demand: Demand = {
         action: details.id,
-        message: this._additionalMessage,
+        message: this.additionalMessage,
       };
       this.setDemand(demandId, demand);
     });
 
-    this.addEventListener('dropdown-element-delete', e => {
+    this.addEventListener('transparency-demand-deselect', e => {
       const details = (e as CustomEvent).detail;
       // Delete demands for the unchecked action
       Array.from(this.demands)
@@ -126,15 +136,17 @@ export class TransparencyForm extends ActionForm {
     });
 
     this.addEventListener('text-element-change', e => {
-      this._additionalMessage = (e as CustomEvent).detail?.text;
+      this.additionalMessage = (e as CustomEvent).detail?.text;
       // Update existing demands
       this.demands.forEach(d => {
         const demand = d;
-        demand.message = this._additionalMessage;
+        demand.message = this.additionalMessage;
       });
       this.setMultipleDemands(this.demands);
     });
   }
+
+  handleAdditionalMessageInput() {}
 
   getEditTemplate(): TemplateResult<1 | 2> {
     const selectedActions = Object.values(this.demands).map(d => d.action);
@@ -142,15 +154,33 @@ export class TransparencyForm extends ActionForm {
       <p id="edit-heading-1">
         <b>${msg('Details of my TRANSPARENCY Demand')}</b>
       </p>
-      <checkbox-dropdown
-        .choices=${this.transparencyActions.map(a => ({
-          id: a,
-          description: ACTION_DESCRIPTIONS[a](),
-          checked: selectedActions.includes(a),
-          disabled: !enabledActions.get(a) ?? true,
-        }))}
-      ></checkbox-dropdown>
-      <slotted-dropdown header=${msg('Advanced settings')}>
+
+      <div class="light-border transparency-options">
+        <span slot="prompt"><b>${msg('I want to know:')}</b></span>
+        <all-checklist
+          .choices=${this.transparencyActions.map(a => ({
+            id: a,
+            description: ACTION_DESCRIPTIONS[a](),
+            checked: selectedActions.includes(a),
+            disabled: !enabledActions.get(a) ?? true,
+          }))}
+          all-message=${msg(
+            'ALL information related to data processing practices and know if the organization has data on me'
+          )}
+          component-mode=${FormComponentState.CLOSED}
+          event-prefix="transparency-demand"
+          include-buttons
+        ></all-checklist>
+      </div>
+
+      <slotted-dropdown header=${msg('Advanced settings')} include-buttons>
+        <span slot="prompt"
+          ><b
+            >${msg(
+              'My transparency demand applies to the following provenance:'
+            )}</b
+          ></span
+        >
         <all-checklist
           .choices=${Object.values(PROVENANCE).map(p => ({
             id: p,
@@ -158,9 +188,26 @@ export class TransparencyForm extends ActionForm {
             checked: true,
             disabled: false,
           }))}
+          all-message=${msg('All provenances')}
+          component-mode=${FormComponentState.OPEN}
         ></all-checklist>
       </slotted-dropdown>
       <slotted-dropdown header=${msg('Additional message (optional)')}>
+        <div class="additional-msg-ctr">
+          <span class="">${msg('My additional message:')}</span>
+          <span class="italic"
+            >${msg(
+              'Please note that adding a personalized message might lead to the demand taking longer to be processed'
+            )}</span
+          >
+          <textarea
+            class="std-txt-area"
+            name="paragraph_text"
+            cols="50"
+            rows="5"
+            @input=${this.handleAdditionalMessageInput}
+          ></textarea>
+        </div>
       </slotted-dropdown>
     `;
   }
@@ -176,10 +223,10 @@ export class TransparencyForm extends ActionForm {
               html` <li><b>${ACTION_DESCRIPTIONS[a.action]()}</b></li> `
           )}
         </ul>
-        ${this._additionalMessage
+        ${this.additionalMessage
           ? html`
               <p>${msg('Plus additional info:')}</p>
-              <p id="extra-msg-txt"><i>${this._additionalMessage}</i></p>
+              <p id="extra-msg-txt"><i>${this.additionalMessage}</i></p>
             `
           : null}
       </div>
