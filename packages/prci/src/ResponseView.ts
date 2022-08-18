@@ -5,7 +5,7 @@ import { customElement, property } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
 import { map } from 'lit/directives/map.js';
 import { ACTION } from './models/priv-terms.js';
-import { DemandResponse, PrivacyResponse } from './models/privacy-response.js';
+import { PrivacyResponse } from './models/privacy-response.js';
 import { ACTION_DESCRIPTIONS } from './utils/dictionary.js';
 
 /**
@@ -13,18 +13,7 @@ import { ACTION_DESCRIPTIONS } from './utils/dictionary.js';
  */
 @customElement('response-view')
 export class ResponseView extends LitElement {
-  @property({ attribute: false }) response: PrivacyResponse = {
-    response_id: '',
-    request_id: '',
-    date: '',
-    demands: [
-      {
-        demand_id: '',
-        date: '',
-        requested_action: ACTION.TRANSPARENCY,
-      },
-    ],
-  };
+  @property({ attribute: false }) response: PrivacyResponse[] = [];
 
   static styles = css`
     :host {
@@ -52,99 +41,99 @@ export class ResponseView extends LitElement {
     }
   `;
 
-  accessTemplate(demand: DemandResponse): TemplateResult {
+  accessTemplate(response: PrivacyResponse): TemplateResult {
     return html``;
   }
 
-  deleteTemplate(demand: DemandResponse): TemplateResult {
+  deleteTemplate(response: PrivacyResponse): TemplateResult {
     return html``;
   }
 
-  modifyTemplate(demand: DemandResponse): TemplateResult {
+  modifyTemplate(response: PrivacyResponse): TemplateResult {
     return html``;
   }
 
-  objectTemplate(demand: DemandResponse): TemplateResult {
+  objectTemplate(response: PrivacyResponse): TemplateResult {
     return html``;
   }
 
-  revokeTemplate(demand: DemandResponse): TemplateResult {
+  revokeTemplate(response: PrivacyResponse): TemplateResult {
     return html``;
   }
 
-  restrictTemplate(demand: DemandResponse): TemplateResult {
+  restrictTemplate(response: PrivacyResponse): TemplateResult {
     return html``;
   }
 
-  portabilityTemplate(demand: DemandResponse): TemplateResult {
+  portabilityTemplate(response: PrivacyResponse): TemplateResult {
     return html``;
   }
 
-  transparencyStandardTemplate(demand: DemandResponse) {
+  transparencyStandardTemplate(response: PrivacyResponse) {
     return html`
       <div class="transparency-rsp-ctr">
         <li>
-          <b>${ACTION_DESCRIPTIONS[demand.requested_action]()}</b> -
-          ${demand.status}
+          <b>${ACTION_DESCRIPTIONS[response.requested_action]()}</b> -
+          ${response.status}
         </li>
-        ${JSON.stringify(demand.answer)}
+        ${JSON.stringify(response.answer)}
       </div>
     `;
   }
 
-  transparencyAllTemplate(demand: DemandResponse): TemplateResult {
-    return this.transparencyStandardTemplate(demand);
+  transparencyAllTemplate(response: PrivacyResponse): TemplateResult {
+    return this.transparencyStandardTemplate(response);
   }
 
-  transparencyDataCatTemplate(demand: DemandResponse): TemplateResult {
-    return this.transparencyStandardTemplate(demand);
+  transparencyDataCatTemplate(response: PrivacyResponse): TemplateResult {
+    return this.transparencyStandardTemplate(response);
   }
 
-  transparencyDpoTemplate(demand: DemandResponse) {
-    return this.transparencyStandardTemplate(demand);
+  transparencyDpoTemplate(response: PrivacyResponse) {
+    return this.transparencyStandardTemplate(response);
   }
 
-  transparencyKnownTemplate(demand: DemandResponse): TemplateResult {
-    return this.transparencyStandardTemplate(demand);
+  transparencyKnownTemplate(response: PrivacyResponse): TemplateResult {
+    return this.transparencyStandardTemplate(response);
   }
 
-  transparencyLegalTemplate(demand: DemandResponse): TemplateResult {
-    return this.transparencyStandardTemplate(demand);
+  transparencyLegalTemplate(response: PrivacyResponse): TemplateResult {
+    return this.transparencyStandardTemplate(response);
   }
 
-  transparencyOrgTemplate(demand: DemandResponse): TemplateResult {
-    return this.transparencyStandardTemplate(demand);
+  transparencyOrgTemplate(response: PrivacyResponse): TemplateResult {
+    return this.transparencyStandardTemplate(response);
   }
 
-  transparencyPolicyTemplate(demand: DemandResponse): TemplateResult {
-    return this.transparencyStandardTemplate(demand);
+  transparencyPolicyTemplate(response: PrivacyResponse): TemplateResult {
+    return this.transparencyStandardTemplate(response);
   }
 
-  transparencyProcessTemplate(demand: DemandResponse): TemplateResult {
-    return this.transparencyStandardTemplate(demand);
+  transparencyProcessTemplate(response: PrivacyResponse): TemplateResult {
+    return this.transparencyStandardTemplate(response);
   }
 
-  transparencyProvTemplate(demand: DemandResponse): TemplateResult {
-    return this.transparencyStandardTemplate(demand);
+  transparencyProvTemplate(response: PrivacyResponse): TemplateResult {
+    return this.transparencyStandardTemplate(response);
   }
 
-  transparencyPurposeTemplate(demand: DemandResponse): TemplateResult {
-    return this.transparencyStandardTemplate(demand);
+  transparencyPurposeTemplate(response: PrivacyResponse): TemplateResult {
+    return this.transparencyStandardTemplate(response);
   }
 
-  transparencyRetentionTemplate(demand: DemandResponse): TemplateResult {
-    return this.transparencyStandardTemplate(demand);
+  transparencyRetentionTemplate(response: PrivacyResponse): TemplateResult {
+    return this.transparencyStandardTemplate(response);
   }
 
-  transparencyWhoTemplate(demand: DemandResponse): TemplateResult {
-    return this.transparencyStandardTemplate(demand);
+  transparencyWhoTemplate(response: PrivacyResponse): TemplateResult {
+    return this.transparencyStandardTemplate(response);
   }
 
-  transparencyWhereTemplate(demand: DemandResponse): TemplateResult {
-    return this.transparencyStandardTemplate(demand);
+  transparencyWhereTemplate(response: PrivacyResponse): TemplateResult {
+    return this.transparencyStandardTemplate(response);
   }
 
-  otherDemandTemplate(demand: DemandResponse): TemplateResult {
+  otherDemandTemplate(response: PrivacyResponse): TemplateResult {
     return html``;
   }
 
@@ -152,7 +141,7 @@ export class ResponseView extends LitElement {
     return html`
       <h1>Requested Information</h1>
       <div id="responses-ctr">
-        ${map(this.response.demands, d =>
+        ${map(this.response, d =>
           choose(
             d.requested_action,
             [

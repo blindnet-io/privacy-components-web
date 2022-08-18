@@ -1,26 +1,27 @@
 // import { html } from 'lit';
-import { expect } from '@open-wc/testing';
 // import { BldnPrivRequest } from '../src/BldnPrivRequest.js';
 import '../src/index.js';
-import { ACTION } from '../src/models/priv-terms.js';
+import { TARGET } from '../src/models/priv-terms.js';
 import { PrivacyRequest } from '../src/models/privacy-request.js';
 import { sendPrivacyRequest } from '../src/utils/privacy-request-api.js';
 
 describe('Mock API Tests', () => {
   it('test single demand', async () => {
     const request: PrivacyRequest = {
-      demands: [{ id: '1', action: ACTION['TRANSPARENCY.DPO'] }],
+      demands: [],
       data_subject: [
         {
-          id: '4f04dbb4-d77d-49df-ae57-52aae9d6f3b5',
+          // FIXME: For now we hardcode this, but will come from token once auth added
+          id: 'fdfc95a6-8fd8-4581-91f7-b3d236a6a10e',
           schema: 'dsid',
         },
       ],
+      email: '',
+      target: TARGET.ORGANIZATION,
     };
 
     sendPrivacyRequest(request, false).then(privacyResponse => {
       console.log(privacyResponse);
-      expect(privacyResponse.demands).to.equal({});
     });
   });
 });
