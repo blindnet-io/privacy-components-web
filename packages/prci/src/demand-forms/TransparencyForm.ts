@@ -75,15 +75,6 @@ export class TransparencyForm extends ActionForm {
         padding: 0px;
       }
 
-      #review-heading-1 {
-        font-weight: bold;
-        /* padding: 0px; */
-      }
-
-      #extra-msg-txt {
-        padding: 0px 0px 0px 20px;
-      }
-
       p {
         margin: 0px;
       }
@@ -100,6 +91,7 @@ export class TransparencyForm extends ActionForm {
     super();
 
     this.addEventListener('transparency-demand-select', e => {
+      // console.log("got select event")
       const details = (e as CustomEvent).detail;
       const demand: Demand = {
         action: details.id,
@@ -109,8 +101,8 @@ export class TransparencyForm extends ActionForm {
     });
 
     this.addEventListener('transparency-demand-deselect', e => {
-      const { actionId } = (e as CustomEvent).detail;
-      this.deleteDemand(actionId);
+      const { id } = (e as CustomEvent).detail;
+      this.deleteDemand(id);
     });
 
     this.addEventListener('text-element-change', e => {
@@ -129,8 +121,18 @@ export class TransparencyForm extends ActionForm {
     return true;
   }
 
-  getEditTemplate(): TemplateResult<1 | 2> {
-    const selectedActions = Object.values(this.demands).map(d => d.action);
+  /**
+   * The defualt transparency demand contains all transparency actions
+   * @returns List of demands with each TRANSPARENCY.* action
+   */
+  getDefaultDemands(): Demand[] {
+    return Object.values(ACTION)
+      .filter(a => a.includes('TRANSPARENCY.'))
+      .map(a => ({ action: a }));
+  }
+
+  getEditTemplate(demands: Demand[]): TemplateResult<1 | 2> {
+    const selectedActions = Object.values(demands).map(d => d.action);
     return html`
       <p id="edit-heading-1">
         <b>${msg('Details of my TRANSPARENCY Demand')}</b>
@@ -166,7 +168,7 @@ export class TransparencyForm extends ActionForm {
           .choices=${Object.values(PROVENANCE).map(p => ({
             id: p,
             description: PROVENANCE_DESCRIPTIONS[p](),
-            checked: true,
+            checked: true, // TODO: Read from demand
             disabled: false,
           }))}
           all-message=${msg('All provenances')}
@@ -191,6 +193,7 @@ export class TransparencyForm extends ActionForm {
             cols="50"
             rows="10"
             @input=${this.handleAdditionalMessageInput}
+            .value=${demands.length !== 0 ? demands[0].message ?? '' : ''}
           ></textarea>
         </div>
       </slotted-dropdown>
@@ -198,6 +201,7 @@ export class TransparencyForm extends ActionForm {
   }
 
   getReviewTemplate(): TemplateResult<1 | 2> {
+    // TODO: Delete
     return html`
       <div id="dmd-ctr">
         <p id="review-hd-1"><b>${msg('TRANSPARENCY demand')}</b></p>

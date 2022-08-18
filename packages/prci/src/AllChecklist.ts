@@ -1,5 +1,5 @@
 import { msg } from '@lit/localize';
-import { css, html, LitElement, PropertyValueMap } from 'lit';
+import { css, html, LitElement } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 import { buttonStyles, containerStyles, textStyles } from './styles.js';
@@ -54,7 +54,7 @@ export class AllChecklist extends LitElement {
     false;
 
   // Holds the IDs of all selected choices
-  @state() _selectedChoices = new Set<string>();
+  @state() selectedChoices = new Set<string>();
 
   static styles = [
     containerStyles,
@@ -127,14 +127,14 @@ export class AllChecklist extends LitElement {
    * @param id ID of the choice to select
    */
   selectChoice(id: string) {
-    this._selectedChoices.add(id);
+    this.selectedChoices.add(id);
     // Fire add event
     const event = new CustomEvent(`${this.eventPrefix}-select`, {
       bubbles: true,
       composed: true,
       detail: {
         id,
-        'first-selection': this._selectedChoices.size === 1,
+        'first-selection': this.selectedChoices.size === 1,
       },
     });
     this.dispatchEvent(event);
@@ -146,14 +146,14 @@ export class AllChecklist extends LitElement {
    * @param id ID of the choice to delete
    */
   deleteChoice(id: string) {
-    this._selectedChoices.delete(id);
+    this.selectedChoices.delete(id);
     // Fire delete event
     const event = new CustomEvent(`${this.eventPrefix}-deselect`, {
       bubbles: true,
       composed: true,
       detail: {
         id,
-        'none-selected': this._selectedChoices.size === 0,
+        'none-selected': this.selectedChoices.size === 0,
       },
     });
     this.dispatchEvent(event);
@@ -161,6 +161,7 @@ export class AllChecklist extends LitElement {
   }
 
   handleChoiceClick(e: Event) {
+    // debug: only enters this once
     const { id, checked } = e.target as HTMLInputElement;
     if (id === 'all-checkbox') {
       // Get all choice checkboxes
@@ -200,7 +201,7 @@ export class AllChecklist extends LitElement {
       // Deselect a single choice
       this.deleteChoice(id);
       // Set all to unchecked if none selected
-      if (this._selectedChoices.size === 0) {
+      if (this.selectedChoices.size === 0) {
         const allCheckbox = this.shadowRoot?.getElementById(
           'all-checkbox'
         ) as HTMLInputElement;
@@ -213,7 +214,7 @@ export class AllChecklist extends LitElement {
    * Update the selection state based on currently selected choices
    */
   updateSelectionState() {
-    switch (this._selectedChoices.size) {
+    switch (this.selectedChoices.size) {
       case 0:
         this.selectionState = SelectionState.NONE;
         break;
@@ -240,27 +241,11 @@ export class AllChecklist extends LitElement {
 
       case FormComponentState.PARTIAL:
         return Array.from(this.choices).filter(c =>
-          this._selectedChoices.has(c.id)
+          this.selectedChoices.has(c.id)
         );
 
       default:
         return [];
-    }
-  }
-
-  /**
-   * Hook into willUpdate lifecycle method to properly set the selected choices when the choices property changes
-   * @param _changedProperties
-   */
-  protected willUpdate(
-    _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
-  ): void {
-    if (_changedProperties.has('choices')) {
-      this.choices.forEach(c => {
-        if (c.checked || this.allChecked) {
-          this.selectChoice(c.id);
-        }
-      });
     }
   }
 
@@ -309,7 +294,7 @@ export class AllChecklist extends LitElement {
                 id=${c.id}
                 class="choice-checkbox"
                 type="checkbox"
-                ?checked=${this._selectedChoices.has(c.id)}
+                ?checked=${c.checked}
                 ?disabled=${c.disabled}
                 @change=${this.handleChoiceClick}
               />

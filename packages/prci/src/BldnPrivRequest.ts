@@ -1,12 +1,15 @@
+/* eslint-disable no-restricted-globals */
 /* eslint-disable no-param-reassign */
 import { html, css, LitElement, PropertyValueMap } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
 import { when } from 'lit/directives/when.js';
+import { map } from 'lit/directives/map.js';
 import { localized, msg } from '@lit/localize';
 
 import './FrequentRequestsMenu.js';
 import './ResponseView.js';
+import './ReviewView.js';
 import './ActionMenu.js';
 import './demand-forms/TransparencyForm.js';
 import { ACTION } from './models/priv-terms.js';
@@ -52,6 +55,8 @@ export class BldnPrivRequest extends LitElement {
   // Map of demand group ids to sets of demands
   @state() _demands: Map<string, Demand[]> = new Map<string, Demand[]>();
 
+  @state() _currentDemandGroupId: string = '';
+
   // Response to our request
   @state() _privacyResponse: PrivacyResponse = {
     response_id: '',
@@ -63,6 +68,11 @@ export class BldnPrivRequest extends LitElement {
   constructor() {
     super();
 
+    // Initialize demands and current demand group to the same uuid
+    const initialGroup = self.crypto.randomUUID();
+    this._demands.set(initialGroup, []);
+    this._currentDemandGroupId = initialGroup;
+
     // State change listener
     this.addEventListener('component-state-change', e => {
       const details = (e as CustomEvent).detail;
@@ -71,6 +81,9 @@ export class BldnPrivRequest extends LitElement {
       switch (this._componentState) {
         case ComponentState.EDIT:
           this._selectedAction = details.action;
+          if (details.demandGroupId !== undefined) {
+            this._currentDemandGroupId = details.demandGroupId;
+          }
           break;
         default:
           break;
@@ -271,7 +284,10 @@ export class BldnPrivRequest extends LitElement {
           [ACTION.REVOKE, () => html``],
           [
             ACTION.TRANSPARENCY,
-            () => html`<transparency-form></transparency-form>`,
+            () => html`<transparency-form
+              .demandGroupId=${this._currentDemandGroupId}
+              .demands=${this._demands.get(this._currentDemandGroupId)}
+            ></transparency-form>`,
           ],
           [ACTION['OTHER.DEMAND'], () => html``],
         ],
@@ -324,7 +340,18 @@ export class BldnPrivRequest extends LitElement {
               ComponentState.EDIT,
               () => this.actionFormFactory(this._selectedAction),
             ],
-            [ComponentState.REVIEW, () => html` <review-view></review-view> `],
+            [
+              ComponentState.REVIEW,
+              () => html`
+                ${map(
+                  this._demands.entries(),
+                  ([groupId, demands]) => html`<review-view
+                    .demandGroupId=${groupId}
+                    .demands=${demands}
+                  ></review-view>`
+                )}
+              `,
+            ],
             [
               ComponentState.REQUESTS,
               () => html` <requests-view></requests-view> `,
