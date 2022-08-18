@@ -40,7 +40,7 @@ export class BldnPrivRequest extends LitElement {
     data_subject: [
       {
         // FIXME: For now we hardcode this, but will come from token once auth added
-        id: '4f04dbb4-d77d-49df-ae57-52aae9d6f3b5',
+        id: 'fdfc95a6-8fd8-4581-91f7-b3d236a6a10e',
         schema: 'dsid',
       },
     ],
