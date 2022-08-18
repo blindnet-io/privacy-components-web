@@ -131,7 +131,10 @@ export abstract class ActionForm extends LitElement {
   protected willUpdate(
     _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
   ): void {
-    if (_changedProperties.has('demands') && this.demands.length === 0) {
+    if (
+      _changedProperties.has('demands') &&
+      (!this.demands || this.demands.length === 0)
+    ) {
       this.demands = this.getDefaultDemands();
     }
   }

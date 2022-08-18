@@ -63,7 +63,7 @@ export class ActionItem extends LitElement {
       composed: true,
       detail: {
         newState: ComponentState.EDIT,
-        action: this.action,
+        newAction: this.action,
       },
     });
     this.dispatchEvent(event);

@@ -1,3 +1,4 @@
+/* eslint-disable lit/binding-positions */
 /* eslint-disable no-restricted-globals */
 /* eslint-disable no-param-reassign */
 import { html, css, LitElement, PropertyValueMap } from 'lit';
@@ -14,7 +15,6 @@ import './ActionMenu.js';
 import './demand-forms/TransparencyForm.js';
 import { ACTION } from './models/priv-terms.js';
 import { PrivacyRequest } from './models/privacy-request.js';
-import { sendPrivacyRequest } from './utils/privacy-request-api.js';
 import { PrivacyResponse } from './models/privacy-response.js';
 import { ComponentState } from './utils/states.js';
 import { Demand } from './models/demand.js';
@@ -80,7 +80,7 @@ export class BldnPrivRequest extends LitElement {
 
       switch (this._componentState) {
         case ComponentState.EDIT:
-          this._selectedAction = details.action;
+          this._selectedAction = details.newAction;
           if (details.demandGroupId !== undefined) {
             this._currentDemandGroupId = details.demandGroupId;
           }
@@ -94,6 +94,13 @@ export class BldnPrivRequest extends LitElement {
     this.addEventListener('demand-set-multiple', e => {
       const { demandGroupId, demands } = (e as CustomEvent).detail;
       this._demands.set(demandGroupId, demands);
+      console.log(this._demands);
+    });
+    this.addEventListener('demand-delete', e => {
+      const { demandGroupId } = (e as CustomEvent).detail;
+      this._demands.delete(demandGroupId);
+      this.requestUpdate();
+      console.log(this._demands);
     });
   }
 
@@ -120,6 +127,7 @@ export class BldnPrivRequest extends LitElement {
       :host p {
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
           Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        margin: 0px;
       }
 
       :host span {
@@ -127,8 +135,13 @@ export class BldnPrivRequest extends LitElement {
           Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
       }
 
+      #priv-req-ctr {
+        padding: 20px 0px 0px 0px;
+      }
+
       #content-ctr {
         display: grid;
+        row-gap: 30px;
         padding: 40px 60px 40px 60px;
       }
 
@@ -142,10 +155,7 @@ export class BldnPrivRequest extends LitElement {
       #new-dmd-ctr {
         display: flex;
         column-gap: 10px;
-        margin: 20px 0px 0px 0px;
         padding: 20px;
-        border: 2px solid #000;
-        border-radius: 20px;
         align-items: center;
         justify-content: center;
       }
@@ -171,21 +181,13 @@ export class BldnPrivRequest extends LitElement {
         padding: 40px 0px;
       }
 
-      #back-btn {
-        grid-column: 1/2;
-        width: fit-content;
-        background: none;
-        border: none;
-        font-size: 18px;
-      }
-
-      #back-btn-txt:hover {
-        text-decoration: underline;
-      }
-
       #other-dmd-btn {
         margin: 20px 0px 0px 0px;
         float: right;
+      }
+
+      #submit-btn {
+        transform: translateY(15px);
       }
 
       .req-hdr {
@@ -233,9 +235,17 @@ export class BldnPrivRequest extends LitElement {
     //   }
     // );
 
-    sendPrivacyRequest(this._privacyRequest, false).then(response => {
-      this._privacyResponse = response;
-    });
+    // sendPrivacyRequest(this._privacyRequest, false).then(response => {
+    //   this._privacyResponse = response;
+    // });
+
+    this.dispatchEvent(
+      new CustomEvent('component-state-change', {
+        detail: {
+          newState: ComponentState.SUBMITTED,
+        },
+      })
+    );
   }
 
   /**
@@ -258,16 +268,6 @@ export class BldnPrivRequest extends LitElement {
       date: '',
       demands: [],
     };
-  }
-
-  showBackAddButtons(): boolean {
-    return [ComponentState.EDIT, ComponentState.AUTH].includes(
-      this._componentState
-    );
-  }
-
-  showSubmitButton(): boolean {
-    return this._componentState === ComponentState.REVIEW;
   }
 
   actionFormFactory(action: ACTION) {
@@ -343,20 +343,47 @@ export class BldnPrivRequest extends LitElement {
             [
               ComponentState.REVIEW,
               () => html`
+                <span><b>${msg('My demand(s):')}</b></span>
                 ${map(
                   this._demands.entries(),
                   ([groupId, demands]) => html`<review-view
+                    class="medium-border"
                     .demandGroupId=${groupId}
                     .demands=${demands}
                   ></review-view>`
                 )}
+                <!-- Uncomment when supporting multiple demands -->
+                <!-- <div id="new-dmd-ctr" class="medium-border">
+                  <span><b>${msg('I want to add another demand')}</b></span>
+                  <button class="svg-btn">
+                    <img src="packages/prci/src/assets/icons/add-circle.svg" alt="add icon"></img>
+                  </button>
+                </div> -->
+                <!-- Submit button -->
+                <button
+                  id="submit-btn"
+                  class="nav-btn ctr-btn"
+                  @click=${this.handleSubmitClick}
+                >
+                  ${msg('Submit Privacy Request')}
+                </button>
               `,
             ],
             [
               ComponentState.REQUESTS,
               () => html` <requests-view></requests-view> `,
             ],
-            [ComponentState.STATUS, () => html` <status-view></status-view> `],
+            [
+              ComponentState.SUBMITTED,
+              () => html`
+                <p class="ctr-txt">
+                  <b>${msg('Your Privacy Request has been sent!')} 🎉</b>
+                </p>
+                <p class="ctr-txt">
+                  ${msg('You may track the status of your request below.')}
+                </p>
+              `,
+            ],
             [ComponentState.AUTH, () => html` <auth-view></auth-view> `],
           ])}
         </div>

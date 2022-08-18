@@ -3,6 +3,7 @@ export enum ComponentState {
   EDIT,
   REVIEW,
   REQUESTS,
+  SUBMITTED,
   STATUS,
   AUTH,
 }

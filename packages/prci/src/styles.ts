@@ -15,6 +15,10 @@ export const containerStyles = css`
     border: 2px solid #c4c4c4;
     border-radius: 10px;
   }
+
+  .no-line-border {
+    border-radius: 10px;
+  }
 `;
 
 export const buttonStyles = css`
@@ -69,6 +73,10 @@ export const buttonStyles = css`
     width: 375px;
     margin: 0px 0px -200px 0px;
     padding: 0px 25px;
+  }
+
+  .curve-btn {
+    border-radius: 6px;
   }
 
   .left-btn {

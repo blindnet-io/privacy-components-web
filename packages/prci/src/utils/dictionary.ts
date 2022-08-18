@@ -67,7 +67,7 @@ export const ACTION_DESCRIPTIONS = {
   'TRANSPARENCY.PROVENANCE': () =>
     msg('The sources that the data concerning me come from'),
   'TRANSPARENCY.PURPOSE': () =>
-    msg('The purpose of the processing o the data the organization has on me'),
+    msg('The purpose of the processing of the data the organization has on me'),
   'TRANSPARENCY.RETENTION': () =>
     msg('For how long the data concerning me kept'),
   'TRANSPARENCY.WHERE': () => msg('Where the data about me is stored'),
