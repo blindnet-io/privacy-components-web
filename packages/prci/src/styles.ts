@@ -23,6 +23,13 @@ export const buttonStyles = css`
       Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   }
 
+  .svg-btn {
+    border: none;
+    padding: 0px;
+    margin: 0px;
+    background: none;
+  }
+
   .link-btn {
     display: grid;
     /* grid-template-columns: repeat(2, 1fr); */
