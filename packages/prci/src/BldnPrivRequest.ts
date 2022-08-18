@@ -13,9 +13,8 @@ import './ResponseView.js';
 import './ReviewView.js';
 import './ActionMenu.js';
 import './demand-forms/TransparencyForm.js';
-import { ACTION } from './models/priv-terms.js';
+import { ACTION, TARGET } from './models/priv-terms.js';
 import { PrivacyRequest } from './models/privacy-request.js';
-import { PrivacyResponse } from './models/privacy-response.js';
 import { ComponentState } from './utils/states.js';
 import { Demand } from './models/demand.js';
 import { getDefaultActions } from './utils/utils.js';
@@ -50,20 +49,14 @@ export class BldnPrivRequest extends LitElement {
         schema: 'dsid',
       },
     ],
+    email: '',
+    target: TARGET.ORGANIZATION,
   };
 
   // Map of demand group ids to sets of demands
   @state() _demands: Map<string, Demand[]> = new Map<string, Demand[]>();
 
   @state() _currentDemandGroupId: string = '';
-
-  // Response to our request
-  @state() _privacyResponse: PrivacyResponse = {
-    response_id: '',
-    request_id: '',
-    date: '',
-    demands: [],
-  };
 
   constructor() {
     super();
@@ -253,21 +246,18 @@ export class BldnPrivRequest extends LitElement {
    */
   handleRestartClick() {
     this._privacyRequest = {
-      demands: [{ action: ACTION.TRANSPARENCY }],
+      demands: [],
       data_subject: [
         {
-          id: '4f04dbb4-d77d-49df-ae57-52aae9d6f3b5',
+          // FIXME: For now we hardcode this, but will come from token once auth added
+          id: 'fdfc95a6-8fd8-4581-91f7-b3d236a6a10e',
           schema: 'dsid',
         },
       ],
+      email: '',
+      target: TARGET.ORGANIZATION,
     };
     this._demands = new Map<string, Demand[]>();
-    this._privacyResponse = {
-      response_id: '',
-      request_id: '',
-      date: '',
-      demands: [],
-    };
   }
 
   actionFormFactory(action: ACTION) {
