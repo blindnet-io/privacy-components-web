@@ -22,7 +22,8 @@
     "start": "web-dev-server"
   },
   "dependencies": {
-    "@blindnet/prci": "^0.4.0-beta.0",
+    "@blindnet/dci": "^0.4.0-beta.6",
+    "@blindnet/prci": "^0.4.0-beta.6",
     "@vaadin/router": "^1.7.4",
     "carbon-web-components": "^1.21.0",
     "lit": "^2.0.2"
