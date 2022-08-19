@@ -1,0 +1,1 @@
+import{s as e,r as t,R as s,$ as o}from"./0f996d08.js";class r extends e{static get styles(){return t``}showDCI(){s.go("/admin")}render(){return o` <h1>Back Office</h1> <input type="text" placeholder="username"> <input type="password" placeholder="password"> <button @click="${this.showDCI}">Login</button> `}}customElements.define("app-backoffice",r);export{r as AppBackOffice};

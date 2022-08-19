@@ -1,1 +1,0 @@
-{"version":3,"file":"hello-world.js","sources":["../../src/hello-world/hello-world.ts"],"sourcesContent":["import 'lit';\n\nexport function helloCore() {\n  // eslint-disable-next-line no-console\n  console.log('Hello Core Library');\n}\n"],"names":[],"mappings":";;SAEgB,SAAS,GAAA;;AAEvB,IAAA,OAAO,CAAC,GAAG,CAAC,oBAAoB,CAAC,CAAC;AACpC;;;;"}
