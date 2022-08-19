@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-beta.5](https://github.com/blindnet-io/privacy-components-web/compare/v0.4.0-beta.4...v0.4.0-beta.5) (2022-08-19)
+
+
+### Bug Fixes
+
+* **@blindnet/prci:** set provenance in transparency form ([89ba314](https://github.com/blindnet-io/privacy-components-web/commit/89ba314841ab7381c6c8e34ca166ac4688b89508))
+
+
+### Features
+
+* **@blindnet/prci:** send requests ([079bf6d](https://github.com/blindnet-io/privacy-components-web/commit/079bf6d3e74d865ce5055d4f3e2b65aefbf651b1))
+
+
+
+
+
 # [0.4.0-beta.4](https://github.com/blindnet-io/privacy-components-web/compare/v0.4.0-beta.3...v0.4.0-beta.4) (2022-08-18)
 
 **Note:** Version bump only for package @blindnet/prci
