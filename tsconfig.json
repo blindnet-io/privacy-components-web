@@ -16,7 +16,8 @@
     "declaration": true,
     "incremental": true,
     "allowJs": true,
-    "checkJs": true
+    "checkJs": true,
+    "skipLibCheck": true
   },
   "include": ["**/*.ts", "**/*.js"],
   "exclude": [
