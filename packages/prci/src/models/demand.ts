@@ -5,5 +5,5 @@ export interface Demand {
   id?: string;
   action: ACTION;
   message?: string;
-  restrictions?: Restriction[];
+  restrictions?: Set<Restriction>;
 }

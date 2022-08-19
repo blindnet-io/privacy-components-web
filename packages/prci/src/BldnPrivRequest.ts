@@ -19,6 +19,7 @@ import { ComponentState } from './utils/states.js';
 import { Demand } from './models/demand.js';
 import { getDefaultActions } from './utils/utils.js';
 import { buttonStyles, containerStyles, textStyles } from './styles.js';
+import { sendPrivacyRequest } from './utils/privacy-request-api.js';
 
 /**
  * Top level component encapsulating a single PrivacyRequest. Contains one or
@@ -78,6 +79,8 @@ export class BldnPrivRequest extends LitElement {
             this._currentDemandGroupId = details.demandGroupId;
           }
           break;
+        case ComponentState.SUBMITTED:
+          break;
         default:
           break;
       }
@@ -87,13 +90,11 @@ export class BldnPrivRequest extends LitElement {
     this.addEventListener('demand-set-multiple', e => {
       const { demandGroupId, demands } = (e as CustomEvent).detail;
       this._demands.set(demandGroupId, demands);
-      console.log(this._demands);
     });
     this.addEventListener('demand-delete', e => {
       const { demandGroupId } = (e as CustomEvent).detail;
       this._demands.delete(demandGroupId);
       this.requestUpdate();
-      console.log(this._demands);
     });
   }
 
@@ -220,25 +221,25 @@ export class BldnPrivRequest extends LitElement {
   ];
 
   handleSubmitClick() {
-    // Form privacy request TODO: Flatten demand map, handle case with multiple transparency demand groups...
-    // this._privacyRequest.demands = Array.from(this._demands.values()).map(
-    //   (d, i) => {
-    //     d.id = i.toString();
-    //     return d;
-    //   }
-    // );
-
-    // sendPrivacyRequest(this._privacyRequest, false).then(response => {
-    //   this._privacyResponse = response;
-    // });
-
-    this.dispatchEvent(
-      new CustomEvent('component-state-change', {
-        detail: {
-          newState: ComponentState.SUBMITTED,
-        },
-      })
+    const allDemands = Array.from(this._demands.values()).reduce(
+      (dmds, dmdGroup) => dmds.concat(dmdGroup),
+      []
     );
+    this._privacyRequest.demands = allDemands.map((d, i) => {
+      d.id = i.toString();
+      return d;
+    });
+
+    sendPrivacyRequest(this._privacyRequest, false).then(response => {
+      this.dispatchEvent(
+        new CustomEvent('component-state-change', {
+          detail: {
+            newState: ComponentState.SUBMITTED,
+            requestId: response.request_id,
+          },
+        })
+      );
+    });
   }
 
   /**
