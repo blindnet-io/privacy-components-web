@@ -67,6 +67,13 @@ export class DevkitSimpleTutorial extends LitElement {
         },
         component: 'app-dci',
       },
+      {
+        path: '/participate',
+        action: async () => {
+          await import('./views/Form.js');
+        },
+        component: 'app-form',
+      },
     ]);
   }
 
@@ -81,6 +88,7 @@ export class DevkitSimpleTutorial extends LitElement {
           >tutorial</bx-header-name
         >
         <bx-header-nav menu-bar-label="blindnet devkit tutorial">
+          <bx-header-nav-item href="/participate">Prizes</bx-header-nav-item>
           <bx-header-nav-item href="/privacy">Privacy</bx-header-nav-item>
           <bx-header-nav-item href="/backoffice"
             >Back Office</bx-header-nav-item
@@ -90,6 +98,7 @@ export class DevkitSimpleTutorial extends LitElement {
       <bx-side-nav aria-label="Side navigation">
         <bx-side-nav-items>
           <bx-side-nav-link href="/">Home</bx-side-nav-link>
+          <bx-side-nav-link href="/participate">Prizes</bx-side-nav-link>
           <bx-side-nav-link href="/privacy">Privacy</bx-side-nav-link>
           <bx-side-nav-link href="/backoffice">Back Office</bx-side-nav-link>
         </bx-side-nav-items>
