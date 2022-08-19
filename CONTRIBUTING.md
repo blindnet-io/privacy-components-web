@@ -202,6 +202,7 @@ The following is the list of supported scopes:
 
 - **@blindnet/core**
 - **@blindnet/prci**
+- **@blindnet/dci**
 
 ### Subject
 

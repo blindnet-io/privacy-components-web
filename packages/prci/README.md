@@ -1,11 +1,13 @@
 # `@blindnet/prci`
 
-> TODO: description
+> Webcomponent for data subjects to create and monitor privacy requests.
 
 ## Usage
 
 ```js
-import prci from '@blindnet/prci';
+import '@blindnet/prci';
+```
 
-// TODO: DEMONSTRATE API
+```html
+<bldn-priv-request></bldn-priv-request>
 ```

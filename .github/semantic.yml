@@ -11,6 +11,7 @@ types:
   - test
   - chore
 scopes:
+  - '@blindnet/dci'
   - '@blindnet/prci'
   - '@blindnet/core'
 allowMergeCommits: true
