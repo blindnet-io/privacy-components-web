@@ -2,6 +2,7 @@
 <html lang="en-GB">
   <head>
     <meta charset="utf-8" />
+    <title>Privacy Components for the Web - Minimal Static Demo</title>
     <style>
       body {
         background: #fafafa;
@@ -9,8 +10,16 @@
     </style>
   </head>
   <body>
+    <h1>Privacy Components for the Web - Minimal Static Demo</h1>
+
+    <h2 id="prci">PRCI</h2>
     <div id="demo__prci">
       <bldn-priv-request></bldn-priv-request>
+    </div>
+
+    <h2 id="dci">DCI</h2>
+    <div id="demo__dci">
+      <bldn-data-consum></bldn-data-consum>
     </div>
 
     <script
@@ -18,5 +27,10 @@
       type="module"
     ></script>
     <!-- <script src="https://unpkg.com/@blindnet/prci/dist/index.core.min.js?module" type="module" ></script> -->
+    <script
+      src="../packages/dci/dist/index.mapped.min.js"
+      type="module"
+    ></script>
+    <!-- <script src="https://unpkg.com/@blindnet/dci/dist/index.core.min.js?module" type="module" ></script> -->
   </body>
 </html>
