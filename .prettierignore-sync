@@ -1,0 +1,10 @@
+# prettier doesn't support multiple ignore files
+# see https://github.com/prettier/prettier/issues/8048
+
+[inline]
+lerna.json
+CHANGELOG.md
+package.json
+
+[local]
+.gitignore

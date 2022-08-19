@@ -1,8 +1,6 @@
 import { html, css, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { localized } from '@lit/localize';
-import { ACTION_TITLES, ACTION_DESCRIPTIONS } from './utils/dictionary.js';
-
 import './ActionItem.js';
 import { ACTION } from './models/priv-terms.js';
 import { enabledActions } from './utils/conf.js';
@@ -11,8 +9,8 @@ import { enabledActions } from './utils/conf.js';
  * Menu of clickable action types
  */
 @localized()
-@customElement('demand-builder-action-menu')
-export class DemandBuilerActionMenu extends LitElement {
+@customElement('action-menu')
+export class ActionMenu extends LitElement {
   // Text displayed above menu
   @property({ type: String }) prompt = 'Type of demand I want to submit:';
 
@@ -20,10 +18,6 @@ export class DemandBuilerActionMenu extends LitElement {
   @property({ attribute: false }) includedActions: ACTION[] = [];
 
   static styles = css`
-    :host {
-      grid-column: 1/5;
-    }
-
     .actions-container {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -42,14 +36,15 @@ export class DemandBuilerActionMenu extends LitElement {
     return html`
       <div class="prompt-heading">${this.prompt}</div>
       <div class="actions-container">
-        ${this.includedActions.map(
-          a =>
-            html`<action-item
-              action-name=${ACTION_TITLES[a]()}
-              action-description=${ACTION_DESCRIPTIONS[a]()}
-              ?disabled=${!enabledActions.get(a)}
-            ></action-item>`
-        )}
+        ${this.includedActions
+          .filter(a => a !== ACTION['OTHER.DEMAND'])
+          .map(
+            a =>
+              html`<action-item
+                .action=${a}
+                ?disabled=${!enabledActions.get(a)}
+              ></action-item>`
+          )}
       </div>
     `;
   }

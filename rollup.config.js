@@ -24,18 +24,23 @@ import {
  */
 async function main(commandLineArgs) {
   // add config specific command line options
-  const { configScope, configIgnore, configRaw, configKeep, configHelp } =
-    commandLineArgs;
+  const {
+    configScope = '@blindnet/*',
+    configIgnore,
+    configRaw,
+    configKeep,
+    configHelp,
+  } = commandLineArgs;
 
   if (configHelp) {
     // eslint-disable-next-line no-console
     console.log(`Rollup: Specific config options
 
---configHelp      Print this help message.                                            [boolean]
---configScope     (Lerna) Include only packages with names matching the given glob.   [string]
---configIgnore    (Lerna) Exclude packages with names matching the given glob.        [string]
---configRaw       Only run raw (no-bundling) build.                                  [boolean]
---configKeep      Skip output directory cleaning before build.                        [boolean]
+--configHelp      Print this help message.                                                                      [boolean]
+--configScope     (Lerna) Include only packages with names matching the given glob ("@blindnet/*" by default)   [string]
+--configIgnore    (Lerna) Exclude packages with names matching the given glob.                                  [string]
+--configRaw       Only run raw (no-bundling) build.                                                             [boolean]
+--configKeep      Skip output directory cleaning before build.                                                  [boolean]
 `);
     process.exit(0);
   }

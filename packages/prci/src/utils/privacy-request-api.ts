@@ -1,6 +1,5 @@
+/* eslint-disable camelcase */
 import { PrivacyRequest } from '../models/privacy-request.js';
-import { PrivacyResponse } from '../models/privacy-response.js';
-
 /**
  * Determine the correct mock header for a PrivacyRequest
  * @param request PrivacyRequest to get mock header for
@@ -31,7 +30,7 @@ function getMockHeader(request: PrivacyRequest): string {
 export async function sendPrivacyRequest(
   request: PrivacyRequest,
   mock: boolean = true
-): Promise<PrivacyResponse> {
+): Promise<{ request_id: string }> {
   const url = mock
     ? 'https://stoplight.io/mocks/blindnet/product-management:open-api/74767654/privacy-request'
     : 'https://devkit-pce-staging.azurewebsites.net/v0/privacy-request';
@@ -53,6 +52,6 @@ export async function sendPrivacyRequest(
     if (!response.ok) {
       throw new Error(response.statusText);
     }
-    return response.json() as Promise<PrivacyResponse>;
+    return response.json() as Promise<{ request_id: string }>;
   });
 }
