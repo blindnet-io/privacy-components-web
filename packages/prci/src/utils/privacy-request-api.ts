@@ -1,5 +1,5 @@
+/* eslint-disable camelcase */
 import { PrivacyRequest } from '../models/privacy-request.js';
-
 /**
  * Determine the correct mock header for a PrivacyRequest
  * @param request PrivacyRequest to get mock header for
