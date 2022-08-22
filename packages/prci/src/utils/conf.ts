@@ -1,8 +1,8 @@
-import { ACTION } from '../models/priv-terms.js';
+import { ACTION, DATA_CATEGORY } from '../models/priv-terms.js';
 
 export const enabledActions = new Map<ACTION, boolean>([
-  [ACTION.ACCESS, false],
-  [ACTION.DELETE, false],
+  [ACTION.ACCESS, true],
+  [ACTION.DELETE, true],
   [ACTION.MODIFY, false],
   [ACTION.OBJECT, false],
   [ACTION.PORTABILITY, false],
@@ -23,3 +23,23 @@ export const enabledActions = new Map<ACTION, boolean>([
   [ACTION['TRANSPARENCY.WHO'], true],
   [ACTION['OTHER.DEMAND'], false],
 ]);
+
+export const PRCI_CONFIG = {
+  'access-allowed-data-categories': [
+    DATA_CATEGORY.AFFILIATION,
+    DATA_CATEGORY.BEHAVIOR,
+    DATA_CATEGORY.BIOMETRIC,
+    DATA_CATEGORY.CONTACT,
+    DATA_CATEGORY.DEMOGRAPHIC,
+    DATA_CATEGORY.DEVICE,
+    DATA_CATEGORY.FINANCIAL,
+    DATA_CATEGORY.GENETIC,
+    DATA_CATEGORY.HEALTH,
+    DATA_CATEGORY.IMAGE,
+    DATA_CATEGORY.LOCATION,
+    DATA_CATEGORY.NAME,
+    DATA_CATEGORY.PROFILING,
+    DATA_CATEGORY.UID,
+    DATA_CATEGORY['OTHER-DATA'],
+  ],
+};

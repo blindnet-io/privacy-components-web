@@ -1,20 +1,19 @@
 import { msg } from '@lit/localize';
 import { css, html, TemplateResult } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
 import { Demand } from '../models/demand.js';
-import { ACTION, PROVENANCE } from '../models/priv-terms.js';
+import { ACTION, DATA_CATEGORY, PROVENANCE } from '../models/priv-terms.js';
 import {
   buttonStyles,
   containerStyles,
   imgStyles,
   textStyles,
 } from '../styles.js';
-import { enabledActions } from '../utils/conf.js';
 import {
-  ACTION_DESCRIPTIONS,
+  DATA_CATEGORY_DESCRIPTIONS,
   PROVENANCE_DESCRIPTIONS,
 } from '../utils/dictionary.js';
-import { ActionForm } from './ActionForm.js';
+import { DemandForm } from './DemandForm.js';
 import { FormComponentState } from '../utils/states.js';
 
 import '../SlottedDropdown.js';
@@ -28,21 +27,13 @@ import { Restriction } from '../models/restriction.js';
  * TRANSPARENCY.* actually represents a completely separate demand, but we display them
  * all in one DemandBuilder element.
  */
-@customElement('transparency-form')
-export class TransparencyForm extends ActionForm {
+@customElement('access-form')
+export class TransparencyForm extends DemandForm {
   @property({ type: Array, attribute: false })
-  transparencyActions: ACTION[] = Object.values(ACTION).filter(a =>
-    a.includes('TRANSPARENCY.')
-  );
-
-  @property({ type: Array }) advancedSettings = [];
-
-  @state() _additionalMessage = '';
-
-  @state() _provenances: Set<Restriction> = new Set<Restriction>();
+  allowedDataCategories: DATA_CATEGORY[] = [];
 
   static styles = [
-    ActionForm.styles,
+    DemandForm.styles,
     containerStyles,
     buttonStyles,
     textStyles,
@@ -55,7 +46,7 @@ export class TransparencyForm extends ActionForm {
         margin: 0px;
       }
 
-      .transparency-options {
+      .access-options {
         padding: 40px 40px 20px 40px;
       }
 
@@ -93,46 +84,42 @@ export class TransparencyForm extends ActionForm {
   constructor() {
     super();
 
-    // Transparency action listeners
-    this.addEventListener('transparency-action-select', e => {
-      const details = (e as CustomEvent).detail;
-      const demand: Demand = {
-        action: details.id,
-        message: this._additionalMessage,
-        restrictions: this._provenances,
-      };
-      this.setDemand(demand);
-    });
-    this.addEventListener('transparency-action-deselect', e => {
+    // Access data category listeners
+    this.addEventListener('access-option-select', e => {
       const { id } = (e as CustomEvent).detail;
-      this.deleteDemand(id);
+      this.demand.dataCategory?.add(id);
     });
+    this.addEventListener('access-option-deselect', e => {
+      const { id } = (e as CustomEvent).detail;
+      this.demand.dataCategory?.delete(id);
+    });
+    this.addEventListener('access-option-other-click', e => {
+      const { checked } = (e as CustomEvent).detail;
+      if (checked) {
+        this.demand.dataCategory?.add(DATA_CATEGORY['OTHER-DATA']);
+      } else {
+        this.demand.dataCategory?.delete(DATA_CATEGORY['OTHER-DATA']);
+      }
+    });
+    // this.addEventListener('access-option-other-input', e => {
+    //   const { text } = (e as CustomEvent).detail
+    //   // TODO: What demand field to put the other-data category
+    // })
 
     // Provenance listeners
     this.addEventListener('provenance-select', e => {
       const { id } = (e as CustomEvent).detail;
-      this._provenances.add(id);
-      this.demands.forEach(d => {
-        const demand = d;
-        demand.restrictions?.add(id);
-      });
+      this.demand.restrictions?.add(id);
     });
     this.addEventListener('provenance-deselect', e => {
       const { id } = (e as CustomEvent).detail;
-      this._provenances.delete(id);
-      this.demands.forEach(d => {
-        const demand = d;
-        demand.restrictions?.delete(id);
-      });
+      this.demand.restrictions?.delete(id);
     });
 
     // Additional message listener
     this.addEventListener('text-element-change', e => {
-      this._additionalMessage = (e as CustomEvent).detail?.text;
-      this.demands.forEach(d => {
-        const demand = d;
-        demand.message = this._additionalMessage;
-      });
+      const { text } = (e as CustomEvent).detail;
+      this.demand.message = text;
     });
   }
 
@@ -155,37 +142,44 @@ export class TransparencyForm extends ActionForm {
    * The defualt transparency demand contains all transparency actions
    * @returns List of demands with each TRANSPARENCY.* action
    */
-  getDefaultDemands(): Demand[] {
-    return Object.values(ACTION)
-      .filter(a => a.includes('TRANSPARENCY.'))
-      .map(a => ({
-        action: a,
-        restrictions: new Set<Restriction>(Object.values(PROVENANCE)),
-      }));
+  getDefaultDemand(): Demand {
+    return {
+      action: ACTION.ACCESS,
+      // Default is all the non-subcategory access options
+      dataCategory: new Set<DATA_CATEGORY>(
+        Object.values(DATA_CATEGORY).filter(dc => !dc.includes('.'))
+      ),
+      // Default is all provenance options
+      restrictions: new Set<Restriction>(Object.values(PROVENANCE)),
+    };
   }
 
-  getEditTemplate(demands: Demand[]): TemplateResult<1 | 2> {
-    const selectedActions = Object.values(demands).map(d => d.action);
+  getEditTemplate(demand: Demand): TemplateResult<1 | 2> {
     return html`
       <p id="edit-heading-1">
-        <b>${msg('Details of my TRANSPARENCY Demand')}</b>
+        <b>${msg('Details of my ACCESS Demand')}</b>
       </p>
 
-      <div class="light-border transparency-options">
-        <span slot="prompt"><b>${msg('I want to know:')}</b></span>
+      <div class="light-border access-options">
+        <span slot="prompt"><b>${msg('I want to access:')}</b></span>
         <all-checklist
-          .choices=${this.transparencyActions.map(a => ({
-            id: a,
-            description: ACTION_DESCRIPTIONS[a](),
-            checked: selectedActions.includes(a),
-            disabled: !enabledActions.get(a) ?? true,
-          }))}
+          .choices=${this.allowedDataCategories
+            .filter(dc => dc !== DATA_CATEGORY['OTHER-DATA'])
+            .map(dc => ({
+              id: dc,
+              description: DATA_CATEGORY_DESCRIPTIONS[dc](),
+              checked: demand.dataCategory?.has(dc),
+              disabled: false,
+            }))}
           all-message=${msg(
-            'ALL information related to data processing practices and know if the organization has data on me'
+            'ALL categories of data the organization has data on me'
           )}
           component-mode=${FormComponentState.CLOSED}
-          event-prefix="transparency-action"
+          event-prefix="access-option"
           include-buttons
+          include-other=${this.allowedDataCategories.includes(
+            DATA_CATEGORY['OTHER-DATA']
+          )}
         ></all-checklist>
       </div>
 
@@ -201,7 +195,7 @@ export class TransparencyForm extends ActionForm {
           .choices=${Object.values(PROVENANCE).map(p => ({
             id: p,
             description: PROVENANCE_DESCRIPTIONS[p](),
-            checked: this.demands[0].restrictions?.has(p),
+            checked: demand.restrictions?.has(p),
             disabled: false,
           }))}
           all-message=${msg('All provenances')}
@@ -227,7 +221,7 @@ export class TransparencyForm extends ActionForm {
             cols="50"
             rows="10"
             @input=${this.handleAdditionalMessageInput}
-            .value=${demands.length !== 0 ? demands[0].message ?? '' : ''}
+            .value=${demand.message ?? ''}
           ></textarea>
         </div>
       </slotted-dropdown>

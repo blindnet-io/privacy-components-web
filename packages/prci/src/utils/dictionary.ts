@@ -1,4 +1,5 @@
 import { msg } from '@lit/localize';
+import { html } from 'lit';
 
 /**
  * Mapping of PRIV Actions to corresponding titles.
@@ -87,4 +88,84 @@ export const PROVENANCE_DESCRIPTIONS = {
     ),
   TRANSFERRED: () =>
     msg('The data is obtained by transfer from another System'),
+};
+
+// export const DATA_CATEGORY_DESCRIPTIONS = {
+//   'AFFILIATION': () => msg(''),
+//   'BEHAVIOR': () => msg('')
+// }
+
+export const DATA_CATEGORY_DESCRIPTIONS = {
+  AFFILIATION: () =>
+    msg(
+      html`<b>AFFILIATION data:</b> Groups and Organisations I am linked to
+        through work, studies, or membership`
+    ),
+  'AFFILIATION.MEMBERSHIP': () => msg(html``),
+  'AFFILIATION.MEMBERSHIP.UNION': () => msg(html``),
+  'AFFILIATION.SCHOOL': () => msg(html``),
+  'AFFILIATION.WORKPLACE': () => msg(html``),
+  BEHAVIOR: () => msg(html`<b>BEHAVIOR data:</b> Data about my behavior`),
+  'BEHAVIOR.ACTIVITY': () => msg(html``),
+  'BEHAVIOR.CONNECTION': () => msg(html``),
+  'BEHAVIOR.PREFERENCE': () => msg(html``),
+  'BEHAVIOR.TELEMETRY': () => msg(html``),
+  BIOMETRIC: () => msg(html`<b>BIOMETRIC data</b>`),
+  CONTACT: () => msg(html`<b>CONTACT data:</b> Data allowing to contact me `),
+  'CONTACT.EMAIL': () => msg(html``),
+  'CONTACT.ADDRESS': () => msg(html``),
+  'CONTACT.PHONE': () => msg(html``),
+  DEMOGRAPHIC: () =>
+    msg(
+      html`<b>DEMOGRAPHIC data:</b> All information allowing to class me in a
+        demographic category`
+    ),
+  'DEMOGRAPHIC.AGE': () => msg(html``),
+  'DEMOGRAPHIC.BELIEFS': () => msg(html``),
+  'DEMOGRAPHIC.GENDER': () => msg(html``),
+  'DEMOGRAPHIC.ORIGIN': () => msg(html``),
+  'DEMOGRAPHIC.RACE': () => msg(html``),
+  'DEMOGRAPHIC.SEXUAL-ORIENTATION': () => msg(html``),
+  DEVICE: () => msg(html`<b>DEVICE data:</b> Data about the device I used`),
+  FINANCIAL: () =>
+    msg(
+      html`<b>FINANCIAL data:</b> Payment data, financial history and data about
+        my financial situation`
+    ),
+  'FINANCIAL.BANK-ACCOUNT': () => msg(html``),
+  GENETIC: () => msg(html`<b>GENETIC data</b>`),
+  HEALTH: () => msg(html`<b>HEALTH data:</b> Data about my health`),
+  IMAGE: () =>
+    msg(
+      html`<b>IMAGE data:</b> Any graphic representation (e.g., image, video) of
+        me`
+    ),
+  LOCATION: () => msg(html`<b>LOCATION data:</b> Geographic location`),
+  NAME: () =>
+    msg(
+      html`<b>NAME data:</b> First names, last names, nicknames, and other names`
+    ),
+  PROFILING: () =>
+    msg(
+      html`<b>PROFILING data:</b> Any data establishing a degree of similarity
+        of with others (e.g., clusters, user-profiles)`
+    ),
+  RELATIONSHIPS: () =>
+    msg(
+      html`<b>RELATIONSHIPS data:</b> Data about relationships I have with
+        others, social activity and interaction`
+    ),
+  UID: () =>
+    msg(
+      html`<b>Unique Identifier data:</b> Any data allowing to uniquely identify
+        me`
+    ),
+  'UID.ID': () => msg(html``),
+  'UID.IP': () => msg(html``),
+  'UID.USER-ACCOUNT': () => msg(html``),
+  'UID.SOCIAL-MEDIA': () => msg(html``),
+  'OTHER-DATA': () =>
+    msg(
+      html`<b>OTHER-DATA:</b> possibility to specify within a message if needed`
+    ),
 };

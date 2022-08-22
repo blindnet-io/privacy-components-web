@@ -112,8 +112,14 @@ export const textStyles = css`
 
   .std-txt-area {
     background: #f8f8fc;
-    border: 1px solid #e5e 5e5;
+    border: 1px solid #e5e5e5;
     border-radius: 8px;
+  }
+
+  .std-txt-input {
+    background: #f8f8fc;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
   }
 `;
 

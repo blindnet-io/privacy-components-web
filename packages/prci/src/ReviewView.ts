@@ -5,9 +5,13 @@ import { choose } from 'lit/directives/choose.js';
 import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
 import { Demand } from './models/demand.js';
-import { ACTION } from './models/priv-terms.js';
+import { ACTION, DATA_CATEGORY } from './models/priv-terms.js';
 import { buttonStyles, containerStyles } from './styles.js';
-import { ACTION_DESCRIPTIONS, ACTION_TITLES } from './utils/dictionary.js';
+import {
+  ACTION_DESCRIPTIONS,
+  ACTION_TITLES,
+  DATA_CATEGORY_DESCRIPTIONS,
+} from './utils/dictionary.js';
 import { ComponentState } from './utils/states.js';
 
 @customElement('review-view')
@@ -15,6 +19,8 @@ export class ReviewView extends LitElement {
   @property({ attribute: false }) demandGroupId: string = '';
 
   @property({ attribute: false }) demands: Demand[] = [];
+
+  @property({ attribute: false }) demand: Demand = { action: ACTION.ACCESS };
 
   @property({ type: Boolean, reflect: true, attribute: 'confirm-delete' })
   confirmDelete: boolean = false;
@@ -117,7 +123,30 @@ export class ReviewView extends LitElement {
   ];
 
   getAccessReviewTemplate() {
-    return html``;
+    return html`
+      <span>${msg('I want to access:')}</span>
+      <ul id="access-review-list" class="review-list">
+        ${map(
+          this.demand.dataCategory,
+          dc => html`
+            ${when(
+              dc !== DATA_CATEGORY['OTHER-DATA'],
+              () => html` <li>${DATA_CATEGORY_DESCRIPTIONS[dc]()}</li> `,
+              () => html`
+                <li>${msg(html`<b>OTHER-DATA: </b>`)}${this.demand.message}</li>
+              `
+            )}
+          `
+        )}
+      </ul>
+      ${when(
+        this.demand.message,
+        () => html`
+          <span>${msg('Plus additional info:')}</span>
+          <span id="access-extra-msg"><i>${this.demand.message}</i></span>
+        `
+      )}
+    `;
   }
 
   getDeleteReviewTemplate() {
@@ -145,9 +174,8 @@ export class ReviewView extends LitElement {
   }
 
   getTransparencyReviewTemplate() {
-    // console.log(this.demands)
     return html`
-      <span>I want to know:</span>
+      <span>${msg('I want to know:')}</span>
       <ul id="transparency-review-list" class="review-list">
         ${map(
           this.demands,
@@ -227,6 +255,8 @@ export class ReviewView extends LitElement {
       this._action = this.demands[0].action;
       if (this._action.includes('TRANSPARENCY')) {
         this._action = ACTION.TRANSPARENCY;
+      } else {
+        [this.demand] = this.demands;
       }
     }
   }

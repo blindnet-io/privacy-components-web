@@ -13,6 +13,7 @@ import './ResponseView.js';
 import './ReviewView.js';
 import './ActionMenu.js';
 import './demand-forms/TransparencyForm.js';
+import './demand-forms/AccessForm.js';
 import { ACTION, TARGET } from './models/priv-terms.js';
 import { PrivacyRequest } from './models/privacy-request.js';
 import { ComponentState } from './utils/states.js';
@@ -20,6 +21,7 @@ import { Demand } from './models/demand.js';
 import { getDefaultActions } from './utils/utils.js';
 import { buttonStyles, containerStyles, textStyles } from './styles.js';
 import { sendPrivacyRequest } from './utils/privacy-request-api.js';
+import { PRCI_CONFIG } from './utils/conf.js';
 
 /**
  * Top level component encapsulating a single PrivacyRequest. Contains one or
@@ -59,6 +61,8 @@ export class BldnPrivRequest extends LitElement {
 
   @state() _currentDemandGroupId: string = '';
 
+  @state() _config = PRCI_CONFIG;
+
   constructor() {
     super();
 
@@ -90,6 +94,10 @@ export class BldnPrivRequest extends LitElement {
     this.addEventListener('demand-set-multiple', e => {
       const { demandGroupId, demands } = (e as CustomEvent).detail;
       this._demands.set(demandGroupId, demands);
+    });
+    this.addEventListener('demand-set', e => {
+      const { demandGroupId, demand } = (e as CustomEvent).detail;
+      this._demands.set(demandGroupId, [demand]);
     });
     this.addEventListener('demand-delete', e => {
       const { demandGroupId } = (e as CustomEvent).detail;
@@ -266,7 +274,17 @@ export class BldnPrivRequest extends LitElement {
       ${choose(
         action,
         [
-          [ACTION.ACCESS, () => html``],
+          [
+            ACTION.ACCESS,
+            () => html`
+              <access-form
+                .demandGroupId=${this._currentDemandGroupId}
+                .allowedDataCategories=${this._config[
+                  'access-allowed-data-categories'
+                ]}
+              ></access-form>
+            `,
+          ],
           [ACTION.DELETE, () => html``],
           [ACTION.MODIFY, () => html``],
           [ACTION.OBJECT, () => html``],
