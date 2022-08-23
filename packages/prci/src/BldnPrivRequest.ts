@@ -19,7 +19,8 @@ import { ComponentState } from './utils/states.js';
 import { Demand } from './models/demand.js';
 import { getDefaultActions } from './utils/utils.js';
 import { buttonStyles, containerStyles, textStyles } from './styles.js';
-import { sendPrivacyRequest } from './utils/privacy-request-api.js';
+import { PRCI_CONFIG } from './utils/conf.js';
+import { TARGET_DESCRIPTIONS } from './utils/dictionary.js';
 
 /**
  * Top level component encapsulating a single PrivacyRequest. Contains one or
@@ -51,7 +52,7 @@ export class BldnPrivRequest extends LitElement {
       },
     ],
     email: '',
-    target: TARGET.ORGANIZATION,
+    target: TARGET.PARTNERS,
   };
 
   // Map of demand group ids to sets of demands
@@ -230,20 +231,24 @@ export class BldnPrivRequest extends LitElement {
       return d;
     });
 
-    sendPrivacyRequest(this._privacyRequest, false).then(response => {
-      this.dispatchEvent(
-        new CustomEvent('component-state-change', {
-          detail: {
-            newState: ComponentState.SUBMITTED,
-            requestId: response.request_id,
-          },
-        })
-      );
-    });
+    // eslint-disable-next-line no-console
+    console.log(this._privacyRequest);
+
+    // sendPrivacyRequest(this._privacyRequest, false).then(response => {
+    //   this.dispatchEvent(
+    //     new CustomEvent('component-state-change', {
+    //       detail: {
+    //         newState: ComponentState.SUBMITTED,
+    //         requestId: response.request_id,
+    //       },
+    //     })
+    //   );
+    // });
   }
 
   /**
    * Reset most states
+   * // TODO: Remove this and use something like getDefaultDemand() from the forms
    */
   handleRestartClick() {
     this._privacyRequest = {
@@ -256,9 +261,14 @@ export class BldnPrivRequest extends LitElement {
         },
       ],
       email: '',
-      target: TARGET.ORGANIZATION,
+      target: TARGET.PARTNERS,
     };
     this._demands = new Map<string, Demand[]>();
+  }
+
+  handleTargetClick(e: Event) {
+    const { id } = (e as CustomEvent).target as HTMLInputElement;
+    this._privacyRequest.target = id as TARGET;
   }
 
   actionFormFactory(action: ACTION) {
@@ -351,6 +361,32 @@ export class BldnPrivRequest extends LitElement {
                   </button>
                 </div> -->
                 <!-- Submit button -->
+                <slotted-dropdown
+                  header=${msg('Advanced settings')}
+                  include-buttons
+                >
+                  <div>
+                    <span> ${msg('I address my Privacy Request to:')} </span>
+                    <fieldset class="provenance-restriction">
+                      ${Object.values(TARGET)
+                        .filter(t => t !== TARGET.ALL)
+                        .map(
+                          t => html`
+                          <input
+                            id=${t}
+                            name='provenance-target'
+                            type='radio'
+                            ?checked=${this._privacyRequest.target === t}
+                            @click=${this.handleTargetClick}>
+                          </input>
+                          <label for=${t}>${TARGET_DESCRIPTIONS[
+                            t
+                          ]()}</label><br/>
+                        `
+                        )}
+                    </fieldset>
+                  </div>
+                </slotted-dropdown>
                 <button
                   id="submit-btn"
                   class="nav-btn ctr-btn"
