@@ -77,6 +77,7 @@ export const ACTION_DESCRIPTIONS = {
 };
 
 export const PROVENANCE_DESCRIPTIONS = {
+  '*': () => msg('All provenances'),
   USER: () =>
     msg(
       'The data is provided by a user of the system (potentially the Data Subject)'
@@ -96,6 +97,13 @@ export const PROVENANCE_DESCRIPTIONS = {
 // }
 
 export const DATA_CATEGORY_DESCRIPTIONS = {
+  '*': () =>
+    msg(
+      html`<b
+        >ALL information related to data processing practices and know if the
+        organization has data on me</b
+      >`
+    ),
   AFFILIATION: () =>
     msg(
       html`<b>AFFILIATION data:</b> Groups and Organisations I am linked to
@@ -167,5 +175,27 @@ export const DATA_CATEGORY_DESCRIPTIONS = {
   'OTHER-DATA': () =>
     msg(
       html`<b>OTHER-DATA:</b> possibility to specify within a message if needed`
+    ),
+};
+
+export const TARGET_DESCRIPTIONS = {
+  '*': () => msg(html`All targets`),
+  SYSTEM: () => msg(html`This system`),
+  ORGANIZATION: () =>
+    msg(html`This system and all systems within this organization`),
+  PARTNERS: () =>
+    msg(
+      html`This system, all systems within this organization, and all partners
+        systems where data has been <b>shared or obtained</b>`
+    ),
+  'PARTNERS.DOWNWARD': () =>
+    msg(
+      html`This system, all systems within this organization, and all partners
+        systems with which data has been <b>shared</b>`
+    ),
+  'PARTNERS.UPWARD': () =>
+    msg(
+      html`This system, all systems within this organization, and all partners
+        systems from which data has been <b>obtained</b>`
     ),
 };
