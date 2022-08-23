@@ -1,5 +1,5 @@
 import { msg } from '@lit/localize';
-import { css, html, LitElement } from 'lit';
+import { css, html, LitElement, TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 import { buttonStyles, containerStyles, textStyles } from './styles.js';
@@ -7,8 +7,8 @@ import { FormComponentState } from './utils/states.js';
 
 interface Choice {
   id: string;
-  description: string;
-  checked: boolean;
+  description: string | TemplateResult<1 | 2>;
+  checked: boolean | false;
   disabled: boolean;
 }
 

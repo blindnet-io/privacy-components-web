@@ -5,7 +5,7 @@ import { choose } from 'lit/directives/choose.js';
 import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
 import { Demand } from './models/demand.js';
-import { ACTION, DATA_CATEGORY } from './models/priv-terms.js';
+import { ACTION } from './models/priv-terms.js';
 import { buttonStyles, containerStyles } from './styles.js';
 import {
   ACTION_DESCRIPTIONS,
@@ -127,16 +127,8 @@ export class ReviewView extends LitElement {
       <span>${msg('I want to access:')}</span>
       <ul id="access-review-list" class="review-list">
         ${map(
-          this.demand.dataCategory,
-          dc => html`
-            ${when(
-              dc !== DATA_CATEGORY['OTHER-DATA'],
-              () => html` <li>${DATA_CATEGORY_DESCRIPTIONS[dc]()}</li> `,
-              () => html`
-                <li>${msg(html`<b>OTHER-DATA: </b>`)}${this.demand.message}</li>
-              `
-            )}
-          `
+          this.demand.restrictions?.privacy_scope?.data_category,
+          dc => html`<li>${DATA_CATEGORY_DESCRIPTIONS[dc]()}</li> `
         )}
       </ul>
       ${when(

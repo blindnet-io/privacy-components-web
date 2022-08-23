@@ -2,7 +2,12 @@ import { msg } from '@lit/localize';
 import { css, html, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { Demand } from '../models/demand.js';
-import { ACTION, DATA_CATEGORY, PROVENANCE } from '../models/priv-terms.js';
+import {
+  ACTION,
+  DATA_CATEGORY,
+  PROVENANCE,
+  TARGET,
+} from '../models/priv-terms.js';
 import {
   buttonStyles,
   containerStyles,
@@ -12,13 +17,13 @@ import {
 import {
   DATA_CATEGORY_DESCRIPTIONS,
   PROVENANCE_DESCRIPTIONS,
+  TARGET_DESCRIPTIONS,
 } from '../utils/dictionary.js';
 import { DemandForm } from './DemandForm.js';
 import { FormComponentState } from '../utils/states.js';
 
 import '../SlottedDropdown.js';
 import '../AllChecklist.js';
-import { Restriction } from '../models/restriction.js';
 
 /**
  * ActionForm for the Transparency PRIV action. Includes a dropdown and text element.
@@ -87,51 +92,59 @@ export class TransparencyForm extends DemandForm {
     // Access data category listeners
     this.addEventListener('access-option-select', e => {
       const { id } = (e as CustomEvent).detail;
-      this.demand.dataCategory?.add(id);
+      this.demand.restrictions!.privacy_scope!.data_category!.add(id);
     });
     this.addEventListener('access-option-deselect', e => {
       const { id } = (e as CustomEvent).detail;
-      this.demand.dataCategory?.delete(id);
+      this.demand.restrictions!.privacy_scope!.data_category!.delete(id);
     });
-    this.addEventListener('access-option-other-click', e => {
-      const { checked } = (e as CustomEvent).detail;
-      if (checked) {
-        this.demand.dataCategory?.add(DATA_CATEGORY['OTHER-DATA']);
-      } else {
-        this.demand.dataCategory?.delete(DATA_CATEGORY['OTHER-DATA']);
-      }
-    });
+
+    // FIXME: Disabled until we resolve how to handle OTHER-DATA
+    // this.addEventListener('access-option-other-click', e => {
+    //   const { checked } = (e as CustomEvent).detail;
+    //   if (checked) {
+    //     this.demand.dataCategory?.add(DATA_CATEGORY['OTHER-DATA']);
+    //   } else {
+    //     this.demand.dataCategory?.delete(DATA_CATEGORY['OTHER-DATA']);
+    //   }
+    // });
     // this.addEventListener('access-option-other-input', e => {
     //   const { text } = (e as CustomEvent).detail
     //   // TODO: What demand field to put the other-data category
     // })
-
-    // Provenance listeners
-    this.addEventListener('provenance-select', e => {
-      const { id } = (e as CustomEvent).detail;
-      this.demand.restrictions?.add(id);
-    });
-    this.addEventListener('provenance-deselect', e => {
-      const { id } = (e as CustomEvent).detail;
-      this.demand.restrictions?.delete(id);
-    });
-
-    // Additional message listener
-    this.addEventListener('text-element-change', e => {
-      const { text } = (e as CustomEvent).detail;
-      this.demand.message = text;
-    });
   }
 
   handleAdditionalMessageInput(e: Event) {
-    const event = new CustomEvent('text-element-change', {
-      bubbles: true,
-      composed: true,
-      detail: {
-        text: (e.target as HTMLTextAreaElement).value,
-      },
-    });
-    this.dispatchEvent(event);
+    const { value } = e.target as HTMLTextAreaElement;
+    this.demand.message = value;
+  }
+
+  handleProvenanceTermClick(e: Event) {
+    const { id } = (e as CustomEvent).target as HTMLInputElement;
+    this.demand.restrictions!.provenance!.term = id as PROVENANCE;
+  }
+
+  handleProvenanceTargetClick(e: Event) {
+    const { id } = (e as CustomEvent).target as HTMLInputElement;
+    this.demand.restrictions!.provenance!.target = id as TARGET;
+  }
+
+  handleDateRestrictionInput(e: Event) {
+    const { id, value } = e.target as HTMLInputElement;
+    if (id === 'date-start') {
+      if (value) {
+        this.demand.restrictions!.date_range!.from = new Date(value);
+      } else {
+        // Value is false when user hits 'clear' button on date picker
+        delete this.demand.restrictions?.date_range?.from;
+      }
+    } else if (id === 'date-end') {
+      if (value) {
+        this.demand.restrictions!.date_range!.to = new Date(value);
+      } else {
+        delete this.demand.restrictions?.date_range?.to;
+      }
+    }
   }
 
   validate(): boolean {
@@ -145,12 +158,19 @@ export class TransparencyForm extends DemandForm {
   getDefaultDemand(): Demand {
     return {
       action: ACTION.ACCESS,
-      // Default is all the non-subcategory access options
-      dataCategory: new Set<DATA_CATEGORY>(
-        Object.values(DATA_CATEGORY).filter(dc => !dc.includes('.'))
-      ),
-      // Default is all provenance options
-      restrictions: new Set<Restriction>(Object.values(PROVENANCE)),
+      restrictions: {
+        privacy_scope: {
+          // Default is all the non-subcategory access options
+          data_category: new Set<DATA_CATEGORY>(
+            Object.values(DATA_CATEGORY).filter(dc => !dc.includes('.'))
+          ),
+        },
+        provenance: {
+          term: PROVENANCE.ALL,
+          target: TARGET.SYSTEM,
+        },
+        date_range: {},
+      },
     };
   }
 
@@ -163,45 +183,81 @@ export class TransparencyForm extends DemandForm {
       <div class="light-border access-options">
         <span slot="prompt"><b>${msg('I want to access:')}</b></span>
         <all-checklist
-          .choices=${this.allowedDataCategories
-            .filter(dc => dc !== DATA_CATEGORY['OTHER-DATA'])
-            .map(dc => ({
-              id: dc,
-              description: DATA_CATEGORY_DESCRIPTIONS[dc](),
-              checked: demand.dataCategory?.has(dc),
-              disabled: false,
-            }))}
+          .choices=${this.allowedDataCategories.map(dc => ({
+            id: dc,
+            description: DATA_CATEGORY_DESCRIPTIONS[dc](),
+            checked: demand.restrictions?.privacy_scope?.data_category?.has(dc),
+            disabled: false,
+          }))}
           all-message=${msg(
             'ALL categories of data the organization has data on me'
           )}
           component-mode=${FormComponentState.CLOSED}
           event-prefix="access-option"
           include-buttons
-          include-other=${this.allowedDataCategories.includes(
-            DATA_CATEGORY['OTHER-DATA']
-          )}
         ></all-checklist>
       </div>
 
       <slotted-dropdown header=${msg('Advanced settings')} include-buttons>
-        <span slot="prompt"
-          ><b
-            >${msg(
-              'My demand applies to data from the following provenance:'
-            )}</b
-          ></span
-        >
-        <all-checklist
-          .choices=${Object.values(PROVENANCE).map(p => ({
-            id: p,
-            description: PROVENANCE_DESCRIPTIONS[p](),
-            checked: demand.restrictions?.has(p),
-            disabled: false,
-          }))}
-          all-message=${msg('All provenances')}
-          component-mode=${FormComponentState.OPEN}
-          event-prefix="provenance"
-        ></all-checklist>
+        <div class="date-restriction-ctr">
+          <p>
+            ${msg(
+              'Specify a date range for the selected category(ies) of data:'
+            )}
+          </p>
+          <div>
+            <span>${msg('From')}</span>
+            <input
+              id="date-start"
+              type="date"
+              @input=${this.handleDateRestrictionInput}
+            />
+            <span>${msg('to')}</span>
+            <input
+              id="date-end"
+              type="date"
+              @input=${this.handleDateRestrictionInput}
+            />
+          </div>
+        </div>
+        <div>
+          <span>
+            ${msg('My demand applies to data from the following provenance:')}
+          </span>
+          <fieldset class="provenance-restriction">
+            ${Object.values(PROVENANCE).map(
+              p => html`
+                <input
+                  id=${p}
+                  name='provenance-term'
+                  type='radio'
+                  ?checked=${demand.restrictions?.provenance?.term === p}
+                  @click=${this.handleProvenanceTermClick}>
+                </input>
+                <label for=${p}>${PROVENANCE_DESCRIPTIONS[p]()}</label><br/>
+              `
+            )}
+          </fieldset>
+        </div>
+        <div>
+          <span> ${msg('I address my demand to:')} </span>
+          <fieldset class="provenance-restriction">
+            ${Object.values(TARGET)
+              .filter(t => t !== TARGET.ALL)
+              .map(
+                t => html`
+                <input
+                  id=${t}
+                  name='provenance-target'
+                  type='radio'
+                  ?checked=${demand.restrictions?.provenance?.target === t}
+                  @click=${this.handleProvenanceTargetClick}>
+                </input>
+                <label for=${t}>${TARGET_DESCRIPTIONS[t]()}</label><br/>
+              `
+              )}
+          </fieldset>
+        </div>
       </slotted-dropdown>
       <slotted-dropdown
         header=${msg('Additional message (optional)')}

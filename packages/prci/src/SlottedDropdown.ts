@@ -31,7 +31,7 @@ export class SlottedDropdown extends LitElement {
     css`
       :host([dropdown-state='2']) .content-ctr {
         display: grid;
-        /* row-gap: 40px; */
+        row-gap: 20px;
       }
 
       .content-ctr {

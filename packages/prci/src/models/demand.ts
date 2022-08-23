@@ -1,10 +1,9 @@
-import { ACTION, DATA_CATEGORY } from './priv-terms.js';
-import { Restriction } from './restriction.js';
+import { ACTION } from './priv-terms.js';
+import { Restrictions } from './restrictions.js';
 
 export interface Demand {
   id?: string;
   action: ACTION;
   message?: string;
-  restrictions?: Set<Restriction>;
-  dataCategory?: Set<DATA_CATEGORY>;
+  restrictions?: Restrictions;
 }

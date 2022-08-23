@@ -19,6 +19,26 @@ export const containerStyles = css`
   .no-line-border {
     border-radius: 10px;
   }
+
+  .provenance-restriction {
+    border: none;
+    padding: 0px;
+    margin: 0px;
+    padding: 20px 0px 20px 30px;
+  }
+
+  .provenance-restriction input {
+    margin: 20px 0px;
+  }
+
+  .date-restriction-ctr {
+    display: grid;
+    row-gap: 30px;
+  }
+
+  .date-restriction-ctr div {
+    padding: 0px 0px 0px 30px;
+  }
 `;
 
 export const buttonStyles = css`
