@@ -130,24 +130,6 @@ export class TransparencyForm extends MultiDemandForm {
     return true;
   }
 
-  /**
-   * The defualt transparency demand contains all transparency actions
-   * @returns List of demands with each TRANSPARENCY.* action
-   */
-  getDefaultDemands(): Demand[] {
-    this._restrictions = {
-      provenance: {
-        term: PROVENANCE.ALL,
-      },
-    };
-    return Object.values(ACTION)
-      .filter(a => a.includes('TRANSPARENCY.'))
-      .map(a => ({
-        action: a,
-        restrictions: this._restrictions,
-      }));
-  }
-
   getEditTemplate(demands: Demand[]): TemplateResult<1 | 2> {
     const selectedActions = Object.values(demands).map(d => d.action);
     return html`

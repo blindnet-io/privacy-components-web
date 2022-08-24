@@ -1,12 +1,5 @@
 import { msg } from '@lit/localize';
-import {
-  css,
-  CSSResultGroup,
-  html,
-  LitElement,
-  PropertyValueMap,
-  TemplateResult,
-} from 'lit';
+import { css, CSSResultGroup, html, LitElement, TemplateResult } from 'lit';
 import { property } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
 import { Demand } from '../models/demand.js';
@@ -99,8 +92,6 @@ export abstract class DemandForm extends LitElement {
    */
   abstract validate(): boolean;
 
-  abstract getDefaultDemand(): Demand;
-
   /**
    * Get the edit template for this action
    * @param useDefault Indicates if form should be populated with default values or from input demands
@@ -108,20 +99,7 @@ export abstract class DemandForm extends LitElement {
    */
   abstract getEditTemplate(demand: Demand): TemplateResult;
 
-  /**
-   * Ensure that we always use the default demands initially
-   * @param _changedProperties
-   */
-  protected willUpdate(
-    _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
-  ): void {
-    if (_changedProperties.has('demand') && !this.demand) {
-      this.demand = this.getDefaultDemand();
-    }
-  }
-
   render(): TemplateResult<1 | 2> {
-    console.log(this.demand);
     return html`
       ${choose(this.demandState, [
         [DemandState.EDIT_OPEN, () => this.getEditTemplate(this.demand)],

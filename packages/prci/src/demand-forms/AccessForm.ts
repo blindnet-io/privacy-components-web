@@ -3,9 +3,10 @@ import { css, html, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { Demand } from '../models/demand.js';
 import {
-  ACTION,
   DATA_CATEGORY,
+  PROCESSING_CATEGORY,
   PROVENANCE,
+  PURPOSE,
   TARGET,
 } from '../models/priv-terms.js';
 import {
@@ -92,11 +93,20 @@ export class TransparencyForm extends DemandForm {
     // Access data category listeners
     this.addEventListener('access-option-select', e => {
       const { id } = (e as CustomEvent).detail;
-      this.demand.restrictions!.privacy_scope!.dc!.add(id);
+      this.demand.restrictions!.privacy_scope!.push({
+        dc: id as DATA_CATEGORY,
+        pc: PROCESSING_CATEGORY.ALL,
+        pp: PURPOSE.ALL,
+      });
     });
     this.addEventListener('access-option-deselect', e => {
       const { id } = (e as CustomEvent).detail;
-      this.demand.restrictions!.privacy_scope!.dc!.delete(id);
+      this.demand.restrictions!.privacy_scope!.splice(
+        this.demand.restrictions!.privacy_scope!.findIndex(
+          psr => psr.dc === (id as DATA_CATEGORY)
+        ),
+        1
+      );
     });
 
     // FIXME: Disabled until we resolve how to handle OTHER-DATA
@@ -151,29 +161,6 @@ export class TransparencyForm extends DemandForm {
     return true;
   }
 
-  /**
-   * The defualt transparency demand contains all transparency actions
-   * @returns List of demands with each TRANSPARENCY.* action
-   */
-  getDefaultDemand(): Demand {
-    return {
-      action: ACTION.ACCESS,
-      restrictions: {
-        privacy_scope: {
-          // Default is all the non-subcategory access options
-          dc: new Set<DATA_CATEGORY>(
-            Object.values(DATA_CATEGORY).filter(dc => !dc.includes('.'))
-          ),
-        },
-        provenance: {
-          term: PROVENANCE.ALL,
-          target: TARGET.SYSTEM,
-        },
-        date_range: {},
-      },
-    };
-  }
-
   getEditTemplate(demand: Demand): TemplateResult<1 | 2> {
     return html`
       <p id="edit-heading-1">
@@ -186,7 +173,10 @@ export class TransparencyForm extends DemandForm {
           .choices=${this.allowedDataCategories.map(dc => ({
             id: dc,
             description: DATA_CATEGORY_DESCRIPTIONS[dc](),
-            checked: demand.restrictions?.privacy_scope?.dc?.has(dc),
+            checked:
+              demand.restrictions?.privacy_scope?.findIndex(
+                psr => psr.dc === dc
+              ) !== -1,
             disabled: false,
           }))}
           all-message=${msg(
@@ -210,12 +200,22 @@ export class TransparencyForm extends DemandForm {
             <input
               id="date-start"
               type="date"
+              .value=${demand.restrictions?.date_range?.from
+                ? demand.restrictions?.date_range?.from
+                    .toISOString()
+                    .split('T')[0]
+                : ''}
               @input=${this.handleDateRestrictionInput}
             />
             <span>${msg('to')}</span>
             <input
               id="date-end"
               type="date"
+              .value=${demand.restrictions?.date_range?.to
+                ? demand.restrictions?.date_range?.to
+                    .toISOString()
+                    .split('T')[0]
+                : ''}
               @input=${this.handleDateRestrictionInput}
             />
           </div>

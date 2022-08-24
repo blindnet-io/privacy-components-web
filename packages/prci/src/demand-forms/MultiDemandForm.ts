@@ -1,12 +1,5 @@
 import { msg } from '@lit/localize';
-import {
-  css,
-  CSSResultGroup,
-  html,
-  LitElement,
-  PropertyValueMap,
-  TemplateResult,
-} from 'lit';
+import { css, CSSResultGroup, html, LitElement, TemplateResult } from 'lit';
 import { property } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
 import { Demand } from '../models/demand.js';
@@ -22,11 +15,6 @@ export abstract class MultiDemandForm extends LitElement {
   @property({ type: String }) demandGroupId = self.crypto.randomUUID();
 
   @property({ attribute: false }) demands: Demand[] = [];
-
-  constructor() {
-    super();
-    this.demands = this.getDefaultDemands();
-  }
 
   static styles = [
     buttonStyles,
@@ -115,31 +103,12 @@ export abstract class MultiDemandForm extends LitElement {
    */
   abstract validate(): boolean;
 
-  abstract getDefaultDemands(): Demand[];
-
   /**
    * Get the edit template for this action
    * @param useDefault Indicates if form should be populated with default values or from input demands
    * @returns HTML template
    */
   abstract getEditTemplate(demands: Demand[]): TemplateResult;
-
-  /**
-   * Ensure that we always use the default demands initially
-   * @param _changedProperties
-   */
-  protected willUpdate(
-    _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
-  ): void {
-    console.log(this.demands);
-    if (
-      _changedProperties.has('demands') &&
-      (!this.demands || this.demands.length === 0)
-    ) {
-      console.log('setting to default demands');
-      this.demands = this.getDefaultDemands();
-    }
-  }
 
   render(): TemplateResult<1 | 2> {
     return html`
