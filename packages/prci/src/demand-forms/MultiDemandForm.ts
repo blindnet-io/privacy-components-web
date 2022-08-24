@@ -14,7 +14,7 @@ import { ACTION } from '../models/priv-terms.js';
 import { buttonStyles } from '../styles.js';
 import { ComponentState, DemandState } from '../utils/states.js';
 
-export abstract class ActionForm extends LitElement {
+export abstract class MultiDemandForm extends LitElement {
   @property({ type: Number, attribute: 'demand-state' })
   demandState: DemandState = DemandState.EDIT_OPEN;
 
@@ -131,10 +131,12 @@ export abstract class ActionForm extends LitElement {
   protected willUpdate(
     _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
   ): void {
+    console.log(this.demands);
     if (
       _changedProperties.has('demands') &&
       (!this.demands || this.demands.length === 0)
     ) {
+      console.log('setting to default demands');
       this.demands = this.getDefaultDemands();
     }
   }
