@@ -1,12 +1,5 @@
 import { msg } from '@lit/localize';
-import {
-  css,
-  CSSResultGroup,
-  html,
-  LitElement,
-  PropertyValueMap,
-  TemplateResult,
-} from 'lit';
+import { css, CSSResultGroup, html, LitElement, TemplateResult } from 'lit';
 import { property } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
 import { Demand } from '../models/demand.js';
@@ -14,7 +7,10 @@ import { ACTION } from '../models/priv-terms.js';
 import { buttonStyles } from '../styles.js';
 import { ComponentState, DemandState } from '../utils/states.js';
 
-export abstract class ActionForm extends LitElement {
+/**
+ * Abstract class for a form that allows the user to create or edit multiple demands.
+ */
+export abstract class MultiDemandForm extends LitElement {
   @property({ type: Number, attribute: 'demand-state' })
   demandState: DemandState = DemandState.EDIT_OPEN;
 
@@ -22,11 +18,6 @@ export abstract class ActionForm extends LitElement {
   @property({ type: String }) demandGroupId = self.crypto.randomUUID();
 
   @property({ attribute: false }) demands: Demand[] = [];
-
-  constructor() {
-    super();
-    this.demands = this.getDefaultDemands();
-  }
 
   static styles = [
     buttonStyles,
@@ -115,29 +106,12 @@ export abstract class ActionForm extends LitElement {
    */
   abstract validate(): boolean;
 
-  abstract getDefaultDemands(): Demand[];
-
   /**
    * Get the edit template for this action
    * @param useDefault Indicates if form should be populated with default values or from input demands
    * @returns HTML template
    */
   abstract getEditTemplate(demands: Demand[]): TemplateResult;
-
-  /**
-   * Ensure that we always use the default demands initially
-   * @param _changedProperties
-   */
-  protected willUpdate(
-    _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
-  ): void {
-    if (
-      _changedProperties.has('demands') &&
-      (!this.demands || this.demands.length === 0)
-    ) {
-      this.demands = this.getDefaultDemands();
-    }
-  }
 
   render(): TemplateResult<1 | 2> {
     return html`

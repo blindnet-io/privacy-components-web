@@ -13,12 +13,20 @@ import './ResponseView.js';
 import './ReviewView.js';
 import './ActionMenu.js';
 import './demand-forms/TransparencyForm.js';
+import './demand-forms/AccessForm.js';
+import './demand-forms/DeleteForm.js';
 import { ACTION, TARGET } from './models/priv-terms.js';
 import { PrivacyRequest } from './models/privacy-request.js';
 import { ComponentState } from './utils/states.js';
 import { Demand } from './models/demand.js';
-import { getDefaultActions } from './utils/utils.js';
+import {
+  getDefaultActions,
+  getDefaultDemand,
+  getDefaultDemands,
+} from './utils/utils.js';
 import { buttonStyles, containerStyles, textStyles } from './styles.js';
+import { PRCI_CONFIG } from './utils/conf.js';
+import { TARGET_DESCRIPTIONS } from './utils/dictionary.js';
 import { sendPrivacyRequest } from './utils/privacy-request-api.js';
 
 /**
@@ -51,13 +59,15 @@ export class BldnPrivRequest extends LitElement {
       },
     ],
     email: '',
-    target: TARGET.ORGANIZATION,
+    target: TARGET.PARTNERS,
   };
 
   // Map of demand group ids to sets of demands
   @state() _demands: Map<string, Demand[]> = new Map<string, Demand[]>();
 
   @state() _currentDemandGroupId: string = '';
+
+  @state() _config = PRCI_CONFIG;
 
   constructor() {
     super();
@@ -81,6 +91,11 @@ export class BldnPrivRequest extends LitElement {
           break;
         case ComponentState.SUBMITTED:
           break;
+        case ComponentState.MENU:
+          // For now, going back to the menu means we reset. This will change
+          // when supporting multiple demands.
+          this._demands.set(this._currentDemandGroupId, []);
+          break;
         default:
           break;
       }
@@ -90,6 +105,10 @@ export class BldnPrivRequest extends LitElement {
     this.addEventListener('demand-set-multiple', e => {
       const { demandGroupId, demands } = (e as CustomEvent).detail;
       this._demands.set(demandGroupId, demands);
+    });
+    this.addEventListener('demand-set', e => {
+      const { demandGroupId, demand } = (e as CustomEvent).detail;
+      this._demands.set(demandGroupId, [demand]);
     });
     this.addEventListener('demand-delete', e => {
       const { demandGroupId } = (e as CustomEvent).detail;
@@ -231,11 +250,12 @@ export class BldnPrivRequest extends LitElement {
     });
 
     sendPrivacyRequest(this._privacyRequest, false).then(response => {
+      console.log(response);
       this.dispatchEvent(
         new CustomEvent('component-state-change', {
           detail: {
-            newState: ComponentState.SUBMITTED,
-            requestId: response.request_id,
+            newState: ComponentState.MENU,
+            // requestId: response.request_id, // TODO: Uncomment this when implementing status view
           },
         })
       );
@@ -244,6 +264,7 @@ export class BldnPrivRequest extends LitElement {
 
   /**
    * Reset most states
+   * // TODO: Remove this and use something like getDefaultDemand() from the forms
    */
   handleRestartClick() {
     this._privacyRequest = {
@@ -256,30 +277,78 @@ export class BldnPrivRequest extends LitElement {
         },
       ],
       email: '',
-      target: TARGET.ORGANIZATION,
+      target: TARGET.PARTNERS,
     };
     this._demands = new Map<string, Demand[]>();
   }
 
+  handleTargetClick(e: Event) {
+    const { id } = (e as CustomEvent).target as HTMLInputElement;
+    this._privacyRequest.target = id as TARGET;
+  }
+
+  /**
+   * Return a form based on action type with either default or prepopulated demand data
+   * @param action PRIV action for which to return a form
+   * @returns
+   */
   actionFormFactory(action: ACTION) {
+    const currentDemand = this._demands.get(this._currentDemandGroupId);
+
+    // Handle the transparency action case where we have multiple demands per form
+    if (action === ACTION.TRANSPARENCY) {
+      // Decide if we should use the default demand or not
+      const multiDemand =
+        currentDemand && currentDemand.length !== 0
+          ? currentDemand
+          : getDefaultDemands(action);
+      return html`
+        <transparency-form
+          .demandGroupId=${this._currentDemandGroupId}
+          .demands=${multiDemand}
+        ></transparency-form>
+      `;
+    }
+
+    // Decide if we should use the default demand or not
+    const demand =
+      currentDemand && currentDemand.length !== 0
+        ? currentDemand[0]
+        : getDefaultDemand(action);
+    // Get the form for all other action types
     return html`
       ${choose(
         action,
         [
-          [ACTION.ACCESS, () => html``],
-          [ACTION.DELETE, () => html``],
+          [
+            ACTION.ACCESS,
+            () => html`
+              <access-form
+                .demand=${demand}
+                .demandGroupId=${this._currentDemandGroupId}
+                .allowedDataCategories=${this._config[
+                  'access-allowed-data-categories'
+                ]}
+              ></access-form>
+            `,
+          ],
+          [
+            ACTION.DELETE,
+            () => html`
+              <delete-form
+                .demand=${demand}
+                .demandGroupId=${this._currentDemandGroupId}
+                .allowedDataCategories=${this._config[
+                  'access-allowed-data-categories'
+                ]}
+              ></delete-form>
+            `,
+          ],
           [ACTION.MODIFY, () => html``],
           [ACTION.OBJECT, () => html``],
           [ACTION.PORTABILITY, () => html``],
           [ACTION.RESTRICT, () => html``],
           [ACTION.REVOKE, () => html``],
-          [
-            ACTION.TRANSPARENCY,
-            () => html`<transparency-form
-              .demandGroupId=${this._currentDemandGroupId}
-              .demands=${this._demands.get(this._currentDemandGroupId)}
-            ></transparency-form>`,
-          ],
           [ACTION['OTHER.DEMAND'], () => html``],
         ],
         () => html`${msg('Error: Invalid Action')}`
@@ -338,7 +407,7 @@ export class BldnPrivRequest extends LitElement {
                 ${map(
                   this._demands.entries(),
                   ([groupId, demands]) => html`<review-view
-                    class="medium-border"
+                    class="light-border"
                     .demandGroupId=${groupId}
                     .demands=${demands}
                   ></review-view>`
@@ -351,6 +420,32 @@ export class BldnPrivRequest extends LitElement {
                   </button>
                 </div> -->
                 <!-- Submit button -->
+                <slotted-dropdown
+                  header=${msg('Privacy Request Advanced settings')}
+                  include-buttons
+                >
+                  <div>
+                    <span> ${msg('I address my Privacy Request to:')} </span>
+                    <fieldset class="provenance-restriction">
+                      ${Object.values(TARGET)
+                        .filter(t => t !== TARGET.ALL)
+                        .map(
+                          t => html`
+                          <input
+                            id=${t}
+                            name='provenance-target'
+                            type='radio'
+                            ?checked=${this._privacyRequest.target === t}
+                            @click=${this.handleTargetClick}>
+                          </input>
+                          <label for=${t}>${TARGET_DESCRIPTIONS[
+                            t
+                          ]()}</label><br/>
+                        `
+                        )}
+                    </fieldset>
+                  </div>
+                </slotted-dropdown>
                 <button
                   id="submit-btn"
                   class="nav-btn ctr-btn"

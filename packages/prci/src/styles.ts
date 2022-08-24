@@ -2,22 +2,49 @@ import { css } from 'lit';
 
 export const containerStyles = css`
   .dark-border {
-    border: 2px solid #000;
+    border: 1px solid #000;
     border-radius: 10px;
   }
 
   .medium-border {
-    border: 2px solid #5b5b5b;
+    border: 1px solid #5b5b5b;
     border-radius: 10px;
   }
 
   .light-border {
-    border: 2px solid #c4c4c4;
+    border: 1px solid #c4c4c4;
     border-radius: 10px;
   }
 
   .no-line-border {
     border-radius: 10px;
+  }
+
+  .provenance-restriction {
+    border: none;
+    padding: 0px;
+    margin: 0px;
+  }
+
+  .provenance-restriction input {
+    margin: 20px 0px 20px 30px;
+  }
+
+  .provenance-restriction input:nth-last-child(3) {
+    margin: 20px 0px 0px 30px;
+  }
+
+  .provenance-restriction input:first-child {
+    margin: 35px 0px 20px 30px;
+  }
+
+  .date-restriction-ctr {
+    display: grid;
+    row-gap: 35px;
+  }
+
+  .date-restriction-ctr div {
+    padding: 0px 0px 0px 30px;
   }
 `;
 
@@ -85,6 +112,7 @@ export const buttonStyles = css`
 
   .ctr-btn {
     justify-self: center;
+    justify-content: center;
   }
 
   .right-btn {
@@ -112,8 +140,19 @@ export const textStyles = css`
 
   .std-txt-area {
     background: #f8f8fc;
-    border: 1px solid #e5e 5e5;
+    border: 1px solid #e5e5e5;
     border-radius: 8px;
+  }
+
+  .std-txt-input {
+    background: #f8f8fc;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+  }
+
+  p {
+    padding: 0px;
+    margin: 0px;
   }
 `;
 
