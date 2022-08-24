@@ -26,6 +26,7 @@ import {
 import { buttonStyles, containerStyles, textStyles } from './styles.js';
 import { PRCI_CONFIG } from './utils/conf.js';
 import { TARGET_DESCRIPTIONS } from './utils/dictionary.js';
+import { sendPrivacyRequest } from './utils/privacy-request-api.js';
 
 /**
  * Top level component encapsulating a single PrivacyRequest. Contains one or
@@ -250,16 +251,17 @@ export class BldnPrivRequest extends LitElement {
     // eslint-disable-next-line no-console
     console.log(this._privacyRequest);
 
-    // sendPrivacyRequest(this._privacyRequest, false).then(response => {
-    //   this.dispatchEvent(
-    //     new CustomEvent('component-state-change', {
-    //       detail: {
-    //         newState: ComponentState.SUBMITTED,
-    //         requestId: response.request_id,
-    //       },
-    //     })
-    //   );
-    // });
+    sendPrivacyRequest(this._privacyRequest, false).then(response => {
+      console.log(response);
+      this.dispatchEvent(
+        new CustomEvent('component-state-change', {
+          detail: {
+            newState: ComponentState.MENU,
+            // requestId: response.request_id, // TODO: Uncomment this when implementing status view
+          },
+        })
+      );
+    });
   }
 
   /**
@@ -302,7 +304,6 @@ export class BldnPrivRequest extends LitElement {
         currentDemand && currentDemand.length !== 0
           ? currentDemand
           : getDefaultDemands(action);
-      console.log(multiDemand);
       return html`
         <transparency-form
           .demandGroupId=${this._currentDemandGroupId}
@@ -316,7 +317,6 @@ export class BldnPrivRequest extends LitElement {
       currentDemand && currentDemand.length !== 0
         ? currentDemand[0]
         : getDefaultDemand(action);
-    console.log(demand);
     // Get the form for all other action types
     return html`
       ${choose(

@@ -2,7 +2,9 @@ import { Demand } from '../models/demand.js';
 import {
   ACTION,
   DATA_CATEGORY,
+  PROCESSING_CATEGORY,
   PROVENANCE,
+  PURPOSE,
   TARGET,
 } from '../models/priv-terms.js';
 
@@ -16,12 +18,13 @@ export function getDefaultDemand(action: ACTION): Demand {
       return {
         action: ACTION.ACCESS,
         restrictions: {
-          privacy_scope: {
-            // Default is all the non-subcategory access options
-            dc: new Set<DATA_CATEGORY>(
-              Object.values(DATA_CATEGORY).filter(dc => !dc.includes('.'))
-            ),
-          },
+          privacy_scope: Object.values(DATA_CATEGORY)
+            .filter(dc => !dc.includes('.') && !dc.includes('*'))
+            .map(dc => ({
+              dc,
+              pc: PROCESSING_CATEGORY.ALL,
+              pp: PURPOSE.ALL,
+            })),
           provenance: {
             term: PROVENANCE.ALL,
             target: TARGET.SYSTEM,

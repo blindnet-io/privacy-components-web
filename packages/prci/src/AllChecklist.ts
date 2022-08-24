@@ -145,7 +145,6 @@ export class AllChecklist extends LitElement {
    * @param id ID of the choice to select
    */
   selectChoice(id: string) {
-    console.log('selecting choice');
     this.selectedChoices.add(id);
     // Fire add event
     const event = new CustomEvent(`${this.eventPrefix}-select`, {
@@ -256,7 +255,6 @@ export class AllChecklist extends LitElement {
    * Update the selection state based on currently selected choices
    */
   updateSelectionState() {
-    console.log(this.selectedChoices.size);
     switch (this.selectedChoices.size) {
       case 0:
         this.selectionState = SelectionState.NONE;
@@ -268,7 +266,6 @@ export class AllChecklist extends LitElement {
         this.selectionState = SelectionState.SOME;
         break;
     }
-    console.log(this.selectionState);
   }
 
   /**
