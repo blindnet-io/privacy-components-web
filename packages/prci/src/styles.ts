@@ -149,6 +149,11 @@ export const textStyles = css`
     border: 1px solid #e5e5e5;
     border-radius: 4px;
   }
+
+  p {
+    padding: 0px;
+    margin: 0px;
+  }
 `;
 
 export const imgStyles = css`

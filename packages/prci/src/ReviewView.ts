@@ -5,12 +5,14 @@ import { choose } from 'lit/directives/choose.js';
 import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
 import { Demand } from './models/demand.js';
-import { ACTION } from './models/priv-terms.js';
-import { buttonStyles, containerStyles } from './styles.js';
+import { ACTION, PROVENANCE, TARGET } from './models/priv-terms.js';
+import { buttonStyles, containerStyles, textStyles } from './styles.js';
 import {
   ACTION_DESCRIPTIONS,
   ACTION_TITLES,
   DATA_CATEGORY_DESCRIPTIONS,
+  PROVENANCE_DESCRIPTIONS,
+  TARGET_DESCRIPTIONS,
 } from './utils/dictionary.js';
 import { ComponentState } from './utils/states.js';
 
@@ -30,6 +32,7 @@ export class ReviewView extends LitElement {
   static styles = [
     containerStyles,
     buttonStyles,
+    textStyles,
     css`
       :host {
         display: grid;
@@ -68,7 +71,7 @@ export class ReviewView extends LitElement {
         z-index: 1;
       }
 
-      #transparency-extra-msg {
+      .extra-msg-txt {
         padding: 0px 0px 0px 20px;
       }
 
@@ -123,6 +126,9 @@ export class ReviewView extends LitElement {
   ];
 
   getAccessReviewTemplate() {
+    const from = this.demand.restrictions?.date_range?.from;
+    const to = this.demand.restrictions?.date_range?.to;
+    const provenance = this.demand.restrictions?.provenance;
     return html`
       <span>${msg('I want to access:')}</span>
       <ul id="access-review-list" class="review-list">
@@ -132,10 +138,30 @@ export class ReviewView extends LitElement {
         )}
       </ul>
       ${when(
+        from || to,
+        () => html`<p>${this.getDateRangeReviewTemplate(from, to)}</p>`
+      )}
+      ${when(
+        provenance?.term !== PROVENANCE.ALL,
+        () => html`
+          <p>
+            ${msg('For:')} <b>${PROVENANCE_DESCRIPTIONS[provenance!.term]()}</b>
+          </p>
+        `
+      )}
+      ${when(
+        provenance?.target !== TARGET.SYSTEM,
+        () => html`
+          <p>
+            ${msg('From:')} <b>${TARGET_DESCRIPTIONS[provenance!.target!]()}</b>
+          </p>
+        `
+      )}
+      ${when(
         this.demand.message,
         () => html`
           <span>${msg('Plus additional info:')}</span>
-          <span id="access-extra-msg"><i>${this.demand.message}</i></span>
+          <span class="extra-msg-txt"><i>${this.demand.message}</i></span>
         `
       )}
     `;
@@ -178,15 +204,27 @@ export class ReviewView extends LitElement {
         this.demands[0].message,
         () => html`
           <span>${msg('Plus additional info:')}</span>
-          <span id="transparency-extra-msg"
-            ><i>${this.demands[0].message}</i></span
-          >
+          <span class="extra-msg-txt"><i>${this.demands[0].message}</i></span>
         `
       )}
     `;
   }
 
   getOtherDemandReviewTemplate() {
+    return html``;
+  }
+
+  getDateRangeReviewTemplate(from: Date | undefined, to: Date | undefined) {
+    if (from && to) {
+      return html`${msg('From')} <b>${from?.toLocaleDateString('en-GB')}</b> to
+        <b>${to?.toLocaleDateString('en-GB')}</b>`;
+    }
+    if (from) {
+      return html`${msg('Since')} <b>${from?.toLocaleDateString('en-GB')}</b>`;
+    }
+    if (to) {
+      return html`${msg('Up to')} <b>${to?.toLocaleDateString('en-GB')}</b>`;
+    }
     return html``;
   }
 
