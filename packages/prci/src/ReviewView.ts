@@ -168,7 +168,45 @@ export class ReviewView extends LitElement {
   }
 
   getDeleteReviewTemplate() {
-    return html``;
+    const from = this.demand.restrictions?.date_range?.from;
+    const to = this.demand.restrictions?.date_range?.to;
+    const provenance = this.demand.restrictions?.provenance;
+    return html`
+      <span>${msg('I want to delete:')}</span>
+      <ul id="delete-review-list" class="review-list">
+        ${map(
+          this.demand.restrictions?.privacy_scope,
+          psr => html`<li>${DATA_CATEGORY_DESCRIPTIONS[psr.dc]()}</li> `
+        )}
+      </ul>
+      ${when(
+        from || to,
+        () => html`<p>${this.getDateRangeReviewTemplate(from, to)}</p>`
+      )}
+      ${when(
+        provenance?.term !== PROVENANCE.ALL,
+        () => html`
+          <p>
+            ${msg('For:')} <b>${PROVENANCE_DESCRIPTIONS[provenance!.term]()}</b>
+          </p>
+        `
+      )}
+      ${when(
+        provenance?.target !== TARGET.SYSTEM,
+        () => html`
+          <p>
+            ${msg('From:')} <b>${TARGET_DESCRIPTIONS[provenance!.target!]()}</b>
+          </p>
+        `
+      )}
+      ${when(
+        this.demand.message,
+        () => html`
+          <span>${msg('Plus additional info:')}</span>
+          <span class="extra-msg-txt"><i>${this.demand.message}</i></span>
+        `
+      )}
+    `;
   }
 
   getModifyReviewTemplate() {
