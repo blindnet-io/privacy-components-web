@@ -365,7 +365,7 @@ export class BldnPrivRequest extends LitElement {
                 ${map(
                   this._demands.entries(),
                   ([groupId, demands]) => html`<review-view
-                    class="medium-border"
+                    class="light-border"
                     .demandGroupId=${groupId}
                     .demands=${demands}
                   ></review-view>`
@@ -379,7 +379,7 @@ export class BldnPrivRequest extends LitElement {
                 </div> -->
                 <!-- Submit button -->
                 <slotted-dropdown
-                  header=${msg('Advanced settings')}
+                  header=${msg('Privacy Request Advanced settings')}
                   include-buttons
                 >
                   <div>

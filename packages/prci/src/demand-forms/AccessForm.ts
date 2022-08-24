@@ -181,7 +181,7 @@ export class TransparencyForm extends DemandForm {
       </p>
 
       <div class="light-border access-options">
-        <span slot="prompt"><b>${msg('I want to access:')}</b></span>
+        <span slot="prompt">${msg('I want to access:')}</span>
         <all-checklist
           .choices=${this.allowedDataCategories.map(dc => ({
             id: dc,

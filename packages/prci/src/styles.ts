@@ -2,17 +2,17 @@ import { css } from 'lit';
 
 export const containerStyles = css`
   .dark-border {
-    border: 2px solid #000;
+    border: 1px solid #000;
     border-radius: 10px;
   }
 
   .medium-border {
-    border: 2px solid #5b5b5b;
+    border: 1px solid #5b5b5b;
     border-radius: 10px;
   }
 
   .light-border {
-    border: 2px solid #c4c4c4;
+    border: 1px solid #c4c4c4;
     border-radius: 10px;
   }
 

@@ -25,12 +25,13 @@ export class ActionItem extends LitElement {
     }
 
     .action-button:not([disabled]):hover {
-      border: 2px solid #18a0fb;
+      border: 1px solid #18a0fb;
       overflow: visible;
     }
 
     .action-button {
       border-radius: 15px;
+      border-width: 1px;
       background-color: #fafafa;
       padding: 10px 40px;
       height: 120px;
