@@ -29,14 +29,21 @@ export class SlottedDropdown extends LitElement {
     textStyles,
     imgStyles,
     css`
-      :host([dropdown-state='2']) .content-ctr {
-        display: grid;
-        row-gap: 20px;
-      }
-
       .content-ctr {
         display: none;
-        padding: 40px;
+      }
+
+      :host([dropdown-state='2']) .content-ctr {
+        display: grid;
+        row-gap: 50px;
+      }
+
+      .dropdown {
+        padding: 40px 40px 20px 40px;
+      }
+
+      :host([dropdown-state='0']) .dropdown {
+        display: none;
       }
 
       :host([dropdown-state='2']) .header {
@@ -45,6 +52,11 @@ export class SlottedDropdown extends LitElement {
 
       :host([dropdown-state='2']) .dropdown-btn-img {
         src: 'packages/prci/src/assets/icons/close_container_arrow.svg';
+      }
+
+      .close-btn-ctr {
+        margin: 20px 0px 0px 0px;
+        text-align: center;
       }
     `,
   ];
@@ -76,19 +88,24 @@ export class SlottedDropdown extends LitElement {
         </button>
       `
       )}
-      <div class="light-border content-ctr">
-        <slot name="prompt"></slot>
-        <slot></slot>
+      <div class="light-border dropdown">
+        <div class="content-ctr">
+          <slot name="prompt"></slot>
+          <slot></slot>
+        </div>
         <!-- Display button top open/close if in partial/open -->
         ${when(
           this.includeButtons,
           () => html`
-            <button
-              @click=${this.handleButtonClick}
-              class="ctr-btn ${this.dropdownState === FormComponentState.PARTIAL
-                ? 'open-btn'
-                : 'close-btn'}"
-            ></button>
+            <div class="close-btn-ctr">
+              <button
+                @click=${this.handleButtonClick}
+                class="ctr-btn ${this.dropdownState ===
+                FormComponentState.PARTIAL
+                  ? 'open-btn'
+                  : 'close-btn'}"
+              ></button>
+            </div>
           `
         )}
       </div>

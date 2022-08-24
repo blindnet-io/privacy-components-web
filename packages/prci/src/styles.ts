@@ -24,11 +24,14 @@ export const containerStyles = css`
     border: none;
     padding: 0px;
     margin: 0px;
-    padding: 20px 0px 20px 30px;
   }
 
   .provenance-restriction input {
-    margin: 20px 0px;
+    margin: 20px 0px 0px 30px;
+  }
+
+  .provenance-restriction input:not(:nth-last-child(3)) {
+    margin: 20px 0px 20px 30px;
   }
 
   .date-restriction-ctr {
@@ -105,6 +108,7 @@ export const buttonStyles = css`
 
   .ctr-btn {
     justify-self: center;
+    justify-content: center;
   }
 
   .right-btn {
