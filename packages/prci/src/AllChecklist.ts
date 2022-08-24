@@ -1,5 +1,5 @@
 import { msg } from '@lit/localize';
-import { css, html, LitElement, TemplateResult } from 'lit';
+import { css, html, LitElement, PropertyValueMap, TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 import { buttonStyles, containerStyles, textStyles } from './styles.js';
@@ -145,6 +145,7 @@ export class AllChecklist extends LitElement {
    * @param id ID of the choice to select
    */
   selectChoice(id: string) {
+    console.log('selecting choice');
     this.selectedChoices.add(id);
     // Fire add event
     const event = new CustomEvent(`${this.eventPrefix}-select`, {
@@ -255,6 +256,7 @@ export class AllChecklist extends LitElement {
    * Update the selection state based on currently selected choices
    */
   updateSelectionState() {
+    console.log(this.selectedChoices.size);
     switch (this.selectedChoices.size) {
       case 0:
         this.selectionState = SelectionState.NONE;
@@ -266,6 +268,7 @@ export class AllChecklist extends LitElement {
         this.selectionState = SelectionState.SOME;
         break;
     }
+    console.log(this.selectionState);
   }
 
   /**
@@ -301,6 +304,23 @@ export class AllChecklist extends LitElement {
       this.componentMode = FormComponentState.OPEN;
     } else {
       this.componentMode = FormComponentState.CLOSED;
+    }
+  }
+
+  /**
+   * Hook into willUpdate to ensure the selected choices set matches choices
+   * @param _changedProperties Map of changed properties for this update
+   */
+  protected willUpdate(
+    _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
+  ): void {
+    if (_changedProperties.has('choices')) {
+      this.choices.forEach(c => {
+        if (c.checked) {
+          this.selectedChoices.add(c.id);
+        }
+      });
+      this.updateSelectionState();
     }
   }
 
