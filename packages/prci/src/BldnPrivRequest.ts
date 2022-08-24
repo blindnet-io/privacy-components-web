@@ -28,9 +28,6 @@ import { buttonStyles, containerStyles, textStyles } from './styles.js';
 import { PRCI_CONFIG } from './utils/conf.js';
 import { TARGET_DESCRIPTIONS } from './utils/dictionary.js';
 import { sendPrivacyRequest } from './utils/privacy-request-api.js';
-import { PRCI_CONFIG } from './utils/conf.js';
-import { TARGET_DESCRIPTIONS } from './utils/dictionary.js';
-import { sendPrivacyRequest } from './utils/privacy-request-api.js';
 
 /**
  * Top level component encapsulating a single PrivacyRequest. Contains one or
