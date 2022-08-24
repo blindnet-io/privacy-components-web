@@ -14,6 +14,7 @@ import './ReviewView.js';
 import './ActionMenu.js';
 import './demand-forms/TransparencyForm.js';
 import './demand-forms/AccessForm.js';
+import './demand-forms/DeleteForm.js';
 import { ACTION, TARGET } from './models/priv-terms.js';
 import { PrivacyRequest } from './models/privacy-request.js';
 import { ComponentState } from './utils/states.js';
@@ -248,9 +249,6 @@ export class BldnPrivRequest extends LitElement {
       return d;
     });
 
-    // eslint-disable-next-line no-console
-    console.log(this._privacyRequest);
-
     sendPrivacyRequest(this._privacyRequest, false).then(response => {
       console.log(response);
       this.dispatchEvent(
@@ -334,7 +332,18 @@ export class BldnPrivRequest extends LitElement {
               ></access-form>
             `,
           ],
-          [ACTION.DELETE, () => html``],
+          [
+            ACTION.DELETE,
+            () => html`
+              <delete-form
+                .demand=${demand}
+                .demandGroupId=${this._currentDemandGroupId}
+                .allowedDataCategories=${this._config[
+                  'access-allowed-data-categories'
+                ]}
+              ></delete-form>
+            `,
+          ],
           [ACTION.MODIFY, () => html``],
           [ACTION.OBJECT, () => html``],
           [ACTION.PORTABILITY, () => html``],

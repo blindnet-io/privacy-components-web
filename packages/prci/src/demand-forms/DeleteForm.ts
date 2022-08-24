@@ -27,10 +27,10 @@ import '../SlottedDropdown.js';
 import '../AllChecklist.js';
 
 /**
- * ActionForm for the Access PRIV action. Includes a dropdown and text element.
+ * ActionForm for the Delete PRIV action.
  */
-@customElement('access-form')
-export class AccessForm extends DemandForm {
+@customElement('delete-form')
+export class DeleteForm extends DemandForm {
   @property({ type: Array, attribute: false })
   allowedDataCategories: DATA_CATEGORY[] = [];
 
@@ -48,7 +48,7 @@ export class AccessForm extends DemandForm {
         margin: 0px;
       }
 
-      .access-options {
+      .delete-options {
         padding: 40px 40px 20px 40px;
       }
 
@@ -86,8 +86,8 @@ export class AccessForm extends DemandForm {
   constructor() {
     super();
 
-    // Access data category listeners
-    this.addEventListener('access-option-select', e => {
+    // Data category listeners
+    this.addEventListener('delete-option-select', e => {
       const { id } = (e as CustomEvent).detail;
       this.demand.restrictions!.privacy_scope!.push({
         dc: id as DATA_CATEGORY,
@@ -95,7 +95,7 @@ export class AccessForm extends DemandForm {
         pp: PURPOSE.ALL,
       });
     });
-    this.addEventListener('access-option-deselect', e => {
+    this.addEventListener('delete-option-deselect', e => {
       const { id } = (e as CustomEvent).detail;
       this.demand.restrictions!.privacy_scope!.splice(
         this.demand.restrictions!.privacy_scope!.findIndex(
@@ -106,7 +106,7 @@ export class AccessForm extends DemandForm {
     });
 
     // FIXME: Disabled until we resolve how to handle OTHER-DATA
-    // this.addEventListener('access-option-other-click', e => {
+    // this.addEventListener('delete-option-other-click', e => {
     //   const { checked } = (e as CustomEvent).detail;
     //   if (checked) {
     //     this.demand.dataCategory?.add(DATA_CATEGORY['OTHER-DATA']);
@@ -114,7 +114,7 @@ export class AccessForm extends DemandForm {
     //     this.demand.dataCategory?.delete(DATA_CATEGORY['OTHER-DATA']);
     //   }
     // });
-    // this.addEventListener('access-option-other-input', e => {
+    // this.addEventListener('delete-option-other-input', e => {
     //   const { text } = (e as CustomEvent).detail
     //   // TODO: What demand field to put the other-data category
     // })
@@ -160,11 +160,11 @@ export class AccessForm extends DemandForm {
   getEditTemplate(demand: Demand): TemplateResult<1 | 2> {
     return html`
       <p id="edit-heading-1">
-        <b>${msg('Details of my ACCESS Demand')}</b>
+        <b>${msg('Details of my DELETE Demand')}</b>
       </p>
 
-      <div class="light-border access-options">
-        <span slot="prompt">${msg('I want to access:')}</span>
+      <div class="light-border delete-options">
+        <span slot="prompt">${msg('I want to delete:')}</span>
         <all-checklist
           .choices=${this.allowedDataCategories.map(dc => ({
             id: dc,
@@ -179,7 +179,7 @@ export class AccessForm extends DemandForm {
             'ALL categories of data the organization has data on me'
           )}
           component-mode=${FormComponentState.CLOSED}
-          event-prefix="access-option"
+          event-prefix="delete-option"
           include-buttons
         ></all-checklist>
       </div>

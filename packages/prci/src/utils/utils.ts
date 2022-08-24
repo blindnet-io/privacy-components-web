@@ -16,7 +16,26 @@ export function getDefaultDemand(action: ACTION): Demand {
   switch (action) {
     case ACTION.ACCESS:
       return {
-        action: ACTION.ACCESS,
+        action,
+        restrictions: {
+          privacy_scope: Object.values(DATA_CATEGORY)
+            .filter(dc => !dc.includes('.') && !dc.includes('*'))
+            .map(dc => ({
+              dc,
+              pc: PROCESSING_CATEGORY.ALL,
+              pp: PURPOSE.ALL,
+            })),
+          provenance: {
+            term: PROVENANCE.ALL,
+            target: TARGET.SYSTEM,
+          },
+          date_range: {},
+        },
+      };
+
+    case ACTION.DELETE:
+      return {
+        action,
         restrictions: {
           privacy_scope: Object.values(DATA_CATEGORY)
             .filter(dc => !dc.includes('.') && !dc.includes('*'))
