@@ -27,16 +27,20 @@ export const containerStyles = css`
   }
 
   .provenance-restriction input {
+    margin: 20px 0px 20px 30px;
+  }
+
+  .provenance-restriction input:nth-last-child(3) {
     margin: 20px 0px 0px 30px;
   }
 
-  .provenance-restriction input:not(:nth-last-child(3)) {
-    margin: 20px 0px 20px 30px;
+  .provenance-restriction input:first-child {
+    margin: 35px 0px 20px 30px;
   }
 
   .date-restriction-ctr {
     display: grid;
-    row-gap: 30px;
+    row-gap: 35px;
   }
 
   .date-restriction-ctr div {
