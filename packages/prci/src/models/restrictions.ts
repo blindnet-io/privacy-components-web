@@ -8,9 +8,9 @@ import {
 } from './priv-terms.js';
 
 interface PrivacyScopeRestriction {
-  dc?: Set<DATA_CATEGORY>;
-  pc?: Set<PROCESSING_CATEGORY>;
-  pp?: Set<PURPOSE>;
+  dc: DATA_CATEGORY;
+  pc: PROCESSING_CATEGORY;
+  pp: PURPOSE;
 }
 
 interface ConsentRestriction {
@@ -32,7 +32,7 @@ interface DataReferenceRestriction {
 }
 
 export interface Restrictions {
-  privacy_scope?: PrivacyScopeRestriction;
+  privacy_scope?: PrivacyScopeRestriction[];
   consent?: ConsentRestriction;
   date_range?: DateRangeRestriction;
   provenance?: ProvenanceRestriction;
