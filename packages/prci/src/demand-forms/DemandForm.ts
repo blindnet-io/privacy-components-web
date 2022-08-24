@@ -10,6 +10,7 @@ import {
 import { property } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
 import { Demand } from '../models/demand.js';
+import { ACTION } from '../models/priv-terms.js';
 import { buttonStyles } from '../styles.js';
 import { ComponentState, DemandState } from '../utils/states.js';
 
@@ -17,10 +18,10 @@ export abstract class DemandForm extends LitElement {
   @property({ type: Number, attribute: 'demand-state' })
   demandState: DemandState = DemandState.EDIT_OPEN;
 
+  @property({ attribute: false }) demand: Demand = { action: ACTION.ACCESS };
+
   // eslint-disable-next-line no-restricted-globals
   @property({ type: String }) demandGroupId = self.crypto.randomUUID();
-
-  @property({ attribute: false }) demand: Demand = this.getDefaultDemand();
 
   static styles = [
     buttonStyles,
@@ -120,6 +121,7 @@ export abstract class DemandForm extends LitElement {
   }
 
   render(): TemplateResult<1 | 2> {
+    console.log(this.demand);
     return html`
       ${choose(this.demandState, [
         [DemandState.EDIT_OPEN, () => this.getEditTemplate(this.demand)],

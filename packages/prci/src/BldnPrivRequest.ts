@@ -18,7 +18,11 @@ import { ACTION, TARGET } from './models/priv-terms.js';
 import { PrivacyRequest } from './models/privacy-request.js';
 import { ComponentState } from './utils/states.js';
 import { Demand } from './models/demand.js';
-import { getDefaultActions } from './utils/utils.js';
+import {
+  getDefaultActions,
+  getDefaultDemand,
+  getDefaultDemands,
+} from './utils/utils.js';
 import { buttonStyles, containerStyles, textStyles } from './styles.js';
 import { PRCI_CONFIG } from './utils/conf.js';
 import { TARGET_DESCRIPTIONS } from './utils/dictionary.js';
@@ -84,6 +88,11 @@ export class BldnPrivRequest extends LitElement {
           }
           break;
         case ComponentState.SUBMITTED:
+          break;
+        case ComponentState.MENU:
+          // For now, going back to the menu means we reset. This will change
+          // when supporting multiple demands.
+          this._demands.set(this._currentDemandGroupId, []);
           break;
         default:
           break;
@@ -278,7 +287,37 @@ export class BldnPrivRequest extends LitElement {
     this._privacyRequest.target = id as TARGET;
   }
 
+  /**
+   * Return a form based on action type with either default or prepopulated demand data
+   * @param action PRIV action for which to return a form
+   * @returns
+   */
   actionFormFactory(action: ACTION) {
+    const currentDemand = this._demands.get(this._currentDemandGroupId);
+
+    // Handle the transparency action case where we have multiple demands per form
+    if (action === ACTION.TRANSPARENCY) {
+      // Decide if we should use the default demand or not
+      const multiDemand =
+        currentDemand && currentDemand.length !== 0
+          ? currentDemand
+          : getDefaultDemands(action);
+      console.log(multiDemand);
+      return html`
+        <transparency-form
+          .demandGroupId=${this._currentDemandGroupId}
+          .demands=${multiDemand}
+        ></transparency-form>
+      `;
+    }
+
+    // Decide if we should use the default demand or not
+    const demand =
+      currentDemand && currentDemand.length !== 0
+        ? currentDemand[0]
+        : getDefaultDemand(action);
+    console.log(demand);
+    // Get the form for all other action types
     return html`
       ${choose(
         action,
@@ -287,6 +326,7 @@ export class BldnPrivRequest extends LitElement {
             ACTION.ACCESS,
             () => html`
               <access-form
+                .demand=${demand}
                 .demandGroupId=${this._currentDemandGroupId}
                 .allowedDataCategories=${this._config[
                   'access-allowed-data-categories'
@@ -300,13 +340,6 @@ export class BldnPrivRequest extends LitElement {
           [ACTION.PORTABILITY, () => html``],
           [ACTION.RESTRICT, () => html``],
           [ACTION.REVOKE, () => html``],
-          [
-            ACTION.TRANSPARENCY,
-            () => html`<transparency-form
-              .demandGroupId=${this._currentDemandGroupId}
-              .demands=${this._demands.get(this._currentDemandGroupId)}
-            ></transparency-form>`,
-          ],
           [ACTION['OTHER.DEMAND'], () => html``],
         ],
         () => html`${msg('Error: Invalid Action')}`
