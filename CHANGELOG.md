@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-beta.8](https://github.com/blindnet-io/privacy-components-web/compare/v0.4.0-beta.7...v0.4.0-beta.8) (2022-08-24)
+
+
+### Features
+
+* **@blindnet/prci:** access and delete requests ([#69](https://github.com/blindnet-io/privacy-components-web/issues/69)) ([059cea7](https://github.com/blindnet-io/privacy-components-web/commit/059cea73ab3392ce5044e87af4212c16257e2687))
+
+
+
+
+
 # [0.4.0-beta.7](https://github.com/blindnet-io/privacy-components-web/compare/v0.4.0-beta.6...v0.4.0-beta.7) (2022-08-19)
 
 
