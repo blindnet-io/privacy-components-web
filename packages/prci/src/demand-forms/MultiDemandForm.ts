@@ -7,6 +7,9 @@ import { ACTION } from '../models/priv-terms.js';
 import { buttonStyles } from '../styles.js';
 import { ComponentState, DemandState } from '../utils/states.js';
 
+/**
+ * Abstract class for a form that allows the user to create or edit multiple demands.
+ */
 export abstract class MultiDemandForm extends LitElement {
   @property({ type: Number, attribute: 'demand-state' })
   demandState: DemandState = DemandState.EDIT_OPEN;

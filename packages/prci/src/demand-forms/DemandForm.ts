@@ -7,6 +7,9 @@ import { ACTION } from '../models/priv-terms.js';
 import { buttonStyles } from '../styles.js';
 import { ComponentState, DemandState } from '../utils/states.js';
 
+/**
+ * Abstract class for a form that allows the user to create or edit a demand.
+ */
 export abstract class DemandForm extends LitElement {
   @property({ type: Number, attribute: 'demand-state' })
   demandState: DemandState = DemandState.EDIT_OPEN;
@@ -41,6 +44,11 @@ export abstract class DemandForm extends LitElement {
     ` as CSSResultGroup,
   ];
 
+  /**
+   * Send this demand up to the top level component to add to the Privacy Request
+   * @param demandGroupId uuid of this demand group
+   * @param demand demand to add
+   */
   addToPrivacyRequest(demandGroupId: string, demand: Demand) {
     this.dispatchEvent(
       new CustomEvent('demand-set', {
@@ -70,7 +78,7 @@ export abstract class DemandForm extends LitElement {
   }
 
   /**
-   * On add click validate and add data then move to review
+   * Validate and add demand to request when add clicked
    */
   handleAddClick() {
     if (this.validate()) {
