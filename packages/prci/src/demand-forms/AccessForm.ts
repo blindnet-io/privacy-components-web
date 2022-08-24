@@ -92,11 +92,11 @@ export class TransparencyForm extends DemandForm {
     // Access data category listeners
     this.addEventListener('access-option-select', e => {
       const { id } = (e as CustomEvent).detail;
-      this.demand.restrictions!.privacy_scope!.data_category!.add(id);
+      this.demand.restrictions!.privacy_scope!.dc!.add(id);
     });
     this.addEventListener('access-option-deselect', e => {
       const { id } = (e as CustomEvent).detail;
-      this.demand.restrictions!.privacy_scope!.data_category!.delete(id);
+      this.demand.restrictions!.privacy_scope!.dc!.delete(id);
     });
 
     // FIXME: Disabled until we resolve how to handle OTHER-DATA
@@ -161,7 +161,7 @@ export class TransparencyForm extends DemandForm {
       restrictions: {
         privacy_scope: {
           // Default is all the non-subcategory access options
-          data_category: new Set<DATA_CATEGORY>(
+          dc: new Set<DATA_CATEGORY>(
             Object.values(DATA_CATEGORY).filter(dc => !dc.includes('.'))
           ),
         },
@@ -186,7 +186,7 @@ export class TransparencyForm extends DemandForm {
           .choices=${this.allowedDataCategories.map(dc => ({
             id: dc,
             description: DATA_CATEGORY_DESCRIPTIONS[dc](),
-            checked: demand.restrictions?.privacy_scope?.data_category?.has(dc),
+            checked: demand.restrictions?.privacy_scope?.dc?.has(dc),
             disabled: false,
           }))}
           all-message=${msg(

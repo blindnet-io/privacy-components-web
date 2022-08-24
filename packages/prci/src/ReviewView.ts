@@ -127,7 +127,7 @@ export class ReviewView extends LitElement {
       <span>${msg('I want to access:')}</span>
       <ul id="access-review-list" class="review-list">
         ${map(
-          this.demand.restrictions?.privacy_scope?.data_category,
+          this.demand.restrictions?.privacy_scope?.dc,
           dc => html`<li>${DATA_CATEGORY_DESCRIPTIONS[dc]()}</li> `
         )}
       </ul>

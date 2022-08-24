@@ -8,9 +8,9 @@ import {
 } from './priv-terms.js';
 
 interface PrivacyScopeRestriction {
-  data_category?: Set<DATA_CATEGORY>;
-  processing_category?: Set<PROCESSING_CATEGORY>;
-  purposes?: Set<PURPOSE>;
+  dc?: Set<DATA_CATEGORY>;
+  pc?: Set<PROCESSING_CATEGORY>;
+  pp?: Set<PURPOSE>;
 }
 
 interface ConsentRestriction {
