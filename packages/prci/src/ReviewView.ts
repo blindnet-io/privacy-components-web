@@ -192,6 +192,7 @@ export class ReviewView extends LitElement {
   }
 
   getTransparencyReviewTemplate() {
+    const provenance = this.demands[0].restrictions?.provenance;
     return html`
       <span>${msg('I want to know:')}</span>
       <ul id="transparency-review-list" class="review-list">
@@ -200,6 +201,14 @@ export class ReviewView extends LitElement {
           d => html` <li><b>${ACTION_DESCRIPTIONS[d.action]()}</b></li> `
         )}
       </ul>
+      ${when(
+        provenance?.term !== PROVENANCE.ALL,
+        () => html`
+          <p>
+            ${msg('For:')} <b>${PROVENANCE_DESCRIPTIONS[provenance!.term]()}</b>
+          </p>
+        `
+      )}
       ${when(
         this.demands[0].message,
         () => html`
