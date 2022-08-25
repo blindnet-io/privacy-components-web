@@ -1,10 +1,8 @@
-/* eslint-disable lit/binding-positions */
 /* eslint-disable no-restricted-globals */
 /* eslint-disable no-param-reassign */
-import { html, css, LitElement, PropertyValueMap } from 'lit';
+import { html, css, LitElement, PropertyValueMap, TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
-import { when } from 'lit/directives/when.js';
 import { map } from 'lit/directives/map.js';
 import { localized, msg } from '@lit/localize';
 
@@ -26,7 +24,6 @@ import {
 } from './utils/utils.js';
 import { buttonStyles, containerStyles, textStyles } from './styles.js';
 import { PRCI_CONFIG } from './utils/conf.js';
-import { TARGET_DESCRIPTIONS } from './utils/dictionary.js';
 import { sendPrivacyRequest } from './utils/privacy-request-api.js';
 
 /**
@@ -115,6 +112,37 @@ export class BldnPrivRequest extends LitElement {
       this._demands.delete(demandGroupId);
       this.requestUpdate();
     });
+
+    // Request target listener
+    this.addEventListener('request-target-change', e => {
+      const { id } = (e as CustomEvent).detail;
+      this._privacyRequest.target = id as TARGET;
+    });
+
+    // Submit request listener
+    this.addEventListener('submit-request', () => {
+      const allDemands = Array.from(this._demands.values()).reduce(
+        (dmds, dmdGroup) => dmds.concat(dmdGroup),
+        []
+      );
+      this._privacyRequest.demands = allDemands.map((d, i) => {
+        d.id = i.toString();
+        return d;
+      });
+
+      sendPrivacyRequest(this._privacyRequest, false).then(response => {
+        // eslint-disable-next-line no-console
+        console.log(response);
+        this.dispatchEvent(
+          new CustomEvent('component-state-change', {
+            detail: {
+              newState: ComponentState.MENU,
+              // requestId: response.request_id, // TODO: Uncomment this when implementing status view
+            },
+          })
+        );
+      });
+    });
   }
 
   static styles = [
@@ -123,13 +151,10 @@ export class BldnPrivRequest extends LitElement {
     containerStyles,
     css`
       :host {
-        display: grid;
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
           Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         font-size: 16;
-        max-width: 1350px;
         background-color: white;
-        padding: 30px;
       }
 
       :host button {
@@ -148,14 +173,9 @@ export class BldnPrivRequest extends LitElement {
           Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
       }
 
-      #priv-req-ctr {
-        padding: 20px 0px 0px 0px;
-      }
-
-      #content-ctr {
-        display: grid;
-        row-gap: 30px;
-        padding: 40px 60px 40px 60px;
+      #prci-ctr {
+        padding: 20px;
+        max-width: 1350px;
       }
 
       #nav-bar {
@@ -199,15 +219,16 @@ export class BldnPrivRequest extends LitElement {
         float: right;
       }
 
-      #submit-btn {
-        transform: translateY(15px);
+      #heading-ctr {
+        padding: 0px 0px 40px 0px;
       }
 
       .req-hdr {
+        display: block;
         font-weight: bold;
         font-size: 24px;
-        text-align: center;
         grid-column: 2/3;
+        text-align: center;
       }
 
       .new-dmd-btn {
@@ -239,29 +260,6 @@ export class BldnPrivRequest extends LitElement {
     `,
   ];
 
-  handleSubmitClick() {
-    const allDemands = Array.from(this._demands.values()).reduce(
-      (dmds, dmdGroup) => dmds.concat(dmdGroup),
-      []
-    );
-    this._privacyRequest.demands = allDemands.map((d, i) => {
-      d.id = i.toString();
-      return d;
-    });
-
-    sendPrivacyRequest(this._privacyRequest, false).then(response => {
-      console.log(response);
-      this.dispatchEvent(
-        new CustomEvent('component-state-change', {
-          detail: {
-            newState: ComponentState.MENU,
-            // requestId: response.request_id, // TODO: Uncomment this when implementing status view
-          },
-        })
-      );
-    });
-  }
-
   /**
    * Reset most states
    * // TODO: Remove this and use something like getDefaultDemand() from the forms
@@ -280,11 +278,6 @@ export class BldnPrivRequest extends LitElement {
       target: TARGET.PARTNERS,
     };
     this._demands = new Map<string, Demand[]>();
-  }
-
-  handleTargetClick(e: Event) {
-    const { id } = (e as CustomEvent).target as HTMLInputElement;
-    this._privacyRequest.target = id as TARGET;
   }
 
   /**
@@ -356,6 +349,17 @@ export class BldnPrivRequest extends LitElement {
     `;
   }
 
+  getHeadingString(componentState: ComponentState): TemplateResult<1 | 2> {
+    switch (componentState) {
+      case ComponentState.REQUESTS:
+        return html`${msg('My Submitted Privacy Request(s)')}`;
+      case ComponentState.STATUS:
+        return html`${msg('My Privacy Request Status')}`;
+      default:
+        return html`${msg('My Privacy Request')}`;
+    }
+  }
+
   // Hook into willUpdate lifecycle method to set the included actions state if a valid list of actions is passed as an attribute
   protected willUpdate(
     _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
@@ -380,111 +384,62 @@ export class BldnPrivRequest extends LitElement {
 
   render() {
     return html`
-      <div id="priv-req-ctr">
-        <!-- Heading -->
-        <div id="nav-bar">
-          <span class="req-hdr">${msg('My Privacy Request')}</span>
+      <div id="prci-ctr">
+        <div id="heading-ctr">
+          <span class="req-hdr"
+            >${this.getHeadingString(this._componentState)}</span
+          >
         </div>
-        <!-- Main View -->
-        <div id="content-ctr" class="medium-border">
-          ${choose(this._componentState, [
-            [
-              ComponentState.MENU,
-              () => html`
+        ${choose(this._componentState, [
+          [
+            ComponentState.MENU,
+            () => html`
+              <div>
                 <action-menu
                   .includedActions=${this._includedActions}
                 ></action-menu>
-              `,
-            ],
-            [
-              ComponentState.EDIT,
-              () => this.actionFormFactory(this._selectedAction),
-            ],
-            [
-              ComponentState.REVIEW,
-              () => html`
-                <span><b>${msg('My demand(s):')}</b></span>
+              </div>
+            `,
+          ],
+          [
+            ComponentState.EDIT,
+            () => html`
+              <div class="medium-border view-ctr">
+                ${this.actionFormFactory(this._selectedAction)}
+              </div>
+            `,
+          ],
+          [
+            ComponentState.REVIEW,
+            () => html`
+              <div class="medium-border view-ctr">
                 ${map(
                   this._demands.entries(),
                   ([groupId, demands]) => html`<review-view
-                    class="light-border"
                     .demandGroupId=${groupId}
                     .demands=${demands}
                   ></review-view>`
                 )}
-                <!-- Uncomment when supporting multiple demands -->
-                <!-- <div id="new-dmd-ctr" class="medium-border">
-                  <span><b>${msg('I want to add another demand')}</b></span>
-                  <button class="svg-btn">
-                    <img src="packages/prci/src/assets/icons/add-circle.svg" alt="add icon"></img>
-                  </button>
-                </div> -->
-                <!-- Submit button -->
-                <slotted-dropdown
-                  header=${msg('Privacy Request Advanced settings')}
-                  include-buttons
-                >
-                  <div>
-                    <span> ${msg('I address my Privacy Request to:')} </span>
-                    <fieldset class="provenance-restriction">
-                      ${Object.values(TARGET)
-                        .filter(t => t !== TARGET.ALL)
-                        .map(
-                          t => html`
-                          <input
-                            id=${t}
-                            name='provenance-target'
-                            type='radio'
-                            ?checked=${this._privacyRequest.target === t}
-                            @click=${this.handleTargetClick}>
-                          </input>
-                          <label for=${t}>${TARGET_DESCRIPTIONS[
-                            t
-                          ]()}</label><br/>
-                        `
-                        )}
-                    </fieldset>
-                  </div>
-                </slotted-dropdown>
-                <button
-                  id="submit-btn"
-                  class="nav-btn ctr-btn"
-                  @click=${this.handleSubmitClick}
-                >
-                  ${msg('Submit Privacy Request')}
-                </button>
-              `,
-            ],
-            [
-              ComponentState.REQUESTS,
-              () => html` <requests-view></requests-view> `,
-            ],
-            [
-              ComponentState.SUBMITTED,
-              () => html`
-                <p class="ctr-txt">
-                  <b>${msg('Your Privacy Request has been sent!')} 🎉</b>
-                </p>
-                <p class="ctr-txt">
-                  ${msg('You may track the status of your request below.')}
-                </p>
-              `,
-            ],
-            [ComponentState.AUTH, () => html` <auth-view></auth-view> `],
-          ])}
-        </div>
-        <!-- Other Demand Option -->
-        ${when(
-          this._componentState === ComponentState.MENU &&
-            this._includedActions.includes(ACTION['OTHER.DEMAND']),
-          () => html`
-            <button id="other-dmd-btn" class="link-btn medium-font underline">
-              ${msg(
-                'Click here if you want to make some other demand (please note that it might take longer to be answered)'
-              )}
-            </button>
-          `
-        )}
+              </div>
+            `,
+          ],
+          [
+            ComponentState.REQUESTS,
+            () => html` <requests-view></requests-view> `,
+          ],
+          [
+            ComponentState.SUBMITTED,
+            () => html`
+              <p class="ctr-txt">
+                <b>${msg('Your Privacy Request has been sent!')} 🎉</b>
+              </p>
+              <p class="ctr-txt">
+                ${msg('You may track the status of your request below.')}
+              </p>
+            `,
+          ],
+          [ComponentState.AUTH, () => html` <auth-view></auth-view> `],
+        ])}
       </div>
     `;
   }

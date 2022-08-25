@@ -20,6 +20,10 @@ export const containerStyles = css`
     border-radius: 10px;
   }
 
+  .view-ctr {
+    padding: 60px 60px 60px 60px;
+  }
+
   .provenance-restriction {
     border: none;
     padding: 0px;

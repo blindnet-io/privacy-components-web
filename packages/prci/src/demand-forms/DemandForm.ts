@@ -31,7 +31,7 @@ export abstract class DemandForm extends LitElement {
         grid-template-columns: repeat(2, 1fr);
         padding: 0px 0px 0px 0px;
         margin: 0px 0px 0px 0px;
-        transform: translateY(15px);
+        transform: translateY(35px);
       }
 
       .back-btn {
@@ -109,9 +109,11 @@ export abstract class DemandForm extends LitElement {
 
   render(): TemplateResult<1 | 2> {
     return html`
-      ${choose(this.demandState, [
-        [DemandState.EDIT_OPEN, () => this.getEditTemplate(this.demand)],
-      ])}
+      <div>
+        ${choose(this.demandState, [
+          [DemandState.EDIT_OPEN, () => this.getEditTemplate(this.demand)],
+        ])}
+      </div>
       <!-- Buttons -->
       <div class="btns-ctr">
         <button class="back-btn nav-btn ctr-btn" @click=${this.handleBackClick}>
