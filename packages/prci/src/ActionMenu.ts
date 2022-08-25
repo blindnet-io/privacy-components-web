@@ -52,11 +52,12 @@ export class ActionMenu extends LitElement {
         display: flex;
         justify-content: center;
         justify-self: center;
+        align-items: center;
         column-gap: 20px;
         background: none;
         padding: 20px;
         width: 35%;
-        font-size: 20px;
+        font-size: 18px;
         border-radius: 15px;
       }
 

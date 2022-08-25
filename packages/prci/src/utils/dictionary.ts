@@ -199,3 +199,10 @@ export const TARGET_DESCRIPTIONS = {
         systems from which data has been <b>obtained</b>`
     ),
 };
+
+export const STATUS_DESCRIPTIONS = {
+  IN_PROCESSING: () => msg(html`In processing`),
+  PARTIALLY_COMPLETED: () => msg(html`Partially completed`),
+  COMPLETED: () => msg(html`Completed`),
+  CANCELED: () => msg(html`Canceled`),
+};

@@ -1,8 +1,8 @@
-interface History {
+export interface RequestHistoryItem {
   id: string;
-  date: Date;
+  date: string;
   demands: number;
   status: string;
 }
 
-export type HistoryResponse = { history: History[] };
+export type HistoryResponse = { history: RequestHistoryItem[] };

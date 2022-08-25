@@ -11,6 +11,7 @@ import './ResponseView.js';
 import './ReviewView.js';
 import './ActionMenu.js';
 import './RequestsView.js';
+import './StatusView.js';
 import './demand-forms/TransparencyForm.js';
 import './demand-forms/AccessForm.js';
 import './demand-forms/DeleteForm.js';
@@ -65,6 +66,8 @@ export class BldnPrivRequest extends LitElement {
 
   @state() _currentDemandGroupId: string = '';
 
+  @state() _currentRequestId: string = '';
+
   @state() _config = PRCI_CONFIG;
 
   constructor() {
@@ -93,6 +96,10 @@ export class BldnPrivRequest extends LitElement {
           // For now, going back to the menu means we reset. This will change
           // when supporting multiple demands.
           this._demands.set(this._currentDemandGroupId, []);
+          break;
+        case ComponentState.STATUS:
+          console.log(details.requestId);
+          this._currentRequestId = details.requestId;
           break;
         default:
           break;
@@ -426,7 +433,14 @@ export class BldnPrivRequest extends LitElement {
           ],
           [
             ComponentState.REQUESTS,
-            () => html` <requests-view></requests-view> `,
+            () => html` <requests-view class="view-ctr"></requests-view> `,
+          ],
+          [
+            ComponentState.STATUS,
+            () =>
+              html` <status-view
+                request-id=${this._currentRequestId}
+              ></status-view>`,
           ],
           [
             ComponentState.SUBMITTED,
