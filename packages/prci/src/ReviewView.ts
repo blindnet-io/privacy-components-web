@@ -1,3 +1,4 @@
+/* eslint-disable lit/binding-positions */
 import { msg } from '@lit/localize';
 import { css, html, LitElement, PropertyValueMap } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
@@ -27,6 +28,8 @@ export class ReviewView extends LitElement {
   @property({ type: Boolean, reflect: true, attribute: 'confirm-delete' })
   confirmDelete: boolean = false;
 
+  @property({ attribute: false }) target: TARGET = TARGET.PARTNERS;
+
   @state() _action: ACTION = ACTION.ACCESS;
 
   static styles = [
@@ -37,7 +40,6 @@ export class ReviewView extends LitElement {
       :host {
         display: grid;
         row-gap: 20px;
-        padding: 40px 40px 40px 40px;
       }
 
       :host([confirm-delete]) {
@@ -50,6 +52,12 @@ export class ReviewView extends LitElement {
         grid-area: 1/1/2/2;
         grid-template-columns: repeat(2, 1fr);
         z-index: 2;
+      }
+
+      .dmd-review-ctr {
+        display: grid;
+        row-gap: 20px;
+        padding: 40px;
       }
 
       #review-btns {
@@ -121,6 +129,10 @@ export class ReviewView extends LitElement {
         background: white;
         color: black;
         border: 2px solid #18a0fb;
+      }
+
+      #submit-btn {
+        transform: translateY(35px);
       }
     `,
   ];
@@ -321,6 +333,27 @@ export class ReviewView extends LitElement {
     this.confirmDelete = false;
   }
 
+  handleTargetClick(e: Event) {
+    const { id } = (e as CustomEvent).target as HTMLInputElement;
+    this.target = id as TARGET;
+    this.dispatchEvent(
+      new CustomEvent('request-target-change', {
+        bubbles: true,
+        composed: true,
+        detail: { id },
+      })
+    );
+  }
+
+  handleSubmitClick() {
+    this.dispatchEvent(
+      new Event('submit-request', {
+        bubbles: true,
+        composed: true,
+      })
+    );
+  }
+
   /**
    * Determine the action to use for this review container whenever demands changes
    * @param _changedProperties Properties that have changed in this update
@@ -340,66 +373,110 @@ export class ReviewView extends LitElement {
 
   render() {
     return html`
-      <div id="review-heading-row">
-        <span id="review-action-heading"><b>${ACTION_TITLES[
-          this._action
-        ]()} demand</b></span>
-        <div id="review-btns">
-          <button id="review-edit-btn" class="svg-btn review-btn" @click=${
-            this.handleEditClick
-          }>
-            <img src="packages/prci/src/assets/icons/pepicons_pen.svg" alt="edit icon"></img>
-          </button>
-          <button id="review-delete-btn" class="svg-btn review-btn" @click=${
-            this.handleDeleteClick
-          }>
-            <img src="packages/prci/src/assets/icons/ion_trash-bin.svg" alt="delete icon"></img>
-          </button>
-        </div>
-      </div>
-      <div id="review-content">
-        ${choose(this._action, [
-          [ACTION.ACCESS, () => this.getAccessReviewTemplate()],
-          [ACTION.DELETE, () => this.getDeleteReviewTemplate()],
-          [ACTION.MODIFY, () => this.getModifyReviewTemplate()],
-          [ACTION.OBJECT, () => this.getObjectReviewTemplate()],
-          [ACTION.PORTABILITY, () => this.getPortabilityReviewTemplate()],
-          [ACTION.RESTRICT, () => this.getRestrictReviewTemplate()],
-          [ACTION.REVOKE, () => this.getRevokeReviewTemplate()],
-          [ACTION.TRANSPARENCY, () => this.getTransparencyReviewTemplate()],
-          [ACTION['OTHER.DEMAND'], () => this.getOtherDemandReviewTemplate()],
-        ])}
-      </div>
-      ${when(
-        this.confirmDelete,
-        () => html`
-          <div id="delete-confirm-popup" class="no-line-border">
-            <span class="popup-txt"
-              >${msg('You are about to remove a demand')}</span
-            >
-            <span class="popup-txt"
-              >${msg(html`Do you confirm <b>deleting this demand</b>?`)}</span
-            >
-            <div id="popup-btns-ctr">
-              <button
-                id="confirm-delete-btn"
-                class="curve-btn popup-btn"
-                @click=${this.handleConfirmDeleteClick}
-              >
-                ${msg('Delete')}
-              </button>
-              <button
-                id="cancel-delete-btn"
-                class="curve-btn popup-btn"
-                @click=${this.handleCancelDeleteClick}
-              >
-                ${msg('Cancel')}
-              </button>
-            </div>
+      <span><b>${msg('My demand(s):')}</b></span>
+      
+      <div class="dmd-review-ctr light-border">
+        <div id="review-heading-row">
+          <span id="review-action-heading"><b>${ACTION_TITLES[
+            this._action
+          ]()} demand</b></span>
+          <div id="review-btns">
+            <button id="review-edit-btn" class="svg-btn review-btn" @click=${
+              this.handleEditClick
+            }>
+              <img src="packages/prci/src/assets/icons/pepicons_pen.svg" alt="edit icon"></img>
+            </button>
+            <button id="review-delete-btn" class="svg-btn review-btn" @click=${
+              this.handleDeleteClick
+            }>
+              <img src="packages/prci/src/assets/icons/ion_trash-bin.svg" alt="delete icon"></img>
+            </button>
           </div>
-        `
-      )}
+        </div>
+        <div id="review-content">
+          ${choose(this._action, [
+            [ACTION.ACCESS, () => this.getAccessReviewTemplate()],
+            [ACTION.DELETE, () => this.getDeleteReviewTemplate()],
+            [ACTION.MODIFY, () => this.getModifyReviewTemplate()],
+            [ACTION.OBJECT, () => this.getObjectReviewTemplate()],
+            [ACTION.PORTABILITY, () => this.getPortabilityReviewTemplate()],
+            [ACTION.RESTRICT, () => this.getRestrictReviewTemplate()],
+            [ACTION.REVOKE, () => this.getRevokeReviewTemplate()],
+            [ACTION.TRANSPARENCY, () => this.getTransparencyReviewTemplate()],
+            [ACTION['OTHER.DEMAND'], () => this.getOtherDemandReviewTemplate()],
+          ])}
+        </div>
+        ${when(
+          this.confirmDelete,
+          () => html`
+            <div id="delete-confirm-popup" class="no-line-border">
+              <span class="popup-txt"
+                >${msg('You are about to remove a demand')}</span
+              >
+              <span class="popup-txt"
+                >${msg(html`Do you confirm <b>deleting this demand</b>?`)}</span
+              >
+              <div id="popup-btns-ctr">
+                <button
+                  id="confirm-delete-btn"
+                  class="curve-btn popup-btn"
+                  @click=${this.handleConfirmDeleteClick}
+                >
+                  ${msg('Delete')}
+                </button>
+                <button
+                  id="cancel-delete-btn"
+                  class="curve-btn popup-btn"
+                  @click=${this.handleCancelDeleteClick}
+                >
+                  ${msg('Cancel')}
+                </button>
+              </div>
+            </div>
+          `
+        )}
+        </div>
+
       </div>
+      <!-- Uncomment when supporting multiple demands -->
+      <!-- <div id="new-dmd-ctr" class="medium-border">
+        <span><b>${msg('I want to add another demand')}</b></span>
+        <button class="svg-btn">
+          <img src="packages/prci/src/assets/icons/add-circle.svg" alt="add icon"></img>
+        </button>
+      </div> -->
+      <!-- Submit button -->
+      <slotted-dropdown
+        header=${msg('Privacy Request Advanced settings')}
+        include-buttons
+      >
+        <div>
+          <span> ${msg('I address my Privacy Request to:')} </span>
+          <fieldset class="provenance-restriction">
+            ${Object.values(TARGET)
+              .filter(t => t !== TARGET.ALL)
+              .map(
+                t => html`
+                <input
+                  id=${t}
+                  name='provenance-target'
+                  type='radio'
+                  ?checked=${this.target === t}
+                  @click=${this.handleTargetClick}>
+                </input>
+                <label for=${t}>${TARGET_DESCRIPTIONS[t]()}</label><br/>
+              `
+              )}
+          </fieldset>
+        </div>
+      </slotted-dropdown>
+      <button
+        id="submit-btn"
+        class="nav-btn ctr-btn"
+        @click=${this.handleSubmitClick}
+      >
+        ${msg('Submit Privacy Request')}
+      </button>
     `;
   }
 }

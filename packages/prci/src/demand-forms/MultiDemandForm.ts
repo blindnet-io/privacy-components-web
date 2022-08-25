@@ -31,7 +31,7 @@ export abstract class MultiDemandForm extends LitElement {
         grid-template-columns: repeat(2, 1fr);
         padding: 0px 0px 0px 0px;
         margin: 0px 0px 0px 0px;
-        transform: translateY(15px);
+        transform: translateY(35px);
       }
 
       .back-btn {
