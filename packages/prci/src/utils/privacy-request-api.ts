@@ -1,4 +1,5 @@
 /* eslint-disable camelcase */
+import { HistoryResponse } from '../models/history-response.js';
 import { DATA_CATEGORY } from '../models/priv-terms.js';
 import { PrivacyRequest } from '../models/privacy-request.js';
 /**
@@ -73,5 +74,20 @@ export async function sendPrivacyRequest(
       throw new Error(response.statusText);
     }
     return response.json() as Promise<{ request_id: string }>;
+  });
+}
+
+export async function getRequestHistory() {
+  return fetch(
+    'https://devkit-pce-staging.azurewebsites.net/v0/privacy-request/history',
+    {
+      method: 'GET',
+      headers: { accept: 'application/json' },
+    }
+  ).then(response => {
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+    return response.json() as Promise<HistoryResponse>;
   });
 }
