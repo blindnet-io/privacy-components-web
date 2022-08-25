@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-beta.10](https://github.com/blindnet-io/privacy-components-web/compare/v0.4.0-beta.9...v0.4.0-beta.10) (2022-08-25)
+
+
+### Features
+
+* **@blindnet/prci:** submitted requests view ([#72](https://github.com/blindnet-io/privacy-components-web/issues/72)) ([93b2c43](https://github.com/blindnet-io/privacy-components-web/commit/93b2c433e60143d665663228422ff861cde5dd4b))
+
+
+
+
+
 # [0.4.0-beta.9](https://github.com/blindnet-io/privacy-components-web/compare/v0.4.0-beta.8...v0.4.0-beta.9) (2022-08-25)
 
 **Note:** Version bump only for package @blindnet/pc4w-root
