@@ -106,10 +106,6 @@ export const buttonStyles = css`
     padding: 0px 25px;
   }
 
-  .curve-btn {
-    border-radius: 6px;
-  }
-
   .left-btn {
     justify-self: flex-start;
   }

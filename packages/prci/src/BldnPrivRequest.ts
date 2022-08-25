@@ -10,6 +10,7 @@ import './FrequentRequestsMenu.js';
 import './ResponseView.js';
 import './ReviewView.js';
 import './ActionMenu.js';
+import './RequestsView.js';
 import './demand-forms/TransparencyForm.js';
 import './demand-forms/AccessForm.js';
 import './demand-forms/DeleteForm.js';

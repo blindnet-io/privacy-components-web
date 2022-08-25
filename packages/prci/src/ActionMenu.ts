@@ -5,6 +5,7 @@ import './ActionItem.js';
 import { ACTION } from './models/priv-terms.js';
 import { enabledActions } from './utils/conf.js';
 import { buttonStyles, containerStyles, textStyles } from './styles.js';
+import { ComponentState } from './utils/states.js';
 
 /**
  * Menu of clickable action types
@@ -39,10 +40,47 @@ export class ActionMenu extends LitElement {
 
       #other-dmd-btn {
         margin: 20px 0px 0px 0px;
+        justify-self: right;
+      }
+
+      #below-menu-btns-ctr {
+        display: grid;
+        row-gap: 100px;
+      }
+
+      #requests-btn {
+        display: flex;
+        justify-content: center;
+        justify-self: center;
+        column-gap: 20px;
+        background: none;
+        padding: 20px;
+        width: 35%;
+        font-size: 20px;
+        border-radius: 15px;
+      }
+
+      #requests-btn:hover {
+        border: 1px solid #18a0fb;
+      }
+
+      #requests-btn img {
         float: right;
       }
     `,
   ];
+
+  handleRequestsClick() {
+    this.dispatchEvent(
+      new CustomEvent('component-state-change', {
+        bubbles: true,
+        composed: true,
+        detail: {
+          newState: ComponentState.REQUESTS,
+        },
+      })
+    );
+  }
 
   render() {
     return html`
@@ -60,11 +98,19 @@ export class ActionMenu extends LitElement {
             )}
         </div>
       </div>
-      <button id="other-dmd-btn" class="link-btn medium-font underline">
-        ${msg(
-          'Click here if you want to make some other demand (please note that it might take longer to be answered)'
-        )}
-      </button>
+      <div id='below-menu-btns-ctr'>
+        <button id="other-dmd-btn" class="link-btn medium-font underline">
+          ${msg(
+            'Click here if you want to make some other demand (please note that it might take longer to be answered)'
+          )}
+        </button>
+        <button id='requests-btn' class='curve-btn medium-border' @click=${
+          this.handleRequestsClick
+        }>
+          <span>${msg('Access my submitted Privacy Requests')}</span>
+          <img src='packages/prci/src/assets/icons/arrow_right.svg' alt='right arrow'></img>
+        </button>
+      </div>
     `;
   }
 }
