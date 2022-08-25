@@ -41,7 +41,7 @@ export class DeleteForm extends DemandForm {
     textStyles,
     imgStyles,
     css`
-      :host {
+      #delete-form {
         display: grid;
         row-gap: 35px;
         align-content: flex-start;
@@ -159,124 +159,126 @@ export class DeleteForm extends DemandForm {
 
   getEditTemplate(demand: Demand): TemplateResult<1 | 2> {
     return html`
-      <p id="edit-heading-1">
-        <b>${msg('Details of my DELETE Demand')}</b>
-      </p>
+      <div id="delete-form">
+        <p id="edit-heading-1">
+          <b>${msg('Details of my DELETE Demand')}</b>
+        </p>
 
-      <div class="light-border delete-options">
-        <span slot="prompt">${msg('I want to delete:')}</span>
-        <all-checklist
-          .choices=${this.allowedDataCategories.map(dc => ({
-            id: dc,
-            description: DATA_CATEGORY_DESCRIPTIONS[dc](),
-            checked:
-              demand.restrictions?.privacy_scope?.findIndex(
-                psr => psr.dc === dc
-              ) !== -1,
-            disabled: false,
-          }))}
-          all-message=${msg(
-            'ALL categories of data the organization has data on me'
-          )}
-          component-mode=${FormComponentState.CLOSED}
-          event-prefix="delete-option"
-          include-buttons
-        ></all-checklist>
-      </div>
+        <div class="light-border delete-options">
+          <span slot="prompt">${msg('I want to delete:')}</span>
+          <all-checklist
+            .choices=${this.allowedDataCategories.map(dc => ({
+              id: dc,
+              description: DATA_CATEGORY_DESCRIPTIONS[dc](),
+              checked:
+                demand.restrictions?.privacy_scope?.findIndex(
+                  psr => psr.dc === dc
+                ) !== -1,
+              disabled: false,
+            }))}
+            all-message=${msg(
+              'ALL categories of data the organization has data on me'
+            )}
+            component-mode=${FormComponentState.CLOSED}
+            event-prefix="delete-option"
+            include-buttons
+          ></all-checklist>
+        </div>
 
-      <slotted-dropdown header=${msg('Advanced settings')} include-buttons>
-        <div class="date-restriction-ctr">
-          <p>
-            ${msg(
-              'Specify a date range for the selected category(ies) of data:'
-            )}
-          </p>
-          <div>
-            <span>${msg('From')}</span>
-            <input
-              id="date-start"
-              type="date"
-              .value=${demand.restrictions?.date_range?.from
-                ? demand.restrictions?.date_range?.from
-                    .toISOString()
-                    .split('T')[0]
-                : ''}
-              @input=${this.handleDateRestrictionInput}
-            />
-            <span>${msg('to')}</span>
-            <input
-              id="date-end"
-              type="date"
-              .value=${demand.restrictions?.date_range?.to
-                ? demand.restrictions?.date_range?.to
-                    .toISOString()
-                    .split('T')[0]
-                : ''}
-              @input=${this.handleDateRestrictionInput}
-            />
-          </div>
-        </div>
-        <div>
-          <span>
-            ${msg('My demand applies to data from the following provenance:')}
-          </span>
-          <fieldset class="provenance-restriction">
-            ${Object.values(PROVENANCE).map(
-              p => html`
-                <input
-                  id=${p}
-                  name='provenance-term'
-                  type='radio'
-                  ?checked=${demand.restrictions?.provenance?.term === p}
-                  @click=${this.handleProvenanceTermClick}>
-                </input>
-                <label for=${p}>${PROVENANCE_DESCRIPTIONS[p]()}</label><br/>
-              `
-            )}
-          </fieldset>
-        </div>
-        <div>
-          <span> ${msg('I address my demand to:')} </span>
-          <fieldset class="provenance-restriction">
-            ${Object.values(TARGET)
-              .filter(t => t !== TARGET.ALL)
-              .map(
-                t => html`
-                <input
-                  id=${t}
-                  name='provenance-target'
-                  type='radio'
-                  ?checked=${demand.restrictions?.provenance?.target === t}
-                  @click=${this.handleProvenanceTargetClick}>
-                </input>
-                <label for=${t}>${TARGET_DESCRIPTIONS[t]()}</label><br/>
-              `
+        <slotted-dropdown header=${msg('Advanced settings')} include-buttons>
+          <div class="date-restriction-ctr">
+            <p>
+              ${msg(
+                'Specify a date range for the selected category(ies) of data:'
               )}
-          </fieldset>
-        </div>
-      </slotted-dropdown>
-      <slotted-dropdown
-        header=${msg('Additional message (optional)')}
-        include-buttons
-      >
-        <div class="additional-msg-ctr">
-          <span class="">${msg('My additional message:')}</span>
-          <span class="italic"
-            >${msg(
-              'Please note that adding a personalized message might lead to the demand taking longer to be processed'
-            )}</span
-          >
-          <textarea
-            id="additional-msg"
-            class="std-txt-area"
-            name="paragraph_text"
-            cols="50"
-            rows="10"
-            @input=${this.handleAdditionalMessageInput}
-            .value=${demand.message ?? ''}
-          ></textarea>
-        </div>
-      </slotted-dropdown>
+            </p>
+            <div>
+              <span>${msg('From')}</span>
+              <input
+                id="date-start"
+                type="date"
+                .value=${demand.restrictions?.date_range?.from
+                  ? demand.restrictions?.date_range?.from
+                      .toISOString()
+                      .split('T')[0]
+                  : ''}
+                @input=${this.handleDateRestrictionInput}
+              />
+              <span>${msg('to')}</span>
+              <input
+                id="date-end"
+                type="date"
+                .value=${demand.restrictions?.date_range?.to
+                  ? demand.restrictions?.date_range?.to
+                      .toISOString()
+                      .split('T')[0]
+                  : ''}
+                @input=${this.handleDateRestrictionInput}
+              />
+            </div>
+          </div>
+          <div>
+            <span>
+              ${msg('My demand applies to data from the following provenance:')}
+            </span>
+            <fieldset class="provenance-restriction">
+              ${Object.values(PROVENANCE).map(
+                p => html`
+                  <input
+                    id=${p}
+                    name='provenance-term'
+                    type='radio'
+                    ?checked=${demand.restrictions?.provenance?.term === p}
+                    @click=${this.handleProvenanceTermClick}>
+                  </input>
+                  <label for=${p}>${PROVENANCE_DESCRIPTIONS[p]()}</label><br/>
+                `
+              )}
+            </fieldset>
+          </div>
+          <div>
+            <span> ${msg('I address my demand to:')} </span>
+            <fieldset class="provenance-restriction">
+              ${Object.values(TARGET)
+                .filter(t => t !== TARGET.ALL)
+                .map(
+                  t => html`
+                  <input
+                    id=${t}
+                    name='provenance-target'
+                    type='radio'
+                    ?checked=${demand.restrictions?.provenance?.target === t}
+                    @click=${this.handleProvenanceTargetClick}>
+                  </input>
+                  <label for=${t}>${TARGET_DESCRIPTIONS[t]()}</label><br/>
+                `
+                )}
+            </fieldset>
+          </div>
+        </slotted-dropdown>
+        <slotted-dropdown
+          header=${msg('Additional message (optional)')}
+          include-buttons
+        >
+          <div class="additional-msg-ctr">
+            <span class="">${msg('My additional message:')}</span>
+            <span class="italic"
+              >${msg(
+                'Please note that adding a personalized message might lead to the demand taking longer to be processed'
+              )}</span
+            >
+            <textarea
+              id="additional-msg"
+              class="std-txt-area"
+              name="paragraph_text"
+              cols="50"
+              rows="10"
+              @input=${this.handleAdditionalMessageInput}
+              .value=${demand.message ?? ''}
+            ></textarea>
+          </div>
+        </slotted-dropdown>
+      </div>
     `;
   }
 }

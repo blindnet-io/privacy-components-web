@@ -20,6 +20,10 @@ export const containerStyles = css`
     border-radius: 10px;
   }
 
+  .view-ctr {
+    padding: 60px 60px 60px 60px;
+  }
+
   .provenance-restriction {
     border: none;
     padding: 0px;
@@ -100,10 +104,6 @@ export const buttonStyles = css`
     width: 375px;
     margin: 0px 0px -200px 0px;
     padding: 0px 25px;
-  }
-
-  .curve-btn {
-    border-radius: 6px;
   }
 
   .left-btn {

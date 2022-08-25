@@ -39,8 +39,6 @@ export class ActionItem extends LitElement {
       width: 100%;
       max-width: 400px;
       text-align: left;
-      transition: 0.5s;
-      -webkit-transition: 0.5s;
 
       overflow: hidden;
       /* white-space: nowrap; */
