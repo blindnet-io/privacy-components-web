@@ -106,6 +106,9 @@ export class AppParticipateForm extends LitElement {
    * @param {FormData} formData
    */
   async saveDataToServer(formData) {
+    if(this._files.length === 0) return;
+    formData.set("proof", this._files[0].file);
+
     await fetch('https://blindnet-connector-demo.azurewebsites.net/form', {
       method: 'POST',
       body: formData,
