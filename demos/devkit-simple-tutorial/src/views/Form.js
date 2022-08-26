@@ -268,7 +268,6 @@ export class AppParticipateForm extends LitElement {
           >
             <bx-file-drop-container
               name="proof"
-              accept="image/jpeg image/png application/pdf"
               @bx-file-drop-container-changed=${this.handleUpload}
             >
               Drag and drop a file here or click to upload
