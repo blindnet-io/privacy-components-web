@@ -100,43 +100,12 @@ export class AppParticipateForm extends LitElement {
    * @param {FormData} formData
    */
   async saveDataToServer(formData) {
-    // Simulates server latency
-    // TODO: POST to the demo storage service instead, and manage errors via handleServerErrors
-    // `await fetch('https://your.server/path/to/the/endpoint', { method: 'POST', body: formData })`
-    await new Promise(resolve =>
-      setTimeout(() => {
-        resolve(formData);
-      }, 500)
-    );
-    this.handleServerErrors();
-  }
+    await fetch('https://blindnet-connector-demo.azurewebsites.net/form', {
+      method: 'POST',
+      body: formData
+    });
 
-  handleServerErrors() {
-    // Example of error handling:
-
-    // const username = formData.get('username');
-    //
-    // if (!username) {
-    //   throw Object.assign(new Error('Login failed'), {
-    //     errors: {
-    //       username: 'User does not exist',
-    //     },
-    //   });
-    // } else if (!['john', 'anne'].includes(username)) {
-    //   throw Object.assign(new Error('Login failed'), {
-    //     errors: {
-    //       username: 'Wrong user name (Has to be john or anne)',
-    //     },
-    //   });
-    // } else if (formData.get('password') !== 'form') {
-    //   throw Object.assign(new Error('Login failed'), {
-    //     errors: {
-    //       password: 'Wrong password (Has to be the name of the parent directory of this example directory)',
-    //     },
-    //   });
-    // } else {
     this._notificationSuccess.open = true;
-    // }
   }
 
   /**
@@ -238,6 +207,7 @@ export class AppParticipateForm extends LitElement {
         <bx-form-item>
           <bx-input
             id="input-firstname"
+            name="first"
             @input=${() => {
               this.setPristine(false);
             }}
@@ -247,6 +217,7 @@ export class AppParticipateForm extends LitElement {
           </bx-input>
           <bx-input
             id="input-lastname"
+            name="last"
             @input=${() => {
               this.setPristine(false);
             }}
@@ -259,6 +230,7 @@ export class AppParticipateForm extends LitElement {
           <bx-input
             type="email"
             id="input-email"
+            name="email"
             @input=${() => {
               this.setPristine(false);
             }}
@@ -277,9 +249,8 @@ export class AppParticipateForm extends LitElement {
             }}
           >
             <bx-file-drop-container
-              accept="image/jpeg image/png application/pdf"
-              ?multiple=${false}
-            >
+              name="proof"
+              accept=${['.jpg', '.jpeg', '.png', '.pdf']}>
               Drag and drop a file here or click to upload
             </bx-file-drop-container>
           </bx-file-uploader>
