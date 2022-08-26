@@ -4,11 +4,13 @@ import 'carbon-web-components/es/components/input/index.js';
 import 'carbon-web-components/es/components/button/button.js';
 import 'carbon-web-components/es/components/file-uploader/index.js';
 import 'carbon-web-components/es/components/notification/inline-notification.js';
+import { FILE_UPLOADER_ITEM_STATE } from 'carbon-web-components/es/components/file-uploader/file-uploader-item.js';
 
 export class AppParticipateForm extends LitElement {
   static get properties() {
     return {
       pristine: { type: Boolean, state: true },
+      _files: { type: Array, state: true },
     };
   }
 
@@ -65,6 +67,10 @@ export class AppParticipateForm extends LitElement {
   constructor() {
     super();
     this.pristine = true;
+    /**
+     * @type {any[]}
+     */
+    this._files = [];
   }
 
   firstUpdated() {
@@ -100,10 +106,16 @@ export class AppParticipateForm extends LitElement {
    * @param {FormData} formData
    */
   async saveDataToServer(formData) {
-    await fetch('https://blindnet-connector-demo.azurewebsites.net/form', {
-      method: 'POST',
-      body: formData
-    });
+    if (this._files.length === 0) return;
+    formData.set('proof', this._files[0].file);
+
+    await fetch(
+      'https://blindnet-connector-demo-staging.azurewebsites.net/form',
+      {
+        method: 'POST',
+        body: formData,
+      }
+    );
 
     this._notificationSuccess.open = true;
   }
@@ -185,6 +197,18 @@ export class AppParticipateForm extends LitElement {
     this.setPristine(true);
   }
 
+  /**
+   * @param {CustomEvent} e
+   */
+  handleUpload(e) {
+    const { addedFiles } = e.detail;
+    const newFiles = addedFiles.map((/** @type {any} */ item) => ({
+      id: Math.random().toString(36).slice(2),
+      file: item,
+    }));
+    this._files = newFiles;
+  }
+
   render() {
     return html`
       <h1>Take part in our prize draw!</h1>
@@ -250,9 +274,21 @@ export class AppParticipateForm extends LitElement {
           >
             <bx-file-drop-container
               name="proof"
-              accept=${['.jpg', '.jpeg', '.png', '.pdf']}>
+              @bx-file-drop-container-changed=${this.handleUpload}
+            >
               Drag and drop a file here or click to upload
             </bx-file-drop-container>
+            ${this._files.map(
+              ({ id, file }) => html`
+                <bx-file-uploader-item
+                  data-file-id="${id}"
+                  state=${FILE_UPLOADER_ITEM_STATE.UPLOADED}
+                >
+                  ${file.name}
+                  <span slot="validity-message-supplement"></span>
+                </bx-file-uploader-item>
+              `
+            )}
           </bx-file-uploader>
         </bx-form-item>
         <div className="btn-container">
