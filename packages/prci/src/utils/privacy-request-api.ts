@@ -2,6 +2,7 @@
 import { HistoryResponse } from '../models/history-response.js';
 import { DATA_CATEGORY } from '../models/priv-terms.js';
 import { PrivacyRequest } from '../models/privacy-request.js';
+import { PrivacyResponse } from '../models/privacy-response.js';
 /**
  * Determine the correct mock header for a PrivacyRequest
  * @param request PrivacyRequest to get mock header for
@@ -64,7 +65,6 @@ export async function sendPrivacyRequest(
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
       };
-  console.log(JSON.stringify(preparedRequest));
   return fetch(url, {
     method: 'POST',
     headers,
@@ -89,5 +89,20 @@ export async function getRequestHistory() {
       throw new Error(response.statusText);
     }
     return response.json() as Promise<HistoryResponse>;
+  });
+}
+
+export async function getRequest(requestId: string) {
+  return fetch(
+    `https://devkit-pce-staging.azurewebsites.net/v0/privacy-request/${requestId}`,
+    {
+      method: 'GET',
+      headers: { accept: 'application/json' },
+    }
+  ).then(response => {
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+    return response.json() as Promise<PrivacyResponse>;
   });
 }

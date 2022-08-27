@@ -98,7 +98,6 @@ export class BldnPrivRequest extends LitElement {
           this._demands.set(this._currentDemandGroupId, []);
           break;
         case ComponentState.STATUS:
-          console.log(details.requestId);
           this._currentRequestId = details.requestId;
           break;
         default:
@@ -433,7 +432,7 @@ export class BldnPrivRequest extends LitElement {
           ],
           [
             ComponentState.REQUESTS,
-            () => html` <requests-view class="view-ctr"></requests-view> `,
+            () => html` <requests-view></requests-view> `,
           ],
           [
             ComponentState.STATUS,
