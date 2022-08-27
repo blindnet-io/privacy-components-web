@@ -3,7 +3,7 @@ import { css, html, LitElement } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
 import { RequestHistoryItem } from './models/history-response.js';
-import { STATUS } from './models/priv-terms.js';
+import { REQUEST_STATUS } from './models/priv-terms.js';
 import { buttonStyles, containerStyles, textStyles } from './styles.js';
 import { STATUS_DESCRIPTIONS } from './utils/dictionary.js';
 import { getRequestHistory } from './utils/privacy-request-api.js';
@@ -16,7 +16,6 @@ export class RequestsView extends LitElement {
   constructor() {
     super();
     getRequestHistory().then(response => {
-      console.log(response);
       this._requests = response.history;
     });
   }
@@ -28,70 +27,48 @@ export class RequestsView extends LitElement {
     css`
       :host {
         display: grid;
+        max-width: 600px;
+        margin: auto;
         row-gap: 50px;
         justify-items: center;
       }
 
       #table-ctr {
         width: 100%;
-        overflow-y: auto;
-        max-height: 500px;
+        /* overflow-y: auto;
+        max-height: 500px; */
       }
 
-      #requests-table {
-        width: 100%;
-        border-collapse: separate;
-        border-spacing: 0 30px;
-        margin-top: -30px;
-        font-size: 18px;
+      #requests-list {
+        display: grid;
+        row-gap: 30px;
       }
 
-      #creation-col {
-        width: 35%;
+      .list-header-ctr {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        text-align: center;
       }
 
-      #status-col {
-        width: 20%;
-      }
-
-      #num-demands-col {
-        width: 20%;
-      }
-
-      #status-link-col {
-        width: 25%;
-      }
-
-      .req-info-ctr {
-        border-collapse: collapse;
-      }
-
-      th {
-        text-align: left;
-      }
-
-      td {
+      .list-item-ctr {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
         padding: 20px 0px;
-        text-align: left;
+        border: 2px solid #5b5b5b;
+        border-radius: 10px;
+        box-shadow: -1px 1px 8px rgba(0, 0, 0, 0.4);
       }
 
-      td {
-        border: 1px solid #5b5b5b;
-        border-style: solid none;
+      .list-item {
+        display: inline-flex;
+        justify-items: center;
+        text-align: center;
+        justify-self: center;
+        align-items: center;
       }
 
-      td:first-child {
-        border-left-style: solid;
-        border-top-left-radius: 10px;
-        border-bottom-left-radius: 10px;
-        padding-left: 20px;
-      }
-
-      td:last-child {
-        border-right-style: solid;
-        border-bottom-right-radius: 10px;
-        border-top-right-radius: 10px;
-        padding-right: 20px;
+      .list-item:last-child {
+        padding: 0px 20px 0px 0px;
       }
 
       #new-request-btn {
@@ -128,33 +105,36 @@ export class RequestsView extends LitElement {
   render() {
     return html`
       <div id="table-ctr">
-        <table id="requests-table">
-          <tr>
-            <th id="creation-col">${msg('Created')}</th>
-            <th id="status-col">${msg('Status')}</th>
-            <th id="num-demands-col">${msg('Number of Demand(s)')}</th>
-            <th id="status-link-col"></th>
-          </tr>
+        <div id="requests-list">
+          <div class="list-header-ctr">
+            <span class="list-header"><b>${msg('Created')}</b></span>
+            <span class="list-header"><b>${msg('Status')}</b></span>
+            <span class="list-header"><b>${msg('Demands')}</b></span>
+            <span></span>
+          </div>
           ${map(
             this._requests,
             r => html`
-              <tr class="req-info-ctr">
-                <td>${new Date(r.date).toLocaleDateString('en-gb')}</td>
-                <td>${STATUS_DESCRIPTIONS[r.status as STATUS]()}</td>
-                <td>${r.demands}</td>
-                <td>
-                  <button
-                    id=${r.id}
-                    class="link-btn dark-font underline"
-                    @click=${this.handleRequestClick}
-                  >
-                    ${msg('See demand details')}
-                  </button>
-                </td>
-              </tr>
+              <div class="list-item-ctr">
+                <span class="list-item"
+                  >${new Date(r.date).toLocaleDateString('en-gb')}</span
+                >
+                <span class="list-item"
+                  >${STATUS_DESCRIPTIONS[r.status as REQUEST_STATUS]()}</span
+                >
+                <span class="list-item">${r.demands}</span>
+                <button
+                  id=${r.id}
+                  class="link-btn dark-font underline list-item"
+                  @click=${this.handleRequestClick}
+                >
+                  ${msg('See Details')}
+                </button>
+              </div>
             `
           )}
-        </table>
+          <div class="list-item"></div>
+        </div>
       </div>
       <div id="new-request-ctr">
         <button
