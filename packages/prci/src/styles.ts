@@ -21,7 +21,7 @@ export const containerStyles = css`
   }
 
   .view-ctr {
-    padding: 60px 60px 60px 60px;
+    padding: 60px;
   }
 
   .provenance-restriction {
@@ -117,6 +117,10 @@ export const buttonStyles = css`
 
   .right-btn {
     justify-self: flex-end;
+  }
+
+  .curve-btn {
+    border-radius: 8px;
   }
 `;
 
