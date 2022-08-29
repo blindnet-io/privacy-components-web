@@ -472,7 +472,7 @@ export class ReviewView extends LitElement {
       </slotted-dropdown>
       <button
         id="submit-btn"
-        class="nav-btn ctr-btn"
+        class="nav-btn ctr-btn  animated-button"
         @click=${this.handleSubmitClick}
       >
         ${msg('Submit Privacy Request')}
