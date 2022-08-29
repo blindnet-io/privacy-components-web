@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-beta.13](https://github.com/blindnet-io/privacy-components-web/compare/v0.4.0-beta.12...v0.4.0-beta.13) (2022-08-29)
+
+
+### Bug Fixes
+
+* connector url ([5e79791](https://github.com/blindnet-io/privacy-components-web/commit/5e79791772c5e075b1d742c66803ee7e1c2740c3))
+
+
+
+
+
 # [0.4.0-beta.12](https://github.com/blindnet-io/privacy-components-web/compare/v0.4.0-beta.11...v0.4.0-beta.12) (2022-08-27)
 
 **Note:** Version bump only for package @blindnet-demos/devkit-simple-tutorial
