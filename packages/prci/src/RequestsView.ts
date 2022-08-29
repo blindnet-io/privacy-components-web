@@ -29,7 +29,7 @@ export class RequestsView extends LitElement {
         display: grid;
         max-width: 600px;
         margin: auto;
-        row-gap: 50px;
+        row-gap: 40px;
         justify-items: center;
       }
 
@@ -56,7 +56,7 @@ export class RequestsView extends LitElement {
         padding: 20px 0px;
         border: 2px solid #5b5b5b;
         border-radius: 10px;
-        box-shadow: -1px 1px 8px rgba(0, 0, 0, 0.4);
+        box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5);
       }
 
       .list-item {
@@ -133,7 +133,6 @@ export class RequestsView extends LitElement {
               </div>
             `
           )}
-          <div class="list-item"></div>
         </div>
       </div>
       <div id="new-request-ctr">

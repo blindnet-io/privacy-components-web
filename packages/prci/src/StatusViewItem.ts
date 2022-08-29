@@ -2,12 +2,24 @@ import { msg } from '@lit/localize';
 import { css, html, LitElement } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
+import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
-import { ACTION, DEMAND_STATUS } from './models/priv-terms.js';
+import { LegalBase } from './models/legal-base.js';
+import {
+  ACTION,
+  DEMAND_STATUS,
+  PROCESSING_CATEGORY,
+  PURPOSE,
+} from './models/priv-terms.js';
 import { PrivacyResponseItem } from './models/privacy-response.js';
+import { Provenance } from './models/provenance.js';
+import { RetentionPolicy } from './models/retention-policy.js';
 import { buttonStyles, containerStyles } from './styles.js';
-import { ACTION_TITLES } from './utils/dictionary.js';
+import { ACTION_DESCRIPTIONS, ACTION_TITLES } from './utils/dictionary.js';
 
+/**
+ * Status for a single demand in a Privacy Request
+ */
 @customElement('status-view-item')
 export class StatusViewItem extends LitElement {
   @property({ attribute: false }) demand: PrivacyResponseItem = {
@@ -18,6 +30,8 @@ export class StatusViewItem extends LitElement {
     includes: [],
     system: '',
   };
+
+  @property({ attribute: false }) demands: PrivacyResponseItem[] = [];
 
   @state() _open: boolean = false;
 
@@ -94,16 +108,6 @@ export class StatusViewItem extends LitElement {
         justify-self: center;
         align-self: flex-end;
         float: right;
-        box-shadow: -1px 1px 8px rgba(0, 0, 0, 0.4);
-      }
-
-      .status-btn:hover {
-        /* transform: translateY(-5px); */
-        box-shadow: -2px 2px 16px rgba(0, 0, 0, 0.5);
-      }
-
-      .status-btn:active {
-        box-shadow: -4px 4px 24px rgba(0, 0, 0, 0.6);
       }
 
       .access-btn {
@@ -133,16 +137,256 @@ export class StatusViewItem extends LitElement {
     `,
   ];
 
-  accessResponseTemplate() {
-    return html`⬇ Your data download should begin automatically.`;
+  accessResponseTemplate(demand: PrivacyResponseItem) {
+    return html`
+      ${choose(demand.status, [
+        [
+          DEMAND_STATUS.GRANTED,
+          () => {
+            if (demand.data) {
+              return html`
+                <div>
+                  ${msg(
+                    html`Click <a href=${demand.data}>here</a> to download your
+                      data.`
+                  )}
+                </div>
+              `;
+            }
+            return html`${msg(
+              'Obtaining data, please wait and refresh the page later.'
+            )}`;
+          },
+        ],
+        [
+          DEMAND_STATUS.DENIED,
+          () =>
+            html`Your ${demand.requested_action.toLocaleLowerCase()} demand has
+            been denied.`,
+        ],
+        [
+          DEMAND_STATUS.CANCELED,
+          () =>
+            html`Your ${demand.requested_action.toLocaleLowerCase()} demand has
+            been cancelled`,
+        ],
+        [
+          DEMAND_STATUS['PARTIALLY-GRANTED'],
+          () =>
+            html`Your ${demand.requested_action.toLocaleLowerCase()} demand has
+            been partially granted.`,
+        ],
+        [
+          DEMAND_STATUS['UNDER-REVIEW'],
+          () =>
+            html`Your ${demand.requested_action.toLocaleLowerCase()} demand is
+            under review.`,
+        ],
+      ])}
+    `;
   }
 
-  deleteResponseTemplate() {
-    return html``;
+  deleteResponseTemplate(demand: PrivacyResponseItem) {
+    return html`
+      ${choose(demand.status, [
+        [
+          DEMAND_STATUS.GRANTED,
+          () =>
+            html`Your ${demand.requested_action.toLocaleLowerCase()} demand has
+            been granted.`,
+        ],
+        [
+          DEMAND_STATUS.DENIED,
+          () =>
+            html`Your ${demand.requested_action.toLocaleLowerCase()} demand has
+            been denied.`,
+        ],
+        [
+          DEMAND_STATUS.CANCELED,
+          () =>
+            html`Your ${demand.requested_action.toLocaleLowerCase()} demand has
+            been cancelled`,
+        ],
+        [
+          DEMAND_STATUS['PARTIALLY-GRANTED'],
+          () =>
+            html`Your ${demand.requested_action.toLocaleLowerCase()} demand has
+            been partially granted.`,
+        ],
+        [
+          DEMAND_STATUS['UNDER-REVIEW'],
+          () =>
+            html`Your ${demand.requested_action.toLocaleLowerCase()} demand is
+            under review.`,
+        ],
+      ])}
+    `;
   }
 
-  transparencyResponseTemplate() {
-    return html``;
+  transparencyResponseTemplate(demand: PrivacyResponseItem) {
+    return html`
+      <b>${ACTION_DESCRIPTIONS[demand.requested_action]()}</b><br />
+      ${demand.answer}
+    `;
+  }
+
+  transparencyDcTemplate(demand: PrivacyResponseItem) {
+    return html`
+      <b>${ACTION_DESCRIPTIONS[demand.requested_action]()}</b><br />
+      ${map(demand.answer as Array<string>, dc => html` ${dc}<br /> `)}
+    `;
+  }
+
+  transparencyDpoTemplate(demand: PrivacyResponseItem) {
+    return html`
+      <b>${ACTION_DESCRIPTIONS[demand.requested_action]()}</b><br />
+      ${demand.answer}
+    `;
+  }
+
+  transparencyKnownTemplate(demand: PrivacyResponseItem) {
+    return html`
+      <b>${ACTION_DESCRIPTIONS[demand.requested_action]()}</b><br />
+      ${demand.answer}
+    `;
+  }
+
+  transparencyLbTemplate(demand: PrivacyResponseItem) {
+    return html`
+      <b>${ACTION_DESCRIPTIONS[demand.requested_action]()}</b><br />
+      ${map(
+        demand.answer as Array<LegalBase>,
+        lb => html`
+          Type: ${lb.lb_type}<br />
+          Name: ${lb.name}<br />
+          Description: ${lb.description}<br /><br />
+        `
+      )}
+    `;
+  }
+
+  transparencyOrgTemplate(demand: PrivacyResponseItem) {
+    return html`
+      <b>${ACTION_DESCRIPTIONS[demand.requested_action]()}</b><br />
+      ${demand.answer}
+    `;
+  }
+
+  transparencyPolicyTemplate(demand: PrivacyResponseItem) {
+    return html`
+      <b>${ACTION_DESCRIPTIONS[demand.requested_action]()}</b><br />
+      ${demand.answer}
+    `;
+  }
+
+  transparencyPcTemplate(demand: PrivacyResponseItem) {
+    return html`
+      <b>${ACTION_DESCRIPTIONS[demand.requested_action]()}</b><br />
+      ${map(
+        demand.answer as Array<PROCESSING_CATEGORY>,
+        pc => html` ${pc}<br /> `
+      )}
+    `;
+  }
+
+  transparencyProvTemplate(demand: PrivacyResponseItem) {
+    const answer = demand.answer as {
+      'AFFILIATION.selector_1': Provenance[];
+      'AFFILIATION.MEMBERSHIP.selector_2': Provenance[];
+      'FINANCIAL.BANK-ACCOUNT.selector_3': Provenance[];
+    };
+    return html`
+      <b>${ACTION_DESCRIPTIONS[demand.requested_action]()}</b><br />
+      ${map(
+        answer['AFFILIATION.selector_1'],
+        prov => html`
+          Provenance: ${prov.provenance}<br />
+          System: ${prov.system}<br /><br />
+        `
+      )}
+      ${map(
+        answer['AFFILIATION.MEMBERSHIP.selector_2'],
+        prov => html`
+          Provenance: ${prov.provenance}<br />
+          System: ${prov.system}<br /><br />
+        `
+      )}
+      ${map(
+        answer['FINANCIAL.BANK-ACCOUNT.selector_3'],
+        prov => html`
+          Provenance: ${prov.provenance}<br />
+          System: ${prov.system}<br /><br />
+        `
+      )}
+    `;
+  }
+
+  transparencyPurposeTemplate(demand: PrivacyResponseItem) {
+    return html`
+      <b>${ACTION_DESCRIPTIONS[demand.requested_action]()}</b><br />
+      ${map(
+        demand.answer as Array<PURPOSE>,
+        purpose => html` ${purpose}<br /> `
+      )}
+    `;
+  }
+
+  transparencyRetTemplate(demand: PrivacyResponseItem) {
+    const answer = demand.answer as {
+      'AFFILIATION.selector_1': RetentionPolicy[];
+      'AFFILIATION.MEMBERSHIP.selector_2': RetentionPolicy[];
+      'FINANCIAL.BANK-ACCOUNT.selector_3': RetentionPolicy[];
+      AFFILIATION: RetentionPolicy[];
+    };
+    return html`
+      <b>${ACTION_DESCRIPTIONS[demand.requested_action]()}</b><br />
+      ${map(
+        answer['AFFILIATION.selector_1'],
+        rp => html`
+          Policy type: ${rp.policy_type}<br />
+          Duration: ${rp.duration}<br />
+          After: ${rp.after}<br /><br />
+        `
+      )}
+      ${map(
+        answer['AFFILIATION.MEMBERSHIP.selector_2'],
+        rp => html`
+          Policy type: ${rp.policy_type}<br />
+          Duration: ${rp.duration}<br />
+          After: ${rp.after}<br /><br />
+        `
+      )}
+      ${map(
+        answer['FINANCIAL.BANK-ACCOUNT.selector_3'],
+        rp => html`
+          Policy type: ${rp.policy_type}<br />
+          Duration: ${rp.duration}<br />
+          After: ${rp.after}<br /><br />
+        `
+      )}
+      ${map(
+        answer.AFFILIATION,
+        rp => html`
+          Policy type: ${rp.policy_type}<br />
+          Duration: ${rp.duration}<br />
+          After: ${rp.after}<br /><br />
+        `
+      )}
+    `;
+  }
+
+  transparencyWhereTemplate(demand: PrivacyResponseItem) {
+    return html`
+      <b>${ACTION_DESCRIPTIONS[demand.requested_action]()}</b><br />
+      ${map(demand.answer as Array<string>, where => html` ${where}<br /> `)}
+    `;
+  }
+
+  transparencyWhoTemplate(demand: PrivacyResponseItem) {
+    return html`
+      <b>${ACTION_DESCRIPTIONS[demand.requested_action]()}</b><br />
+      ${map(demand.answer as Array<string>, who => html` ${who}<br /> `)}
+    `;
   }
 
   render() {
@@ -166,7 +410,7 @@ export class StatusViewItem extends LitElement {
             ].includes(this.demand.status),
             () => html`
               <button
-                class="status-btn access-btn curve-btn"
+                class="status-btn access-btn curve-btn animated-button"
                 @click=${() => {
                   this._open = !this._open;
                 }}
@@ -179,7 +423,7 @@ export class StatusViewItem extends LitElement {
             this.demand.status === DEMAND_STATUS['UNDER-REVIEW'],
             () => html`
               <button
-                class="status-btn cancel-btn curve-btn"
+                class="status-btn cancel-btn curve-btn animated-button"
                 @click=${() => {
                   this._open = !this._open;
                 }}
@@ -199,19 +443,69 @@ export class StatusViewItem extends LitElement {
               ${choose(
                 this.demand.requested_action,
                 [
-                  [ACTION.ACCESS, () => this.accessResponseTemplate()],
-                  [ACTION.DELETE, () => this.deleteResponseTemplate()],
+                  [
+                    ACTION.ACCESS,
+                    () => this.accessResponseTemplate(this.demand),
+                  ],
+                  [
+                    ACTION.DELETE,
+                    () => this.deleteResponseTemplate(this.demand),
+                  ],
                   [
                     ACTION.TRANSPARENCY,
-                    () => this.transparencyResponseTemplate(),
+                    () => this.transparencyResponseTemplate(this.demand),
+                  ],
+                  [
+                    ACTION['TRANSPARENCY.DATA.CATEGORIES'],
+                    () => this.transparencyDcTemplate(this.demand),
+                  ],
+                  [
+                    ACTION['TRANSPARENCY.DPO'],
+                    () => this.transparencyDpoTemplate(this.demand),
+                  ],
+                  [
+                    ACTION['TRANSPARENCY.KNOWN'],
+                    () => this.transparencyKnownTemplate(this.demand),
+                  ],
+                  [
+                    ACTION['TRANSPARENCY.LEGAL.BASES'],
+                    () => this.transparencyLbTemplate(this.demand),
+                  ],
+                  [
+                    ACTION['TRANSPARENCY.ORGANIZATION'],
+                    () => this.transparencyOrgTemplate(this.demand),
+                  ],
+                  [
+                    ACTION['TRANSPARENCY.POLICY'],
+                    () => this.transparencyPolicyTemplate(this.demand),
+                  ],
+                  [
+                    ACTION['TRANSPARENCY.PROCESSING.CATEGORIES'],
+                    () => this.transparencyPcTemplate(this.demand),
+                  ],
+                  [
+                    ACTION['TRANSPARENCY.PROVENANCE'],
+                    () => this.transparencyProvTemplate(this.demand),
+                  ],
+                  [
+                    ACTION['TRANSPARENCY.PURPOSE'],
+                    () => this.transparencyPurposeTemplate(this.demand),
+                  ],
+                  [
+                    ACTION['TRANSPARENCY.RETENTION'],
+                    () => this.transparencyRetTemplate(this.demand),
+                  ],
+                  [
+                    ACTION['TRANSPARENCY.WHERE'],
+                    () => this.transparencyWhereTemplate(this.demand),
+                  ],
+                  [
+                    ACTION['TRANSPARENCY.WHO'],
+                    () => this.transparencyWhoTemplate(this.demand),
                   ],
                 ],
-                () => html`
-                  Error: No response template defined for
-                  ${this.demand.requested_action}!
-                `
+                () => this.transparencyResponseTemplate(this.demand)
               )}
-              ${this.demand.answer}
             </div>
           `
         )}
