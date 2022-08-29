@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-beta.14](https://github.com/blindnet-io/privacy-components-web/compare/v0.4.0-beta.13...v0.4.0-beta.14) (2022-08-29)
+
+
+### Features
+
+* **@blindnet/prci:** demand status view ([#74](https://github.com/blindnet-io/privacy-components-web/issues/74)) ([57e22b1](https://github.com/blindnet-io/privacy-components-web/commit/57e22b12a42dc73d0fcbb283c086e491513ce25a))
+
+
+
+
+
 # [0.4.0-beta.13](https://github.com/blindnet-io/privacy-components-web/compare/v0.4.0-beta.12...v0.4.0-beta.13) (2022-08-29)
 
 
