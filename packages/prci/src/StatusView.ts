@@ -5,10 +5,11 @@ import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
 import { DEMAND_STATUS } from './models/priv-terms.js';
 import { PrivacyResponseItem } from './models/privacy-response.js';
-import { buttonStyles, containerStyles } from './styles.js';
+import { buttonStyles, containerStyles, textStyles } from './styles.js';
 import { getRequest } from './utils/privacy-request-api.js';
 
 import './StatusViewItem.js';
+import { ComponentState } from './utils/states.js';
 
 /**
  * View the status of a Privacy Request
@@ -28,6 +29,7 @@ export class StatusView extends LitElement {
   static styles = [
     containerStyles,
     buttonStyles,
+    textStyles,
     css`
       :host {
         display: grid;
@@ -55,6 +57,15 @@ export class StatusView extends LitElement {
       #completed-dmds-ctr {
         border: 1px solid #18a0fb;
         background: rgba(24, 160, 251, 0.11);
+      }
+
+      #new-request-ctr {
+        display: flex;
+        justify-content: center;
+      }
+
+      #new-request-btn {
+        font-size: 18px;
       }
 
       p {
@@ -91,6 +102,18 @@ export class StatusView extends LitElement {
     if (_changedProperties.has('requestId') && this.requestId !== '') {
       this.reloadRequest();
     }
+  }
+
+  handleNewRequestClick() {
+    this.dispatchEvent(
+      new CustomEvent('component-state-change', {
+        bubbles: true,
+        composed: true,
+        detail: {
+          newState: ComponentState.MENU,
+        },
+      })
+    );
   }
 
   render() {
@@ -180,6 +203,15 @@ export class StatusView extends LitElement {
           </div>
         `
       )}
+      <div id="new-request-ctr">
+        <button
+          id="new-request-btn"
+          class="link-btn dark-font underline"
+          @click=${this.handleNewRequestClick}
+        >
+          ${msg('Submit a new Privacy Request')}
+        </button>
+      </div>
     `;
   }
 }

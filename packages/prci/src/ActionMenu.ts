@@ -45,7 +45,7 @@ export class ActionMenu extends LitElement {
 
       #below-menu-btns-ctr {
         display: grid;
-        row-gap: 100px;
+        row-gap: 50px;
       }
 
       #requests-btn {
@@ -59,10 +59,6 @@ export class ActionMenu extends LitElement {
         width: 35%;
         font-size: 18px;
         border-radius: 15px;
-      }
-
-      #requests-btn:hover {
-        border: 1px solid #18a0fb;
       }
 
       #requests-btn img {
@@ -105,7 +101,7 @@ export class ActionMenu extends LitElement {
             'Click here if you want to make some other demand (please note that it might take longer to be answered)'
           )}
         </button>
-        <button id='requests-btn' class='curve-btn medium-border' @click=${
+        <button id='requests-btn' class='curve-btn medium-border animated-button' @click=${
           this.handleRequestsClick
         }>
           <span>${msg('Access my submitted Privacy Requests')}</span>
