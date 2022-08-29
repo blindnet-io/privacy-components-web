@@ -12,6 +12,7 @@ export interface PrivacyResponseItem {
   lang?: string;
   includes: string[];
   system: string;
+  data?: string;
 }
 
 export type PrivacyResponse = PrivacyResponseItem[];
