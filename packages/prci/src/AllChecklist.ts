@@ -387,12 +387,13 @@ export class AllChecklist extends LitElement {
       ${when(
         this.includeButtons,
         () => html`
-          <button
+          <simple-icon-button
             @click=${this.handleButtonClick}
-            class="ctr-btn ${this.componentMode === FormComponentState.OPEN
-              ? 'close-btn'
-              : 'open-btn'}"
-          ></button>
+            icon="expand-${this.componentMode === FormComponentState.OPEN
+              ? 'less'
+              : 'more'}"
+          >
+          </simple-icon-button>
         `
       )}
     `;

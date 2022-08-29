@@ -120,10 +120,16 @@ export abstract class MultiDemandForm extends LitElement {
       ])}
       <!-- Buttons -->
       <div class="btns-ctr">
-        <button class="back-btn nav-btn ctr-btn" @click=${this.handleBackClick}>
+        <button
+          class="back-btn nav-btn ctr-btn animated-btn"
+          @click=${this.handleBackClick}
+        >
           ${msg('Back')}
         </button>
-        <button class="add-btn nav-btn ctr-btn" @click=${this.handleAddClick}>
+        <button
+          class="add-btn nav-btn ctr-btn animated-btn"
+          @click=${this.handleAddClick}
+        >
           ${msg('Add demand to Privacy Request')}
         </button>
       </div>

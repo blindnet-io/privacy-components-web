@@ -5,6 +5,9 @@ import { customElement, property, state } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
 import { map } from 'lit/directives/map.js';
 import { localized, msg } from '@lit/localize';
+import '@lrnwebcomponents/simple-icon/lib/simple-icons.js';
+import '@lrnwebcomponents/simple-icon/simple-icon.js';
+import '@lrnwebcomponents/simple-icon/lib/simple-icon-button.js';
 
 import './FrequentRequestsMenu.js';
 import './ResponseView.js';

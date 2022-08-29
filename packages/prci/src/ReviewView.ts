@@ -381,16 +381,21 @@ export class ReviewView extends LitElement {
             this._action
           ]()} demand</b></span>
           <div id="review-btns">
-            <button id="review-edit-btn" class="svg-btn review-btn" @click=${
+            <simple-icon-button 
+              @click=${this.handleEditClick} 
+              icon="create">
+            </simple-icon-button>
+            <!-- <button id="review-edit-btn" class="svg-btn review-btn" @click=${
               this.handleEditClick
             }>
               <img src="packages/prci/src/assets/icons/pepicons_pen.svg" alt="edit icon"></img>
-            </button>
-            <button id="review-delete-btn" class="svg-btn review-btn" @click=${
-              this.handleDeleteClick
-            }>
-              <img src="packages/prci/src/assets/icons/ion_trash-bin.svg" alt="delete icon"></img>
-            </button>
+            </button> -->
+            <simple-icon-button 
+              @click=${this.handleDeleteClick} 
+              icon="delete">
+            </simple-icon-button>
+              <!-- <img src="packages/prci/src/assets/icons/ion_trash-bin.svg" alt="delete icon"></img>
+            </button> -->
           </div>
         </div>
         <div id="review-content">
@@ -472,7 +477,7 @@ export class ReviewView extends LitElement {
       </slotted-dropdown>
       <button
         id="submit-btn"
-        class="nav-btn ctr-btn  animated-button"
+        class="nav-btn ctr-btn  animated-btn"
         @click=${this.handleSubmitClick}
       >
         ${msg('Submit Privacy Request')}

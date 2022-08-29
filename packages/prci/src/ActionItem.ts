@@ -66,7 +66,7 @@ export class ActionItem extends LitElement {
   render() {
     return html`
       <button
-        class="action-button animated-button"
+        class="action-button animated-btn"
         @click="${this.handleClick}"
         ?disabled=${this.disabled}
       >
