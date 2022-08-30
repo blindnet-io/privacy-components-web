@@ -26,6 +26,9 @@ export class StatusView extends LitElement {
 
   @state() _cancelledDemands: PrivacyResponseItem[] = [];
 
+  // eslint-disable-next-line no-undef
+  @state() _intervalId: any = undefined;
+
   static styles = [
     containerStyles,
     buttonStyles,
@@ -76,6 +79,9 @@ export class StatusView extends LitElement {
   ];
 
   reloadRequest() {
+    console.log('getting request');
+    console.log(this.requestId);
+    console.log(this._intervalId);
     getRequest(this.requestId).then(response => {
       if (response.length > 0) {
         this._requestDate = new Date(response[0].date);
@@ -92,6 +98,15 @@ export class StatusView extends LitElement {
         this._cancelledDemands = response.filter(
           d => d.status === DEMAND_STATUS.CANCELED
         );
+      }
+
+      // If no more demands are processing we can stop reloading this request
+      if (this._processingDemands.length === 0 && this._intervalId) {
+        clearInterval(this._intervalId);
+        this._intervalId = undefined;
+      } else if (!this._intervalId && this._processingDemands.length !== 0) {
+        // Setup an interval to get the status of processing demands every 3 seconds
+        this._intervalId = setInterval(() => this.reloadRequest(), 3000);
       }
     });
   }
@@ -155,7 +170,6 @@ export class StatusView extends LitElement {
               </div>
             `
           )}
-          <p></p>
         `,
         () => html`
           <p>

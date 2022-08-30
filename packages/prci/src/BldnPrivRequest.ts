@@ -148,8 +148,8 @@ export class BldnPrivRequest extends LitElement {
         this.dispatchEvent(
           new CustomEvent('component-state-change', {
             detail: {
-              newState: ComponentState.MENU,
-              // requestId: response.request_id, // TODO: Uncomment this when implementing status view
+              newState: ComponentState.STATUS,
+              requestId: response.request_id,
             },
           })
         );
