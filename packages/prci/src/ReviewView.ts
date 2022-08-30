@@ -204,11 +204,6 @@ export class ReviewView extends LitElement {
     return html`
       <span>${msg('I want to delete:')}</span>
       <ul id="delete-review-list" class="review-list">
-        <!-- ${map(
-          this.demand.restrictions?.privacy_scope,
-          psr => html`<li>${DATA_CATEGORY_DESCRIPTIONS[psr.dc]()}</li> `
-        )} -->
-
         ${when(
           privacyScope &&
             Object.values(DATA_CATEGORY)
