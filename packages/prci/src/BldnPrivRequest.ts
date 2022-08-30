@@ -8,6 +8,8 @@ import { localized, msg } from '@lit/localize';
 import '@lrnwebcomponents/simple-icon/lib/simple-icons.js';
 import '@lrnwebcomponents/simple-icon/simple-icon.js';
 import '@lrnwebcomponents/simple-icon/lib/simple-icon-button.js';
+// declare const SimpleIconsetStore: any;
+// import '@lrnwebcomponents/simple-icon/lib/simple-iconset.js';
 
 import './FrequentRequestsMenu.js';
 import './ResponseView.js';
@@ -165,6 +167,7 @@ export class BldnPrivRequest extends LitElement {
           Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         font-size: 16;
         background-color: white;
+        text-align: left;
       }
 
       :host button {

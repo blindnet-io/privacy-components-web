@@ -22,6 +22,7 @@ export const containerStyles = css`
 
   .view-ctr {
     padding: 60px;
+    width: 1050px;
   }
 
   .provenance-restriction {
@@ -85,7 +86,7 @@ export const buttonStyles = css`
     border-radius: 6px;
     font-size: 18px;
     color: #ffffff;
-    width: 375px;
+    /* width: 375px; */
     margin: 0px 0px -200px 0px;
     padding: 0px 25px;
   }

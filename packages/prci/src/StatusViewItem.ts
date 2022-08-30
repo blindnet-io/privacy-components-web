@@ -410,7 +410,7 @@ export class StatusViewItem extends LitElement {
             ].includes(this.demand.status),
             () => html`
               <button
-                class="status-btn access-btn curve-btn animated-button"
+                class="status-btn access-btn curve-btn animated-btn"
                 @click=${() => {
                   this._open = !this._open;
                 }}
@@ -423,7 +423,7 @@ export class StatusViewItem extends LitElement {
             this.demand.status === DEMAND_STATUS['UNDER-REVIEW'],
             () => html`
               <button
-                class="status-btn cancel-btn curve-btn animated-button"
+                class="status-btn cancel-btn curve-btn animated-btn"
                 @click=${() => {
                   this._open = !this._open;
                 }}

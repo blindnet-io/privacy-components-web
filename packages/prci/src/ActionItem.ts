@@ -24,7 +24,7 @@ export class ActionItem extends LitElement {
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
           Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         /* font-size: 16px; */
-        font-size: 1rem;
+        font-size: 1.5vh;
       }
 
       .action-button {
