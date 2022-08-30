@@ -47,7 +47,7 @@ export class ReviewView extends LitElement {
         row-gap: 20px;
       }
 
-      :host([confirm-delete]) {
+      :host([confirm-delete]) .dmd-review-ctr {
         background: #c4c4c4;
         opacity: 0.7;
       }
@@ -120,7 +120,9 @@ export class ReviewView extends LitElement {
       }
 
       .popup-btn {
-        width: 200px;
+        min-width: 30%;
+        max-width: 200px;
+        /* width: 30%; */
         font-size: 18px;
       }
 
