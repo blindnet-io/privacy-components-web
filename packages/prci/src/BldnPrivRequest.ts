@@ -310,8 +310,9 @@ export class BldnPrivRequest extends LitElement {
           : getDefaultDemands(action);
       return html`
         <transparency-form
-          .demandGroupId=${this._currentDemandGroupId}
           .demands=${multiDemand}
+          .demandGroupId=${this._currentDemandGroupId}
+          .restrictions=${multiDemand[0].restrictions}
         ></transparency-form>
       `;
     }

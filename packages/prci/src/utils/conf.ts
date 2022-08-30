@@ -26,6 +26,7 @@ export const enabledActions = new Map<ACTION, boolean>([
 
 export const PRCI_CONFIG = {
   'access-allowed-data-categories': [
+    DATA_CATEGORY.RELATIONSHIPS,
     DATA_CATEGORY.AFFILIATION,
     DATA_CATEGORY.BEHAVIOR,
     DATA_CATEGORY.BIOMETRIC,

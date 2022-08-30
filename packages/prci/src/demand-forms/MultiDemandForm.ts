@@ -28,18 +28,22 @@ export abstract class MultiDemandForm extends LitElement {
 
       .btns-ctr {
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr auto 1fr;
         padding: 0px 0px 0px 0px;
         margin: 0px 0px 0px 0px;
         transform: translateY(35px);
       }
 
-      .back-btn {
+      #back-btn {
         grid-column: 1/2;
+        min-width: 80%;
+        max-width: 375px;
       }
 
-      .add-btn {
-        grid-column: 2/3;
+      #add-btn {
+        grid-column: 3/4;
+        min-width: 80%;
+        max-width: 375px;
       }
     ` as CSSResultGroup,
   ];
@@ -121,13 +125,15 @@ export abstract class MultiDemandForm extends LitElement {
       <!-- Buttons -->
       <div class="btns-ctr">
         <button
-          class="back-btn nav-btn ctr-btn animated-btn"
+          id="back-btn"
+          class="nav-btn ctr-btn animated-btn"
           @click=${this.handleBackClick}
         >
           ${msg('Back')}
         </button>
         <button
-          class="add-btn nav-btn ctr-btn animated-btn"
+          id="add-btn"
+          class="nav-btn ctr-btn animated-btn"
           @click=${this.handleAddClick}
         >
           ${msg('Add demand to Privacy Request')}
