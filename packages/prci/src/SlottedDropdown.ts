@@ -80,13 +80,16 @@ export class SlottedDropdown extends LitElement {
       ${when(
         this.header,
         () => html`
-        <button class="header link-btn" @click=${this.handleButtonClick}>
-        <span class="medium-font underline">${this.header}</span>
-        <img class="dropdown-btn-img medium-img" src='packages/prci/src/assets/icons/${
-          this.dropdownState === FormComponentState.OPEN ? 'close' : 'open'
-        }_container_arrow.svg' alt='open-arrow' width='24' height='24'></img>
-        </button>
-      `
+          <button class="header link-btn" @click=${this.handleButtonClick}>
+            <span class="medium-font underline">${this.header}</span>
+            <simple-icon
+              icon="expand-${this.dropdownState === FormComponentState.OPEN
+                ? 'less'
+                : 'more'}"
+            >
+            </simple-icon>
+          </button>
+        `
       )}
       <div class="light-border dropdown">
         <div class="content-ctr">
@@ -98,13 +101,12 @@ export class SlottedDropdown extends LitElement {
           this.includeButtons,
           () => html`
             <div class="close-btn-ctr">
-              <button
+              <simple-icon-button
                 @click=${this.handleButtonClick}
-                class="ctr-btn ${this.dropdownState ===
-                FormComponentState.PARTIAL
-                  ? 'open-btn'
-                  : 'close-btn'}"
-              ></button>
+                icon="expand-${this.dropdownState === FormComponentState.PARTIAL
+                  ? 'more'
+                  : 'less'}"
+              ></simple-icon-button>
             </div>
           `
         )}

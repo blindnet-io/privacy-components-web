@@ -6,7 +6,12 @@ import { choose } from 'lit/directives/choose.js';
 import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
 import { Demand } from './models/demand.js';
-import { ACTION, PROVENANCE, TARGET } from './models/priv-terms.js';
+import {
+  ACTION,
+  DATA_CATEGORY,
+  PROVENANCE,
+  TARGET,
+} from './models/priv-terms.js';
 import { buttonStyles, containerStyles, textStyles } from './styles.js';
 import {
   ACTION_DESCRIPTIONS,
@@ -42,7 +47,7 @@ export class ReviewView extends LitElement {
         row-gap: 20px;
       }
 
-      :host([confirm-delete]) {
+      :host([confirm-delete]) .dmd-review-ctr {
         background: #c4c4c4;
         opacity: 0.7;
       }
@@ -115,7 +120,9 @@ export class ReviewView extends LitElement {
       }
 
       .popup-btn {
-        width: 200px;
+        min-width: 30%;
+        max-width: 200px;
+        /* width: 30%; */
         font-size: 18px;
       }
 
@@ -141,12 +148,24 @@ export class ReviewView extends LitElement {
     const from = this.demand.restrictions?.date_range?.from;
     const to = this.demand.restrictions?.date_range?.to;
     const provenance = this.demand.restrictions?.provenance;
+    const privacyScope = this.demand.restrictions?.privacy_scope;
     return html`
       <span>${msg('I want to access:')}</span>
       <ul id="access-review-list" class="review-list">
-        ${map(
-          this.demand.restrictions?.privacy_scope,
-          psr => html`<li>${DATA_CATEGORY_DESCRIPTIONS[psr.dc]()}</li> `
+        ${when(
+          privacyScope &&
+            Object.values(DATA_CATEGORY)
+              .filter(dc => !dc.includes('.') && dc !== DATA_CATEGORY.ALL)
+              .every(dc => privacyScope.map(psr => psr.dc).includes(dc)),
+          () => html`
+            <li>${DATA_CATEGORY_DESCRIPTIONS[DATA_CATEGORY.ALL]()}</li>
+          `,
+          () => html`
+            ${map(
+              this.demand.restrictions?.privacy_scope,
+              psr => html`<li>${DATA_CATEGORY_DESCRIPTIONS[psr.dc]()}</li> `
+            )}
+          `
         )}
       </ul>
       ${when(
@@ -183,12 +202,24 @@ export class ReviewView extends LitElement {
     const from = this.demand.restrictions?.date_range?.from;
     const to = this.demand.restrictions?.date_range?.to;
     const provenance = this.demand.restrictions?.provenance;
+    const privacyScope = this.demand.restrictions?.privacy_scope;
     return html`
       <span>${msg('I want to delete:')}</span>
       <ul id="delete-review-list" class="review-list">
-        ${map(
-          this.demand.restrictions?.privacy_scope,
-          psr => html`<li>${DATA_CATEGORY_DESCRIPTIONS[psr.dc]()}</li> `
+        ${when(
+          privacyScope &&
+            Object.values(DATA_CATEGORY)
+              .filter(dc => !dc.includes('.') && dc !== DATA_CATEGORY.ALL)
+              .every(dc => privacyScope.map(psr => psr.dc).includes(dc)),
+          () => html`
+            <li>${DATA_CATEGORY_DESCRIPTIONS[DATA_CATEGORY.ALL]()}</li>
+          `,
+          () => html`
+            ${map(
+              this.demand.restrictions?.privacy_scope,
+              psr => html`<li>${DATA_CATEGORY_DESCRIPTIONS[psr.dc]()}</li> `
+            )}
+          `
         )}
       </ul>
       ${when(
@@ -381,16 +412,21 @@ export class ReviewView extends LitElement {
             this._action
           ]()} demand</b></span>
           <div id="review-btns">
-            <button id="review-edit-btn" class="svg-btn review-btn" @click=${
+            <simple-icon-button 
+              @click=${this.handleEditClick} 
+              icon="create">
+            </simple-icon-button>
+            <!-- <button id="review-edit-btn" class="svg-btn review-btn" @click=${
               this.handleEditClick
             }>
               <img src="packages/prci/src/assets/icons/pepicons_pen.svg" alt="edit icon"></img>
-            </button>
-            <button id="review-delete-btn" class="svg-btn review-btn" @click=${
-              this.handleDeleteClick
-            }>
-              <img src="packages/prci/src/assets/icons/ion_trash-bin.svg" alt="delete icon"></img>
-            </button>
+            </button> -->
+            <simple-icon-button 
+              @click=${this.handleDeleteClick} 
+              icon="delete">
+            </simple-icon-button>
+              <!-- <img src="packages/prci/src/assets/icons/ion_trash-bin.svg" alt="delete icon"></img>
+            </button> -->
           </div>
         </div>
         <div id="review-content">
@@ -472,7 +508,7 @@ export class ReviewView extends LitElement {
       </slotted-dropdown>
       <button
         id="submit-btn"
-        class="nav-btn ctr-btn  animated-button"
+        class="nav-btn ctr-btn  animated-btn"
         @click=${this.handleSubmitClick}
       >
         ${msg('Submit Privacy Request')}

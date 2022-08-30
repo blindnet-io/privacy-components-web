@@ -11,9 +11,9 @@ export class DevkitSimpleTutorial extends LitElement {
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: flex-start;
+        justify-content: center;
         color: #1a2b42;
-        max-width: 960px;
+        max-width: 1250px;
         margin: 0 auto;
         text-align: center;
         background-color: var(--devkit-simple-tutorial-background-color);

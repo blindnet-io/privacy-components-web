@@ -95,17 +95,19 @@ export class ActionMenu extends LitElement {
             )}
         </div>
       </div>
-      <div id='below-menu-btns-ctr'>
+      <div id="below-menu-btns-ctr">
         <button id="other-dmd-btn" class="link-btn medium-font underline">
           ${msg(
             'Click here if you want to make some other demand (please note that it might take longer to be answered)'
           )}
         </button>
-        <button id='requests-btn' class='curve-btn medium-border animated-button' @click=${
-          this.handleRequestsClick
-        }>
+        <button
+          id="requests-btn"
+          class="curve-btn medium-border animated-btn"
+          @click=${this.handleRequestsClick}
+        >
           <span>${msg('Access my submitted Privacy Requests')}</span>
-          <img src='packages/prci/src/assets/icons/arrow_right.svg' alt='right arrow'></img>
+          <simple-icon icon="arrow-forward"></simple-icon>
         </button>
       </div>
     `;

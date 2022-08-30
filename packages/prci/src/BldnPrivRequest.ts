@@ -5,6 +5,11 @@ import { customElement, property, state } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
 import { map } from 'lit/directives/map.js';
 import { localized, msg } from '@lit/localize';
+import '@lrnwebcomponents/simple-icon/lib/simple-icons.js';
+import '@lrnwebcomponents/simple-icon/simple-icon.js';
+import '@lrnwebcomponents/simple-icon/lib/simple-icon-button.js';
+// declare const SimpleIconsetStore: any;
+// import '@lrnwebcomponents/simple-icon/lib/simple-iconset.js';
 
 import './FrequentRequestsMenu.js';
 import './ResponseView.js';
@@ -143,8 +148,8 @@ export class BldnPrivRequest extends LitElement {
         this.dispatchEvent(
           new CustomEvent('component-state-change', {
             detail: {
-              newState: ComponentState.MENU,
-              // requestId: response.request_id, // TODO: Uncomment this when implementing status view
+              newState: ComponentState.STATUS,
+              requestId: response.request_id,
             },
           })
         );
@@ -162,6 +167,7 @@ export class BldnPrivRequest extends LitElement {
           Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         font-size: 16;
         background-color: white;
+        text-align: left;
       }
 
       :host button {
@@ -304,8 +310,9 @@ export class BldnPrivRequest extends LitElement {
           : getDefaultDemands(action);
       return html`
         <transparency-form
-          .demandGroupId=${this._currentDemandGroupId}
           .demands=${multiDemand}
+          .demandGroupId=${this._currentDemandGroupId}
+          .restrictions=${multiDemand[0].restrictions}
         ></transparency-form>
       `;
     }

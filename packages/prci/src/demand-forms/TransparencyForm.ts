@@ -37,9 +37,9 @@ export class TransparencyForm extends MultiDemandForm {
 
   @property({ type: Array }) advancedSettings = [];
 
-  @state() _additionalMessage = '';
+  @property({ attribute: false }) restrictions: Restrictions = {};
 
-  @state() _restrictions: Restrictions = {};
+  @state() _additionalMessage = '';
 
   static styles = [
     MultiDemandForm.styles,
@@ -95,23 +95,27 @@ export class TransparencyForm extends MultiDemandForm {
 
     // Transparency action listeners
     this.addEventListener('transparency-action-select', e => {
+      console.log('got transparancy select');
       const details = (e as CustomEvent).detail;
       const demand: Demand = {
         action: details.id,
         message: this._additionalMessage,
-        restrictions: this._restrictions,
+        restrictions: this.restrictions,
       };
       this.setDemand(demand);
+      console.log(this.demands);
     });
     this.addEventListener('transparency-action-deselect', e => {
+      console.log('got transparancy deselect');
       const { id } = (e as CustomEvent).detail;
       this.deleteDemand(id);
+      console.log(this.demands);
     });
   }
 
   handleProvenanceTermClick(e: Event) {
     const { id } = (e as CustomEvent).target as HTMLInputElement;
-    this._restrictions.provenance = { term: id as PROVENANCE };
+    this.restrictions.provenance = { term: id as PROVENANCE };
     this.demands.forEach(d => {
       const demand = d;
       demand.restrictions!.provenance!.term = id as PROVENANCE;

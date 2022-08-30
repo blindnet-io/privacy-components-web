@@ -22,6 +22,7 @@ export const containerStyles = css`
 
   .view-ctr {
     padding: 60px;
+    width: 1050px;
   }
 
   .provenance-restriction {
@@ -78,22 +79,6 @@ export const buttonStyles = css`
     padding: 0px;
   }
 
-  .open-btn {
-    height: 24px;
-    background: url('packages/prci/src/assets/icons/open_container_arrow.svg')
-      no-repeat;
-    width: 24px;
-    border: none;
-  }
-
-  .close-btn {
-    height: 24px;
-    background: url('packages/prci/src/assets/icons/close_container_arrow.svg')
-      no-repeat;
-    width: 24px;
-    border: none;
-  }
-
   .nav-btn {
     height: 50px;
     background-color: #18a0fb;
@@ -101,7 +86,7 @@ export const buttonStyles = css`
     border-radius: 6px;
     font-size: 18px;
     color: #ffffff;
-    width: 375px;
+    /* width: 375px; */
     margin: 0px 0px -200px 0px;
     padding: 0px 25px;
   }
@@ -123,13 +108,13 @@ export const buttonStyles = css`
     border-radius: 8px;
   }
 
-  .animated-button {
+  .animated-btn {
     box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.1),
       0px 2px 4px rgba(0, 0, 0, 0.2), 0px 4px 8px rgba(0, 0, 0, 0.2),
       0px 8px 16px rgba(0, 0, 0, 0.2);
   }
 
-  .animated-button:not([disabled]):hover {
+  .animated-btn:not([disabled]):hover {
     transform: translateY(-2px);
     transition: 0.2s;
     box-shadow: 0px 7px 10px 0px rgba(0, 0, 0, 0.3),
@@ -137,7 +122,7 @@ export const buttonStyles = css`
       0px 10px 16px rgba(0, 0, 0, 0.2);
   }
 
-  .animated-button:not([disabled]):active {
+  .animated-btn:not([disabled]):active {
     transform: translateY(2px);
     transition: 0.2s;
     box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.1),

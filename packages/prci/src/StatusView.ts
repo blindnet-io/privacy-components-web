@@ -26,6 +26,9 @@ export class StatusView extends LitElement {
 
   @state() _cancelledDemands: PrivacyResponseItem[] = [];
 
+  // eslint-disable-next-line no-undef
+  @state() _intervalId: any = undefined;
+
   static styles = [
     containerStyles,
     buttonStyles,
@@ -59,12 +62,15 @@ export class StatusView extends LitElement {
         background: rgba(24, 160, 251, 0.11);
       }
 
-      #new-request-ctr {
+      #nav-btns-ctr {
         display: flex;
+        /* grid-template-columns: repeat(2, 1fr); */
+        column-gap: 20px;
         justify-content: center;
+        justify-items: center;
       }
 
-      #new-request-btn {
+      .status-nav-btn {
         font-size: 18px;
       }
 
@@ -93,6 +99,15 @@ export class StatusView extends LitElement {
           d => d.status === DEMAND_STATUS.CANCELED
         );
       }
+
+      // If no more demands are processing we can stop reloading this request
+      if (this._processingDemands.length === 0 && this._intervalId) {
+        clearInterval(this._intervalId);
+        this._intervalId = undefined;
+      } else if (!this._intervalId && this._processingDemands.length !== 0) {
+        // Setup an interval to get the status of processing demands every 3 seconds
+        this._intervalId = setInterval(() => this.reloadRequest(), 3000);
+      }
     });
   }
 
@@ -102,6 +117,18 @@ export class StatusView extends LitElement {
     if (_changedProperties.has('requestId') && this.requestId !== '') {
       this.reloadRequest();
     }
+  }
+
+  handleBackClick() {
+    this.dispatchEvent(
+      new CustomEvent('component-state-change', {
+        bubbles: true,
+        composed: true,
+        detail: {
+          newState: ComponentState.REQUESTS,
+        },
+      })
+    );
   }
 
   handleNewRequestClick() {
@@ -155,7 +182,6 @@ export class StatusView extends LitElement {
               </div>
             `
           )}
-          <p></p>
         `,
         () => html`
           <p>
@@ -203,10 +229,15 @@ export class StatusView extends LitElement {
           </div>
         `
       )}
-      <div id="new-request-ctr">
+      <div id="nav-btns-ctr">
         <button
-          id="new-request-btn"
-          class="link-btn dark-font underline"
+          class="status-nav-btn link-btn dark-font underline"
+          @click=${this.handleBackClick}
+        >
+          ${msg('Back to my Requests')}
+        </button>
+        <button
+          class="status-nav-btn link-btn dark-font underline"
           @click=${this.handleNewRequestClick}
         >
           ${msg('Submit a new Privacy Request')}

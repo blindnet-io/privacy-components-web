@@ -73,13 +73,13 @@ export class AllChecklist extends LitElement {
 
       :host([selection-state='0']) #all-checkbox:checked + label {
         opacity: 1;
-        background: url('/packages/prci/src/assets/icons/all-checkbox-checked.svg')
+        background: url('http://localhost:8000/__wds-outside-root__/2/packages/prci/dist/assets/icons/all-checkbox-checked.svg')
           no-repeat;
       }
 
       :host([selection-state='1']) #all-checkbox + label {
         opacity: 1;
-        background: url('/packages/prci/src/assets/icons/all-checkbox-dash.svg')
+        background: url('http://localhost:8000/__wds-outside-root__/2/packages/prci/dist/assets/icons/all-checkbox-dash.svg')
           no-repeat;
       }
 
@@ -114,7 +114,7 @@ export class AllChecklist extends LitElement {
       }
 
       #all-checkbox + label {
-        background: url('/packages/prci/src/assets/icons/all-checkbox-unchecked.svg')
+        background: url('http://localhost:8000/__wds-outside-root__/2/packages/prci/dist/assets/icons/all-checkbox-unchecked.svg')
           no-repeat;
         height: 13px;
         width: 13px;
@@ -387,12 +387,13 @@ export class AllChecklist extends LitElement {
       ${when(
         this.includeButtons,
         () => html`
-          <button
+          <simple-icon-button
             @click=${this.handleButtonClick}
-            class="ctr-btn ${this.componentMode === FormComponentState.OPEN
-              ? 'close-btn'
-              : 'open-btn'}"
-          ></button>
+            icon="expand-${this.componentMode === FormComponentState.OPEN
+              ? 'less'
+              : 'more'}"
+          >
+          </simple-icon-button>
         `
       )}
     `;
