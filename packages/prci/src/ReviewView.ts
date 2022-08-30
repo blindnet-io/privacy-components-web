@@ -6,7 +6,12 @@ import { choose } from 'lit/directives/choose.js';
 import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
 import { Demand } from './models/demand.js';
-import { ACTION, PROVENANCE, TARGET } from './models/priv-terms.js';
+import {
+  ACTION,
+  DATA_CATEGORY,
+  PROVENANCE,
+  TARGET,
+} from './models/priv-terms.js';
 import { buttonStyles, containerStyles, textStyles } from './styles.js';
 import {
   ACTION_DESCRIPTIONS,
@@ -141,12 +146,24 @@ export class ReviewView extends LitElement {
     const from = this.demand.restrictions?.date_range?.from;
     const to = this.demand.restrictions?.date_range?.to;
     const provenance = this.demand.restrictions?.provenance;
+    const privacyScope = this.demand.restrictions?.privacy_scope;
     return html`
       <span>${msg('I want to access:')}</span>
       <ul id="access-review-list" class="review-list">
-        ${map(
-          this.demand.restrictions?.privacy_scope,
-          psr => html`<li>${DATA_CATEGORY_DESCRIPTIONS[psr.dc]()}</li> `
+        ${when(
+          privacyScope &&
+            Object.values(DATA_CATEGORY)
+              .filter(dc => !dc.includes('.') && dc !== DATA_CATEGORY.ALL)
+              .every(dc => privacyScope.map(psr => psr.dc).includes(dc)),
+          () => html`
+            <li>${DATA_CATEGORY_DESCRIPTIONS[DATA_CATEGORY.ALL]()}</li>
+          `,
+          () => html`
+            ${map(
+              this.demand.restrictions?.privacy_scope,
+              psr => html`<li>${DATA_CATEGORY_DESCRIPTIONS[psr.dc]()}</li> `
+            )}
+          `
         )}
       </ul>
       ${when(
@@ -183,12 +200,29 @@ export class ReviewView extends LitElement {
     const from = this.demand.restrictions?.date_range?.from;
     const to = this.demand.restrictions?.date_range?.to;
     const provenance = this.demand.restrictions?.provenance;
+    const privacyScope = this.demand.restrictions?.privacy_scope;
     return html`
       <span>${msg('I want to delete:')}</span>
       <ul id="delete-review-list" class="review-list">
-        ${map(
+        <!-- ${map(
           this.demand.restrictions?.privacy_scope,
           psr => html`<li>${DATA_CATEGORY_DESCRIPTIONS[psr.dc]()}</li> `
+        )} -->
+
+        ${when(
+          privacyScope &&
+            Object.values(DATA_CATEGORY)
+              .filter(dc => !dc.includes('.') && dc !== DATA_CATEGORY.ALL)
+              .every(dc => privacyScope.map(psr => psr.dc).includes(dc)),
+          () => html`
+            <li>${DATA_CATEGORY_DESCRIPTIONS[DATA_CATEGORY.ALL]()}</li>
+          `,
+          () => html`
+            ${map(
+              this.demand.restrictions?.privacy_scope,
+              psr => html`<li>${DATA_CATEGORY_DESCRIPTIONS[psr.dc]()}</li> `
+            )}
+          `
         )}
       </ul>
       ${when(
