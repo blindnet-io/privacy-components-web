@@ -22,7 +22,7 @@ jobs:
 
       - name: Install dependencies 🔧
         run: |
-          yarn install
+          yarn install --frozen-lockfile
           yarn lerna bootstrap
 
       - name: Build 👷‍♀
