@@ -1,6 +1,7 @@
-// import { msg } from "@lit/localize"
+import { msg } from '@lit/localize';
 import { css, html, LitElement } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
+import { map } from 'lit/directives/map.js';
 import { PendingRequestsResponse } from './models/pending-requests-response.js';
 import { DCIStyles } from './styles.js';
 import { getPendingDemands } from './utils/data-consumer-api.js';
@@ -12,6 +13,10 @@ export class ProcessRequestsView extends LitElement {
   static styles = [
     DCIStyles,
     css`
+      #process-req-ctr {
+        text-align: center;
+      }
+
       #requests-list {
         display: grid;
         row-gap: 30px;
@@ -19,29 +24,8 @@ export class ProcessRequestsView extends LitElement {
 
       .list-header-ctr {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(3, 1fr);
         text-align: center;
-      }
-
-      .list-item-ctr {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        padding: 20px 0px;
-        border: 2px solid #5b5b5b;
-        border-radius: 10px;
-        box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5);
-      }
-
-      .list-item {
-        display: inline-flex;
-        justify-items: center;
-        text-align: center;
-        justify-self: center;
-        align-items: center;
-      }
-
-      .list-item:last-child {
-        padding: 0px 20px 0px 0px;
       }
     `,
   ];
@@ -72,15 +56,18 @@ export class ProcessRequestsView extends LitElement {
 
   render() {
     return html`
-      <div>
-        <span><b>PRIVACY REQUESTS TO PROCESS</b></span>
+      <div id="process-req-ctr">
+        <span class="title"><b>${msg('PRIVACY REQUESTS TO PROCESS')}</b></span>
         <div id="requests-list">
           <div class="list-header-ctr">
-            <!-- <span class='list-header'><b>Submitted</b></span>
-            <span class='list-header'><b>Data Subject</b></span>
-            <span class='list-header'><b>Action(s)</b></span> -->
-            <span></span>
+            <span class="list-header"><b>${msg('Submitted')}</b></span>
+            <span class="list-header"><b>${msg('Data Subject')}</b></span>
+            <span class="list-header"><b>${msg('Action(s)')}</b></span>
           </div>
+          ${map(
+            this._demands,
+            d => html`<requests-list-item .demand=${d}></requests-list-item>`
+          )}
         </div>
       </div>
     `;

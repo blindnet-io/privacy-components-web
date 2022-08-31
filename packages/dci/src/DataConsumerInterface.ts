@@ -45,6 +45,7 @@ export class DataConsumerInterface extends LitElement {
       #view-ctr {
         grid-column: 2/6;
         height: 100px;
+        justify-content: center;
       }
     `,
   ];
