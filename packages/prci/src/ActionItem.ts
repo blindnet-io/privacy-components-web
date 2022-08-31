@@ -23,8 +23,7 @@ export class ActionItem extends LitElement {
       :host button {
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
           Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        /* font-size: 16px; */
-        font-size: 1.5vh;
+        font-size: 16px;
       }
 
       .action-button {
