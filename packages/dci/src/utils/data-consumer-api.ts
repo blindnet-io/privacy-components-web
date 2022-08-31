@@ -47,6 +47,5 @@ export async function approveDemand(
     if (!response.ok) {
       throw new Error(response.statusText);
     }
-    return response.json() as Promise<any>;
   });
 }

@@ -1,15 +1,21 @@
 /* eslint-disable lit-a11y/click-events-have-key-events */
-// eslint-disable-next-line import/no-extraneous-dependencies
+// import { ACTION } from '@blindnet/prci/src/models/priv-terms';
 import { ACTION } from '@blindnet/prci/dist/models/priv-terms.js';
 import { msg } from '@lit/localize';
 import { css, html, LitElement, PropertyValueMap } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import { map } from 'lit/directives/map.js';
+import { choose } from 'lit/directives/choose.js';
 import { when } from 'lit/directives/when.js';
 import { PendingDemandResponse } from './models/pending-demand-response.js';
 import { PendingRequestsResponse } from './models/pending-requests-response.js';
 import { DCIStyles } from './styles.js';
 import { approveDemand, getPendingDemand } from './utils/data-consumer-api.js';
+
+enum REQ_ITEM_UI_STATE {
+  PENDING_DECISION,
+  APPROVED,
+  DENIED,
+}
 
 /**
  * A single item in the pending requests list
@@ -39,6 +45,40 @@ export class RequestsListItem extends LitElement {
         align-items: center;
       }
 
+      #dmd-details-ctr {
+        display: flex;
+        justify-items: center;
+        justify-content: center;
+        padding: 20px;
+        column-gap: 40px;
+      }
+
+      #approve-btn {
+        border-color: #51d214;
+      }
+
+      #deny-btn {
+        border-color: #f90707;
+      }
+
+      .dmd-btn {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+          Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        font-size: 18px;
+        padding: 20px;
+        border: 4px solid;
+        border-radius: 10px;
+        border-width: 4px;
+        background: none;
+        width: 200px;
+        text-align: center;
+      }
+
+      .decision-ctr {
+        padding: 20px;
+        font-size: 16px;
+      }
+
       li {
         text-align: left;
       }
@@ -59,6 +99,8 @@ export class RequestsListItem extends LitElement {
 
   @state() _demandDetails: PendingDemandResponse | undefined;
 
+  @state() _uiState: REQ_ITEM_UI_STATE = REQ_ITEM_UI_STATE.PENDING_DECISION;
+
   protected willUpdate(
     _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
   ): void {
@@ -70,44 +112,75 @@ export class RequestsListItem extends LitElement {
   }
 
   approveDemand() {
-    approveDemand(this.demand.id, 'Approved').then(() => {});
+    approveDemand(this.demand.id, 'Approved').then(() => {
+      this._uiState = REQ_ITEM_UI_STATE.APPROVED;
+    });
+  }
+
+  denyDemand() {
+    this._uiState = REQ_ITEM_UI_STATE.DENIED;
   }
 
   render() {
     return html`
-      <!-- TODO: MAKE THIS FIT IN THE GRID -->
-      <div
-        id="summary-ctr"
-        @click=${() => {
-          this._open = !this._open;
-        }}
-      >
-        <span class="dmd-info-element"
-          >${new Date(this.demand.date).toLocaleDateString('en-gb')}</span
-        >
-        <span class="dmd-info-element">${this.demand.data_subject.id}</span>
-        <span class="dmd-info-element">${this.demand.action}</span>
-      </div>
-      ${when(
-        this._open,
-        () => html`
-          ${when(
-            this._demandDetails,
-            () => html`
-              <button @click=${this.approveDemand}>Approve</button>
-              <button>Deny</button>
-              <ul>
-                <b>${msg('I want to delete:')}</b>
-                ${map(
-                  this._demandDetails?.recommendation.data_categories,
-                  dc => html` <li>${dc}</li> `
-                )}
-              </ul>
-            `,
-            () => html` Getting demand details... `
-          )}
-        `
-      )}
+      ${choose(this._uiState, [
+        [
+          REQ_ITEM_UI_STATE.PENDING_DECISION,
+          () => html`
+            <div
+              id="summary-ctr"
+              @click=${() => {
+                this._open = !this._open;
+              }}
+            >
+              <span class="dmd-info-element"
+                >${new Date(this.demand.date).toLocaleDateString('en-gb')}</span
+              >
+              <span class="dmd-info-element">John Smith</span>
+              <span class="dmd-info-element">${this.demand.action}</span>
+            </div>
+            ${when(
+              this._open,
+              () => html`
+                <div id="dmd-details-ctr">
+                  ${when(
+                    this._demandDetails,
+                    () => html`
+                      <button
+                        id="approve-btn"
+                        class="dmd-btn animated-btn"
+                        @click=${this.approveDemand}
+                      >
+                        Approve
+                      </button>
+                      <button
+                        id="deny-btn"
+                        class="dmd-btn animated-btn"
+                        @click=${this.denyDemand}
+                      >
+                        Deny
+                      </button>
+                    `,
+                    () => html` Getting demand details... `
+                  )}
+                </div>
+              `
+            )}
+          `,
+        ],
+        [
+          REQ_ITEM_UI_STATE.APPROVED,
+          () => html`
+            <div class="decision-ctr">${msg('Demand Approved ✅')}</div>
+          `,
+        ],
+        [
+          REQ_ITEM_UI_STATE.DENIED,
+          () => html`
+            <div class="decision-ctr">${msg('Demand Denied ❌')}</div>
+          `,
+        ],
+      ])}
     `;
   }
 }

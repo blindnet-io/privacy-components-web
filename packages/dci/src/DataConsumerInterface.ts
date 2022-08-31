@@ -26,6 +26,13 @@ export class DataConsumerInterface extends LitElement {
         max-width: 1350px;
       }
 
+      :host button {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+          Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        font-size: 16;
+        max-width: 1350px;
+      }
+
       #dci-ctr {
         display: grid;
         grid-template-columns: repeat(5, 1fr);
@@ -33,18 +40,31 @@ export class DataConsumerInterface extends LitElement {
 
       #sidebar-ctr {
         grid-column: 1/2;
-        height: 100px;
-      }
-
-      #user-ctr {
       }
 
       #view-btns-ctr {
+        display: grid;
+        padding: 20px;
+        row-gap: 20px;
+      }
+
+      .view-btn {
+        border: none;
+        background: none;
+        padding: 40px;
+        border-radius: 10px;
+        background-color: #d9d9d9;
+        color: black;
+        font-size: 18px;
+      }
+
+      .current-view-btn {
+        background-color: #5b5b5b;
+        color: white;
       }
 
       #view-ctr {
         grid-column: 2/6;
-        height: 100px;
         justify-content: center;
       }
     `,
@@ -59,26 +79,38 @@ export class DataConsumerInterface extends LitElement {
           <div id="user-ctr"></div>
           <div id="view-btns-ctr">
             <button
+              id="to-process-view-btn"
+              class="view-btn animated-btn ${this._uiState ===
+              DCI_UI_STATE.PROCESS_REQUESTS
+                ? 'current-view-btn'
+                : ''}"
               @click=${() => {
                 this._uiState = DCI_UI_STATE.PROCESS_REQUESTS;
               }}
-              id="to-process-view-btn"
             >
               Requests to process
             </button>
             <button
+              id="req-history-view-btn"
+              class="view-btn animated-btn ${this._uiState ===
+              DCI_UI_STATE.REQUEST_HISTORY
+                ? 'current-view-btn'
+                : ''}"
               @click=${() => {
                 this._uiState = DCI_UI_STATE.REQUEST_HISTORY;
               }}
-              id="req-history-view-btn"
             >
               Requests history
             </button>
             <button
+              id="settings-btn"
+              class="view-btn animated-btn ${this._uiState ===
+              DCI_UI_STATE.SETTINGS
+                ? 'current-view-btn'
+                : ''}"
               @click=${() => {
                 this._uiState = DCI_UI_STATE.SETTINGS;
               }}
-              id="settings-btn"
             >
               Settings
             </button>

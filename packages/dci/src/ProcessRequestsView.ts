@@ -14,18 +14,24 @@ export class ProcessRequestsView extends LitElement {
     DCIStyles,
     css`
       #process-req-ctr {
+        display: grid;
+        row-gap: 40px;
         text-align: center;
       }
 
       #requests-list {
         display: grid;
-        row-gap: 30px;
+        row-gap: 10px;
       }
 
       .list-header-ctr {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         text-align: center;
+      }
+
+      .title {
+        font-size: 22px;
       }
     `,
   ];
@@ -42,15 +48,6 @@ export class ProcessRequestsView extends LitElement {
   reloadRequests() {
     getPendingDemands().then(response => {
       this._demands = response;
-
-      // If no more demands are processing we can stop reloading this request
-      // if (this._processingDemands.length === 0 && this._intervalId) {
-      //   clearInterval(this._intervalId);
-      //   this._intervalId = undefined;
-      // } else if (!this._intervalId && this._processingDemands.length !== 0) {
-      //   // Setup an interval to get the status of processing demands every 3 seconds
-      //   this._intervalId = setInterval(() => this.reloadRequest(), 3000);
-      // }
     });
   }
 
