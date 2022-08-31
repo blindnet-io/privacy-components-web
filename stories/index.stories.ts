@@ -1,7 +1,7 @@
 import { html, TemplateResult } from 'lit';
 import '../packages/prci/dist/index.js';
-import { allLocales } from '../packages/prci/dist/generated/locale-codes.js';
-import { setLocale } from '../packages/prci/dist/utils/localization.js';
+import { allLocales } from '@blindnet/prci/src/generated/locale-codes.js';
+import { setLocale } from '@blindnet/prci/src/utils/localization.js';
 
 export default {
   title: 'BldnPrivRequest',
