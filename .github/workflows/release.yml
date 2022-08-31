@@ -62,5 +62,5 @@ jobs:
         if: github.ref == 'refs/heads/develop'
         run: |
           yarn lerna publish --loglevel silly \
-           --yes --no-git-tag-version --no-push \
+           --canary --yes --no-git-tag-version --no-push \
            --dist-tag next --preid beta-$(git rev-parse --short HEAD)
