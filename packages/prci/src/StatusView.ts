@@ -3,7 +3,7 @@ import { css, html, LitElement, PropertyValueMap } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
-import { DEMAND_STATUS } from './models/priv-terms.js';
+import { ACTION, DEMAND_STATUS } from './models/priv-terms.js';
 import { PrivacyResponseItem } from './models/privacy-response.js';
 import { buttonStyles, containerStyles, textStyles } from './styles.js';
 import { getRequest } from './utils/privacy-request-api.js';
@@ -100,8 +100,15 @@ export class StatusView extends LitElement {
         );
       }
 
-      // If no more demands are processing we can stop reloading this request
-      if (this._processingDemands.length === 0 && this._intervalId) {
+      // If no more demands are processing, the reload interval exists, and the data for
+      // all ACCESS responses has arrived, stop reloading the request.
+      if (
+        this._processingDemands.length === 0 &&
+        this._intervalId &&
+        !this._completedDemands.some(
+          d => d.requested_action === ACTION.ACCESS && !d.data
+        )
+      ) {
         clearInterval(this._intervalId);
         this._intervalId = undefined;
       } else if (!this._intervalId && this._processingDemands.length !== 0) {
