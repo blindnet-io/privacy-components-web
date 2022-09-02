@@ -31,22 +31,31 @@ let SlottedDropdown = class SlottedDropdown extends LitElement {
     render() {
         return html `
       ${when(this.header, () => html `
-        <button class="header link-btn" @click=${this.handleButtonClick}>
-        <span class="medium-font underline">${this.header}</span>
-        <img class="dropdown-btn-img medium-img" src='packages/prci/src/assets/icons/${this.dropdownState === FormComponentState.OPEN ? 'close' : 'open'}_container_arrow.svg' alt='open-arrow' width='24' height='24'></img>
-        </button>
-      `)}
-      <div class="light-border content-ctr">
-        <slot name="prompt"></slot>
-        <slot></slot>
+          <button class="header link-btn" @click=${this.handleButtonClick}>
+            <span class="medium-font underline">${this.header}</span>
+            <simple-icon
+              icon="expand-${this.dropdownState === FormComponentState.OPEN
+            ? 'less'
+            : 'more'}"
+            >
+            </simple-icon>
+          </button>
+        `)}
+      <div class="light-border dropdown">
+        <div class="content-ctr">
+          <slot name="prompt"></slot>
+          <slot></slot>
+        </div>
         <!-- Display button top open/close if in partial/open -->
         ${when(this.includeButtons, () => html `
-            <button
-              @click=${this.handleButtonClick}
-              class="ctr-btn ${this.dropdownState === FormComponentState.PARTIAL
-            ? 'open-btn'
-            : 'close-btn'}"
-            ></button>
+            <div class="close-btn-ctr">
+              <simple-icon-button
+                @click=${this.handleButtonClick}
+                icon="expand-${this.dropdownState === FormComponentState.PARTIAL
+            ? 'more'
+            : 'less'}"
+              ></simple-icon-button>
+            </div>
           `)}
       </div>
     `;
@@ -58,14 +67,21 @@ SlottedDropdown.styles = [
     textStyles,
     imgStyles,
     css `
-      :host([dropdown-state='2']) .content-ctr {
-        display: grid;
-        /* row-gap: 40px; */
-      }
-
       .content-ctr {
         display: none;
-        padding: 40px;
+      }
+
+      :host([dropdown-state='2']) .content-ctr {
+        display: grid;
+        row-gap: 50px;
+      }
+
+      .dropdown {
+        padding: 40px 40px 20px 40px;
+      }
+
+      :host([dropdown-state='0']) .dropdown {
+        display: none;
       }
 
       :host([dropdown-state='2']) .header {
@@ -74,6 +90,11 @@ SlottedDropdown.styles = [
 
       :host([dropdown-state='2']) .dropdown-btn-img {
         src: 'packages/prci/src/assets/icons/close_container_arrow.svg';
+      }
+
+      .close-btn-ctr {
+        margin: 20px 0px 0px 0px;
+        text-align: center;
       }
     `,
 ];

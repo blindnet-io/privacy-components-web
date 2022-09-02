@@ -1,2 +1,0 @@
-
-//# sourceMappingURL=restriction.js.map

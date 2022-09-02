@@ -1,28 +1,47 @@
-import { ACTION } from '../models/priv-terms.js';
+import { ACTION, DATA_CATEGORY } from '../models/priv-terms.js';
 
 const enabledActions = new Map([
-    [ACTION.ACCESS, false],
-    [ACTION.DELETE, false],
+    [ACTION.ACCESS, true],
+    [ACTION.DELETE, true],
     [ACTION.MODIFY, false],
     [ACTION.OBJECT, false],
     [ACTION.PORTABILITY, false],
     [ACTION.RESTRICT, false],
     [ACTION.REVOKE, false],
     [ACTION.TRANSPARENCY, true],
-    [ACTION['TRANSPARENCY.DATA.CATEGORIES'], false],
+    [ACTION['TRANSPARENCY.DATA.CATEGORIES'], true],
     [ACTION['TRANSPARENCY.DPO'], true],
-    [ACTION['TRANSPARENCY.KNOWN'], false],
-    [ACTION['TRANSPARENCY.LEGAL.BASES'], false],
+    [ACTION['TRANSPARENCY.KNOWN'], true],
+    [ACTION['TRANSPARENCY.LEGAL.BASES'], true],
     [ACTION['TRANSPARENCY.ORGANIZATION'], true],
     [ACTION['TRANSPARENCY.POLICY'], true],
-    [ACTION['TRANSPARENCY.PROCESSING.CATEGORIES'], false],
-    [ACTION['TRANSPARENCY.PURPOSE'], false],
-    [ACTION['TRANSPARENCY.PROVENANCE'], false],
+    [ACTION['TRANSPARENCY.PROCESSING.CATEGORIES'], true],
+    [ACTION['TRANSPARENCY.PURPOSE'], true],
+    [ACTION['TRANSPARENCY.PROVENANCE'], true],
     [ACTION['TRANSPARENCY.RETENTION'], true],
     [ACTION['TRANSPARENCY.WHERE'], true],
     [ACTION['TRANSPARENCY.WHO'], true],
-    [ACTION['OTHER.DEMAND'], false],
+    [ACTION['OTHER.DEMAND'], true],
 ]);
+const PRCI_CONFIG = {
+    'access-allowed-data-categories': [
+        DATA_CATEGORY.RELATIONSHIPS,
+        DATA_CATEGORY.AFFILIATION,
+        DATA_CATEGORY.BEHAVIOR,
+        DATA_CATEGORY.BIOMETRIC,
+        DATA_CATEGORY.CONTACT,
+        DATA_CATEGORY.DEMOGRAPHIC,
+        DATA_CATEGORY.DEVICE,
+        DATA_CATEGORY.FINANCIAL,
+        DATA_CATEGORY.GENETIC,
+        DATA_CATEGORY.HEALTH,
+        DATA_CATEGORY.IMAGE,
+        DATA_CATEGORY.LOCATION,
+        DATA_CATEGORY.NAME,
+        DATA_CATEGORY.PROFILING,
+        DATA_CATEGORY.UID,
+    ],
+};
 
-export { enabledActions };
+export { PRCI_CONFIG, enabledActions };
 //# sourceMappingURL=conf.js.map

@@ -1,3 +1,5 @@
+import { DATA_CATEGORY } from '../models/priv-terms.js';
+
 /**
  * Determine the correct mock header for a PrivacyRequest
  * @param request PrivacyRequest to get mock header for
@@ -16,6 +18,20 @@ function getMockHeader(request) {
     // If no demands get bad request response
     return 'code=400';
 }
+function preProcessRequest(request) {
+    // If all privacy scopes provided, this is the same as no restriction
+    const allDataCategories = Object.values(DATA_CATEGORY).filter(dc => dc !== DATA_CATEGORY.ALL && !dc.includes('.'));
+    request.demands.forEach(d => {
+        if (d.restrictions && d.restrictions.privacy_scope) {
+            const demandDcs = d.restrictions.privacy_scope.map(psr => psr.dc);
+            if (allDataCategories.every(dc => demandDcs.includes(dc))) {
+                const demand = d;
+                delete demand.restrictions.privacy_scope;
+            }
+        }
+    });
+    return request;
+}
 /**
  * Send a PrivacyRequest to the privacy-request API
  * @param {PrivacyRequest} request Request body to send
@@ -23,6 +39,7 @@ function getMockHeader(request) {
  * @returns
  */
 async function sendPrivacyRequest(request, mock = true) {
+    const preparedRequest = preProcessRequest(request);
     const url = mock
         ? 'https://stoplight.io/mocks/blindnet/product-management:open-api/74767654/privacy-request'
         : 'https://devkit-pce-staging.azurewebsites.net/v0/privacy-request';
@@ -38,7 +55,29 @@ async function sendPrivacyRequest(request, mock = true) {
     return fetch(url, {
         method: 'POST',
         headers,
-        body: JSON.stringify(request),
+        body: JSON.stringify(preparedRequest),
+    }).then(response => {
+        if (!response.ok) {
+            throw new Error(response.statusText);
+        }
+        return response.json();
+    });
+}
+async function getRequestHistory() {
+    return fetch('https://devkit-pce-staging.azurewebsites.net/v0/privacy-request/history', {
+        method: 'GET',
+        headers: { accept: 'application/json' },
+    }).then(response => {
+        if (!response.ok) {
+            throw new Error(response.statusText);
+        }
+        return response.json();
+    });
+}
+async function getRequest(requestId) {
+    return fetch(`https://devkit-pce-staging.azurewebsites.net/v0/privacy-request/${requestId}`, {
+        method: 'GET',
+        headers: { accept: 'application/json' },
     }).then(response => {
         if (!response.ok) {
             throw new Error(response.statusText);
@@ -47,5 +86,5 @@ async function sendPrivacyRequest(request, mock = true) {
     });
 }
 
-export { sendPrivacyRequest };
+export { getRequest, getRequestHistory, sendPrivacyRequest };
 //# sourceMappingURL=privacy-request-api.js.map

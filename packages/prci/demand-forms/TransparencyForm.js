@@ -6,92 +6,61 @@ import { ACTION, PROVENANCE } from '../models/priv-terms.js';
 import { containerStyles, buttonStyles, textStyles, imgStyles } from '../styles.js';
 import { enabledActions } from '../utils/conf.js';
 import { ACTION_DESCRIPTIONS, PROVENANCE_DESCRIPTIONS } from '../utils/dictionary.js';
-import { ActionForm } from './ActionForm.js';
+import { MultiDemandForm } from './MultiDemandForm.js';
 import { FormComponentState } from '../utils/states.js';
 import '../SlottedDropdown.js';
 import '../AllChecklist.js';
 
 /**
- * ActionForm for the Transparency PRIV action. Includes a dropdown and text element.
+ * MultiDemandForm for the Transparency PRIV action. Includes a dropdown and text element.
  *
  * The transparency form follows a different pattern than the other actions, as each
  * TRANSPARENCY.* actually represents a completely separate demand, but we display them
- * all in one DemandBuilder element.
+ * all in one form.
  */
-let TransparencyForm = class TransparencyForm extends ActionForm {
+let TransparencyForm = class TransparencyForm extends MultiDemandForm {
     constructor() {
         super();
         this.transparencyActions = Object.values(ACTION).filter(a => a.includes('TRANSPARENCY.'));
         this.advancedSettings = [];
+        this.restrictions = {};
         this._additionalMessage = '';
-        this._provenances = new Set();
         // Transparency action listeners
         this.addEventListener('transparency-action-select', e => {
+            console.log('got transparancy select');
             const details = e.detail;
             const demand = {
                 action: details.id,
                 message: this._additionalMessage,
-                restrictions: this._provenances,
+                restrictions: this.restrictions,
             };
             this.setDemand(demand);
+            console.log(this.demands);
         });
         this.addEventListener('transparency-action-deselect', e => {
+            console.log('got transparancy deselect');
             const { id } = e.detail;
             this.deleteDemand(id);
+            console.log(this.demands);
         });
-        // Provenance listeners
-        this.addEventListener('provenance-select', e => {
-            const { id } = e.detail;
-            this._provenances.add(id);
-            this.demands.forEach(d => {
-                var _a;
-                const demand = d;
-                (_a = demand.restrictions) === null || _a === void 0 ? void 0 : _a.add(id);
-            });
-        });
-        this.addEventListener('provenance-deselect', e => {
-            const { id } = e.detail;
-            this._provenances.delete(id);
-            this.demands.forEach(d => {
-                var _a;
-                const demand = d;
-                (_a = demand.restrictions) === null || _a === void 0 ? void 0 : _a.delete(id);
-            });
-        });
-        // Additional message listener
-        this.addEventListener('text-element-change', e => {
-            var _a;
-            this._additionalMessage = (_a = e.detail) === null || _a === void 0 ? void 0 : _a.text;
-            this.demands.forEach(d => {
-                const demand = d;
-                demand.message = this._additionalMessage;
-            });
+    }
+    handleProvenanceTermClick(e) {
+        const { id } = e.target;
+        this.restrictions.provenance = { term: id };
+        this.demands.forEach(d => {
+            const demand = d;
+            demand.restrictions.provenance.term = id;
         });
     }
     handleAdditionalMessageInput(e) {
-        const event = new CustomEvent('text-element-change', {
-            bubbles: true,
-            composed: true,
-            detail: {
-                text: e.target.value,
-            },
+        this._additionalMessage = e.target.value;
+        this.demands.forEach(d => {
+            const demand = d;
+            demand.message = this._additionalMessage;
         });
-        this.dispatchEvent(event);
     }
     validate() {
         return true;
-    }
-    /**
-     * The defualt transparency demand contains all transparency actions
-     * @returns List of demands with each TRANSPARENCY.* action
-     */
-    getDefaultDemands() {
-        return Object.values(ACTION)
-            .filter(a => a.includes('TRANSPARENCY.'))
-            .map(a => ({
-            action: a,
-            restrictions: new Set(Object.values(PROVENANCE)),
-        }));
     }
     getEditTemplate(demands) {
         var _a;
@@ -121,25 +90,26 @@ let TransparencyForm = class TransparencyForm extends ActionForm {
       </div>
 
       <slotted-dropdown header=${msg('Advanced settings')} include-buttons>
-        <span slot="prompt"
-          ><b
-            >${msg('My transparency demand applies to the following provenance:')}</b
-          ></span
-        >
-        <all-checklist
-          .choices=${Object.values(PROVENANCE).map(p => {
-            var _a;
-            return ({
-                id: p,
-                description: PROVENANCE_DESCRIPTIONS[p](),
-                checked: (_a = this.demands[0].restrictions) === null || _a === void 0 ? void 0 : _a.has(p),
-                disabled: false,
-            });
+        <div>
+          <span>
+            ${msg('My demand applies to data from the following provenance:')}
+          </span>
+          <fieldset class="provenance-restriction">
+            ${Object.values(PROVENANCE).map(p => {
+            var _a, _b;
+            return html `
+                <input
+                  id=${p}
+                  name='provenance-term'
+                  type='radio'
+                  ?checked=${((_b = (_a = demands[0].restrictions) === null || _a === void 0 ? void 0 : _a.provenance) === null || _b === void 0 ? void 0 : _b.term) === p}
+                  @click=${this.handleProvenanceTermClick}>
+                </input>
+                <label for=${p}>${PROVENANCE_DESCRIPTIONS[p]()}</label><br/>
+              `;
         })}
-          all-message=${msg('All provenances')}
-          component-mode=${FormComponentState.OPEN}
-          event-prefix="provenance"
-        ></all-checklist>
+          </fieldset>
+        </div>
       </slotted-dropdown>
       <slotted-dropdown
         header=${msg('Additional message (optional)')}
@@ -163,27 +133,9 @@ let TransparencyForm = class TransparencyForm extends ActionForm {
       </slotted-dropdown>
     `;
     }
-    getReviewTemplate() {
-        // TODO: Delete
-        return html `
-      <div id="dmd-ctr">
-        <p id="review-hd-1"><b>${msg('TRANSPARENCY demand')}</b></p>
-        <p>${msg('I want to know:')}</p>
-        <ul id="transparency-demand-review-list">
-          ${Array.from(this.demands.values()).map((a) => html ` <li><b>${ACTION_DESCRIPTIONS[a.action]()}</b></li> `)}
-        </ul>
-        ${this._additionalMessage
-            ? html `
-              <p>${msg('Plus additional info:')}</p>
-              <p id="extra-msg-txt"><i>${this._additionalMessage}</i></p>
-            `
-            : null}
-      </div>
-    `;
-    }
 };
 TransparencyForm.styles = [
-    ActionForm.styles,
+    MultiDemandForm.styles,
     containerStyles,
     buttonStyles,
     textStyles,
@@ -237,11 +189,11 @@ __decorate([
     property({ type: Array })
 ], TransparencyForm.prototype, "advancedSettings", void 0);
 __decorate([
-    state()
-], TransparencyForm.prototype, "_additionalMessage", void 0);
+    property({ attribute: false })
+], TransparencyForm.prototype, "restrictions", void 0);
 __decorate([
     state()
-], TransparencyForm.prototype, "_provenances", void 0);
+], TransparencyForm.prototype, "_additionalMessage", void 0);
 TransparencyForm = __decorate([
     customElement('transparency-form')
 ], TransparencyForm);

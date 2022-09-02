@@ -1,9 +1,9 @@
-import { LitElement } from 'lit';
+import { LitElement, PropertyValueMap, TemplateResult } from 'lit';
 import { FormComponentState } from './utils/states.js';
 interface Choice {
     id: string;
-    description: string;
-    checked: boolean;
+    description: string | TemplateResult<1 | 2>;
+    checked: boolean | false;
     disabled: boolean;
 }
 /**
@@ -23,6 +23,7 @@ export declare class AllChecklist extends LitElement {
     allMessage: string;
     eventPrefix: string;
     includeButtons: boolean;
+    includeOther: boolean;
     selectedChoices: Set<string>;
     static styles: import("lit").CSSResult[];
     /**
@@ -36,6 +37,8 @@ export declare class AllChecklist extends LitElement {
      */
     deleteChoice(id: string): void;
     handleChoiceClick(e: Event): void;
+    handleOtherClick(e: Event): void;
+    handleOtherInput(e: Event): void;
     /**
      * Update the selection state based on currently selected choices
      */
@@ -49,6 +52,11 @@ export declare class AllChecklist extends LitElement {
      * Determine which to switch to when open or close button is clicked
      */
     handleButtonClick(): void;
-    render(): import("lit").TemplateResult<1>;
+    /**
+     * Hook into willUpdate to ensure the selected choices set matches choices
+     * @param _changedProperties Map of changed properties for this update
+     */
+    protected willUpdate(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void;
+    render(): TemplateResult<1>;
 }
 export {};
