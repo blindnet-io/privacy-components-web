@@ -15,7 +15,11 @@ import { PrivacyResponseItem } from './models/privacy-response.js';
 import { Provenance } from './models/provenance.js';
 import { RetentionPolicy } from './models/retention-policy.js';
 import { buttonStyles, containerStyles } from './styles.js';
-import { ACTION_DESCRIPTIONS, ACTION_TITLES } from './utils/dictionary.js';
+import {
+  ACTION_DESCRIPTIONS,
+  ACTION_TITLES,
+  DEMAND_STATUS_DESCRIPTIONS,
+} from './utils/dictionary.js';
 
 /**
  * Status for a single demand in a Privacy Request
@@ -126,6 +130,7 @@ export class StatusViewItem extends LitElement {
       .dmd-details-ctr {
         display: grid;
         background-color: white;
+        row-gap: 20px;
         /* height: 100px; */
         padding: 10px 20px 30px 20px;
       }
@@ -139,89 +144,32 @@ export class StatusViewItem extends LitElement {
 
   accessResponseTemplate(demand: PrivacyResponseItem) {
     return html`
-      ${choose(demand.status, [
-        [
-          DEMAND_STATUS.GRANTED,
-          () => {
-            if (demand.data) {
-              return html`
-                <div>
-                  ${msg(
-                    // NOTE: For now, we assume demand.data is a JSON file
-                    html`Click <a href="${demand.data}.json">here</a> to
-                      download your data.`
-                  )}
-                </div>
-              `;
-            }
-            return html`${msg(
-              'Obtaining data, please wait and refresh the page later.'
-            )}`;
-          },
-        ],
-        [
-          DEMAND_STATUS.DENIED,
-          () =>
-            html`Your ${demand.requested_action.toLocaleLowerCase()} demand has
-            been denied.`,
-        ],
-        [
-          DEMAND_STATUS.CANCELED,
-          () =>
-            html`Your ${demand.requested_action.toLocaleLowerCase()} demand has
-            been cancelled`,
-        ],
-        [
-          DEMAND_STATUS['PARTIALLY-GRANTED'],
-          () =>
-            html`Your ${demand.requested_action.toLocaleLowerCase()} demand has
-            been partially granted.`,
-        ],
-        [
-          DEMAND_STATUS['UNDER-REVIEW'],
-          () =>
-            html`Your ${demand.requested_action.toLocaleLowerCase()} demand is
-            under review.`,
-        ],
-      ])}
+      ${when(
+        [DEMAND_STATUS.GRANTED, DEMAND_STATUS['PARTIALLY-GRANTED']].includes(
+          demand.status
+        ),
+        () => {
+          if (demand.data) {
+            return html`
+              <div>
+                ${msg(
+                  // NOTE: For now, we assume demand.data is a JSON file
+                  html`Click <a href="${demand.data}.json">here</a> to download
+                    your data.`
+                )}
+              </div>
+            `;
+          }
+          return html`${msg(
+            'Obtaining data, please wait and refresh the page later.'
+          )}`;
+        }
+      )}
     `;
   }
 
-  deleteResponseTemplate(demand: PrivacyResponseItem) {
-    return html`
-      ${choose(demand.status, [
-        [
-          DEMAND_STATUS.GRANTED,
-          () =>
-            html`Your ${demand.requested_action.toLocaleLowerCase()} demand has
-            been granted.`,
-        ],
-        [
-          DEMAND_STATUS.DENIED,
-          () =>
-            html`Your ${demand.requested_action.toLocaleLowerCase()} demand has
-            been denied.`,
-        ],
-        [
-          DEMAND_STATUS.CANCELED,
-          () =>
-            html`Your ${demand.requested_action.toLocaleLowerCase()} demand has
-            been cancelled`,
-        ],
-        [
-          DEMAND_STATUS['PARTIALLY-GRANTED'],
-          () =>
-            html`Your ${demand.requested_action.toLocaleLowerCase()} demand has
-            been partially granted.`,
-        ],
-        [
-          DEMAND_STATUS['UNDER-REVIEW'],
-          () =>
-            html`Your ${demand.requested_action.toLocaleLowerCase()} demand is
-            under review.`,
-        ],
-      ])}
-    `;
+  deleteResponseTemplate() {
+    return html``;
   }
 
   transparencyResponseTemplate(demand: PrivacyResponseItem) {
@@ -441,71 +389,73 @@ export class StatusViewItem extends LitElement {
               id="${this.demand.demand_id}-details-ctr"
               class="dmd-details-ctr round-bottom"
             >
-              ${choose(
-                this.demand.requested_action,
+              <b
+                >Your demand has been
+                ${DEMAND_STATUS_DESCRIPTIONS[
+                  this.demand.status
+                ]().toLocaleLowerCase()}.</b
+              >
+              ${choose(this.demand.requested_action, [
+                [ACTION.ACCESS, () => this.accessResponseTemplate(this.demand)],
                 [
-                  [
-                    ACTION.ACCESS,
-                    () => this.accessResponseTemplate(this.demand),
-                  ],
-                  [
-                    ACTION.DELETE,
-                    () => this.deleteResponseTemplate(this.demand),
-                  ],
-                  [
-                    ACTION.TRANSPARENCY,
-                    () => this.transparencyResponseTemplate(this.demand),
-                  ],
-                  [
-                    ACTION['TRANSPARENCY.DATA.CATEGORIES'],
-                    () => this.transparencyDcTemplate(this.demand),
-                  ],
-                  [
-                    ACTION['TRANSPARENCY.DPO'],
-                    () => this.transparencyDpoTemplate(this.demand),
-                  ],
-                  [
-                    ACTION['TRANSPARENCY.KNOWN'],
-                    () => this.transparencyKnownTemplate(this.demand),
-                  ],
-                  [
-                    ACTION['TRANSPARENCY.LEGAL.BASES'],
-                    () => this.transparencyLbTemplate(this.demand),
-                  ],
-                  [
-                    ACTION['TRANSPARENCY.ORGANIZATION'],
-                    () => this.transparencyOrgTemplate(this.demand),
-                  ],
-                  [
-                    ACTION['TRANSPARENCY.POLICY'],
-                    () => this.transparencyPolicyTemplate(this.demand),
-                  ],
-                  [
-                    ACTION['TRANSPARENCY.PROCESSING.CATEGORIES'],
-                    () => this.transparencyPcTemplate(this.demand),
-                  ],
-                  [
-                    ACTION['TRANSPARENCY.PROVENANCE'],
-                    () => this.transparencyProvTemplate(this.demand),
-                  ],
-                  [
-                    ACTION['TRANSPARENCY.PURPOSE'],
-                    () => this.transparencyPurposeTemplate(this.demand),
-                  ],
-                  [
-                    ACTION['TRANSPARENCY.RETENTION'],
-                    () => this.transparencyRetTemplate(this.demand),
-                  ],
-                  [
-                    ACTION['TRANSPARENCY.WHERE'],
-                    () => this.transparencyWhereTemplate(this.demand),
-                  ],
-                  [
-                    ACTION['TRANSPARENCY.WHO'],
-                    () => this.transparencyWhoTemplate(this.demand),
-                  ],
+                  ACTION.TRANSPARENCY,
+                  () => this.transparencyResponseTemplate(this.demand),
                 ],
-                () => this.transparencyResponseTemplate(this.demand)
+                [
+                  ACTION['TRANSPARENCY.DATA.CATEGORIES'],
+                  () => this.transparencyDcTemplate(this.demand),
+                ],
+                [
+                  ACTION['TRANSPARENCY.DPO'],
+                  () => this.transparencyDpoTemplate(this.demand),
+                ],
+                [
+                  ACTION['TRANSPARENCY.KNOWN'],
+                  () => this.transparencyKnownTemplate(this.demand),
+                ],
+                [
+                  ACTION['TRANSPARENCY.LEGAL.BASES'],
+                  () => this.transparencyLbTemplate(this.demand),
+                ],
+                [
+                  ACTION['TRANSPARENCY.ORGANIZATION'],
+                  () => this.transparencyOrgTemplate(this.demand),
+                ],
+                [
+                  ACTION['TRANSPARENCY.POLICY'],
+                  () => this.transparencyPolicyTemplate(this.demand),
+                ],
+                [
+                  ACTION['TRANSPARENCY.PROCESSING.CATEGORIES'],
+                  () => this.transparencyPcTemplate(this.demand),
+                ],
+                [
+                  ACTION['TRANSPARENCY.PROVENANCE'],
+                  () => this.transparencyProvTemplate(this.demand),
+                ],
+                [
+                  ACTION['TRANSPARENCY.PURPOSE'],
+                  () => this.transparencyPurposeTemplate(this.demand),
+                ],
+                [
+                  ACTION['TRANSPARENCY.RETENTION'],
+                  () => this.transparencyRetTemplate(this.demand),
+                ],
+                [
+                  ACTION['TRANSPARENCY.WHERE'],
+                  () => this.transparencyWhereTemplate(this.demand),
+                ],
+                [
+                  ACTION['TRANSPARENCY.WHO'],
+                  () => this.transparencyWhoTemplate(this.demand),
+                ],
+              ])}
+              ${when(
+                this.demand.message,
+                () => html`
+                  <p>Included message:</p>
+                  <i>${this.demand.message}</i>
+                `
               )}
             </div>
           `

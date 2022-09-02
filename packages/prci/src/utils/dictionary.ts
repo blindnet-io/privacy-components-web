@@ -206,3 +206,11 @@ export const STATUS_DESCRIPTIONS = {
   COMPLETED: () => msg(html`Completed`),
   CANCELED: () => msg(html`Canceled`),
 };
+
+export const DEMAND_STATUS_DESCRIPTIONS = {
+  GRANTED: () => msg('Granted'),
+  DENIED: () => msg('Denied'),
+  'PARTIALLY-GRANTED': () => msg('Partially Granted'),
+  'UNDER-REVIEW': () => msg('Under Review'),
+  CANCELED: () => msg('Canceled'),
+};
