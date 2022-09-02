@@ -7,11 +7,7 @@ export class AppDCI extends LitElement {
   }
 
   render() {
-    return html`
-      <h1>Admin</h1>
-
-      <bldn-data-consum></bldn-data-consum>
-    `;
+    return html` <bldn-data-consum></bldn-data-consum> `;
   }
 }
 

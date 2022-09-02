@@ -7,7 +7,15 @@ export class AppBackOffice extends LitElement {
   }
 
   showDCI() {
-    Router.go('/admin');
+    // Vaadin Router doesn't handle baseUrl propertly here
+    // TODO: report issue to Vaadin
+    // alternatively, we could use a popstate event
+    const baseURL = document.querySelector('base')?.href || '/';
+    const routed = Router.go(`${baseURL}admin`);
+    if (!routed) {
+      // eslint-disable-next-line no-console
+      console.error('admin route not found');
+    }
   }
 
   render() {

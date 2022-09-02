@@ -47,7 +47,7 @@ export class AppHome extends LitElement {
         for details and instructions.
       </p>
 
-      <p>🚀 <a class="app-link" href="/privacy">Make a privacy request.</a></p>
+      <p>🚀 <a class="app-link" href="./privacy">Make a privacy request.</a></p>
     `;
   }
 }
