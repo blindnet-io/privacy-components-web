@@ -147,8 +147,9 @@ export class StatusViewItem extends LitElement {
               return html`
                 <div>
                   ${msg(
-                    html`Click <a href=${demand.data}>here</a> to download your
-                      data.`
+                    // NOTE: For now, we assume demand.data is a JSON file
+                    html`Click <a href="${demand.data}.json">here</a> to
+                      download your data.`
                   )}
                 </div>
               `;
