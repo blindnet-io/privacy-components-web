@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/blindnet-io/privacy-components-web/compare/v0.4.0...v0.5.0) (2022-09-02)
+
+
+### Bug Fixes
+
+* **@blindnet-demos/devkit-simple-tutorial:** base URL ([ad9649a](https://github.com/blindnet-io/privacy-components-web/commit/ad9649ab9f5c254a35a38375dbe1194be39a7ba0))
+
+
+### Features
+
+* **@blindnet-demos/devkit-simple-tutorial:** data to demo connector ([7391843](https://github.com/blindnet-io/privacy-components-web/commit/7391843892be6afe711a603ef032379014469499))
+* **@blindnet-demos/devkit-simple-tutorial:** save data ([2f385db](https://github.com/blindnet-io/privacy-components-web/commit/2f385db5b8c73dbc70a61f1c9cb73e9e850f1ccd))
+* **@blindnet/dci:** basic data consumer interface ([#82](https://github.com/blindnet-io/privacy-components-web/issues/82)) ([09da283](https://github.com/blindnet-io/privacy-components-web/commit/09da28353571382bd3d978fa39881efaae2be319))
+* **@blindnet/prci:** access and delete requests ([#69](https://github.com/blindnet-io/privacy-components-web/issues/69)) ([5bd6ab2](https://github.com/blindnet-io/privacy-components-web/commit/5bd6ab2b52f66ef9704892c2f5369a2a1b070237))
+* **@blindnet/prci:** demand status view ([#74](https://github.com/blindnet-io/privacy-components-web/issues/74)) ([e2baf85](https://github.com/blindnet-io/privacy-components-web/commit/e2baf85671248ca8f991f7ded0ae1993ae550dd1))
+* **@blindnet/prci:** request status page ([64ca70f](https://github.com/blindnet-io/privacy-components-web/commit/64ca70f00218b18588ba594a7e40dd660953bd09))
+* **@blindnet/prci:** submitted requests view ([#72](https://github.com/blindnet-io/privacy-components-web/issues/72)) ([d1a2043](https://github.com/blindnet-io/privacy-components-web/commit/d1a20436c1550ed3d7fbe1d91da72888b7d7ca78))
+
+
+
+
+
 # [0.4.0](https://github.com/blindnet-io/privacy-components-web/compare/v0.4.0-beta.7...v0.4.0) (2022-08-21)
 
 **Note:** Version bump only for package @blindnet/pc4w-root

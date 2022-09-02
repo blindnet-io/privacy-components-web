@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/blindnet-io/privacy-components-web/compare/v0.4.0...v0.5.0) (2022-09-02)
+
+
+### Features
+
+* **@blindnet/prci:** access and delete requests ([#69](https://github.com/blindnet-io/privacy-components-web/issues/69)) ([5bd6ab2](https://github.com/blindnet-io/privacy-components-web/commit/5bd6ab2b52f66ef9704892c2f5369a2a1b070237))
+* **@blindnet/prci:** demand status view ([#74](https://github.com/blindnet-io/privacy-components-web/issues/74)) ([e2baf85](https://github.com/blindnet-io/privacy-components-web/commit/e2baf85671248ca8f991f7ded0ae1993ae550dd1))
+* **@blindnet/prci:** request status page ([64ca70f](https://github.com/blindnet-io/privacy-components-web/commit/64ca70f00218b18588ba594a7e40dd660953bd09))
+* **@blindnet/prci:** submitted requests view ([#72](https://github.com/blindnet-io/privacy-components-web/issues/72)) ([d1a2043](https://github.com/blindnet-io/privacy-components-web/commit/d1a20436c1550ed3d7fbe1d91da72888b7d7ca78))
+
+
+
+
+
 # [0.4.0](https://github.com/blindnet-io/privacy-components-web/compare/v0.4.0-beta.7...v0.4.0) (2022-08-21)
 
 **Note:** Version bump only for package @blindnet/prci
