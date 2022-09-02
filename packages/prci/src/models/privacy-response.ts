@@ -1,15 +1,18 @@
 /* eslint-disable camelcase */
-import { ACTION, STATUS } from './priv-terms.js';
+import { ACTION, DEMAND_STATUS, MOTIVE } from './priv-terms.js';
 
-export interface PrivacyResponse {
+export interface PrivacyResponseItem {
   demand_id: string;
   date: string;
   requested_action: ACTION;
-  action: ACTION;
-  status?: STATUS;
+  status: DEMAND_STATUS;
+  motive?: MOTIVE;
   answer?: Object;
   message?: string;
   lang?: string;
-  includes: PrivacyResponse[];
+  includes: string[];
   system: string;
+  data?: string;
 }
+
+export type PrivacyResponse = PrivacyResponseItem[];

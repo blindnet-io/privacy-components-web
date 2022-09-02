@@ -11,9 +11,9 @@ export class DevkitSimpleTutorial extends LitElement {
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: flex-start;
+        justify-content: center;
         color: #1a2b42;
-        max-width: 960px;
+        max-width: 1250px;
         margin: 0 auto;
         text-align: center;
         background-color: var(--devkit-simple-tutorial-background-color);
@@ -74,6 +74,10 @@ export class DevkitSimpleTutorial extends LitElement {
         },
         component: 'app-form',
       },
+      {
+        path: '',
+        redirect: '/',
+      },
     ]);
   }
 
@@ -84,23 +88,23 @@ export class DevkitSimpleTutorial extends LitElement {
           button-label-active="Close menu"
           button-label-inactive="Open menu"
         ></bx-header-menu-button>
-        <bx-header-name href="/" prefix="blindnet devkit"
+        <bx-header-name href="./" prefix="blindnet devkit"
           >tutorial</bx-header-name
         >
         <bx-header-nav menu-bar-label="blindnet devkit tutorial">
-          <bx-header-nav-item href="/participate">Prizes</bx-header-nav-item>
-          <bx-header-nav-item href="/privacy">Privacy</bx-header-nav-item>
-          <bx-header-nav-item href="/backoffice"
+          <bx-header-nav-item href="./participate">Prizes</bx-header-nav-item>
+          <bx-header-nav-item href="./privacy">Privacy</bx-header-nav-item>
+          <bx-header-nav-item href="./backoffice"
             >Back Office</bx-header-nav-item
           >
         </bx-header-nav>
       </bx-header>
       <bx-side-nav aria-label="Side navigation">
         <bx-side-nav-items>
-          <bx-side-nav-link href="/">Home</bx-side-nav-link>
-          <bx-side-nav-link href="/participate">Prizes</bx-side-nav-link>
-          <bx-side-nav-link href="/privacy">Privacy</bx-side-nav-link>
-          <bx-side-nav-link href="/backoffice">Back Office</bx-side-nav-link>
+          <bx-side-nav-link href="./">Home</bx-side-nav-link>
+          <bx-side-nav-link href="./participate">Prizes</bx-side-nav-link>
+          <bx-side-nav-link href="./privacy">Privacy</bx-side-nav-link>
+          <bx-side-nav-link href="./backoffice">Back Office</bx-side-nav-link>
         </bx-side-nav-items>
       </bx-side-nav>
       <main>

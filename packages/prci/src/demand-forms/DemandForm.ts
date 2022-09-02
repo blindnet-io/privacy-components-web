@@ -1,12 +1,5 @@
 import { msg } from '@lit/localize';
-import {
-  css,
-  CSSResultGroup,
-  html,
-  LitElement,
-  PropertyValueMap,
-  TemplateResult,
-} from 'lit';
+import { css, CSSResultGroup, html, LitElement, TemplateResult } from 'lit';
 import { property } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
 import { Demand } from '../models/demand.js';
@@ -14,19 +7,17 @@ import { ACTION } from '../models/priv-terms.js';
 import { buttonStyles } from '../styles.js';
 import { ComponentState, DemandState } from '../utils/states.js';
 
-export abstract class ActionForm extends LitElement {
+/**
+ * Abstract class for a form that allows the user to create or edit a demand.
+ */
+export abstract class DemandForm extends LitElement {
   @property({ type: Number, attribute: 'demand-state' })
   demandState: DemandState = DemandState.EDIT_OPEN;
 
+  @property({ attribute: false }) demand: Demand = { action: ACTION.ACCESS };
+
   // eslint-disable-next-line no-restricted-globals
   @property({ type: String }) demandGroupId = self.crypto.randomUUID();
-
-  @property({ attribute: false }) demands: Demand[] = [];
-
-  constructor() {
-    super();
-    this.demands = this.getDefaultDemands();
-  }
 
   static styles = [
     buttonStyles,
@@ -37,41 +28,39 @@ export abstract class ActionForm extends LitElement {
 
       .btns-ctr {
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr auto 1fr;
         padding: 0px 0px 0px 0px;
         margin: 0px 0px 0px 0px;
-        transform: translateY(15px);
+        transform: translateY(35px);
       }
 
-      .back-btn {
+      #back-btn {
         grid-column: 1/2;
+        min-width: 80%;
+        max-width: 375px;
       }
 
-      .add-btn {
-        grid-column: 2/3;
+      #add-btn {
+        grid-column: 3/4;
+        min-width: 80%;
+        max-width: 375px;
       }
     ` as CSSResultGroup,
   ];
 
-  setDemand(demand: Demand) {
-    this.demands.push(demand);
-  }
-
-  deleteDemand(action: ACTION) {
-    this.demands.splice(
-      this.demands.findIndex(d => d.action === action),
-      1
-    );
-  }
-
-  addToPrivacyRequest(demandGroupId: string, demands: Demand[]) {
+  /**
+   * Send this demand up to the top level component to add to the Privacy Request
+   * @param demandGroupId uuid of this demand group
+   * @param demand demand to add
+   */
+  addToPrivacyRequest(demandGroupId: string, demand: Demand) {
     this.dispatchEvent(
-      new CustomEvent('demand-set-multiple', {
+      new CustomEvent('demand-set', {
         bubbles: true,
         composed: true,
         detail: {
           demandGroupId,
-          demands,
+          demand,
         },
       })
     );
@@ -93,11 +82,11 @@ export abstract class ActionForm extends LitElement {
   }
 
   /**
-   * On add click validate and add data then move to review
+   * Validate and add demand to request when add clicked
    */
   handleAddClick() {
     if (this.validate()) {
-      this.addToPrivacyRequest(this.demandGroupId, this.demands);
+      this.addToPrivacyRequest(this.demandGroupId, this.demand);
       this.dispatchEvent(
         new CustomEvent('component-state-change', {
           bubbles: true,
@@ -115,41 +104,34 @@ export abstract class ActionForm extends LitElement {
    */
   abstract validate(): boolean;
 
-  abstract getDefaultDemands(): Demand[];
-
   /**
    * Get the edit template for this action
    * @param useDefault Indicates if form should be populated with default values or from input demands
    * @returns HTML template
    */
-  abstract getEditTemplate(demands: Demand[]): TemplateResult;
-
-  /**
-   * Ensure that we always use the default demands initially
-   * @param _changedProperties
-   */
-  protected willUpdate(
-    _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
-  ): void {
-    if (
-      _changedProperties.has('demands') &&
-      (!this.demands || this.demands.length === 0)
-    ) {
-      this.demands = this.getDefaultDemands();
-    }
-  }
+  abstract getEditTemplate(demand: Demand): TemplateResult;
 
   render(): TemplateResult<1 | 2> {
     return html`
-      ${choose(this.demandState, [
-        [DemandState.EDIT_OPEN, () => this.getEditTemplate(this.demands)],
-      ])}
+      <div>
+        ${choose(this.demandState, [
+          [DemandState.EDIT_OPEN, () => this.getEditTemplate(this.demand)],
+        ])}
+      </div>
       <!-- Buttons -->
       <div class="btns-ctr">
-        <button class="back-btn nav-btn ctr-btn" @click=${this.handleBackClick}>
+        <button
+          id="back-btn"
+          class="nav-btn ctr-btn animated-btn"
+          @click=${this.handleBackClick}
+        >
           ${msg('Back')}
         </button>
-        <button class="add-btn nav-btn ctr-btn" @click=${this.handleAddClick}>
+        <button
+          id="add-btn"
+          class="nav-btn ctr-btn animated-btn"
+          @click=${this.handleAddClick}
+        >
           ${msg('Add demand to Privacy Request')}
         </button>
       </div>

@@ -1,24 +1,36 @@
-/* eslint-disable lit/binding-positions */
 /* eslint-disable no-restricted-globals */
 /* eslint-disable no-param-reassign */
-import { html, css, LitElement, PropertyValueMap } from 'lit';
+import { html, css, LitElement, PropertyValueMap, TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
-import { when } from 'lit/directives/when.js';
 import { map } from 'lit/directives/map.js';
 import { localized, msg } from '@lit/localize';
+import '@lrnwebcomponents/simple-icon/lib/simple-icons.js';
+import '@lrnwebcomponents/simple-icon/simple-icon.js';
+import '@lrnwebcomponents/simple-icon/lib/simple-icon-button.js';
+// declare const SimpleIconsetStore: any;
+// import '@lrnwebcomponents/simple-icon/lib/simple-iconset.js';
 
 import './FrequentRequestsMenu.js';
 import './ResponseView.js';
 import './ReviewView.js';
 import './ActionMenu.js';
+import './RequestsView.js';
+import './StatusView.js';
 import './demand-forms/TransparencyForm.js';
+import './demand-forms/AccessForm.js';
+import './demand-forms/DeleteForm.js';
 import { ACTION, TARGET } from './models/priv-terms.js';
 import { PrivacyRequest } from './models/privacy-request.js';
 import { ComponentState } from './utils/states.js';
 import { Demand } from './models/demand.js';
-import { getDefaultActions } from './utils/utils.js';
+import {
+  getDefaultActions,
+  getDefaultDemand,
+  getDefaultDemands,
+} from './utils/utils.js';
 import { buttonStyles, containerStyles, textStyles } from './styles.js';
+import { PRCI_CONFIG } from './utils/conf.js';
 import { sendPrivacyRequest } from './utils/privacy-request-api.js';
 
 /**
@@ -51,13 +63,17 @@ export class BldnPrivRequest extends LitElement {
       },
     ],
     email: '',
-    target: TARGET.ORGANIZATION,
+    target: TARGET.PARTNERS,
   };
 
   // Map of demand group ids to sets of demands
   @state() _demands: Map<string, Demand[]> = new Map<string, Demand[]>();
 
   @state() _currentDemandGroupId: string = '';
+
+  @state() _currentRequestId: string = '';
+
+  @state() _config = PRCI_CONFIG;
 
   constructor() {
     super();
@@ -81,6 +97,14 @@ export class BldnPrivRequest extends LitElement {
           break;
         case ComponentState.SUBMITTED:
           break;
+        case ComponentState.MENU:
+          // For now, going back to the menu means we reset. This will change
+          // when supporting multiple demands.
+          this._demands.set(this._currentDemandGroupId, []);
+          break;
+        case ComponentState.STATUS:
+          this._currentRequestId = details.requestId;
+          break;
         default:
           break;
       }
@@ -91,10 +115,45 @@ export class BldnPrivRequest extends LitElement {
       const { demandGroupId, demands } = (e as CustomEvent).detail;
       this._demands.set(demandGroupId, demands);
     });
+    this.addEventListener('demand-set', e => {
+      const { demandGroupId, demand } = (e as CustomEvent).detail;
+      this._demands.set(demandGroupId, [demand]);
+    });
     this.addEventListener('demand-delete', e => {
       const { demandGroupId } = (e as CustomEvent).detail;
       this._demands.delete(demandGroupId);
       this.requestUpdate();
+    });
+
+    // Request target listener
+    this.addEventListener('request-target-change', e => {
+      const { id } = (e as CustomEvent).detail;
+      this._privacyRequest.target = id as TARGET;
+    });
+
+    // Submit request listener
+    this.addEventListener('submit-request', () => {
+      const allDemands = Array.from(this._demands.values()).reduce(
+        (dmds, dmdGroup) => dmds.concat(dmdGroup),
+        []
+      );
+      this._privacyRequest.demands = allDemands.map((d, i) => {
+        d.id = i.toString();
+        return d;
+      });
+
+      sendPrivacyRequest(this._privacyRequest, false).then(response => {
+        // eslint-disable-next-line no-console
+        console.log(response);
+        this.dispatchEvent(
+          new CustomEvent('component-state-change', {
+            detail: {
+              newState: ComponentState.STATUS,
+              requestId: response.request_id,
+            },
+          })
+        );
+      });
     });
   }
 
@@ -104,13 +163,11 @@ export class BldnPrivRequest extends LitElement {
     containerStyles,
     css`
       :host {
-        display: grid;
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
           Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         font-size: 16;
-        max-width: 1350px;
         background-color: white;
-        padding: 30px;
+        text-align: left;
       }
 
       :host button {
@@ -129,14 +186,9 @@ export class BldnPrivRequest extends LitElement {
           Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
       }
 
-      #priv-req-ctr {
-        padding: 20px 0px 0px 0px;
-      }
-
-      #content-ctr {
-        display: grid;
-        row-gap: 30px;
-        padding: 40px 60px 40px 60px;
+      #prci-ctr {
+        padding: 20px;
+        max-width: 1350px;
       }
 
       #nav-bar {
@@ -180,15 +232,16 @@ export class BldnPrivRequest extends LitElement {
         float: right;
       }
 
-      #submit-btn {
-        transform: translateY(15px);
+      #heading-ctr {
+        padding: 0px 0px 40px 0px;
       }
 
       .req-hdr {
+        display: block;
         font-weight: bold;
         font-size: 24px;
-        text-align: center;
         grid-column: 2/3;
+        text-align: center;
       }
 
       .new-dmd-btn {
@@ -220,30 +273,9 @@ export class BldnPrivRequest extends LitElement {
     `,
   ];
 
-  handleSubmitClick() {
-    const allDemands = Array.from(this._demands.values()).reduce(
-      (dmds, dmdGroup) => dmds.concat(dmdGroup),
-      []
-    );
-    this._privacyRequest.demands = allDemands.map((d, i) => {
-      d.id = i.toString();
-      return d;
-    });
-
-    sendPrivacyRequest(this._privacyRequest, false).then(response => {
-      this.dispatchEvent(
-        new CustomEvent('component-state-change', {
-          detail: {
-            newState: ComponentState.SUBMITTED,
-            requestId: response.request_id,
-          },
-        })
-      );
-    });
-  }
-
   /**
    * Reset most states
+   * // TODO: Remove this and use something like getDefaultDemand() from the forms
    */
   handleRestartClick() {
     this._privacyRequest = {
@@ -256,35 +288,90 @@ export class BldnPrivRequest extends LitElement {
         },
       ],
       email: '',
-      target: TARGET.ORGANIZATION,
+      target: TARGET.PARTNERS,
     };
     this._demands = new Map<string, Demand[]>();
   }
 
+  /**
+   * Return a form based on action type with either default or prepopulated demand data
+   * @param action PRIV action for which to return a form
+   * @returns
+   */
   actionFormFactory(action: ACTION) {
+    const currentDemand = this._demands.get(this._currentDemandGroupId);
+
+    // Handle the transparency action case where we have multiple demands per form
+    if (action === ACTION.TRANSPARENCY) {
+      // Decide if we should use the default demand or not
+      const multiDemand =
+        currentDemand && currentDemand.length !== 0
+          ? currentDemand
+          : getDefaultDemands(action);
+      return html`
+        <transparency-form
+          .demands=${multiDemand}
+          .demandGroupId=${this._currentDemandGroupId}
+          .restrictions=${multiDemand[0].restrictions}
+        ></transparency-form>
+      `;
+    }
+
+    // Decide if we should use the default demand or not
+    const demand =
+      currentDemand && currentDemand.length !== 0
+        ? currentDemand[0]
+        : getDefaultDemand(action);
+    // Get the form for all other action types
     return html`
       ${choose(
         action,
         [
-          [ACTION.ACCESS, () => html``],
-          [ACTION.DELETE, () => html``],
+          [
+            ACTION.ACCESS,
+            () => html`
+              <access-form
+                .demand=${demand}
+                .demandGroupId=${this._currentDemandGroupId}
+                .allowedDataCategories=${this._config[
+                  'access-allowed-data-categories'
+                ]}
+              ></access-form>
+            `,
+          ],
+          [
+            ACTION.DELETE,
+            () => html`
+              <delete-form
+                .demand=${demand}
+                .demandGroupId=${this._currentDemandGroupId}
+                .allowedDataCategories=${this._config[
+                  'access-allowed-data-categories'
+                ]}
+              ></delete-form>
+            `,
+          ],
           [ACTION.MODIFY, () => html``],
           [ACTION.OBJECT, () => html``],
           [ACTION.PORTABILITY, () => html``],
           [ACTION.RESTRICT, () => html``],
           [ACTION.REVOKE, () => html``],
-          [
-            ACTION.TRANSPARENCY,
-            () => html`<transparency-form
-              .demandGroupId=${this._currentDemandGroupId}
-              .demands=${this._demands.get(this._currentDemandGroupId)}
-            ></transparency-form>`,
-          ],
           [ACTION['OTHER.DEMAND'], () => html``],
         ],
         () => html`${msg('Error: Invalid Action')}`
       )}
     `;
+  }
+
+  getHeadingString(componentState: ComponentState): TemplateResult<1 | 2> {
+    switch (componentState) {
+      case ComponentState.REQUESTS:
+        return html`${msg('My Submitted Privacy Request(s)')}`;
+      case ComponentState.STATUS:
+        return html`${msg('My Privacy Request Status')}`;
+      default:
+        return html`${msg('My Privacy Request')}`;
+    }
   }
 
   // Hook into willUpdate lifecycle method to set the included actions state if a valid list of actions is passed as an attribute
@@ -311,85 +398,69 @@ export class BldnPrivRequest extends LitElement {
 
   render() {
     return html`
-      <div id="priv-req-ctr">
-        <!-- Heading -->
-        <div id="nav-bar">
-          <span class="req-hdr">${msg('My Privacy Request')}</span>
+      <div id="prci-ctr">
+        <div id="heading-ctr">
+          <span class="req-hdr"
+            >${this.getHeadingString(this._componentState)}</span
+          >
         </div>
-        <!-- Main View -->
-        <div id="content-ctr" class="medium-border">
-          ${choose(this._componentState, [
-            [
-              ComponentState.MENU,
-              () => html`
+        ${choose(this._componentState, [
+          [
+            ComponentState.MENU,
+            () => html`
+              <div>
                 <action-menu
                   .includedActions=${this._includedActions}
                 ></action-menu>
-              `,
-            ],
-            [
-              ComponentState.EDIT,
-              () => this.actionFormFactory(this._selectedAction),
-            ],
-            [
-              ComponentState.REVIEW,
-              () => html`
-                <span><b>${msg('My demand(s):')}</b></span>
+              </div>
+            `,
+          ],
+          [
+            ComponentState.EDIT,
+            () => html`
+              <div class="medium-border view-ctr">
+                ${this.actionFormFactory(this._selectedAction)}
+              </div>
+            `,
+          ],
+          [
+            ComponentState.REVIEW,
+            () => html`
+              <div class="medium-border view-ctr">
                 ${map(
                   this._demands.entries(),
                   ([groupId, demands]) => html`<review-view
-                    class="medium-border"
                     .demandGroupId=${groupId}
                     .demands=${demands}
                   ></review-view>`
                 )}
-                <!-- Uncomment when supporting multiple demands -->
-                <!-- <div id="new-dmd-ctr" class="medium-border">
-                  <span><b>${msg('I want to add another demand')}</b></span>
-                  <button class="svg-btn">
-                    <img src="packages/prci/src/assets/icons/add-circle.svg" alt="add icon"></img>
-                  </button>
-                </div> -->
-                <!-- Submit button -->
-                <button
-                  id="submit-btn"
-                  class="nav-btn ctr-btn"
-                  @click=${this.handleSubmitClick}
-                >
-                  ${msg('Submit Privacy Request')}
-                </button>
-              `,
-            ],
-            [
-              ComponentState.REQUESTS,
-              () => html` <requests-view></requests-view> `,
-            ],
-            [
-              ComponentState.SUBMITTED,
-              () => html`
-                <p class="ctr-txt">
-                  <b>${msg('Your Privacy Request has been sent!')} 🎉</b>
-                </p>
-                <p class="ctr-txt">
-                  ${msg('You may track the status of your request below.')}
-                </p>
-              `,
-            ],
-            [ComponentState.AUTH, () => html` <auth-view></auth-view> `],
-          ])}
-        </div>
-        <!-- Other Demand Option -->
-        ${when(
-          this._componentState === ComponentState.MENU &&
-            this._includedActions.includes(ACTION['OTHER.DEMAND']),
-          () => html`
-            <button id="other-dmd-btn" class="link-btn medium-font underline">
-              ${msg(
-                'Click here if you want to make some other demand (please note that it might take longer to be answered)'
-              )}
-            </button>
-          `
-        )}
+              </div>
+            `,
+          ],
+          [
+            ComponentState.REQUESTS,
+            () => html` <requests-view></requests-view> `,
+          ],
+          [
+            ComponentState.STATUS,
+            () =>
+              html` <status-view
+                request-id=${this._currentRequestId}
+              ></status-view>`,
+          ],
+          [
+            ComponentState.SUBMITTED,
+            () => html`
+              <p class="ctr-txt">
+                <b>${msg('Your Privacy Request has been sent!')} 🎉</b>
+              </p>
+              <p class="ctr-txt">
+                ${msg('You may track the status of your request below.')}
+              </p>
+            `,
+          ],
+          [ComponentState.AUTH, () => html` <auth-view></auth-view> `],
+        ])}
       </div>
     `;
   }

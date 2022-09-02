@@ -1,9 +1,11 @@
 import { html, css, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { localized } from '@lit/localize';
+import { localized, msg } from '@lit/localize';
 import './ActionItem.js';
 import { ACTION } from './models/priv-terms.js';
 import { enabledActions } from './utils/conf.js';
+import { buttonStyles, containerStyles, textStyles } from './styles.js';
+import { ComponentState } from './utils/states.js';
 
 /**
  * Menu of clickable action types
@@ -17,34 +19,96 @@ export class ActionMenu extends LitElement {
   // Actions to be displayed in the menu, each corresponding to an ActionItem.
   @property({ attribute: false }) includedActions: ACTION[] = [];
 
-  static styles = css`
-    .actions-container {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 50px;
-      padding: 30px 40px 10px 40px;
-    }
+  static styles = [
+    textStyles,
+    containerStyles,
+    buttonStyles,
+    css`
+      .actions-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 50px;
+        /* padding: 30px 40px 10px 40px; */
+      }
 
-    .prompt-heading {
-      font-size: 18px;
-      text-align: left;
-      padding: 0px 0px 0px 10px;
-    }
-  `;
+      .prompt-heading {
+        font-size: 16px;
+        text-align: left;
+        padding: 0px 0px 0px 0px;
+        margin: 0px 0px 35px 0px;
+      }
+
+      #other-dmd-btn {
+        margin: 20px 0px 0px 0px;
+        justify-self: right;
+      }
+
+      #below-menu-btns-ctr {
+        display: grid;
+        row-gap: 50px;
+      }
+
+      #requests-btn {
+        display: flex;
+        justify-content: center;
+        justify-self: center;
+        align-items: center;
+        column-gap: 20px;
+        background: none;
+        padding: 20px;
+        width: 35%;
+        font-size: 18px;
+        border-radius: 15px;
+      }
+
+      #requests-btn img {
+        float: right;
+      }
+    `,
+  ];
+
+  handleRequestsClick() {
+    this.dispatchEvent(
+      new CustomEvent('component-state-change', {
+        bubbles: true,
+        composed: true,
+        detail: {
+          newState: ComponentState.REQUESTS,
+        },
+      })
+    );
+  }
 
   render() {
     return html`
-      <div class="prompt-heading">${this.prompt}</div>
-      <div class="actions-container">
-        ${this.includedActions
-          .filter(a => a !== ACTION['OTHER.DEMAND'])
-          .map(
-            a =>
-              html`<action-item
-                .action=${a}
-                ?disabled=${!enabledActions.get(a)}
-              ></action-item>`
+      <div class="view-ctr medium-border">
+        <div class="prompt-heading"><b>${this.prompt}</b></div>
+        <div class="actions-container">
+          ${this.includedActions
+            .filter(a => a !== ACTION['OTHER.DEMAND'])
+            .map(
+              a =>
+                html`<action-item
+                  .action=${a}
+                  ?disabled=${!enabledActions.get(a)}
+                ></action-item>`
+            )}
+        </div>
+      </div>
+      <div id="below-menu-btns-ctr">
+        <button id="other-dmd-btn" class="link-btn medium-font underline">
+          ${msg(
+            'Click here if you want to make some other demand (please note that it might take longer to be answered)'
           )}
+        </button>
+        <button
+          id="requests-btn"
+          class="curve-btn medium-border animated-btn"
+          @click=${this.handleRequestsClick}
+        >
+          <span>${msg('Access my submitted Privacy Requests')}</span>
+          <simple-icon icon="arrow-forward"></simple-icon>
+        </button>
       </div>
     `;
   }

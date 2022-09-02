@@ -1,5 +1,5 @@
 import { msg } from '@lit/localize';
-import { css, html, LitElement } from 'lit';
+import { css, html, LitElement, PropertyValueMap, TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 import { buttonStyles, containerStyles, textStyles } from './styles.js';
@@ -7,8 +7,8 @@ import { FormComponentState } from './utils/states.js';
 
 interface Choice {
   id: string;
-  description: string;
-  checked: boolean;
+  description: string | TemplateResult<1 | 2>;
+  checked: boolean | false;
   disabled: boolean;
 }
 
@@ -53,6 +53,8 @@ export class AllChecklist extends LitElement {
   @property({ type: Boolean, attribute: 'include-buttons' }) includeButtons =
     false;
 
+  @property({ type: Boolean, attribute: 'include-other' }) includeOther = false;
+
   // Holds the IDs of all selected choices
   @state() selectedChoices = new Set<string>();
 
@@ -71,13 +73,13 @@ export class AllChecklist extends LitElement {
 
       :host([selection-state='0']) #all-checkbox:checked + label {
         opacity: 1;
-        background: url('/packages/prci/src/assets/icons/all-checkbox-checked.svg')
+        background: url('http://localhost:8000/__wds-outside-root__/2/packages/prci/dist/assets/icons/all-checkbox-checked.svg')
           no-repeat;
       }
 
       :host([selection-state='1']) #all-checkbox + label {
         opacity: 1;
-        background: url('/packages/prci/src/assets/icons/all-checkbox-dash.svg')
+        background: url('http://localhost:8000/__wds-outside-root__/2/packages/prci/dist/assets/icons/all-checkbox-dash.svg')
           no-repeat;
       }
 
@@ -112,12 +114,28 @@ export class AllChecklist extends LitElement {
       }
 
       #all-checkbox + label {
-        background: url('/packages/prci/src/assets/icons/all-checkbox-unchecked.svg')
+        background: url('http://localhost:8000/__wds-outside-root__/2/packages/prci/dist/assets/icons/all-checkbox-unchecked.svg')
           no-repeat;
         height: 13px;
         width: 13px;
         display: inline-block;
         margin: 3px 3px 3px 4px;
+      }
+
+      #other-data-input-ctr {
+        display: flex;
+        column-gap: 5px;
+        padding: 20px 55px;
+        align-items: center;
+      }
+
+      #other-data-input input {
+        height: 30px;
+        width: 100%;
+      }
+
+      #other-data-input span {
+        flex-shrink: 0;
       }
     `,
   ];
@@ -161,7 +179,6 @@ export class AllChecklist extends LitElement {
   }
 
   handleChoiceClick(e: Event) {
-    // debug: only enters this once
     const { id, checked } = e.target as HTMLInputElement;
     if (id === 'all-checkbox') {
       // Get all choice checkboxes
@@ -208,6 +225,30 @@ export class AllChecklist extends LitElement {
         allCheckbox.checked = false;
       }
     }
+  }
+
+  handleOtherClick(e: Event) {
+    this.dispatchEvent(
+      new CustomEvent(`${this.eventPrefix}-other-click`, {
+        bubbles: true,
+        composed: true,
+        detail: {
+          checked: (e.target as HTMLInputElement).checked,
+        },
+      })
+    );
+  }
+
+  handleOtherInput(e: Event) {
+    this.dispatchEvent(
+      new CustomEvent(`${this.eventPrefix}-other-input`, {
+        bubbles: true,
+        composed: true,
+        detail: {
+          text: (e.target as HTMLInputElement).value,
+        },
+      })
+    );
   }
 
   /**
@@ -263,6 +304,23 @@ export class AllChecklist extends LitElement {
     }
   }
 
+  /**
+   * Hook into willUpdate to ensure the selected choices set matches choices
+   * @param _changedProperties Map of changed properties for this update
+   */
+  protected willUpdate(
+    _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
+  ): void {
+    if (_changedProperties.has('choices')) {
+      this.choices.forEach(c => {
+        if (c.checked) {
+          this.selectedChoices.add(c.id);
+        }
+      });
+      this.updateSelectionState();
+    }
+  }
+
   render() {
     return html`
       <div class="choices-list">
@@ -302,17 +360,40 @@ export class AllChecklist extends LitElement {
             </div>
           `
         )}
+        <!-- Optionally include an other option -->
+        ${when(
+          this.includeOther && this.componentMode === FormComponentState.OPEN,
+          () => html`
+          <div id="other-data-ctr">
+            <div class="choice-ctr">
+              <input
+                id='other-checkbox'
+                type="checkbox"
+                @change=${this.handleOtherClick}
+              />
+              <label>${msg(
+                html`<b>OTHER-DATA:</b> Specify another type of data`
+              )}</label>
+            </div>
+            <div id="other-data-input-ctr">
+              <span>${msg('Other data type:')}</span>
+              <input id="other-data-input" type="text" class="std-txt-input"></input>
+            </div>
+          </div>
+        `
+        )}
       </div>
       <!-- Optionally include a close button -->
       ${when(
         this.includeButtons,
         () => html`
-          <button
+          <simple-icon-button
             @click=${this.handleButtonClick}
-            class="ctr-btn ${this.componentMode === FormComponentState.OPEN
-              ? 'close-btn'
-              : 'open-btn'}"
-          ></button>
+            icon="expand-${this.componentMode === FormComponentState.OPEN
+              ? 'less'
+              : 'more'}"
+          >
+          </simple-icon-button>
         `
       )}
     `;

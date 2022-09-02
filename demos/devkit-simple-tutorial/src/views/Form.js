@@ -4,11 +4,13 @@ import 'carbon-web-components/es/components/input/index.js';
 import 'carbon-web-components/es/components/button/button.js';
 import 'carbon-web-components/es/components/file-uploader/index.js';
 import 'carbon-web-components/es/components/notification/inline-notification.js';
+import { FILE_UPLOADER_ITEM_STATE } from 'carbon-web-components/es/components/file-uploader/file-uploader-item.js';
 
 export class AppParticipateForm extends LitElement {
   static get properties() {
     return {
       pristine: { type: Boolean, state: true },
+      _files: { type: Array, state: true },
     };
   }
 
@@ -65,6 +67,10 @@ export class AppParticipateForm extends LitElement {
   constructor() {
     super();
     this.pristine = true;
+    /**
+     * @type {any[]}
+     */
+    this._files = [];
   }
 
   firstUpdated() {
@@ -100,43 +106,18 @@ export class AppParticipateForm extends LitElement {
    * @param {FormData} formData
    */
   async saveDataToServer(formData) {
-    // Simulates server latency
-    // TODO: POST to the demo storage service instead, and manage errors via handleServerErrors
-    // `await fetch('https://your.server/path/to/the/endpoint', { method: 'POST', body: formData })`
-    await new Promise(resolve =>
-      setTimeout(() => {
-        resolve(formData);
-      }, 500)
+    if (this._files.length === 0) return;
+    formData.set('proof', this._files[0].file);
+
+    await fetch(
+      'https://blindnet-connector-demo-staging.azurewebsites.net/form',
+      {
+        method: 'POST',
+        body: formData,
+      }
     );
-    this.handleServerErrors();
-  }
 
-  handleServerErrors() {
-    // Example of error handling:
-
-    // const username = formData.get('username');
-    //
-    // if (!username) {
-    //   throw Object.assign(new Error('Login failed'), {
-    //     errors: {
-    //       username: 'User does not exist',
-    //     },
-    //   });
-    // } else if (!['john', 'anne'].includes(username)) {
-    //   throw Object.assign(new Error('Login failed'), {
-    //     errors: {
-    //       username: 'Wrong user name (Has to be john or anne)',
-    //     },
-    //   });
-    // } else if (formData.get('password') !== 'form') {
-    //   throw Object.assign(new Error('Login failed'), {
-    //     errors: {
-    //       password: 'Wrong password (Has to be the name of the parent directory of this example directory)',
-    //     },
-    //   });
-    // } else {
     this._notificationSuccess.open = true;
-    // }
   }
 
   /**
@@ -216,6 +197,18 @@ export class AppParticipateForm extends LitElement {
     this.setPristine(true);
   }
 
+  /**
+   * @param {CustomEvent} e
+   */
+  handleUpload(e) {
+    const { addedFiles } = e.detail;
+    const newFiles = addedFiles.map((/** @type {any} */ item) => ({
+      id: Math.random().toString(36).slice(2),
+      file: item,
+    }));
+    this._files = newFiles;
+  }
+
   render() {
     return html`
       <h1>Take part in our prize draw!</h1>
@@ -238,6 +231,7 @@ export class AppParticipateForm extends LitElement {
         <bx-form-item>
           <bx-input
             id="input-firstname"
+            name="first"
             @input=${() => {
               this.setPristine(false);
             }}
@@ -247,6 +241,7 @@ export class AppParticipateForm extends LitElement {
           </bx-input>
           <bx-input
             id="input-lastname"
+            name="last"
             @input=${() => {
               this.setPristine(false);
             }}
@@ -259,6 +254,7 @@ export class AppParticipateForm extends LitElement {
           <bx-input
             type="email"
             id="input-email"
+            name="email"
             @input=${() => {
               this.setPristine(false);
             }}
@@ -277,11 +273,22 @@ export class AppParticipateForm extends LitElement {
             }}
           >
             <bx-file-drop-container
-              accept="image/jpeg image/png application/pdf"
-              ?multiple=${false}
+              name="proof"
+              @bx-file-drop-container-changed=${this.handleUpload}
             >
               Drag and drop a file here or click to upload
             </bx-file-drop-container>
+            ${this._files.map(
+              ({ id, file }) => html`
+                <bx-file-uploader-item
+                  data-file-id="${id}"
+                  state=${FILE_UPLOADER_ITEM_STATE.UPLOADED}
+                >
+                  ${file.name}
+                  <span slot="validity-message-supplement"></span>
+                </bx-file-uploader-item>
+              `
+            )}
           </bx-file-uploader>
         </bx-form-item>
         <div className="btn-container">

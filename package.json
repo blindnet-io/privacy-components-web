@@ -5,12 +5,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "postinstall": "lerna bootstrap && yarn build",
+    "postinstall": "lerna bootstrap",
     "lerna": "lerna",
     "build:imports": "lerna exec --scope \"@blindnet/*\" -- \"importly --host=unpkg --lookup=unpkg --semver=minor < package.json > import-map.json\"",
     "build:localize": "lerna run localize",
     "build:rollup": "rollup -c",
-    "build": "yarn run build:imports && yarn run build:localize && yarn run build:rollup",
+    "build": "yarn run build:imports && yarn run build:localize && yarn run build:rollup && yarn run copy:assets",
     "watch": "yarn run build:rollup --configKeep --watch",
     "analyze": "lerna exec -- \"cem analyze --litelement\"",
     "start": "wds",
@@ -30,9 +30,8 @@
     "test:packages:watch": "wtr --watch",
     "test": "yarn run test:packages && yarn run test:demos",
     "storybook": "concurrently -k -r \"tsc --watch --preserveWatchOutput -p stories\" \"wds -c .storybook/server.mjs\"",
-    "prestorybook:build": "yarn build && yarn storybook:build-stories",
     "storybook:build-stories": "tsc -p stories",
-    "storybook:build": "build-storybook",
+    "storybook:build": "yarn storybook:build-stories && build-storybook",
     "validate": "yarn install --check-files --ignore-scripts && yarn build && yarn lint && yarn typecheck && yarn test",
     "prepublish:npm": "yarn validate",
     "publish:npm": "lerna publish",
@@ -40,10 +39,12 @@
     "ignore-sync": "ignore-sync .",
     "bundle:build-demos": "lerna run build --scope \"@blindnet-demos/*\"",
     "bundle:copy": "node ./tasks/bundle-copy.js",
-    "bundle": "yarn bundle:build-demos && yarn storybook:build && yarn bundle:copy"
+    "bundle": "yarn bundle:build-demos && yarn storybook:build && yarn bundle:copy",
+    "copy:assets": "lerna exec --scope \"@blindnet/*\" -- \"cp -rv src/assets dist/assets || :\""
   },
   "dependencies": {
     "@lit/localize": "^0.11.3",
+    "@lrnwebcomponents/simple-icon": "^4.1.0",
     "@rollup/plugin-alias": "^3.1.9",
     "lit": "^2.0.2"
   },

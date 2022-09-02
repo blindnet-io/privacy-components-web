@@ -22,11 +22,11 @@ jobs:
 
       - name: Install dependencies 🔧
         run: |
-          yarn install
-          yarn lerna bootstrap
+          yarn install --frozen-lockfile
 
       - name: Build 👷‍♀
         run: |
+          yarn build
           yarn bundle
 
       - name: Check ✅
@@ -58,8 +58,9 @@ jobs:
           yarn lerna version --conventional-graduate --force-publish --yes
           yarn lerna publish from-git --yes
 
-      - name: Version and publish (beta) 📦
+      - name: Publish (beta) 📦
         if: github.ref == 'refs/heads/develop'
         run: |
-          yarn lerna version --conventional-prerelease --preid beta --yes
-          yarn lerna publish from-git --yes --dist-tag next
+          yarn lerna publish --loglevel silly \
+           --canary --yes --no-git-tag-version --no-push \
+           --dist-tag next --preid beta-$(git rev-parse --short HEAD)
