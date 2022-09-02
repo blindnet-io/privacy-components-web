@@ -7,6 +7,7 @@ import { when } from 'lit/directives/when.js';
 import { LegalBase } from './models/legal-base.js';
 import {
   ACTION,
+  DATA_CATEGORY,
   DEMAND_STATUS,
   PROCESSING_CATEGORY,
   PURPOSE,
@@ -20,6 +21,7 @@ import {
   ACTION_TITLES,
   DEMAND_STATUS_DESCRIPTIONS,
 } from './utils/dictionary.js';
+import { getRetentionPolicyString } from './utils/utils.js';
 
 /**
  * Status for a single demand in a Privacy Request
@@ -174,35 +176,45 @@ export class StatusViewItem extends LitElement {
 
   transparencyResponseTemplate(demand: PrivacyResponseItem) {
     return html`
-      <b>${ACTION_DESCRIPTIONS[demand.requested_action]()}</b><br />
+      <p>
+        <b>Requested info:</b> ${ACTION_DESCRIPTIONS[demand.requested_action]()}
+      </p>
       ${demand.answer}
     `;
   }
 
   transparencyDcTemplate(demand: PrivacyResponseItem) {
     return html`
-      <b>${ACTION_DESCRIPTIONS[demand.requested_action]()}</b><br />
+      <p>
+        <b>Requested info:</b> ${ACTION_DESCRIPTIONS[demand.requested_action]()}
+      </p>
       ${map(demand.answer as Array<string>, dc => html` ${dc}<br /> `)}
     `;
   }
 
   transparencyDpoTemplate(demand: PrivacyResponseItem) {
     return html`
-      <b>${ACTION_DESCRIPTIONS[demand.requested_action]()}</b><br />
+      <p>
+        <b>Requested info:</b> ${ACTION_DESCRIPTIONS[demand.requested_action]()}
+      </p>
       ${demand.answer}
     `;
   }
 
   transparencyKnownTemplate(demand: PrivacyResponseItem) {
     return html`
-      <b>${ACTION_DESCRIPTIONS[demand.requested_action]()}</b><br />
+      <p>
+        <b>Requested info:</b> ${ACTION_DESCRIPTIONS[demand.requested_action]()}
+      </p>
       ${demand.answer}
     `;
   }
 
   transparencyLbTemplate(demand: PrivacyResponseItem) {
     return html`
-      <b>${ACTION_DESCRIPTIONS[demand.requested_action]()}</b><br />
+      <p>
+        <b>Requested info:</b> ${ACTION_DESCRIPTIONS[demand.requested_action]()}
+      </p>
       ${map(
         demand.answer as Array<LegalBase>,
         lb => html`
@@ -216,21 +228,27 @@ export class StatusViewItem extends LitElement {
 
   transparencyOrgTemplate(demand: PrivacyResponseItem) {
     return html`
-      <b>${ACTION_DESCRIPTIONS[demand.requested_action]()}</b><br />
+      <p>
+        <b>Requested info:</b> ${ACTION_DESCRIPTIONS[demand.requested_action]()}
+      </p>
       ${demand.answer}
     `;
   }
 
   transparencyPolicyTemplate(demand: PrivacyResponseItem) {
     return html`
-      <b>${ACTION_DESCRIPTIONS[demand.requested_action]()}</b><br />
+      <p>
+        <b>Requested info:</b> ${ACTION_DESCRIPTIONS[demand.requested_action]()}
+      </p>
       ${demand.answer}
     `;
   }
 
   transparencyPcTemplate(demand: PrivacyResponseItem) {
     return html`
-      <b>${ACTION_DESCRIPTIONS[demand.requested_action]()}</b><br />
+      <p>
+        <b>Requested info:</b> ${ACTION_DESCRIPTIONS[demand.requested_action]()}
+      </p>
       ${map(
         demand.answer as Array<PROCESSING_CATEGORY>,
         pc => html` ${pc}<br /> `
@@ -245,7 +263,9 @@ export class StatusViewItem extends LitElement {
       'FINANCIAL.BANK-ACCOUNT.selector_3': Provenance[];
     };
     return html`
-      <b>${ACTION_DESCRIPTIONS[demand.requested_action]()}</b><br />
+      <p>
+        <b>Requested info:</b> ${ACTION_DESCRIPTIONS[demand.requested_action]()}
+      </p>
       ${map(
         answer['AFFILIATION.selector_1'],
         prov => html`
@@ -272,7 +292,9 @@ export class StatusViewItem extends LitElement {
 
   transparencyPurposeTemplate(demand: PrivacyResponseItem) {
     return html`
-      <b>${ACTION_DESCRIPTIONS[demand.requested_action]()}</b><br />
+      <p>
+        <b>Requested info:</b> ${ACTION_DESCRIPTIONS[demand.requested_action]()}
+      </p>
       ${map(
         demand.answer as Array<PURPOSE>,
         purpose => html` ${purpose}<br /> `
@@ -288,52 +310,62 @@ export class StatusViewItem extends LitElement {
       AFFILIATION: RetentionPolicy[];
     };
     return html`
-      <b>${ACTION_DESCRIPTIONS[demand.requested_action]()}</b><br />
+      <p>
+        <b>Requested info:</b> ${ACTION_DESCRIPTIONS[demand.requested_action]()}
+      </p>
       ${map(
         answer['AFFILIATION.selector_1'],
-        rp => html`
-          Policy type: ${rp.policy_type}<br />
-          Duration: ${rp.duration}<br />
-          After: ${rp.after}<br /><br />
-        `
+        rp =>
+          html`<p>
+            ${getRetentionPolicyString(
+              DATA_CATEGORY.AFFILIATION,
+              rp.policy_type,
+              rp.duration,
+              rp.after
+            )}
+          </p>`
       )}
       ${map(
         answer['AFFILIATION.MEMBERSHIP.selector_2'],
-        rp => html`
-          Policy type: ${rp.policy_type}<br />
-          Duration: ${rp.duration}<br />
-          After: ${rp.after}<br /><br />
-        `
+        rp =>
+          html`<p>
+            ${getRetentionPolicyString(
+              DATA_CATEGORY['AFFILIATION.MEMBERSHIP'],
+              rp.policy_type,
+              rp.duration,
+              rp.after
+            )}
+          </p>`
       )}
       ${map(
         answer['FINANCIAL.BANK-ACCOUNT.selector_3'],
-        rp => html`
-          Policy type: ${rp.policy_type}<br />
-          Duration: ${rp.duration}<br />
-          After: ${rp.after}<br /><br />
-        `
-      )}
-      ${map(
-        answer.AFFILIATION,
-        rp => html`
-          Policy type: ${rp.policy_type}<br />
-          Duration: ${rp.duration}<br />
-          After: ${rp.after}<br /><br />
-        `
+        rp =>
+          html`<p>
+            ${getRetentionPolicyString(
+              DATA_CATEGORY['FINANCIAL.BANK-ACCOUNT'],
+              rp.policy_type,
+              rp.duration,
+              rp.after
+            )}
+          </p>`
       )}
     `;
   }
 
   transparencyWhereTemplate(demand: PrivacyResponseItem) {
     return html`
-      <b>${ACTION_DESCRIPTIONS[demand.requested_action]()}</b><br />
+      <p>
+        <b>Requested info:</b> ${ACTION_DESCRIPTIONS[demand.requested_action]()}
+      </p>
       ${map(demand.answer as Array<string>, where => html` ${where}<br /> `)}
     `;
   }
 
   transparencyWhoTemplate(demand: PrivacyResponseItem) {
     return html`
-      <b>${ACTION_DESCRIPTIONS[demand.requested_action]()}</b><br />
+      <p>
+        <b>Requested info:</b> ${ACTION_DESCRIPTIONS[demand.requested_action]()}
+      </p>
       ${map(demand.answer as Array<string>, who => html` ${who}<br /> `)}
     `;
   }
