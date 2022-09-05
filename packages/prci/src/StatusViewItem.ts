@@ -338,46 +338,20 @@ export class StatusViewItem extends LitElement {
   }
 
   transparencyRetTemplate(demand: PrivacyResponseItem) {
+    console.log(demand);
     const answer = demand.answer as {
-      'AFFILIATION.selector_1': RetentionPolicy[];
-      'AFFILIATION.MEMBERSHIP.selector_2': RetentionPolicy[];
-      'FINANCIAL.BANK-ACCOUNT.selector_3': RetentionPolicy[];
-      AFFILIATION: RetentionPolicy[];
+      NAME: RetentionPolicy[];
     };
     return html`
       <p>
         <b>Requested info:</b> ${ACTION_DESCRIPTIONS[demand.requested_action]()}
       </p>
       ${map(
-        answer['AFFILIATION.selector_1'],
+        answer.NAME,
         rp =>
           html`<p>
             ${getRetentionPolicyString(
-              DATA_CATEGORY.AFFILIATION,
-              rp.policy_type,
-              rp.duration,
-              rp.after
-            )}
-          </p>`
-      )}
-      ${map(
-        answer['AFFILIATION.MEMBERSHIP.selector_2'],
-        rp =>
-          html`<p>
-            ${getRetentionPolicyString(
-              DATA_CATEGORY['AFFILIATION.MEMBERSHIP'],
-              rp.policy_type,
-              rp.duration,
-              rp.after
-            )}
-          </p>`
-      )}
-      ${map(
-        answer['FINANCIAL.BANK-ACCOUNT.selector_3'],
-        rp =>
-          html`<p>
-            ${getRetentionPolicyString(
-              DATA_CATEGORY['FINANCIAL.BANK-ACCOUNT'],
+              DATA_CATEGORY.NAME,
               rp.policy_type,
               rp.duration,
               rp.after
