@@ -55,7 +55,6 @@ export class StatusViewItem extends LitElement {
 
       .status-type-ctr {
         font-size: 16px;
-        color: white;
       }
 
       .demand-status-ctr span {
