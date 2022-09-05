@@ -9,7 +9,11 @@ import { when } from 'lit/directives/when.js';
 import { PendingDemandResponse } from './models/pending-demand-response.js';
 import { PendingRequestsResponse } from './models/pending-requests-response.js';
 import { DCIStyles } from './styles.js';
-import { approveDemand, getPendingDemand } from './utils/data-consumer-api.js';
+import {
+  approveDemand,
+  denyDemand,
+  getPendingDemand,
+} from './utils/data-consumer-api.js';
 
 enum REQ_ITEM_UI_STATE {
   PENDING_DECISION,
@@ -136,14 +140,16 @@ export class RequestsListItem extends LitElement {
     }
   }
 
-  approveDemand() {
+  handleApproveDemandClick() {
     approveDemand(this.demand.id, this._message).then(() => {
       this._uiState = REQ_ITEM_UI_STATE.APPROVED;
     });
   }
 
-  denyDemand() {
-    this._uiState = REQ_ITEM_UI_STATE.DENIED;
+  handleDenyDemandClick() {
+    denyDemand(this.demand.id, this._message).then(() => {
+      this._uiState = REQ_ITEM_UI_STATE.DENIED;
+    });
   }
 
   handleMessageInput(e: Event) {
@@ -191,14 +197,14 @@ export class RequestsListItem extends LitElement {
                         <button
                           id="approve-btn"
                           class="dmd-btn animated-btn"
-                          @click=${this.approveDemand}
+                          @click=${this.handleApproveDemandClick}
                         >
                           Approve
                         </button>
                         <button
                           id="deny-btn"
                           class="dmd-btn animated-btn"
-                          @click=${this.denyDemand}
+                          @click=${this.handleDenyDemandClick}
                         >
                           Deny
                         </button>
