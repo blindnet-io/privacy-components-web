@@ -95,7 +95,6 @@ export class TransparencyForm extends MultiDemandForm {
 
     // Transparency action listeners
     this.addEventListener('transparency-action-select', e => {
-      console.log('got transparancy select');
       const details = (e as CustomEvent).detail;
       const demand: Demand = {
         action: details.id,
@@ -103,13 +102,10 @@ export class TransparencyForm extends MultiDemandForm {
         restrictions: this.restrictions,
       };
       this.setDemand(demand);
-      console.log(this.demands);
     });
     this.addEventListener('transparency-action-deselect', e => {
-      console.log('got transparancy deselect');
       const { id } = (e as CustomEvent).detail;
       this.deleteDemand(id);
-      console.log(this.demands);
     });
   }
 
