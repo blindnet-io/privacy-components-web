@@ -1,6 +1,6 @@
 import { msg } from '@lit/localize';
 import { css, html, LitElement } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
 import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
@@ -39,7 +39,7 @@ export class StatusViewItem extends LitElement {
 
   @property({ attribute: false }) demands: PrivacyResponseItem[] = [];
 
-  @state() _open: boolean = false;
+  @property({ type: Boolean, reflect: true }) open: boolean = false;
 
   static styles = [
     containerStyles,
@@ -51,6 +51,11 @@ export class StatusViewItem extends LitElement {
         border-radius: 15px;
         border: 2px solid #e6e6e6;
         box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5);
+      }
+
+      .status-type-ctr {
+        font-size: 16px;
+        color: white;
       }
 
       .demand-status-ctr span {
@@ -72,14 +77,66 @@ export class StatusViewItem extends LitElement {
         border-color: #51d214;
       }
 
+      .granted-dmd button {
+        border: 2px solid #51d214;
+      }
+
+      :host([open]) .granted-dmd button {
+        background-color: #51d214;
+      }
+
       .denied-dmd {
         background-color: #f90707;
         border-color: #f90707;
       }
 
+      .denied-dmd button {
+        border: 2px solid #f90707;
+      }
+
+      :host([open]) .denied-dmd button {
+        background-color: #f90707;
+      }
+
       .partially-granted-dmd {
         background-color: #ff7a00;
         border-color: #ff7a00;
+      }
+
+      .partially-granted-dmd button {
+        border: 2px solid #ff7a00;
+      }
+
+      :host([open]) .partially-granted-dmd button {
+        background-color: #ff7a00;
+      }
+
+      :host([open]) .details-btn {
+        color: white;
+      }
+
+      .status-btn {
+        background: none;
+        padding: 10px 40px;
+        justify-self: center;
+        align-self: flex-end;
+        float: right;
+        font-size: 16px;
+        font-weight: bold;
+      }
+
+      .details-btn {
+        background-color: white;
+        color: black;
+      }
+
+      .cancel-btn {
+        border: 2px solid #f90707;
+      }
+
+      .round-bottom {
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
       }
 
       .granted-dmd span {
@@ -106,27 +163,6 @@ export class StatusViewItem extends LitElement {
 
       .action-title {
         justify-self: center;
-      }
-
-      .status-btn {
-        background: none;
-        padding: 10px 20px;
-        justify-self: center;
-        align-self: flex-end;
-        float: right;
-      }
-
-      .access-btn {
-        border: 2px solid #18a0fb;
-      }
-
-      .cancel-btn {
-        border: 2px solid #f90707;
-      }
-
-      .round-bottom {
-        border-bottom-left-radius: 15px;
-        border-bottom-right-radius: 15px;
       }
 
       .dmd-details-ctr {
@@ -373,10 +409,10 @@ export class StatusViewItem extends LitElement {
   render() {
     return html`
       <div
-        class="demand-status-ctr ${this.demand.status.toLocaleLowerCase()}-dmd medium-border"
+        class="demand-status-ctr ${this.demand.status.toLowerCase()}-dmd medium-border"
       >
-        <span class="status-type-ctr">${this.demand.status}</span>
-        <div class="dmd-action-ctr ${this._open ? '' : 'round-bottom'}">
+        <span class="status-type-ctr"><b>${this.demand.status}</b></span>
+        <div class="dmd-action-ctr ${this.open ? '' : 'round-bottom'}">
           <p class="action-title">
             <b
               >${ACTION_TITLES[this.demand.requested_action]()}
@@ -391,12 +427,15 @@ export class StatusViewItem extends LitElement {
             ].includes(this.demand.status),
             () => html`
               <button
-                class="status-btn access-btn curve-btn animated-btn"
+                class="status-btn ${this.demand.status.toLowerCase()}-${this
+                  .open
+                  ? 'open'
+                  : 'closed'}-btn details-btn curve-btn animated-btn"
                 @click=${() => {
-                  this._open = !this._open;
+                  this.open = !this.open;
                 }}
               >
-                ${msg('ACCESS DETAILS')}
+                ${msg('Details')}
               </button>
             `
           )}
@@ -406,16 +445,16 @@ export class StatusViewItem extends LitElement {
               <button
                 class="status-btn cancel-btn curve-btn animated-btn"
                 @click=${() => {
-                  this._open = !this._open;
+                  this.open = !this.open;
                 }}
               >
-                ${msg('CANCEL DEMAND')}
+                ${msg('Cancel Demand')}
               </button>
             `
           )}
         </div>
         ${when(
-          this._open,
+          this.open,
           () => html`
             <div
               id="${this.demand.demand_id}-details-ctr"
