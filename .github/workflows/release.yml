@@ -59,6 +59,15 @@ jobs:
           yarn lerna version --conventional-graduate --force-publish --yes
           yarn lerna publish from-git --yes
 
+      - name: Update develop (from main) 🔀
+        if: github.ref == 'refs/heads/main'
+        # develop is pulled again in case it has been updated after the initial checkout step
+        run: |
+          git checkout origin/develop
+          git pull origin develop
+          git merge main
+          git push origin develop
+
       - name: Publish (beta) 📦
         if: github.ref == 'refs/heads/develop'
         run: |
