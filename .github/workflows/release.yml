@@ -50,6 +50,7 @@ jobs:
         run: |
           git config --global user.name "blindnet bot"
           git config --global user.email "dev@blindnet.io"
+          git remote set-url origin https://github.com/${{ github.repository }}
           echo "//registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN" > .npmrc
 
       - name: Version and publish (main) 📦
