@@ -91,10 +91,47 @@ export const PROVENANCE_DESCRIPTIONS = {
     msg('The data is obtained by transfer from another System'),
 };
 
-// export const DATA_CATEGORY_DESCRIPTIONS = {
-//   'AFFILIATION': () => msg(''),
-//   'BEHAVIOR': () => msg('')
-// }
+export const DATA_CATEGORY_TITLES = {
+  '*': () => msg(''),
+  AFFILIATION: () => msg('affiliation'),
+  'AFFILIATION.MEMBERSHIP': () => msg('affiliation membership'),
+  'AFFILIATION.MEMBERSHIP.UNION': () => msg(''),
+  'AFFILIATION.SCHOOL': () => msg(''),
+  'AFFILIATION.WORKPLACE': () => msg(''),
+  BEHAVIOR: () => msg('behavior'),
+  'BEHAVIOR.ACTIVITY': () => msg(''),
+  'BEHAVIOR.CONNECTION': () => msg(''),
+  'BEHAVIOR.PREFERENCE': () => msg(''),
+  'BEHAVIOR.TELEMETRY': () => msg(''),
+  BIOMETRIC: () => msg('biometric'),
+  CONTACT: () => msg('contact'),
+  'CONTACT.EMAIL': () => msg(''),
+  'CONTACT.ADDRESS': () => msg(''),
+  'CONTACT.PHONE': () => msg(''),
+  DEMOGRAPHIC: () => msg('demographic'),
+  'DEMOGRAPHIC.AGE': () => msg(''),
+  'DEMOGRAPHIC.BELIEFS': () => msg(''),
+  'DEMOGRAPHIC.GENDER': () => msg(''),
+  'DEMOGRAPHIC.ORIGIN': () => msg(''),
+  'DEMOGRAPHIC.RACE': () => msg(''),
+  'DEMOGRAPHIC.SEXUAL-ORIENTATION': () => msg(''),
+  DEVICE: () => msg('device'),
+  FINANCIAL: () => msg('financial'),
+  'FINANCIAL.BANK-ACCOUNT': () => msg('finacial bank account'),
+  GENETIC: () => msg('genetic'),
+  HEALTH: () => msg('health'),
+  IMAGE: () => msg('image'),
+  LOCATION: () => msg('location'),
+  NAME: () => msg('name'),
+  PROFILING: () => msg('profiling'),
+  RELATIONSHIPS: () => msg('relationships'),
+  UID: () => msg('uid'),
+  'UID.ID': () => msg(''),
+  'UID.IP': () => msg(''),
+  'UID.USER-ACCOUNT': () => msg(''),
+  'UID.SOCIAL-MEDIA': () => msg(''),
+  'OTHER-DATA': () => msg('other data'),
+};
 
 export const DATA_CATEGORY_DESCRIPTIONS = {
   '*': () =>
@@ -205,4 +242,25 @@ export const STATUS_DESCRIPTIONS = {
   PARTIALLY_COMPLETED: () => msg(html`Partially completed`),
   COMPLETED: () => msg(html`Completed`),
   CANCELED: () => msg(html`Canceled`),
+};
+
+export const DEMAND_STATUS_DESCRIPTIONS = {
+  GRANTED: () => msg('Granted'),
+  DENIED: () => msg('Denied'),
+  'PARTIALLY-GRANTED': () => msg('Partially Granted'),
+  'UNDER-REVIEW': () => msg('Under Review'),
+  CANCELED: () => msg('Canceled'),
+};
+
+export const POLICY_TYPE_TITLES = {
+  'NO-LONGER-THAN': () => msg('no longer than'),
+  'NO-LESS-THAN': () => msg('no less than'),
+};
+
+export const AFTER_TITLES = {
+  'CAPTURE-DATE': () => msg('capture date'),
+  'RELATIONSHIP-START': () => msg('relationship start'),
+  'RELATIONSHIP-END': () => msg('relationship end'),
+  'SERVICE-START': () => msg('service start'),
+  'SERVICE-END': () => msg('service end'),
 };

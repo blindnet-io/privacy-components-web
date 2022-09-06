@@ -82,6 +82,19 @@ export class SlottedDropdown extends LitElement {
         () => html`
           <button class="header link-btn" @click=${this.handleButtonClick}>
             <span class="medium-font underline">${this.header}</span>
+            ${when(
+              this.dropdownState === FormComponentState.OPEN,
+              () => html`
+                <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24">
+                  <path d="m7.4 15.375-1.4-1.4 6-6 6 6-1.4 1.4-4.6-4.6Z" />
+                </svg>
+              `,
+              () => html`
+                <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24">
+                  <path d="m12 15.375-6-6 1.4-1.4 4.6 4.6 4.6-4.6 1.4 1.4Z" />
+                </svg>
+              `
+            )}
             <simple-icon
               icon="expand-${this.dropdownState === FormComponentState.OPEN
                 ? 'less'
@@ -101,12 +114,31 @@ export class SlottedDropdown extends LitElement {
           this.includeButtons,
           () => html`
             <div class="close-btn-ctr">
-              <simple-icon-button
-                @click=${this.handleButtonClick}
-                icon="expand-${this.dropdownState === FormComponentState.PARTIAL
-                  ? 'more'
-                  : 'less'}"
-              ></simple-icon-button>
+              <button class="svg-btn" @click=${this.handleButtonClick}>
+                ${when(
+                  this.dropdownState === FormComponentState.PARTIAL,
+                  () => html`
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      height="24"
+                      width="24"
+                    >
+                      <path
+                        d="m12 15.375-6-6 1.4-1.4 4.6 4.6 4.6-4.6 1.4 1.4Z"
+                      />
+                    </svg>
+                  `,
+                  () => html`
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      height="24"
+                      width="24"
+                    >
+                      <path d="m7.4 15.375-1.4-1.4 6-6 6 6-1.4 1.4-4.6-4.6Z" />
+                    </svg>
+                  `
+                )}
+              </button>
             </div>
           `
         )}

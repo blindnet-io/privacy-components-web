@@ -2,8 +2,6 @@
 	"imports": {
 		"@lit/localize/": "https://unpkg.com/@lit/localize@~0.11.3/",
 		"@lit/localize": "https://unpkg.com/@lit/localize@~0.11.3/lit-localize.js",
-		"@lrnwebcomponents/simple-icon/": "https://unpkg.com/@lrnwebcomponents/simple-icon@~4.1.0/",
-		"@lrnwebcomponents/simple-icon": "https://unpkg.com/@lrnwebcomponents/simple-icon@~4.1.0/simple-icon.js",
 		"lit/": "https://unpkg.com/lit@~2.2.8/",
 		"lit": "https://unpkg.com/lit@~2.2.8/index.js"
 	},

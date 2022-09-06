@@ -9,7 +9,11 @@ import { when } from 'lit/directives/when.js';
 import { PendingDemandResponse } from './models/pending-demand-response.js';
 import { PendingRequestsResponse } from './models/pending-requests-response.js';
 import { DCIStyles } from './styles.js';
-import { approveDemand, getPendingDemand } from './utils/data-consumer-api.js';
+import {
+  approveDemand,
+  denyDemand,
+  getPendingDemand,
+} from './utils/data-consumer-api.js';
 
 enum REQ_ITEM_UI_STATE {
   PENDING_DECISION,
@@ -45,11 +49,34 @@ export class RequestsListItem extends LitElement {
         align-items: center;
       }
 
-      #dmd-details-ctr {
+      #dmd-response-ctr {
+        display: grid;
+        justify-content: center;
+        padding: 20px;
+        row-gap: 20px;
+      }
+
+      #response-msg-ctr {
+        display: grid;
+        row-gap: 10px;
+      }
+
+      #response-msg-ctr label {
+        display: block;
+        text-align: left;
+      }
+
+      #response-msg {
+        display: block;
+        background: #f8f8fc;
+        border: 1px solid #d9d9d9;
+        border-radius: 8px;
+      }
+
+      #response-btns-ctr {
         display: flex;
         justify-items: center;
         justify-content: center;
-        padding: 20px;
         column-gap: 40px;
       }
 
@@ -70,7 +97,7 @@ export class RequestsListItem extends LitElement {
         border-radius: 10px;
         border-width: 4px;
         background: none;
-        width: 200px;
+        width: 150px;
         text-align: center;
       }
 
@@ -101,6 +128,8 @@ export class RequestsListItem extends LitElement {
 
   @state() _uiState: REQ_ITEM_UI_STATE = REQ_ITEM_UI_STATE.PENDING_DECISION;
 
+  @state() _message: string = '';
+
   protected willUpdate(
     _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
   ): void {
@@ -111,14 +140,21 @@ export class RequestsListItem extends LitElement {
     }
   }
 
-  approveDemand() {
-    approveDemand(this.demand.id, 'Approved').then(() => {
+  handleApproveDemandClick() {
+    approveDemand(this.demand.id, this._message).then(() => {
       this._uiState = REQ_ITEM_UI_STATE.APPROVED;
     });
   }
 
-  denyDemand() {
-    this._uiState = REQ_ITEM_UI_STATE.DENIED;
+  handleDenyDemandClick() {
+    denyDemand(this.demand.id, this._message).then(() => {
+      this._uiState = REQ_ITEM_UI_STATE.DENIED;
+    });
+  }
+
+  handleMessageInput(e: Event) {
+    const { value } = e.target as HTMLTextAreaElement;
+    this._message = value;
   }
 
   render() {
@@ -142,24 +178,37 @@ export class RequestsListItem extends LitElement {
             ${when(
               this._open,
               () => html`
-                <div id="dmd-details-ctr">
+                <div id="dmd-response-ctr">
                   ${when(
                     this._demandDetails,
                     () => html`
-                      <button
-                        id="approve-btn"
-                        class="dmd-btn animated-btn"
-                        @click=${this.approveDemand}
-                      >
-                        Approve
-                      </button>
-                      <button
-                        id="deny-btn"
-                        class="dmd-btn animated-btn"
-                        @click=${this.denyDemand}
-                      >
-                        Deny
-                      </button>
+                      <div id="response-msg-ctr">
+                        <label for="response-msg"
+                          >${msg('Optional Message')}</label
+                        >
+                        <textarea
+                          id="response-msg"
+                          rows="5"
+                          cols="50"
+                          @input=${this.handleMessageInput}
+                        ></textarea>
+                      </div>
+                      <div id="response-btns-ctr">
+                        <button
+                          id="approve-btn"
+                          class="dmd-btn animated-btn"
+                          @click=${this.handleApproveDemandClick}
+                        >
+                          Approve
+                        </button>
+                        <button
+                          id="deny-btn"
+                          class="dmd-btn animated-btn"
+                          @click=${this.handleDenyDemandClick}
+                        >
+                          Deny
+                        </button>
+                      </div>
                     `,
                     () => html` Getting demand details... `
                   )}
