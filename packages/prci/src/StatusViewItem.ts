@@ -10,6 +10,7 @@ import {
   DATA_CATEGORY,
   DEMAND_STATUS,
   PROCESSING_CATEGORY,
+  PROVENANCE,
   PURPOSE,
 } from './models/priv-terms.js';
 import { PrivacyResponseItem } from './models/privacy-response.js';
@@ -292,31 +293,69 @@ export class StatusViewItem extends LitElement {
   }
 
   transparencyProvTemplate(demand: PrivacyResponseItem) {
+    console.log(demand);
     const answer = demand.answer as {
       'AFFILIATION.selector_1': Provenance[];
       'AFFILIATION.MEMBERSHIP.selector_2': Provenance[];
       'FINANCIAL.BANK-ACCOUNT.selector_3': Provenance[];
     };
+    console.log(Object.keys(demand.answer as Object));
+    console.log(Object.entries(demand.answer as Object));
     return html`
       <p>
         <b>Requested info:</b> ${ACTION_DESCRIPTIONS[demand.requested_action]()}
       </p>
+      ${map(Object.entries(demand.answer as Object), ([d, p]) => {
+        const dc = d as DATA_CATEGORY;
+        const provenances = p as Provenance[];
+        return html`
+          ${map(
+            provenances,
+            prov => html`
+              <p>
+                <i>${dc}</i> data:
+                ${choose(prov.provenance, [
+                  [PROVENANCE.ALL, () => msg(html``)],
+                  [
+                    PROVENANCE.USER,
+                    () =>
+                      msg(
+                        html`Provided by a user of the
+                          <i>${prov.system}</i> system`
+                      ),
+                  ],
+                  [
+                    PROVENANCE['USER.DATA-SUBJECT'],
+                    () =>
+                      msg(
+                        html`Provided by you as a user of the
+                          <i>${prov.system}</i> system`
+                      ),
+                  ],
+                  [
+                    PROVENANCE.TRANSFERRED,
+                    () =>
+                      msg(
+                        html`Derived by user actions, extracted from other data,
+                          or inferred by the <i>${prov.system}</i> system`
+                      ),
+                  ],
+                  [
+                    PROVENANCE.DERIVED,
+                    () =>
+                      msg(
+                        html`Obtained by transfer from the
+                          <i>${prov.system}</i> system`
+                      ),
+                  ],
+                ])}
+              </p>
+            `
+          )}
+        `;
+      })}
       ${map(
         answer['AFFILIATION.selector_1'],
-        prov => html`
-          Provenance: ${prov.provenance}<br />
-          System: ${prov.system}<br /><br />
-        `
-      )}
-      ${map(
-        answer['AFFILIATION.MEMBERSHIP.selector_2'],
-        prov => html`
-          Provenance: ${prov.provenance}<br />
-          System: ${prov.system}<br /><br />
-        `
-      )}
-      ${map(
-        answer['FINANCIAL.BANK-ACCOUNT.selector_3'],
         prov => html`
           Provenance: ${prov.provenance}<br />
           System: ${prov.system}<br /><br />

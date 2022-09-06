@@ -80,15 +80,25 @@ export const PROVENANCE_DESCRIPTIONS = {
   '*': () => msg('All provenances'),
   USER: () =>
     msg(
-      'The data is provided by a user of the system (potentially the Data Subject)'
+      'The data provided by a user of the system (potentially the Data Subject)'
     ),
   'USER.DATA-SUBJECT': () => msg('The data is provided by the Data Subject'),
   DERIVED: () =>
     msg(
-      'The data is derived from users actions, extracted from other data or inferred'
+      'The data derived from user actions, extracted from other data or inferred'
     ),
-  TRANSFERRED: () =>
-    msg('The data is obtained by transfer from another System'),
+  TRANSFERRED: () => msg('The data obtained by transfer from another System'),
+};
+
+export const PROVENANCE_DESCRIPTIONS_STATUS_VIEW = {
+  '*': () => msg('All provenances'),
+  USER: () => msg('Provided by a user of the system'),
+  'USER.DATA-SUBJECT': () => msg('Provided by you while using the system'),
+  DERIVED: () =>
+    msg(
+      'Derived from user actions, extracted from other data or inferred by the system'
+    ),
+  TRANSFERRED: () => msg('Obtained by transfer from another system'),
 };
 
 export const DATA_CATEGORY_TITLES = {
@@ -200,19 +210,13 @@ export const DATA_CATEGORY_DESCRIPTIONS = {
       html`<b>RELATIONSHIPS data:</b> Data about relationships I have with
         others, social activity and interaction`
     ),
-  UID: () =>
-    msg(
-      html`<b>Unique Identifier data:</b> Any data allowing to uniquely identify
-        me`
-    ),
+  UID: () => msg(html`<b>UID data:</b> Any data that uniquely identifies me`),
   'UID.ID': () => msg(html``),
   'UID.IP': () => msg(html``),
   'UID.USER-ACCOUNT': () => msg(html``),
   'UID.SOCIAL-MEDIA': () => msg(html``),
   'OTHER-DATA': () =>
-    msg(
-      html`<b>OTHER-DATA:</b> possibility to specify within a message if needed`
-    ),
+    msg(html`<b>OTHER DATA:</b> Any other categories or forms of data`),
 };
 
 export const TARGET_DESCRIPTIONS = {
