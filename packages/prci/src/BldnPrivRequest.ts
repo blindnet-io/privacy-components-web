@@ -340,7 +340,7 @@ export class BldnPrivRequest extends LitElement {
                 .demand=${demand}
                 .demandGroupId=${this._currentDemandGroupId}
                 .allowedDataCategories=${this._config[
-                  'access-allowed-data-categories'
+                  'delete-allowed-data-categories'
                 ]}
               ></delete-form>
             `,
