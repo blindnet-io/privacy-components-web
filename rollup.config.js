@@ -10,6 +10,7 @@ import {
   configFromImportMaps,
   directories,
   clean,
+  importAndOptimizeMetaAssets,
 } from './tasks/rollup-base-config.js';
 
 /**
@@ -78,6 +79,7 @@ async function main(commandLineArgs) {
         ],
         plugins: [
           ...(configKeep ? [] : [clean(basePath)]),
+          importAndOptimizeMetaAssets(),
           typescript({
             compilerOptions: {
               declaration: true,
