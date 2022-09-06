@@ -6,10 +6,10 @@ import { PrivacyResponseItem } from './models/privacy-response.js';
 export declare class StatusViewItem extends LitElement {
     demand: PrivacyResponseItem;
     demands: PrivacyResponseItem[];
-    _open: boolean;
+    open: boolean;
     static styles: import("lit").CSSResult[];
     accessResponseTemplate(demand: PrivacyResponseItem): import("lit").TemplateResult<1>;
-    deleteResponseTemplate(demand: PrivacyResponseItem): import("lit").TemplateResult<1>;
+    deleteResponseTemplate(): import("lit").TemplateResult<1>;
     transparencyResponseTemplate(demand: PrivacyResponseItem): import("lit").TemplateResult<1>;
     transparencyDcTemplate(demand: PrivacyResponseItem): import("lit").TemplateResult<1>;
     transparencyDpoTemplate(demand: PrivacyResponseItem): import("lit").TemplateResult<1>;

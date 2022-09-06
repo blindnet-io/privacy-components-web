@@ -57,6 +57,47 @@ export declare const PROVENANCE_DESCRIPTIONS: {
     DERIVED: () => string;
     TRANSFERRED: () => string;
 };
+export declare const DATA_CATEGORY_TITLES: {
+    '*': () => string;
+    AFFILIATION: () => string;
+    'AFFILIATION.MEMBERSHIP': () => string;
+    'AFFILIATION.MEMBERSHIP.UNION': () => string;
+    'AFFILIATION.SCHOOL': () => string;
+    'AFFILIATION.WORKPLACE': () => string;
+    BEHAVIOR: () => string;
+    'BEHAVIOR.ACTIVITY': () => string;
+    'BEHAVIOR.CONNECTION': () => string;
+    'BEHAVIOR.PREFERENCE': () => string;
+    'BEHAVIOR.TELEMETRY': () => string;
+    BIOMETRIC: () => string;
+    CONTACT: () => string;
+    'CONTACT.EMAIL': () => string;
+    'CONTACT.ADDRESS': () => string;
+    'CONTACT.PHONE': () => string;
+    DEMOGRAPHIC: () => string;
+    'DEMOGRAPHIC.AGE': () => string;
+    'DEMOGRAPHIC.BELIEFS': () => string;
+    'DEMOGRAPHIC.GENDER': () => string;
+    'DEMOGRAPHIC.ORIGIN': () => string;
+    'DEMOGRAPHIC.RACE': () => string;
+    'DEMOGRAPHIC.SEXUAL-ORIENTATION': () => string;
+    DEVICE: () => string;
+    FINANCIAL: () => string;
+    'FINANCIAL.BANK-ACCOUNT': () => string;
+    GENETIC: () => string;
+    HEALTH: () => string;
+    IMAGE: () => string;
+    LOCATION: () => string;
+    NAME: () => string;
+    PROFILING: () => string;
+    RELATIONSHIPS: () => string;
+    UID: () => string;
+    'UID.ID': () => string;
+    'UID.IP': () => string;
+    'UID.USER-ACCOUNT': () => string;
+    'UID.SOCIAL-MEDIA': () => string;
+    'OTHER-DATA': () => string;
+};
 export declare const DATA_CATEGORY_DESCRIPTIONS: {
     '*': () => import("lit").TemplateResult<1 | 2>;
     AFFILIATION: () => import("lit").TemplateResult<1 | 2>;
@@ -111,4 +152,22 @@ export declare const STATUS_DESCRIPTIONS: {
     PARTIALLY_COMPLETED: () => import("lit").TemplateResult<1 | 2>;
     COMPLETED: () => import("lit").TemplateResult<1 | 2>;
     CANCELED: () => import("lit").TemplateResult<1 | 2>;
+};
+export declare const DEMAND_STATUS_DESCRIPTIONS: {
+    GRANTED: () => string;
+    DENIED: () => string;
+    'PARTIALLY-GRANTED': () => string;
+    'UNDER-REVIEW': () => string;
+    CANCELED: () => string;
+};
+export declare const POLICY_TYPE_TITLES: {
+    'NO-LONGER-THAN': () => string;
+    'NO-LESS-THAN': () => string;
+};
+export declare const AFTER_TITLES: {
+    'CAPTURE-DATE': () => string;
+    'RELATIONSHIP-START': () => string;
+    'RELATIONSHIP-END': () => string;
+    'SERVICE-START': () => string;
+    'SERVICE-END': () => string;
 };

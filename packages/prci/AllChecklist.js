@@ -2,6 +2,7 @@ import { __decorate } from './node_modules/tslib/tslib.es6.js';
 import { msg } from '@lit/localize';
 import { css, LitElement, html } from 'lit';
 import { property, state, customElement } from 'lit/decorators.js';
+import { choose } from 'lit/directives/choose.js';
 import { when } from 'lit/directives/when.js';
 import { containerStyles, textStyles, buttonStyles } from './styles.js';
 import { FormComponentState } from './utils/states.js';
@@ -211,7 +212,72 @@ let AllChecklist = class AllChecklist extends LitElement {
                 @click=${this.handleChoiceClick}
                 ?checked=${this.allChecked}
               />
-              <label for="all-checkbox"></label>
+              <label for="all-checkbox">
+                ${choose(this.selectionState, [
+            [
+                SelectionState.NONE,
+                () => html `
+                      <svg
+                        width="13"
+                        height="13"
+                        viewBox="0 0 13 13"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          x="0.5"
+                          y="0.5"
+                          width="12"
+                          height="12"
+                          rx="1.5"
+                          stroke="#414040"
+                        />
+                      </svg>
+                    `,
+            ],
+            [
+                SelectionState.SOME,
+                () => html `
+                      <svg
+                        width="13"
+                        height="13"
+                        viewBox="0 0 13 13"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect width="13" height="13" rx="2" fill="#377CFD" />
+                        <line
+                          x1="2.5"
+                          y1="6.5"
+                          x2="10.5"
+                          y2="6.5"
+                          stroke="white"
+                          stroke-width="2"
+                        />
+                      </svg>
+                    `,
+            ],
+            [
+                SelectionState.ALL,
+                () => html `
+                      <svg
+                        width="13"
+                        height="13"
+                        viewBox="0 0 13 13"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect width="13" height="13" rx="2" fill="#377CFD" />
+                        <path
+                          d="M4.875 8.75876L2.61625 6.50001L1.84708 7.26376L4.875 10.2917L11.375 3.79167L10.6113 3.02792L4.875 8.75876Z"
+                          fill="white"
+                          stroke="white"
+                        />
+                      </svg>
+                    `,
+            ],
+        ])}
+              </label>
               <span class="all-prefix">${this.allMessage}</span>
             </div>
           `)}
@@ -249,13 +315,17 @@ let AllChecklist = class AllChecklist extends LitElement {
       </div>
       <!-- Optionally include a close button -->
       ${when(this.includeButtons, () => html `
-          <simple-icon-button
-            @click=${this.handleButtonClick}
-            icon="expand-${this.componentMode === FormComponentState.OPEN
-            ? 'less'
-            : 'more'}"
-          >
-          </simple-icon-button>
+          <button class="svg-btn" @click=${this.handleButtonClick}>
+            ${when(this.componentMode === FormComponentState.OPEN, () => html `
+                <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24">
+                  <path d="m7.4 15.375-1.4-1.4 6-6 6 6-1.4 1.4-4.6-4.6Z" />
+                </svg>
+              `, () => html `
+                <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24">
+                  <path d="m12 15.375-6-6 1.4-1.4 4.6 4.6 4.6-4.6 1.4 1.4Z" />
+                </svg>
+              `)}
+          </button>
         `)}
     `;
     }
@@ -275,14 +345,10 @@ AllChecklist.styles = [
 
       :host([selection-state='0']) #all-checkbox:checked + label {
         opacity: 1;
-        background: url('http://localhost:8000/__wds-outside-root__/2/packages/prci/dist/assets/icons/all-checkbox-checked.svg')
-          no-repeat;
       }
 
       :host([selection-state='1']) #all-checkbox + label {
         opacity: 1;
-        background: url('http://localhost:8000/__wds-outside-root__/2/packages/prci/dist/assets/icons/all-checkbox-dash.svg')
-          no-repeat;
       }
 
       :host([selection-state='2']) .choice-checkbox {
@@ -316,8 +382,6 @@ AllChecklist.styles = [
       }
 
       #all-checkbox + label {
-        background: url('http://localhost:8000/__wds-outside-root__/2/packages/prci/dist/assets/icons/all-checkbox-unchecked.svg')
-          no-repeat;
         height: 13px;
         width: 13px;
         display: inline-block;

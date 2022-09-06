@@ -147,7 +147,7 @@ StatusView.styles = [
       :host {
         display: grid;
         row-gap: 40px;
-        max-width: 600px;
+        max-width: 900px;
         text-align: center;
         margin: auto;
       }

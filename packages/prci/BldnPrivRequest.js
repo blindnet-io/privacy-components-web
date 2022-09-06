@@ -4,9 +4,6 @@ import { property, state, customElement } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
 import { map } from 'lit/directives/map.js';
 import { localized, msg } from '@lit/localize';
-import '@lrnwebcomponents/simple-icon/lib/simple-icons.js';
-import '@lrnwebcomponents/simple-icon/simple-icon.js';
-import '@lrnwebcomponents/simple-icon/lib/simple-icon-button.js';
 import './FrequentRequestsMenu.js';
 import './ReviewView.js';
 import './ActionMenu.js';
@@ -109,8 +106,6 @@ let BldnPrivRequest = class BldnPrivRequest extends LitElement {
                 return d;
             });
             sendPrivacyRequest(this._privacyRequest, false).then(response => {
-                // eslint-disable-next-line no-console
-                console.log(response);
                 this.dispatchEvent(new CustomEvent('component-state-change', {
                     detail: {
                         newState: ComponentState.STATUS,
@@ -364,6 +359,7 @@ BldnPrivRequest.styles = [
 
       #heading-ctr {
         padding: 0px 0px 40px 0px;
+        max-width: 1170px;
       }
 
       .req-hdr {

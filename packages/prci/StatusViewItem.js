@@ -1,13 +1,14 @@
 import { __decorate } from './node_modules/tslib/tslib.es6.js';
 import { msg } from '@lit/localize';
 import { css, LitElement, html } from 'lit';
-import { property, state, customElement } from 'lit/decorators.js';
+import { property, customElement } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
 import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
-import { ACTION, DEMAND_STATUS } from './models/priv-terms.js';
+import { ACTION, DEMAND_STATUS, DATA_CATEGORY } from './models/priv-terms.js';
 import { containerStyles, buttonStyles } from './styles.js';
-import { ACTION_DESCRIPTIONS, ACTION_TITLES } from './utils/dictionary.js';
+import { ACTION_DESCRIPTIONS, ACTION_TITLES, DEMAND_STATUS_DESCRIPTIONS } from './utils/dictionary.js';
+import { getRetentionPolicyString } from './utils/utils.js';
 
 /**
  * Status for a single demand in a Privacy Request
@@ -24,108 +25,65 @@ let StatusViewItem = class StatusViewItem extends LitElement {
             system: '',
         };
         this.demands = [];
-        this._open = false;
+        this.open = false;
     }
     accessResponseTemplate(demand) {
         return html `
-      ${choose(demand.status, [
-            [
-                DEMAND_STATUS.GRANTED,
-                () => {
-                    if (demand.data) {
-                        return html `
-                <div>
-                  ${msg(
-                        // NOTE: For now, we assume demand.data is a JSON file
-                        html `Click <a href="${demand.data}.json">here</a> to
-                      download your data.`)}
-                </div>
-              `;
-                    }
-                    return html `${msg('Obtaining data, please wait and refresh the page later.')}`;
-                },
-            ],
-            [
-                DEMAND_STATUS.DENIED,
-                () => html `Your ${demand.requested_action.toLocaleLowerCase()} demand has
-            been denied.`,
-            ],
-            [
-                DEMAND_STATUS.CANCELED,
-                () => html `Your ${demand.requested_action.toLocaleLowerCase()} demand has
-            been cancelled`,
-            ],
-            [
-                DEMAND_STATUS['PARTIALLY-GRANTED'],
-                () => html `Your ${demand.requested_action.toLocaleLowerCase()} demand has
-            been partially granted.`,
-            ],
-            [
-                DEMAND_STATUS['UNDER-REVIEW'],
-                () => html `Your ${demand.requested_action.toLocaleLowerCase()} demand is
-            under review.`,
-            ],
-        ])}
+      ${when([DEMAND_STATUS.GRANTED, DEMAND_STATUS['PARTIALLY-GRANTED']].includes(demand.status), () => {
+            if (demand.data) {
+                return html `
+              <div>
+                ${msg(
+                // NOTE: For now, we assume demand.data is a JSON file
+                html `Click <a href="${demand.data}.json">here</a> to download
+                    your data.`)}
+              </div>
+            `;
+            }
+            return html `${msg('Obtaining data, please wait and refresh the page later.')}`;
+        })}
     `;
     }
-    deleteResponseTemplate(demand) {
-        return html `
-      ${choose(demand.status, [
-            [
-                DEMAND_STATUS.GRANTED,
-                () => html `Your ${demand.requested_action.toLocaleLowerCase()} demand has
-            been granted.`,
-            ],
-            [
-                DEMAND_STATUS.DENIED,
-                () => html `Your ${demand.requested_action.toLocaleLowerCase()} demand has
-            been denied.`,
-            ],
-            [
-                DEMAND_STATUS.CANCELED,
-                () => html `Your ${demand.requested_action.toLocaleLowerCase()} demand has
-            been cancelled`,
-            ],
-            [
-                DEMAND_STATUS['PARTIALLY-GRANTED'],
-                () => html `Your ${demand.requested_action.toLocaleLowerCase()} demand has
-            been partially granted.`,
-            ],
-            [
-                DEMAND_STATUS['UNDER-REVIEW'],
-                () => html `Your ${demand.requested_action.toLocaleLowerCase()} demand is
-            under review.`,
-            ],
-        ])}
-    `;
+    deleteResponseTemplate() {
+        return html ``;
     }
     transparencyResponseTemplate(demand) {
         return html `
-      <b>${ACTION_DESCRIPTIONS[demand.requested_action]()}</b><br />
+      <p>
+        <b>Requested info:</b> ${ACTION_DESCRIPTIONS[demand.requested_action]()}
+      </p>
       ${demand.answer}
     `;
     }
     transparencyDcTemplate(demand) {
         return html `
-      <b>${ACTION_DESCRIPTIONS[demand.requested_action]()}</b><br />
+      <p>
+        <b>Requested info:</b> ${ACTION_DESCRIPTIONS[demand.requested_action]()}
+      </p>
       ${map(demand.answer, dc => html ` ${dc}<br /> `)}
     `;
     }
     transparencyDpoTemplate(demand) {
         return html `
-      <b>${ACTION_DESCRIPTIONS[demand.requested_action]()}</b><br />
+      <p>
+        <b>Requested info:</b> ${ACTION_DESCRIPTIONS[demand.requested_action]()}
+      </p>
       ${demand.answer}
     `;
     }
     transparencyKnownTemplate(demand) {
         return html `
-      <b>${ACTION_DESCRIPTIONS[demand.requested_action]()}</b><br />
+      <p>
+        <b>Requested info:</b> ${ACTION_DESCRIPTIONS[demand.requested_action]()}
+      </p>
       ${demand.answer}
     `;
     }
     transparencyLbTemplate(demand) {
         return html `
-      <b>${ACTION_DESCRIPTIONS[demand.requested_action]()}</b><br />
+      <p>
+        <b>Requested info:</b> ${ACTION_DESCRIPTIONS[demand.requested_action]()}
+      </p>
       ${map(demand.answer, lb => html `
           Type: ${lb.lb_type}<br />
           Name: ${lb.name}<br />
@@ -135,26 +93,34 @@ let StatusViewItem = class StatusViewItem extends LitElement {
     }
     transparencyOrgTemplate(demand) {
         return html `
-      <b>${ACTION_DESCRIPTIONS[demand.requested_action]()}</b><br />
+      <p>
+        <b>Requested info:</b> ${ACTION_DESCRIPTIONS[demand.requested_action]()}
+      </p>
       ${demand.answer}
     `;
     }
     transparencyPolicyTemplate(demand) {
         return html `
-      <b>${ACTION_DESCRIPTIONS[demand.requested_action]()}</b><br />
+      <p>
+        <b>Requested info:</b> ${ACTION_DESCRIPTIONS[demand.requested_action]()}
+      </p>
       ${demand.answer}
     `;
     }
     transparencyPcTemplate(demand) {
         return html `
-      <b>${ACTION_DESCRIPTIONS[demand.requested_action]()}</b><br />
+      <p>
+        <b>Requested info:</b> ${ACTION_DESCRIPTIONS[demand.requested_action]()}
+      </p>
       ${map(demand.answer, pc => html ` ${pc}<br /> `)}
     `;
     }
     transparencyProvTemplate(demand) {
         const answer = demand.answer;
         return html `
-      <b>${ACTION_DESCRIPTIONS[demand.requested_action]()}</b><br />
+      <p>
+        <b>Requested info:</b> ${ACTION_DESCRIPTIONS[demand.requested_action]()}
+      </p>
       ${map(answer['AFFILIATION.selector_1'], prov => html `
           Provenance: ${prov.provenance}<br />
           System: ${prov.system}<br /><br />
@@ -171,55 +137,47 @@ let StatusViewItem = class StatusViewItem extends LitElement {
     }
     transparencyPurposeTemplate(demand) {
         return html `
-      <b>${ACTION_DESCRIPTIONS[demand.requested_action]()}</b><br />
+      <p>
+        <b>Requested info:</b> ${ACTION_DESCRIPTIONS[demand.requested_action]()}
+      </p>
       ${map(demand.answer, purpose => html ` ${purpose}<br /> `)}
     `;
     }
     transparencyRetTemplate(demand) {
+        console.log(demand);
         const answer = demand.answer;
         return html `
-      <b>${ACTION_DESCRIPTIONS[demand.requested_action]()}</b><br />
-      ${map(answer['AFFILIATION.selector_1'], rp => html `
-          Policy type: ${rp.policy_type}<br />
-          Duration: ${rp.duration}<br />
-          After: ${rp.after}<br /><br />
-        `)}
-      ${map(answer['AFFILIATION.MEMBERSHIP.selector_2'], rp => html `
-          Policy type: ${rp.policy_type}<br />
-          Duration: ${rp.duration}<br />
-          After: ${rp.after}<br /><br />
-        `)}
-      ${map(answer['FINANCIAL.BANK-ACCOUNT.selector_3'], rp => html `
-          Policy type: ${rp.policy_type}<br />
-          Duration: ${rp.duration}<br />
-          After: ${rp.after}<br /><br />
-        `)}
-      ${map(answer.AFFILIATION, rp => html `
-          Policy type: ${rp.policy_type}<br />
-          Duration: ${rp.duration}<br />
-          After: ${rp.after}<br /><br />
-        `)}
+      <p>
+        <b>Requested info:</b> ${ACTION_DESCRIPTIONS[demand.requested_action]()}
+      </p>
+      ${map(answer.NAME, rp => html `<p>
+            ${getRetentionPolicyString(DATA_CATEGORY.NAME, rp.policy_type, rp.duration, rp.after)}
+          </p>`)}
     `;
     }
     transparencyWhereTemplate(demand) {
         return html `
-      <b>${ACTION_DESCRIPTIONS[demand.requested_action]()}</b><br />
+      <p>
+        <b>Requested info:</b> ${ACTION_DESCRIPTIONS[demand.requested_action]()}
+      </p>
       ${map(demand.answer, where => html ` ${where}<br /> `)}
     `;
     }
     transparencyWhoTemplate(demand) {
         return html `
-      <b>${ACTION_DESCRIPTIONS[demand.requested_action]()}</b><br />
+      <p>
+        <b>Requested info:</b> ${ACTION_DESCRIPTIONS[demand.requested_action]()}
+      </p>
       ${map(demand.answer, who => html ` ${who}<br /> `)}
     `;
     }
     render() {
         return html `
       <div
-        class="demand-status-ctr ${this.demand.status.toLocaleLowerCase()}-dmd medium-border"
+        class="demand-status-ctr ${this.demand.status.toLowerCase()}-dmd medium-border"
       >
-        <span class="status-type-ctr">${this.demand.status}</span>
-        <div class="dmd-action-ctr ${this._open ? '' : 'round-bottom'}">
+        <span class="status-type-ctr"><b>${this.demand.status}</b></span>
+        <div class="dmd-action-ctr ${this.open ? '' : 'round-bottom'}">
           <p class="action-title">
             <b
               >${ACTION_TITLES[this.demand.requested_action]()}
@@ -232,39 +190,39 @@ let StatusViewItem = class StatusViewItem extends LitElement {
             DEMAND_STATUS.DENIED,
         ].includes(this.demand.status), () => html `
               <button
-                class="status-btn access-btn curve-btn animated-btn"
+                class="status-btn ${this.demand.status.toLowerCase()}-${this
+            .open
+            ? 'open'
+            : 'closed'}-btn details-btn curve-btn animated-btn"
                 @click=${() => {
-            this._open = !this._open;
+            this.open = !this.open;
         }}
               >
-                ${msg('ACCESS DETAILS')}
+                ${msg('Details')}
               </button>
             `)}
           ${when(this.demand.status === DEMAND_STATUS['UNDER-REVIEW'], () => html `
               <button
                 class="status-btn cancel-btn curve-btn animated-btn"
                 @click=${() => {
-            this._open = !this._open;
+            this.open = !this.open;
         }}
               >
-                ${msg('CANCEL DEMAND')}
+                ${msg('Cancel Demand')}
               </button>
             `)}
         </div>
-        ${when(this._open, () => html `
+        ${when(this.open, () => html `
             <div
               id="${this.demand.demand_id}-details-ctr"
               class="dmd-details-ctr round-bottom"
             >
+              <b
+                >Your demand has been
+                ${DEMAND_STATUS_DESCRIPTIONS[this.demand.status]().toLocaleLowerCase()}.</b
+              >
               ${choose(this.demand.requested_action, [
-            [
-                ACTION.ACCESS,
-                () => this.accessResponseTemplate(this.demand),
-            ],
-            [
-                ACTION.DELETE,
-                () => this.deleteResponseTemplate(this.demand),
-            ],
+            [ACTION.ACCESS, () => this.accessResponseTemplate(this.demand)],
             [
                 ACTION.TRANSPARENCY,
                 () => this.transparencyResponseTemplate(this.demand),
@@ -317,7 +275,11 @@ let StatusViewItem = class StatusViewItem extends LitElement {
                 ACTION['TRANSPARENCY.WHO'],
                 () => this.transparencyWhoTemplate(this.demand),
             ],
-        ], () => this.transparencyResponseTemplate(this.demand))}
+        ])}
+              ${when(this.demand.message, () => html `
+                  <p>Included message:</p>
+                  <i>${this.demand.message}</i>
+                `)}
             </div>
           `)}
       </div>
@@ -334,6 +296,10 @@ StatusViewItem.styles = [
         border-radius: 15px;
         border: 2px solid #e6e6e6;
         box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5);
+      }
+
+      .status-type-ctr {
+        font-size: 16px;
       }
 
       .demand-status-ctr span {
@@ -355,14 +321,66 @@ StatusViewItem.styles = [
         border-color: #51d214;
       }
 
+      .granted-dmd button {
+        border: 2px solid #51d214;
+      }
+
+      :host([open]) .granted-dmd button {
+        background-color: #51d214;
+      }
+
       .denied-dmd {
         background-color: #f90707;
         border-color: #f90707;
       }
 
+      .denied-dmd button {
+        border: 2px solid #f90707;
+      }
+
+      :host([open]) .denied-dmd button {
+        background-color: #f90707;
+      }
+
       .partially-granted-dmd {
         background-color: #ff7a00;
         border-color: #ff7a00;
+      }
+
+      .partially-granted-dmd button {
+        border: 2px solid #ff7a00;
+      }
+
+      :host([open]) .partially-granted-dmd button {
+        background-color: #ff7a00;
+      }
+
+      :host([open]) .details-btn {
+        color: white;
+      }
+
+      .status-btn {
+        background: none;
+        padding: 10px 40px;
+        justify-self: center;
+        align-self: flex-end;
+        float: right;
+        font-size: 16px;
+        font-weight: bold;
+      }
+
+      .details-btn {
+        background-color: white;
+        color: black;
+      }
+
+      .cancel-btn {
+        border: 2px solid #f90707;
+      }
+
+      .round-bottom {
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
       }
 
       .granted-dmd span {
@@ -391,30 +409,10 @@ StatusViewItem.styles = [
         justify-self: center;
       }
 
-      .status-btn {
-        background: none;
-        padding: 10px 20px;
-        justify-self: center;
-        align-self: flex-end;
-        float: right;
-      }
-
-      .access-btn {
-        border: 2px solid #18a0fb;
-      }
-
-      .cancel-btn {
-        border: 2px solid #f90707;
-      }
-
-      .round-bottom {
-        border-bottom-left-radius: 15px;
-        border-bottom-right-radius: 15px;
-      }
-
       .dmd-details-ctr {
         display: grid;
         background-color: white;
+        row-gap: 20px;
         /* height: 100px; */
         padding: 10px 20px 30px 20px;
       }
@@ -432,8 +430,8 @@ __decorate([
     property({ attribute: false })
 ], StatusViewItem.prototype, "demands", void 0);
 __decorate([
-    state()
-], StatusViewItem.prototype, "_open", void 0);
+    property({ type: Boolean, reflect: true })
+], StatusViewItem.prototype, "open", void 0);
 StatusViewItem = __decorate([
     customElement('status-view-item')
 ], StatusViewItem);

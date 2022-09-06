@@ -15,9 +15,11 @@ export declare class RequestsListItem extends LitElement {
     _open: boolean;
     _demandDetails: PendingDemandResponse | undefined;
     _uiState: REQ_ITEM_UI_STATE;
+    _message: string;
     protected willUpdate(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void;
-    approveDemand(): void;
-    denyDemand(): void;
+    handleApproveDemandClick(): void;
+    handleDenyDemandClick(): void;
+    handleMessageInput(e: Event): void;
     render(): import("lit-html").TemplateResult<1>;
 }
 export {};

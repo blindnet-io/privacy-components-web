@@ -60,10 +60,47 @@ const PROVENANCE_DESCRIPTIONS = {
     DERIVED: () => msg('The data is derived from users actions, extracted from other data or inferred'),
     TRANSFERRED: () => msg('The data is obtained by transfer from another System'),
 };
-// export const DATA_CATEGORY_DESCRIPTIONS = {
-//   'AFFILIATION': () => msg(''),
-//   'BEHAVIOR': () => msg('')
-// }
+const DATA_CATEGORY_TITLES = {
+    '*': () => msg(''),
+    AFFILIATION: () => msg('affiliation'),
+    'AFFILIATION.MEMBERSHIP': () => msg('affiliation membership'),
+    'AFFILIATION.MEMBERSHIP.UNION': () => msg(''),
+    'AFFILIATION.SCHOOL': () => msg(''),
+    'AFFILIATION.WORKPLACE': () => msg(''),
+    BEHAVIOR: () => msg('behavior'),
+    'BEHAVIOR.ACTIVITY': () => msg(''),
+    'BEHAVIOR.CONNECTION': () => msg(''),
+    'BEHAVIOR.PREFERENCE': () => msg(''),
+    'BEHAVIOR.TELEMETRY': () => msg(''),
+    BIOMETRIC: () => msg('biometric'),
+    CONTACT: () => msg('contact'),
+    'CONTACT.EMAIL': () => msg(''),
+    'CONTACT.ADDRESS': () => msg(''),
+    'CONTACT.PHONE': () => msg(''),
+    DEMOGRAPHIC: () => msg('demographic'),
+    'DEMOGRAPHIC.AGE': () => msg(''),
+    'DEMOGRAPHIC.BELIEFS': () => msg(''),
+    'DEMOGRAPHIC.GENDER': () => msg(''),
+    'DEMOGRAPHIC.ORIGIN': () => msg(''),
+    'DEMOGRAPHIC.RACE': () => msg(''),
+    'DEMOGRAPHIC.SEXUAL-ORIENTATION': () => msg(''),
+    DEVICE: () => msg('device'),
+    FINANCIAL: () => msg('financial'),
+    'FINANCIAL.BANK-ACCOUNT': () => msg('finacial bank account'),
+    GENETIC: () => msg('genetic'),
+    HEALTH: () => msg('health'),
+    IMAGE: () => msg('image'),
+    LOCATION: () => msg('location'),
+    NAME: () => msg('name'),
+    PROFILING: () => msg('profiling'),
+    RELATIONSHIPS: () => msg('relationships'),
+    UID: () => msg('uid'),
+    'UID.ID': () => msg(''),
+    'UID.IP': () => msg(''),
+    'UID.USER-ACCOUNT': () => msg(''),
+    'UID.SOCIAL-MEDIA': () => msg(''),
+    'OTHER-DATA': () => msg('other data'),
+};
 const DATA_CATEGORY_DESCRIPTIONS = {
     '*': () => msg(html `<b
         >ALL information related to data processing practices and know if the
@@ -132,6 +169,24 @@ const STATUS_DESCRIPTIONS = {
     COMPLETED: () => msg(html `Completed`),
     CANCELED: () => msg(html `Canceled`),
 };
+const DEMAND_STATUS_DESCRIPTIONS = {
+    GRANTED: () => msg('Granted'),
+    DENIED: () => msg('Denied'),
+    'PARTIALLY-GRANTED': () => msg('Partially Granted'),
+    'UNDER-REVIEW': () => msg('Under Review'),
+    CANCELED: () => msg('Canceled'),
+};
+const POLICY_TYPE_TITLES = {
+    'NO-LONGER-THAN': () => msg('no longer than'),
+    'NO-LESS-THAN': () => msg('no less than'),
+};
+const AFTER_TITLES = {
+    'CAPTURE-DATE': () => msg('capture date'),
+    'RELATIONSHIP-START': () => msg('relationship start'),
+    'RELATIONSHIP-END': () => msg('relationship end'),
+    'SERVICE-START': () => msg('service start'),
+    'SERVICE-END': () => msg('service end'),
+};
 
-export { ACTION_DESCRIPTIONS, ACTION_TITLES, DATA_CATEGORY_DESCRIPTIONS, PROVENANCE_DESCRIPTIONS, STATUS_DESCRIPTIONS, TARGET_DESCRIPTIONS };
+export { ACTION_DESCRIPTIONS, ACTION_TITLES, AFTER_TITLES, DATA_CATEGORY_DESCRIPTIONS, DATA_CATEGORY_TITLES, DEMAND_STATUS_DESCRIPTIONS, POLICY_TYPE_TITLES, PROVENANCE_DESCRIPTIONS, STATUS_DESCRIPTIONS, TARGET_DESCRIPTIONS };
 //# sourceMappingURL=dictionary.js.map

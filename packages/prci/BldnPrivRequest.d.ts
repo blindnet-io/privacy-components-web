@@ -1,7 +1,4 @@
 import { LitElement, PropertyValueMap, TemplateResult } from 'lit';
-import '@lrnwebcomponents/simple-icon/lib/simple-icons.js';
-import '@lrnwebcomponents/simple-icon/simple-icon.js';
-import '@lrnwebcomponents/simple-icon/lib/simple-icon-button.js';
 import './FrequentRequestsMenu.js';
 import './ResponseView.js';
 import './ReviewView.js';
