@@ -10,6 +10,7 @@ import {
   PURPOSE,
   TARGET,
 } from '../models/priv-terms.js';
+import { PRCI_CONFIG } from './conf.js';
 import {
   AFTER_TITLES,
   DATA_CATEGORY_TITLES,
@@ -26,7 +27,7 @@ export function getDefaultDemand(action: ACTION): Demand {
       return {
         action,
         restrictions: {
-          privacy_scope: Object.values(DATA_CATEGORY)
+          privacy_scope: PRCI_CONFIG['access-allowed-data-categories']
             .filter(dc => !dc.includes('.') && !dc.includes('*'))
             .map(dc => ({
               dc,
@@ -45,7 +46,7 @@ export function getDefaultDemand(action: ACTION): Demand {
       return {
         action,
         restrictions: {
-          privacy_scope: Object.values(DATA_CATEGORY)
+          privacy_scope: PRCI_CONFIG['delete-allowed-data-categories']
             .filter(dc => !dc.includes('.') && !dc.includes('*'))
             .map(dc => ({
               dc,
