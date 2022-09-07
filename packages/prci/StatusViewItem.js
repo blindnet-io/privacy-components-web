@@ -5,7 +5,7 @@ import { property, customElement } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
 import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
-import { ACTION, DEMAND_STATUS, DATA_CATEGORY } from './models/priv-terms.js';
+import { ACTION, DEMAND_STATUS, PROVENANCE, DATA_CATEGORY } from './models/priv-terms.js';
 import { containerStyles, buttonStyles } from './styles.js';
 import { ACTION_DESCRIPTIONS, ACTION_TITLES, DEMAND_STATUS_DESCRIPTIONS } from './utils/dictionary.js';
 import { getRetentionPolicyString } from './utils/utils.js';
@@ -116,20 +116,49 @@ let StatusViewItem = class StatusViewItem extends LitElement {
     `;
     }
     transparencyProvTemplate(demand) {
+        console.log(demand);
         const answer = demand.answer;
+        console.log(Object.keys(demand.answer));
+        console.log(Object.entries(demand.answer));
         return html `
       <p>
         <b>Requested info:</b> ${ACTION_DESCRIPTIONS[demand.requested_action]()}
       </p>
+      ${map(Object.entries(demand.answer), ([d, p]) => {
+            const dc = d;
+            const provenances = p;
+            return html `
+          ${map(provenances, prov => html `
+              <p>
+                <i>${dc}</i> data:
+                ${choose(prov.provenance, [
+                [PROVENANCE.ALL, () => msg(html ``)],
+                [
+                    PROVENANCE.USER,
+                    () => msg(html `Provided by a user of the
+                          <i>${prov.system}</i> system`),
+                ],
+                [
+                    PROVENANCE['USER.DATA-SUBJECT'],
+                    () => msg(html `Provided by you as a user of the
+                          <i>${prov.system}</i> system`),
+                ],
+                [
+                    PROVENANCE.TRANSFERRED,
+                    () => msg(html `Derived by user actions, extracted from other data,
+                          or inferred by the <i>${prov.system}</i> system`),
+                ],
+                [
+                    PROVENANCE.DERIVED,
+                    () => msg(html `Obtained by transfer from the
+                          <i>${prov.system}</i> system`),
+                ],
+            ])}
+              </p>
+            `)}
+        `;
+        })}
       ${map(answer['AFFILIATION.selector_1'], prov => html `
-          Provenance: ${prov.provenance}<br />
-          System: ${prov.system}<br /><br />
-        `)}
-      ${map(answer['AFFILIATION.MEMBERSHIP.selector_2'], prov => html `
-          Provenance: ${prov.provenance}<br />
-          System: ${prov.system}<br /><br />
-        `)}
-      ${map(answer['FINANCIAL.BANK-ACCOUNT.selector_3'], prov => html `
           Provenance: ${prov.provenance}<br />
           System: ${prov.system}<br /><br />
         `)}

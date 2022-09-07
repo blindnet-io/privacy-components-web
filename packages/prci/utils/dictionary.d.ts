@@ -57,6 +57,13 @@ export declare const PROVENANCE_DESCRIPTIONS: {
     DERIVED: () => string;
     TRANSFERRED: () => string;
 };
+export declare const PROVENANCE_DESCRIPTIONS_STATUS_VIEW: {
+    '*': () => string;
+    USER: () => string;
+    'USER.DATA-SUBJECT': () => string;
+    DERIVED: () => string;
+    TRANSFERRED: () => string;
+};
 export declare const DATA_CATEGORY_TITLES: {
     '*': () => string;
     AFFILIATION: () => string;

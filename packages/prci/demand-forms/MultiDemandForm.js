@@ -79,7 +79,7 @@ class MultiDemandForm extends LitElement {
           class="nav-btn ctr-btn animated-btn"
           @click=${this.handleAddClick}
         >
-          ${msg('Add demand to Privacy Request')}
+          ${msg('Next')}
         </button>
       </div>
     `;
@@ -102,14 +102,14 @@ MultiDemandForm.styles = [
 
       #back-btn {
         grid-column: 1/2;
-        min-width: 80%;
-        max-width: 375px;
+        min-width: 60%;
+        max-width: 300px;
       }
 
       #add-btn {
         grid-column: 3/4;
-        min-width: 80%;
-        max-width: 375px;
+        min-width: 60%;
+        max-width: 300px;
       }
     `,
 ];

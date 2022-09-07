@@ -55,10 +55,17 @@ const ACTION_DESCRIPTIONS = {
 };
 const PROVENANCE_DESCRIPTIONS = {
     '*': () => msg('All provenances'),
-    USER: () => msg('The data is provided by a user of the system (potentially the Data Subject)'),
+    USER: () => msg('The data provided by a user of the system (potentially the Data Subject)'),
     'USER.DATA-SUBJECT': () => msg('The data is provided by the Data Subject'),
-    DERIVED: () => msg('The data is derived from users actions, extracted from other data or inferred'),
-    TRANSFERRED: () => msg('The data is obtained by transfer from another System'),
+    DERIVED: () => msg('The data derived from user actions, extracted from other data or inferred'),
+    TRANSFERRED: () => msg('The data obtained by transfer from another System'),
+};
+const PROVENANCE_DESCRIPTIONS_STATUS_VIEW = {
+    '*': () => msg('All provenances'),
+    USER: () => msg('Provided by a user of the system'),
+    'USER.DATA-SUBJECT': () => msg('Provided by you while using the system'),
+    DERIVED: () => msg('Derived from user actions, extracted from other data or inferred by the system'),
+    TRANSFERRED: () => msg('Obtained by transfer from another system'),
 };
 const DATA_CATEGORY_TITLES = {
     '*': () => msg(''),
@@ -144,13 +151,12 @@ const DATA_CATEGORY_DESCRIPTIONS = {
         of with others (e.g., clusters, user-profiles)`),
     RELATIONSHIPS: () => msg(html `<b>RELATIONSHIPS data:</b> Data about relationships I have with
         others, social activity and interaction`),
-    UID: () => msg(html `<b>Unique Identifier data:</b> Any data allowing to uniquely identify
-        me`),
+    UID: () => msg(html `<b>UID data:</b> Any data that uniquely identifies me`),
     'UID.ID': () => msg(html ``),
     'UID.IP': () => msg(html ``),
     'UID.USER-ACCOUNT': () => msg(html ``),
     'UID.SOCIAL-MEDIA': () => msg(html ``),
-    'OTHER-DATA': () => msg(html `<b>OTHER-DATA:</b> possibility to specify within a message if needed`),
+    'OTHER-DATA': () => msg(html `<b>OTHER DATA:</b> Any other categories or forms of data`),
 };
 const TARGET_DESCRIPTIONS = {
     '*': () => msg(html `All targets`),
@@ -188,5 +194,5 @@ const AFTER_TITLES = {
     'SERVICE-END': () => msg('service end'),
 };
 
-export { ACTION_DESCRIPTIONS, ACTION_TITLES, AFTER_TITLES, DATA_CATEGORY_DESCRIPTIONS, DATA_CATEGORY_TITLES, DEMAND_STATUS_DESCRIPTIONS, POLICY_TYPE_TITLES, PROVENANCE_DESCRIPTIONS, STATUS_DESCRIPTIONS, TARGET_DESCRIPTIONS };
+export { ACTION_DESCRIPTIONS, ACTION_TITLES, AFTER_TITLES, DATA_CATEGORY_DESCRIPTIONS, DATA_CATEGORY_TITLES, DEMAND_STATUS_DESCRIPTIONS, POLICY_TYPE_TITLES, PROVENANCE_DESCRIPTIONS, PROVENANCE_DESCRIPTIONS_STATUS_VIEW, STATUS_DESCRIPTIONS, TARGET_DESCRIPTIONS };
 //# sourceMappingURL=dictionary.js.map

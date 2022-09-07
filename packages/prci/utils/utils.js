@@ -1,5 +1,6 @@
 import { html } from 'lit';
-import { ACTION, DATA_CATEGORY, PROCESSING_CATEGORY, PURPOSE, PROVENANCE, TARGET } from '../models/priv-terms.js';
+import { ACTION, PROCESSING_CATEGORY, PURPOSE, PROVENANCE, TARGET } from '../models/priv-terms.js';
+import { PRCI_CONFIG } from './conf.js';
 import { DATA_CATEGORY_TITLES, POLICY_TYPE_TITLES, AFTER_TITLES } from './dictionary.js';
 
 function getDefaultActions() {
@@ -11,7 +12,7 @@ function getDefaultDemand(action) {
             return {
                 action,
                 restrictions: {
-                    privacy_scope: Object.values(DATA_CATEGORY)
+                    privacy_scope: PRCI_CONFIG['access-allowed-data-categories']
                         .filter(dc => !dc.includes('.') && !dc.includes('*'))
                         .map(dc => ({
                         dc,
@@ -29,7 +30,7 @@ function getDefaultDemand(action) {
             return {
                 action,
                 restrictions: {
-                    privacy_scope: Object.values(DATA_CATEGORY)
+                    privacy_scope: PRCI_CONFIG['delete-allowed-data-categories']
                         .filter(dc => !dc.includes('.') && !dc.includes('*'))
                         .map(dc => ({
                         dc,

@@ -54,10 +54,14 @@ const templates = {
     'sa7ee6646f0fd7ced': `Where the data about me is stored`,
     's255eaeef4249ebf2': `Who can access the data that the organization has on me`,
     's3fc1f890d4f5a074': `All provenances`,
-    's6500f17d9b2b131e': `The data is provided by a user of the system (potentially the Data Subject)`,
+    's45aea633edb60ede': `The data provided by a user of the system (potentially the Data Subject)`,
     's4b55ea3273df7775': `The data is provided by the Data Subject`,
-    's18ab052279789e66': `The data is derived from users actions, extracted from other data or inferred`,
-    's31dcf1c18fdd7228': `The data is obtained by transfer from another System`,
+    'sbb56c7b43dca3565': `The data derived from user actions, extracted from other data or inferred`,
+    'scd73a2ff5bb51768': `The data obtained by transfer from another System`,
+    's9f0a5e615ad80bfc': `Provided by a user of the system`,
+    's6976edd03bbc39db': `Provided by you while using the system`,
+    'safdf52d3db58ccbb': `Derived from user actions, extracted from other data or inferred by the system`,
+    's31a4a5e072be4a9d': `Obtained by transfer from another system`,
     'scbf29ce484222325': ``,
     's7330c16cfd44f739': `affiliation`,
     's8b0e3c94f063dd33': `affiliation membership`,
@@ -100,9 +104,8 @@ const templates = {
         of with others (e.g., clusters, user-profiles)`,
     'h0bbeaf491183d39a': html `<b>RELATIONSHIPS data:</b> Data about relationships I have with
         others, social activity and interaction`,
-    'h4710f3529774d2a6': html `<b>Unique Identifier data:</b> Any data allowing to uniquely identify
-        me`,
-    'hd79030be08b53f83': html `<b>OTHER-DATA:</b> possibility to specify within a message if needed`,
+    'hc3becbe49599063b': html `<b>UID data:</b> Any data that uniquely identifies me`,
+    'hce00a8ccfeb74875': html `<b>OTHER DATA:</b> Any other categories or forms of data`,
     'ha8ea706cb7b3c5f2': html `All targets`,
     'hb2029b140d2b8e3a': html `This system`,
     'h13d5761d00e9feca': html `This system and all systems within this organization`,
@@ -159,6 +162,14 @@ const templates = {
     'h07a854b6f92dc95c': html `Click <a href="${0}.json">here</a> to download
                     your data.`,
     's3137e812940ae6b7': `Obtaining data, please wait and refresh the page later.`,
+    'h0b299251150ee94b': html `Provided by a user of the
+                          <i>${0}</i> system`,
+    'he1fd7c01f92eb310': html `Provided by you as a user of the
+                          <i>${0}</i> system`,
+    'hb5be28950f6ca957': html `Derived by user actions, extracted from other data,
+                          or inferred by the <i>${0}</i> system`,
+    'hfed8a087807cfa44': html `Obtained by transfer from the
+                          <i>${0}</i> system`,
     's1caf5d7ab36059be': `Demand`,
     's355b21b89ce5d9c5': `Details`,
     'se40a735383dec962': `Cancel Demand`,
@@ -178,7 +189,7 @@ const templates = {
     'sdba3c1a749077731': `Cancelled Demand(s)`,
     's67e9ae7b0ec235d3': `Back to my Requests`,
     'sc16e00a7a8b2fde2': `Back`,
-    's6d81372b5f1573bd': `Add demand to Privacy Request`,
+    's0fbf6dc6a1966408': `Next`,
     'sac5b43e0e39b86c1': `Details of my TRANSPARENCY Demand`,
     'sf21f87f3901c35ff': `ALL information related to data processing practices and know if the organization has data on me`,
     'scb6620fcd5bff04c': `Advanced settings`,

@@ -178,7 +178,7 @@ let BldnPrivRequest = class BldnPrivRequest extends LitElement {
               <delete-form
                 .demand=${demand}
                 .demandGroupId=${this._currentDemandGroupId}
-                .allowedDataCategories=${this._config['access-allowed-data-categories']}
+                .allowedDataCategories=${this._config['delete-allowed-data-categories']}
               ></delete-form>
             `,
             ],

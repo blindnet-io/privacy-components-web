@@ -105,7 +105,8 @@ export declare enum DATA_CATEGORY {
     'UID.ID' = "UID.ID",
     'UID.IP' = "UID.IP",
     'UID.USER-ACCOUNT' = "UID.USER-ACCOUNT",
-    'UID.SOCIAL-MEDIA' = "UID.SOCIAL-MEDIA"
+    'UID.SOCIAL-MEDIA' = "UID.SOCIAL-MEDIA",
+    'OTHER-DATA' = "OTHER-DATA"
 }
 export declare enum PROCESSING_CATEGORY {
     'ALL' = "*",

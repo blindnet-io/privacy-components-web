@@ -27,6 +27,7 @@ export declare class BldnPrivRequest extends LitElement {
     _currentRequestId: string;
     _config: {
         'access-allowed-data-categories': import("./models/priv-terms.js").DATA_CATEGORY[];
+        'delete-allowed-data-categories': import("./models/priv-terms.js").DATA_CATEGORY[];
     };
     constructor();
     static styles: import("lit").CSSResult[];
