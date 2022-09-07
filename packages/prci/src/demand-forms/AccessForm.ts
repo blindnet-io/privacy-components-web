@@ -22,8 +22,6 @@ import {
 } from '../utils/dictionary.js';
 import { DemandForm } from './DemandForm.js';
 import { FormComponentState } from '../utils/states.js';
-
-import '../SlottedDropdown.js';
 import '../AllChecklist.js';
 
 /**
