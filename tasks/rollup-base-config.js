@@ -7,6 +7,8 @@ import { terser } from 'rollup-plugin-terser';
 import typescript from '@rollup/plugin-typescript';
 import del from 'rollup-plugin-delete';
 import minifyHTML from 'rollup-plugin-minify-html-literals';
+import { importMetaAssets } from '@web/rollup-plugin-import-meta-assets';
+import { optimize as optimizeSVG } from 'svgo';
 
 /**
  * @typedef {import("rollup").RollupOptions} RollupOptions
@@ -111,6 +113,35 @@ export function clean(basePath) {
 }
 
 /**
+ * importMetaAssets plugin with svg optimization using SVGO
+ */
+export function importAndOptimizeMetaAssets() {
+  return importMetaAssets({
+    // workaround for plugin's incorrect typings
+    include: undefined,
+    warnOnError: false,
+    // exclude all dependencies for performance optimization
+    // @blindnet dependencies like @blindnet/core might need to be included in the future
+    exclude: 'node_modules/**',
+    transform: (
+      /** @type {Buffer} */ assetBuffer,
+      /** @type {string} */ assetPath
+    ) => {
+      if (assetPath.endsWith('.svg')) {
+        const result = optimizeSVG(assetBuffer.toString());
+        if ('data' in result) {
+          return result.data;
+        }
+        // eslint-disable-next-line no-console
+        console.error(new Error(result.error));
+      }
+
+      return assetBuffer;
+    },
+  });
+}
+
+/**
  * base config for bundled esm build for CDN$
  *
  * @param {string} basePath
@@ -123,6 +154,7 @@ export function genBaseBundleConfig(basePath) {
       {
         format: 'esm',
         sourcemap: true,
+        assetFileNames: 'assets/[name].[ext]',
       },
     ],
     plugins: [
@@ -133,6 +165,7 @@ export function genBaseBundleConfig(basePath) {
           rootDir: path.join(basePath, directories.source),
         },
       }),
+      importAndOptimizeMetaAssets(),
       terser({
         output: { comments: false },
       }),

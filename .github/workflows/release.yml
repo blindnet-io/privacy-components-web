@@ -50,6 +50,7 @@ jobs:
         run: |
           git config --global user.name "blindnet bot"
           git config --global user.email "dev@blindnet.io"
+          git remote set-url origin https://github.com/${{ github.repository }}
           echo "//registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN" > .npmrc
 
       - name: Version and publish (main) 📦
@@ -57,6 +58,15 @@ jobs:
         run: |
           yarn lerna version --conventional-graduate --force-publish --yes
           yarn lerna publish from-git --yes
+
+      - name: Update develop (from main) 🔀
+        if: github.ref == 'refs/heads/main'
+        # develop is pulled again in case it has been updated after the initial checkout step
+        run: |
+          git checkout origin/develop
+          git pull origin develop
+          git merge main
+          git push origin develop
 
       - name: Publish (beta) 📦
         if: github.ref == 'refs/heads/develop'
