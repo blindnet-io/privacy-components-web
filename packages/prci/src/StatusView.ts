@@ -16,19 +16,6 @@ import { ComponentState } from './utils/states.js';
  */
 @customElement('status-view')
 export class StatusView extends LitElement {
-  @property({ type: String, attribute: 'request-id' }) requestId: string = '';
-
-  @state() _requestDate: Date = new Date();
-
-  @state() _completedDemands: PrivacyResponseItem[] = [];
-
-  @state() _processingDemands: PrivacyResponseItem[] = [];
-
-  @state() _cancelledDemands: PrivacyResponseItem[] = [];
-
-  // eslint-disable-next-line no-undef
-  @state() _intervalId: any = undefined;
-
   static styles = [
     containerStyles,
     buttonStyles,
@@ -80,6 +67,19 @@ export class StatusView extends LitElement {
       }
     `,
   ];
+
+  @property({ type: String, attribute: 'request-id' }) requestId: string = '';
+
+  @state() _requestDate: Date = new Date();
+
+  @state() _completedDemands: PrivacyResponseItem[] = [];
+
+  @state() _processingDemands: PrivacyResponseItem[] = [];
+
+  @state() _cancelledDemands: PrivacyResponseItem[] = [];
+
+  // eslint-disable-next-line no-undef
+  @state() _intervalId: any = undefined;
 
   reloadRequest() {
     getRequest(this.requestId).then(response => {

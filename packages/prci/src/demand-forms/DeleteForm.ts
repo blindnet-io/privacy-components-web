@@ -31,9 +31,6 @@ import '../AllChecklist.js';
  */
 @customElement('delete-form')
 export class DeleteForm extends DemandForm {
-  @property({ type: Array, attribute: false })
-  allowedDataCategories: DATA_CATEGORY[] = [];
-
   static styles = [
     DemandForm.styles,
     containerStyles,
@@ -82,6 +79,9 @@ export class DeleteForm extends DemandForm {
       }
     `,
   ];
+
+  @property({ type: Array, attribute: false })
+  allowedDataCategories: DATA_CATEGORY[] = [];
 
   constructor() {
     super();

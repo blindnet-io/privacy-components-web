@@ -29,19 +29,6 @@ import { getRetentionPolicyString } from './utils/utils.js';
  */
 @customElement('status-view-item')
 export class StatusViewItem extends LitElement {
-  @property({ attribute: false }) demand: PrivacyResponseItem = {
-    demand_id: '',
-    date: '',
-    requested_action: ACTION.ACCESS,
-    status: DEMAND_STATUS.GRANTED,
-    includes: [],
-    system: '',
-  };
-
-  @property({ attribute: false }) demands: PrivacyResponseItem[] = [];
-
-  @property({ type: Boolean, reflect: true }) open: boolean = false;
-
   static styles = [
     containerStyles,
     buttonStyles,
@@ -179,6 +166,19 @@ export class StatusViewItem extends LitElement {
       }
     `,
   ];
+
+  @property({ attribute: false }) demand: PrivacyResponseItem = {
+    demand_id: '',
+    date: '',
+    requested_action: ACTION.ACCESS,
+    status: DEMAND_STATUS.GRANTED,
+    includes: [],
+    system: '',
+  };
+
+  @property({ attribute: false }) demands: PrivacyResponseItem[] = [];
+
+  @property({ type: Boolean, reflect: true }) open: boolean = false;
 
   accessResponseTemplate(demand: PrivacyResponseItem) {
     return html`

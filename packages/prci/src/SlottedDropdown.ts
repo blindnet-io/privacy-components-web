@@ -14,15 +14,6 @@ import { FormComponentState } from './utils/states.js';
  */
 @customElement('slotted-dropdown')
 export class SlottedDropdown extends LitElement {
-  @property({ type: String }) header = '';
-
-  @property({ type: Boolean, attribute: 'include-buttons' })
-  includeButtons: Boolean = false;
-
-  // Boolean indicating if the choices should be displayed initially
-  @property({ type: Number, reflect: true, attribute: 'dropdown-state' })
-  dropdownState: FormComponentState = FormComponentState.CLOSED;
-
   static styles = [
     containerStyles,
     buttonStyles,
@@ -60,6 +51,15 @@ export class SlottedDropdown extends LitElement {
       }
     `,
   ];
+
+  @property({ type: String }) header = '';
+
+  @property({ type: Boolean, attribute: 'include-buttons' })
+  includeButtons: Boolean = false;
+
+  // Boolean indicating if the choices should be displayed initially
+  @property({ type: Number, reflect: true, attribute: 'dropdown-state' })
+  dropdownState: FormComponentState = FormComponentState.CLOSED;
 
   /**
    * Decide the next state when dropdown button is clicked

@@ -11,14 +11,6 @@ import { ComponentState, DemandState } from '../utils/states.js';
  * Abstract class for a form that allows the user to create or edit multiple demands.
  */
 export abstract class MultiDemandForm extends LitElement {
-  @property({ type: Number, attribute: 'demand-state' })
-  demandState: DemandState = DemandState.EDIT_OPEN;
-
-  // eslint-disable-next-line no-restricted-globals
-  @property({ type: String }) demandGroupId = self.crypto.randomUUID();
-
-  @property({ attribute: false }) demands: Demand[] = [];
-
   static styles = [
     buttonStyles,
     css`
@@ -47,6 +39,14 @@ export abstract class MultiDemandForm extends LitElement {
       }
     ` as CSSResultGroup,
   ];
+
+  @property({ type: Number, attribute: 'demand-state' })
+  demandState: DemandState = DemandState.EDIT_OPEN;
+
+  // eslint-disable-next-line no-restricted-globals
+  @property({ type: String }) demandGroupId = self.crypto.randomUUID();
+
+  @property({ attribute: false }) demands: Demand[] = [];
 
   setDemand(demand: Demand) {
     this.demands.push(demand);

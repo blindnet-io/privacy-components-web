@@ -18,12 +18,6 @@ const arrowForwardSvg = new URL(
 @localized()
 @customElement('action-menu')
 export class ActionMenu extends LitElement {
-  // Text displayed above menu
-  @property({ type: String }) prompt = 'Type of demand I want to submit:';
-
-  // Actions to be displayed in the menu, each corresponding to an ActionItem.
-  @property({ attribute: false }) includedActions: ACTION[] = [];
-
   static styles = [
     textStyles,
     containerStyles,
@@ -72,6 +66,12 @@ export class ActionMenu extends LitElement {
       }
     `,
   ];
+
+  // Text displayed above menu
+  @property({ type: String }) prompt = 'Type of demand I want to submit:';
+
+  // Actions to be displayed in the menu, each corresponding to an ActionItem.
+  @property({ attribute: false }) includedActions: ACTION[] = [];
 
   handleRequestsClick() {
     this.dispatchEvent(
