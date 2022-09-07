@@ -41,10 +41,13 @@ export class BldnPrivRequest extends LitElement {
     containerStyles,
     css`
       :host {
+        display: flex;
+        justify-content: center;
+        justify-items: center;
+
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
           Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         font-size: 16;
-        background-color: white;
         text-align: left;
       }
 
