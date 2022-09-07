@@ -67,7 +67,8 @@ jobs:
           git fetch origin
           git checkout origin/develop
           git merge main
-          git push origin develop
+          git push origin HEAD:develop
+          git checkout main
 
       - name: Publish (beta) 📦
         if: github.ref == 'refs/heads/develop'
