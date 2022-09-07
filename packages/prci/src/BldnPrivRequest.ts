@@ -6,8 +6,8 @@ import { choose } from 'lit/directives/choose.js';
 import { map } from 'lit/directives/map.js';
 import { localized, msg } from '@lit/localize';
 
+import '@blindnet/core';
 import './FrequentRequestsMenu.js';
-import './ResponseView.js';
 import './ReviewView.js';
 import './ActionMenu.js';
 import './RequestsView.js';

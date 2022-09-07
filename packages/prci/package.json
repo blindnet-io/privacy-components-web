@@ -35,6 +35,7 @@
     "access": "public"
   },
   "dependencies": {
+    "@blindnet/core": "^0.6.0",
     "@lit/localize": "^0.11.3",
     "lit": "^2.2.8"
   }
