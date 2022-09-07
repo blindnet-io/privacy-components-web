@@ -31,9 +31,6 @@ import '../AllChecklist.js';
  */
 @customElement('access-form')
 export class AccessForm extends DemandForm {
-  @property({ type: Array, attribute: false })
-  allowedDataCategories: DATA_CATEGORY[] = [];
-
   static styles = [
     DemandForm.styles,
     containerStyles,
@@ -82,6 +79,9 @@ export class AccessForm extends DemandForm {
       }
     `,
   ];
+
+  @property({ type: Array, attribute: false })
+  allowedDataCategories: DATA_CATEGORY[] = [];
 
   constructor() {
     super();

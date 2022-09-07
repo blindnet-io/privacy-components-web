@@ -11,14 +11,6 @@ import { ComponentState, DemandState } from '../utils/states.js';
  * Abstract class for a form that allows the user to create or edit a demand.
  */
 export abstract class DemandForm extends LitElement {
-  @property({ type: Number, attribute: 'demand-state' })
-  demandState: DemandState = DemandState.EDIT_OPEN;
-
-  @property({ attribute: false }) demand: Demand = { action: ACTION.ACCESS };
-
-  // eslint-disable-next-line no-restricted-globals
-  @property({ type: String }) demandGroupId = self.crypto.randomUUID();
-
   static styles = [
     buttonStyles,
     css`
@@ -47,6 +39,14 @@ export abstract class DemandForm extends LitElement {
       }
     ` as CSSResultGroup,
   ];
+
+  @property({ type: Number, attribute: 'demand-state' })
+  demandState: DemandState = DemandState.EDIT_OPEN;
+
+  @property({ attribute: false }) demand: Demand = { action: ACTION.ACCESS };
+
+  // eslint-disable-next-line no-restricted-globals
+  @property({ type: String }) demandGroupId = self.crypto.randomUUID();
 
   /**
    * Send this demand up to the top level component to add to the Privacy Request

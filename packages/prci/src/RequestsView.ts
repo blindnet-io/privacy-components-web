@@ -11,15 +11,6 @@ import { ComponentState } from './utils/states.js';
 
 @customElement('requests-view')
 export class RequestsView extends LitElement {
-  @state() _requests: RequestHistoryItem[] = [];
-
-  constructor() {
-    super();
-    getRequestHistory().then(response => {
-      this._requests = response.history;
-    });
-  }
-
   static styles = [
     containerStyles,
     buttonStyles,
@@ -76,6 +67,15 @@ export class RequestsView extends LitElement {
       }
     `,
   ];
+
+  @state() _requests: RequestHistoryItem[] = [];
+
+  constructor() {
+    super();
+    getRequestHistory().then(response => {
+      this._requests = response.history;
+    });
+  }
 
   handleRequestClick(e: Event) {
     this.dispatchEvent(

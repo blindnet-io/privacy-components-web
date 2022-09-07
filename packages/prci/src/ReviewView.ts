@@ -24,19 +24,6 @@ import { ComponentState } from './utils/states.js';
 
 @customElement('review-view')
 export class ReviewView extends LitElement {
-  @property({ attribute: false }) demandGroupId: string = '';
-
-  @property({ attribute: false }) demands: Demand[] = [];
-
-  @property({ attribute: false }) demand: Demand = { action: ACTION.ACCESS };
-
-  @property({ type: Boolean, reflect: true, attribute: 'confirm-delete' })
-  confirmDelete: boolean = false;
-
-  @property({ attribute: false }) target: TARGET = TARGET.PARTNERS;
-
-  @state() _action: ACTION = ACTION.ACCESS;
-
   static styles = [
     containerStyles,
     buttonStyles,
@@ -143,6 +130,19 @@ export class ReviewView extends LitElement {
       }
     `,
   ];
+
+  @property({ attribute: false }) demandGroupId: string = '';
+
+  @property({ attribute: false }) demands: Demand[] = [];
+
+  @property({ attribute: false }) demand: Demand = { action: ACTION.ACCESS };
+
+  @property({ type: Boolean, reflect: true, attribute: 'confirm-delete' })
+  confirmDelete: boolean = false;
+
+  @property({ attribute: false }) target: TARGET = TARGET.PARTNERS;
+
+  @state() _action: ACTION = ACTION.ACCESS;
 
   getAccessReviewTemplate() {
     const from = this.demand.restrictions?.date_range?.from;

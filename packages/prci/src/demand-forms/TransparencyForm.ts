@@ -30,17 +30,6 @@ import { Restrictions } from '../models/restrictions.js';
  */
 @customElement('transparency-form')
 export class TransparencyForm extends MultiDemandForm {
-  @property({ type: Array, attribute: false })
-  transparencyActions: ACTION[] = Object.values(ACTION).filter(a =>
-    a.includes('TRANSPARENCY.')
-  );
-
-  @property({ type: Array }) advancedSettings = [];
-
-  @property({ attribute: false }) restrictions: Restrictions = {};
-
-  @state() _additionalMessage = '';
-
   static styles = [
     MultiDemandForm.styles,
     containerStyles,
@@ -89,6 +78,17 @@ export class TransparencyForm extends MultiDemandForm {
       }
     `,
   ];
+
+  @property({ type: Array, attribute: false })
+  transparencyActions: ACTION[] = Object.values(ACTION).filter(a =>
+    a.includes('TRANSPARENCY.')
+  );
+
+  @property({ type: Array }) advancedSettings = [];
+
+  @property({ attribute: false }) restrictions: Restrictions = {};
+
+  @state() _additionalMessage = '';
 
   constructor() {
     super();
