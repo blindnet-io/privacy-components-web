@@ -129,7 +129,7 @@ export class TransparencyForm extends MultiDemandForm {
     return true;
   }
 
-  getEditTemplate(demands: Demand[]): TemplateResult<1 | 2> {
+  getFormTemplate(demands: Demand[]): TemplateResult<1 | 2> {
     const selectedActions = Object.values(demands).map(d => d.action);
     return html`
       <p id="edit-heading-1">

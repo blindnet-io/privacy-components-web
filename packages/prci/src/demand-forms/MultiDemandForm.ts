@@ -115,12 +115,12 @@ export abstract class MultiDemandForm extends LitElement {
    * @param useDefault Indicates if form should be populated with default values or from input demands
    * @returns HTML template
    */
-  abstract getEditTemplate(demands: Demand[]): TemplateResult;
+  abstract getFormTemplate(demands: Demand[]): TemplateResult;
 
   render(): TemplateResult<1 | 2> {
     return html`
       ${choose(this.demandState, [
-        [DemandState.EDIT_OPEN, () => this.getEditTemplate(this.demands)],
+        [DemandState.EDIT_OPEN, () => this.getFormTemplate(this.demands)],
       ])}
       <!-- Buttons -->
       <div class="btns-ctr">

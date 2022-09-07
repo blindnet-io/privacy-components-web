@@ -156,7 +156,7 @@ export class DeleteForm extends DemandForm {
     return true;
   }
 
-  getEditTemplate(demand: Demand): TemplateResult<1 | 2> {
+  getFormTemplate(demand: Demand): TemplateResult<1 | 2> {
     return html`
       <div id="delete-form">
         <p id="edit-heading-1">
