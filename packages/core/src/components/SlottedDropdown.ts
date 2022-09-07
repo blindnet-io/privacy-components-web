@@ -3,6 +3,16 @@ import { customElement, property } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 import { bldnStyles } from './blindnet-wc-styles.js';
 
+const closeContainerArrowSvg = new URL(
+  '../assets/icons/close-container-arrow.svg',
+  import.meta.url
+).href;
+
+const openContainerArrowSvg = new URL(
+  '../assets/icons/open-container-arrow.svg',
+  import.meta.url
+).href;
+
 /**
  * Collapsable element with slots for children
  */
@@ -30,10 +40,6 @@ export class SlottedDropdown extends LitElement {
 
       .header {
         margin: 0px 0px 20px 0px;
-      }
-
-      .dropdown-btn-img {
-        src: 'packages/prci/src/assets/icons/close_container_arrow.svg';
       }
 
       #close-btn-ctr {
@@ -89,16 +95,9 @@ export class SlottedDropdown extends LitElement {
             <span class="medium-font underline">${this.header}</span>
             ${when(
               this.open,
-              () => html`
-                <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24">
-                  <path d="m7.4 15.375-1.4-1.4 6-6 6 6-1.4 1.4-4.6-4.6Z" />
-                </svg>
-              `,
-              () => html`
-                <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24">
-                  <path d="m12 15.375-6-6 1.4-1.4 4.6 4.6 4.6-4.6 1.4 1.4Z" />
-                </svg>
-              `
+              () =>
+                html`<img src=${closeContainerArrowSvg} alt="close arrow" />`,
+              () => html`<img src=${openContainerArrowSvg} alt="open arrow" />`
             )}
             <simple-icon
               icon="expand-${this.open ? 'less' : 'more'}"
@@ -122,9 +121,7 @@ export class SlottedDropdown extends LitElement {
                   this.open = !this.open;
                 }}
               >
-                <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24">
-                  <path d="m7.4 15.375-1.4-1.4 6-6 6 6-1.4 1.4-4.6-4.6Z" />
-                </svg>
+                <img src=${closeContainerArrowSvg} alt="close arrow" />
               </button>
             </div>
           `
