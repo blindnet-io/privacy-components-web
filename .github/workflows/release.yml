@@ -56,7 +56,8 @@ jobs:
       - name: Version and publish (main) 📦
         if: github.ref == 'refs/heads/main'
         run: |
-          yarn lerna version --conventional-graduate --force-publish --yes
+          yarn lerna version --conventional-graduate --force-publish --yes --no-push
+          git push --follow-tags
           yarn lerna publish from-git --yes
 
       - name: Update develop (from main) 🔀
