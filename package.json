@@ -11,7 +11,7 @@
     "build:localize": "lerna run localize",
     "build:rollup": "rollup -c",
     "build": "yarn run build:imports && yarn run build:localize && yarn run build:rollup",
-    "watch": "yarn run build:rollup --configKeep --watch",
+    "watch": "yarn run build:rollup --configKeep --configRaw --watch",
     "analyze": "lerna exec -- \"cem analyze --litelement\"",
     "start": "wds",
     "preinstall": "node -e \"if(process.env.npm_execpath.indexOf('yarn') === -1) throw new Error('Use yarn')\"",
