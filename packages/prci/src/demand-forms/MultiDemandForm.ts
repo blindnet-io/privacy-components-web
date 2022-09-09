@@ -15,7 +15,7 @@ export abstract class MultiDemandForm extends LitElement {
     buttonStyles,
     css`
       :host {
-        margin: 0px 0px 0px 0px;
+        margin: 0px;
       }
 
       .btns-ctr {
@@ -36,6 +36,25 @@ export abstract class MultiDemandForm extends LitElement {
         grid-column: 3/4;
         min-width: 60%;
         max-width: 300px;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        padding: 0;
+        margin: 0;
+      }
+
+      h2 {
+        font-size: 20px;
+      }
+
+      h3 {
+        font-size: 16px;
+        font-weight: normal;
       }
     ` as CSSResultGroup,
   ];
@@ -92,7 +111,11 @@ export abstract class MultiDemandForm extends LitElement {
    */
   handleAddClick() {
     if (this.validate()) {
+      // Create list of demands from data entered in the form
+      this.demands = this.buildDemands();
+      // Send the demands to the top level component to be added to priacy request
       this.addToPrivacyRequest(this.demandGroupId, this.demands);
+      // Move to review state
       this.dispatchEvent(
         new CustomEvent('component-state-change', {
           bubbles: true,
@@ -111,16 +134,21 @@ export abstract class MultiDemandForm extends LitElement {
   abstract validate(): boolean;
 
   /**
+   * Create a list of demands from the data entered in the form
+   */
+  abstract buildDemands(): Demand[];
+
+  /**
    * Get the edit template for this action
    * @param useDefault Indicates if form should be populated with default values or from input demands
    * @returns HTML template
    */
-  abstract getFormTemplate(demands: Demand[]): TemplateResult;
+  abstract getFormTemplate(): TemplateResult;
 
   render(): TemplateResult<1 | 2> {
     return html`
       ${choose(this.demandState, [
-        [DemandState.EDIT_OPEN, () => this.getFormTemplate(this.demands)],
+        [DemandState.EDIT_OPEN, () => this.getFormTemplate()],
       ])}
       <!-- Buttons -->
       <div class="btns-ctr">

@@ -293,14 +293,11 @@ export class StatusViewItem extends LitElement {
   }
 
   transparencyProvTemplate(demand: PrivacyResponseItem) {
-    console.log(demand);
     const answer = demand.answer as {
       'AFFILIATION.selector_1': Provenance[];
       'AFFILIATION.MEMBERSHIP.selector_2': Provenance[];
       'FINANCIAL.BANK-ACCOUNT.selector_3': Provenance[];
     };
-    console.log(Object.keys(demand.answer as Object));
-    console.log(Object.entries(demand.answer as Object));
     return html`
       <p>
         <b>Requested info:</b> ${ACTION_DESCRIPTIONS[demand.requested_action]()}
@@ -377,7 +374,6 @@ export class StatusViewItem extends LitElement {
   }
 
   transparencyRetTemplate(demand: PrivacyResponseItem) {
-    console.log(demand);
     const answer = demand.answer as {
       NAME: RetentionPolicy[];
     };

@@ -32,6 +32,7 @@ export class SlottedDropdown extends LitElement {
           var(--bldn-light-border-color, #c4c4c4);
         border-radius: 10px;
         padding: 40px 40px 20px 40px;
+        margin: 20px 0px 0px 0px;
       }
 
       :host([open]) #dropdown {
@@ -39,7 +40,7 @@ export class SlottedDropdown extends LitElement {
       }
 
       .header {
-        margin: 0px 0px 20px 0px;
+        margin: 0px 0px 0px 0px;
       }
 
       #close-btn-ctr {
