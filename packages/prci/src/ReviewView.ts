@@ -35,7 +35,6 @@ export class ReviewView extends LitElement {
     css`
       :host {
         display: grid;
-        row-gap: 20px;
       }
 
       :host([confirm-delete]) .dmd-review-ctr {
@@ -52,7 +51,6 @@ export class ReviewView extends LitElement {
 
       .dmd-review-ctr {
         display: grid;
-        row-gap: 20px;
         padding: 40px;
       }
 
@@ -71,7 +69,6 @@ export class ReviewView extends LitElement {
       #review-content {
         display: grid;
         grid-area: 2/1/3/2;
-        row-gap: 20px;
         z-index: 1;
       }
 
@@ -85,6 +82,10 @@ export class ReviewView extends LitElement {
 
       .review-list {
         margin: 0px;
+      }
+
+      #request-settings {
+        margin: 20px 0px 0px 0px;
       }
 
       #delete-confirm-popup {
@@ -132,6 +133,15 @@ export class ReviewView extends LitElement {
       #submit-btn {
         transform: translateY(35px);
       }
+
+      h2,
+      h3 {
+        margin-top: 0px;
+      }
+
+      h4 {
+        font-weight: normal;
+      }
     `,
   ];
 
@@ -154,7 +164,7 @@ export class ReviewView extends LitElement {
     const provenance = this.demand.restrictions?.provenance;
     const privacyScope = this.demand.restrictions?.privacy_scope;
     return html`
-      <span>${msg('I want to access:')}</span>
+      <h4>${msg('I want to access:')}</h4>
       <ul id="access-review-list" class="review-list">
         ${when(
           privacyScope &&
@@ -195,7 +205,7 @@ export class ReviewView extends LitElement {
       ${when(
         this.demand.message,
         () => html`
-          <span>${msg('Plus additional info:')}</span>
+          <h4>${msg('Plus additional info:')}</h4>
           <span class="extra-msg-txt"><i>${this.demand.message}</i></span>
         `
       )}
@@ -208,7 +218,7 @@ export class ReviewView extends LitElement {
     const provenance = this.demand.restrictions?.provenance;
     const privacyScope = this.demand.restrictions?.privacy_scope;
     return html`
-      <span>${msg('I want to delete:')}</span>
+      <h4>${msg('I want to delete:')}</h4>
       <ul id="delete-review-list" class="review-list">
         ${when(
           privacyScope &&
@@ -249,7 +259,7 @@ export class ReviewView extends LitElement {
       ${when(
         this.demand.message,
         () => html`
-          <span>${msg('Plus additional info:')}</span>
+          <h4>${msg('Plus additional info:')}</h4>
           <span class="extra-msg-txt"><i>${this.demand.message}</i></span>
         `
       )}
@@ -272,14 +282,38 @@ export class ReviewView extends LitElement {
     return html``;
   }
 
+  /**
+   * FIXME: Use actual revoke texts once the endpoint provides them
+   * @returns
+   */
   getRevokeReviewTemplate() {
-    return html``;
+    return html`
+      <h4>${msg('I no longer consent to:')}</h4>
+      <ul class="review-list">
+        ${map(
+          this.demands,
+          () => html`
+            <li>
+              The storage and processing of my data for the purposes of the
+              prize draw
+            </li>
+          `
+        )}
+      </ul>
+      ${when(
+        this.demands[0].message,
+        () => html`
+          <span>${msg('Plus additional info:')}</span>
+          <span class="extra-msg-txt"><i>${this.demands[0].message}</i></span>
+        `
+      )}
+    `;
   }
 
   getTransparencyReviewTemplate() {
     const provenance = this.demands[0].restrictions?.provenance;
     return html`
-      <span>${msg('I want to know:')}</span>
+      <h4>${msg('I want to know:')}</h4>
       <ul id="transparency-review-list" class="review-list">
         ${map(
           this.demands,
@@ -297,7 +331,7 @@ export class ReviewView extends LitElement {
       ${when(
         this.demands[0].message,
         () => html`
-          <span>${msg('Plus additional info:')}</span>
+          <h4>${msg('Plus additional info:')}</h4>
           <span class="extra-msg-txt"><i>${this.demands[0].message}</i></span>
         `
       )}
@@ -408,13 +442,13 @@ export class ReviewView extends LitElement {
 
   render() {
     return html`
-      <span><b>${msg('My demand(s):')}</b></span>
+      <h2><b>${msg('My demand(s):')}</b></h2>
       
       <div class="dmd-review-ctr light-border">
         <div id="review-heading-row">
-          <span id="review-action-heading"><b>${ACTION_TITLES[
+          <h3 id="review-action-heading">${ACTION_TITLES[
             this._action
-          ]()} demand</b></span>
+          ]()} Demand</h3>
           <div id="review-btns">
             <button class='svg-btn' @click=${this.handleEditClick}>
               <img src=${editSvg} alt='edit'/>
@@ -478,7 +512,8 @@ export class ReviewView extends LitElement {
       </div> -->
       <!-- Submit button -->
       <slotted-dropdown
-        header=${msg('Privacy Request Advanced settings')}
+        id='request-settings'  
+        .header=${msg('Privacy Request Advanced settings')}
         include-buttons
       >
         <div>
