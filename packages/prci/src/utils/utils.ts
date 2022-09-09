@@ -61,6 +61,11 @@ export function getDefaultDemand(action: ACTION): Demand {
         },
       };
 
+    case ACTION.REVOKE:
+      return {
+        action,
+      };
+
     default:
       throw Error(`No default demand for action: ${action}!`);
   }

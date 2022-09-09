@@ -15,6 +15,8 @@ import './StatusView.js';
 import './demand-forms/TransparencyForm.js';
 import './demand-forms/AccessForm.js';
 import './demand-forms/DeleteForm.js';
+import './demand-forms/RevokeConsentForm.js';
+
 import { ACTION, TARGET } from './models/priv-terms.js';
 import { PrivacyRequest } from './models/privacy-request.js';
 import { ComponentState } from './utils/states.js';
@@ -202,6 +204,7 @@ export class BldnPrivRequest extends LitElement {
     this.addEventListener('component-state-change', e => {
       const details = (e as CustomEvent).detail;
       this._componentState = details.newState;
+      console.log(this._demands);
 
       switch (this._componentState) {
         case ComponentState.EDIT:
@@ -352,7 +355,15 @@ export class BldnPrivRequest extends LitElement {
           [ACTION.OBJECT, () => html``],
           [ACTION.PORTABILITY, () => html``],
           [ACTION.RESTRICT, () => html``],
-          [ACTION.REVOKE, () => html``],
+          [
+            ACTION.REVOKE,
+            () => html`
+              <revoke-consent-form
+                .demand=${demand}
+                .demandGroupId=${this._currentDemandGroupId}
+              ></revoke-consent-form>
+            `,
+          ],
           [ACTION['OTHER.DEMAND'], () => html``],
         ],
         () => html`${msg('Error: Invalid Action')}`

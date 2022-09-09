@@ -15,7 +15,7 @@ export abstract class DemandForm extends LitElement {
     buttonStyles,
     css`
       :host {
-        margin: 0px 0px 0px 0px;
+        margin: 0px;
       }
 
       .btns-ctr {
