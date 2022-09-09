@@ -249,14 +249,6 @@ export class AppParticipateForm extends LitElement {
     this._files = newFiles;
   }
 
-  /**
-   * @param {CustomEvent} e
-   */
-  handleConsentClick(e) {
-    const { checked } = e.target;
-    this.consentGiven = checked;
-  }
-
   render() {
     return html`
       <h1>Take part in our prize draw!</h1>
@@ -342,7 +334,9 @@ export class AppParticipateForm extends LitElement {
         <bx-form-item>
           <bx-checkbox
             id="consent-checkbox"
-            @bx-checkbox-changed=${this.handleConsentClick}
+            @bx-checkbox-changed=${() => {
+              this.consentGiven = !this.consentGiven;
+            }}
             label-text="I consent to the storage and processing of my data for the purposes of this draw"
           ></bx-checkbox>
           ${when(
