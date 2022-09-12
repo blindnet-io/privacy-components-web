@@ -5,10 +5,10 @@ import { DemandState } from '../utils/states.js';
  * Abstract class for a form that allows the user to create or edit a demand.
  */
 export declare abstract class DemandForm extends LitElement {
+    static styles: CSSResultGroup[];
     demandState: DemandState;
     demand: Demand;
     demandGroupId: string;
-    static styles: CSSResultGroup[];
     /**
      * Send this demand up to the top level component to add to the Privacy Request
      * @param demandGroupId uuid of this demand group
@@ -32,6 +32,6 @@ export declare abstract class DemandForm extends LitElement {
      * @param useDefault Indicates if form should be populated with default values or from input demands
      * @returns HTML template
      */
-    abstract getEditTemplate(demand: Demand): TemplateResult;
+    abstract getFormTemplate(demand: Demand): TemplateResult;
     render(): TemplateResult<1 | 2>;
 }

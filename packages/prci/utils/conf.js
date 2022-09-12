@@ -7,7 +7,7 @@ const enabledActions = new Map([
     [ACTION.OBJECT, false],
     [ACTION.PORTABILITY, false],
     [ACTION.RESTRICT, false],
-    [ACTION.REVOKE, false],
+    [ACTION.REVOKE, true],
     [ACTION.TRANSPARENCY, true],
     [ACTION['TRANSPARENCY.DATA.CATEGORIES'], true],
     [ACTION['TRANSPARENCY.DPO'], true],

@@ -1,6 +1,6 @@
 import { LitElement, PropertyValueMap, TemplateResult } from 'lit';
+import '@blindnet/core';
 import './FrequentRequestsMenu.js';
-import './ResponseView.js';
 import './ReviewView.js';
 import './ActionMenu.js';
 import './RequestsView.js';
@@ -8,6 +8,7 @@ import './StatusView.js';
 import './demand-forms/TransparencyForm.js';
 import './demand-forms/AccessForm.js';
 import './demand-forms/DeleteForm.js';
+import './demand-forms/RevokeConsentForm.js';
 import { ACTION } from './models/priv-terms.js';
 import { PrivacyRequest } from './models/privacy-request.js';
 import { ComponentState } from './utils/states.js';
@@ -17,6 +18,7 @@ import { Demand } from './models/demand.js';
  * more DemandBuilder elements, each for a single demand action type.
  */
 export declare class BldnPrivRequest extends LitElement {
+    static styles: import("lit").CSSResult[];
     actions: string;
     _includedActions: ACTION[];
     _componentState: ComponentState;
@@ -30,7 +32,6 @@ export declare class BldnPrivRequest extends LitElement {
         'delete-allowed-data-categories': import("./models/priv-terms.js").DATA_CATEGORY[];
     };
     constructor();
-    static styles: import("lit").CSSResult[];
     /**
      * Reset most states
      * // TODO: Remove this and use something like getDefaultDemand() from the forms

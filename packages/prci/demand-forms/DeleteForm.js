@@ -7,7 +7,6 @@ import { containerStyles, buttonStyles, textStyles, imgStyles } from '../styles.
 import { DATA_CATEGORY_DESCRIPTIONS, PROVENANCE_DESCRIPTIONS, TARGET_DESCRIPTIONS } from '../utils/dictionary.js';
 import { DemandForm } from './DemandForm.js';
 import { FormComponentState } from '../utils/states.js';
-import '../SlottedDropdown.js';
 import '../AllChecklist.js';
 
 /**
@@ -80,7 +79,7 @@ let DeleteForm = class DeleteForm extends DemandForm {
     validate() {
         return true;
     }
-    getEditTemplate(demand) {
+    getFormTemplate(demand) {
         var _a, _b, _c, _d, _e, _f, _g, _h, _j;
         return html `
       <div id="delete-form">

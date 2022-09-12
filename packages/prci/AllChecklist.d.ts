@@ -15,6 +15,7 @@ declare enum SelectionState {
     NONE = 2
 }
 export declare class AllChecklist extends LitElement {
+    static styles: import("lit").CSSResult[];
     choices: Choice[];
     selectionState: SelectionState;
     componentMode: FormComponentState;
@@ -25,7 +26,6 @@ export declare class AllChecklist extends LitElement {
     includeButtons: boolean;
     includeOther: boolean;
     selectedChoices: Set<string>;
-    static styles: import("lit").CSSResult[];
     /**
      * Select a choice and notify parent component
      * @param id ID of the choice to select

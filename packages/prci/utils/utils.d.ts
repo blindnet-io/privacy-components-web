@@ -11,4 +11,4 @@ export declare function getDefaultDemands(action: ACTION): Demand[];
  * @param after Point after which the data is kept
  * @returns String combining the provided information to represent a retention policy
  */
-export declare function getRetentionPolicyString(dataCategory: DATA_CATEGORY, policyType: POLICY_TYPE, duration: string, after: AFTER): import("lit").TemplateResult<1>;
+export declare function getRetentionPolicyString(dataCategory: DATA_CATEGORY, policyType: POLICY_TYPE, duration: string, after: AFTER): import("lit-html").TemplateResult<1>;

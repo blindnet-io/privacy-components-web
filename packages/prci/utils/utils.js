@@ -44,6 +44,10 @@ function getDefaultDemand(action) {
                     date_range: {},
                 },
             };
+        case ACTION.REVOKE:
+            return {
+                action,
+            };
         default:
             throw Error(`No default demand for action: ${action}!`);
     }

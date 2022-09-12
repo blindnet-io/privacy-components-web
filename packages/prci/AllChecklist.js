@@ -7,6 +7,11 @@ import { when } from 'lit/directives/when.js';
 import { containerStyles, textStyles, buttonStyles } from './styles.js';
 import { FormComponentState } from './utils/states.js';
 
+const allCheckboxCheckedSvg = new URL(new URL('assets/all-checkbox-checked.svg', import.meta.url).href, import.meta.url).href;
+const allCheckboxDashSvg = new URL(new URL('assets/all-checkbox-dash.svg', import.meta.url).href, import.meta.url).href;
+const allCheckboxUncheckedSvg = new URL(new URL('assets/all-checkbox-unchecked.svg', import.meta.url).href, import.meta.url).href;
+const closeContainerArrowSvg = new URL(new URL('assets/close-container-arrow.svg', import.meta.url).href, import.meta.url).href;
+const openContainerArrowSvg = new URL(new URL('assets/open-container-arrow.svg', import.meta.url).href, import.meta.url).href;
 /**
  * States describing the choice list
  */
@@ -216,65 +221,24 @@ let AllChecklist = class AllChecklist extends LitElement {
                 ${choose(this.selectionState, [
             [
                 SelectionState.NONE,
-                () => html `
-                      <svg
-                        width="13"
-                        height="13"
-                        viewBox="0 0 13 13"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <rect
-                          x="0.5"
-                          y="0.5"
-                          width="12"
-                          height="12"
-                          rx="1.5"
-                          stroke="#414040"
-                        />
-                      </svg>
-                    `,
+                () => html `<img
+                        src=${allCheckboxUncheckedSvg}
+                        alt="empty checkbox"
+                      />`,
             ],
             [
                 SelectionState.SOME,
-                () => html `
-                      <svg
-                        width="13"
-                        height="13"
-                        viewBox="0 0 13 13"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <rect width="13" height="13" rx="2" fill="#377CFD" />
-                        <line
-                          x1="2.5"
-                          y1="6.5"
-                          x2="10.5"
-                          y2="6.5"
-                          stroke="white"
-                          stroke-width="2"
-                        />
-                      </svg>
-                    `,
+                () => html `<img
+                        src=${allCheckboxDashSvg}
+                        alt="dash checkbox"
+                      />`,
             ],
             [
                 SelectionState.ALL,
-                () => html `
-                      <svg
-                        width="13"
-                        height="13"
-                        viewBox="0 0 13 13"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <rect width="13" height="13" rx="2" fill="#377CFD" />
-                        <path
-                          d="M4.875 8.75876L2.61625 6.50001L1.84708 7.26376L4.875 10.2917L11.375 3.79167L10.6113 3.02792L4.875 8.75876Z"
-                          fill="white"
-                          stroke="white"
-                        />
-                      </svg>
-                    `,
+                () => html `<img
+                        src=${allCheckboxCheckedSvg}
+                        alt="checked checkbox"
+                      />`,
             ],
         ])}
               </label>
@@ -316,15 +280,7 @@ let AllChecklist = class AllChecklist extends LitElement {
       <!-- Optionally include a close button -->
       ${when(this.includeButtons, () => html `
           <button class="svg-btn" @click=${this.handleButtonClick}>
-            ${when(this.componentMode === FormComponentState.OPEN, () => html `
-                <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24">
-                  <path d="m7.4 15.375-1.4-1.4 6-6 6 6-1.4 1.4-4.6-4.6Z" />
-                </svg>
-              `, () => html `
-                <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24">
-                  <path d="m12 15.375-6-6 1.4-1.4 4.6 4.6 4.6-4.6 1.4 1.4Z" />
-                </svg>
-              `)}
+            ${when(this.componentMode === FormComponentState.OPEN, () => html `<img src=${closeContainerArrowSvg} alt="close arrow" />`, () => html `<img src=${openContainerArrowSvg} alt="open arrow" />`)}
           </button>
         `)}
     `;

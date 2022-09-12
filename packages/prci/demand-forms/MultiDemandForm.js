@@ -50,7 +50,11 @@ class MultiDemandForm extends LitElement {
      */
     handleAddClick() {
         if (this.validate()) {
+            // Create list of demands from data entered in the form
+            this.demands = this.buildDemands();
+            // Send the demands to the top level component to be added to priacy request
             this.addToPrivacyRequest(this.demandGroupId, this.demands);
+            // Move to review state
             this.dispatchEvent(new CustomEvent('component-state-change', {
                 bubbles: true,
                 composed: true,
@@ -63,7 +67,7 @@ class MultiDemandForm extends LitElement {
     render() {
         return html `
       ${choose(this.demandState, [
-            [DemandState.EDIT_OPEN, () => this.getEditTemplate(this.demands)],
+            [DemandState.EDIT_OPEN, () => this.getFormTemplate()],
         ])}
       <!-- Buttons -->
       <div class="btns-ctr">
@@ -89,7 +93,7 @@ MultiDemandForm.styles = [
     buttonStyles,
     css `
       :host {
-        margin: 0px 0px 0px 0px;
+        margin: 0px;
       }
 
       .btns-ctr {
@@ -110,6 +114,25 @@ MultiDemandForm.styles = [
         grid-column: 3/4;
         min-width: 60%;
         max-width: 300px;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        padding: 0;
+        margin: 0;
+      }
+
+      h2 {
+        font-size: 20px;
+      }
+
+      h3 {
+        font-size: 16px;
+        font-weight: normal;
       }
     `,
 ];

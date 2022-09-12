@@ -4,6 +4,7 @@ import { property, state, customElement } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
 import { map } from 'lit/directives/map.js';
 import { localized, msg } from '@lit/localize';
+import '@blindnet/core';
 import './FrequentRequestsMenu.js';
 import './ReviewView.js';
 import './ActionMenu.js';
@@ -12,6 +13,7 @@ import './StatusView.js';
 import './demand-forms/TransparencyForm.js';
 import './demand-forms/AccessForm.js';
 import './demand-forms/DeleteForm.js';
+import './demand-forms/RevokeConsentForm.js';
 import { ACTION, TARGET } from './models/priv-terms.js';
 import { ComponentState } from './utils/states.js';
 import { getDefaultActions, getDefaultDemands, getDefaultDemand } from './utils/utils.js';
@@ -60,6 +62,7 @@ let BldnPrivRequest = class BldnPrivRequest extends LitElement {
         this.addEventListener('component-state-change', e => {
             const details = e.detail;
             this._componentState = details.newState;
+            console.log(this._demands);
             switch (this._componentState) {
                 case ComponentState.EDIT:
                     this._selectedAction = details.newAction;
@@ -186,7 +189,15 @@ let BldnPrivRequest = class BldnPrivRequest extends LitElement {
             [ACTION.OBJECT, () => html ``],
             [ACTION.PORTABILITY, () => html ``],
             [ACTION.RESTRICT, () => html ``],
-            [ACTION.REVOKE, () => html ``],
+            [
+                ACTION.REVOKE,
+                () => html `
+              <revoke-consent-form
+                .demand=${demand}
+                .demandGroupId=${this._currentDemandGroupId}
+              ></revoke-consent-form>
+            `,
+            ],
             [ACTION['OTHER.DEMAND'], () => html ``],
         ], () => html `${msg('Error: Invalid Action')}`)}
     `;
@@ -288,10 +299,13 @@ BldnPrivRequest.styles = [
     containerStyles,
     css `
       :host {
+        display: flex;
+        justify-content: center;
+        justify-items: center;
+
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
           Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         font-size: 16;
-        background-color: white;
         text-align: left;
       }
 

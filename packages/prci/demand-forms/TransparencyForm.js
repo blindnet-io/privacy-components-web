@@ -8,7 +8,6 @@ import { enabledActions } from '../utils/conf.js';
 import { ACTION_DESCRIPTIONS, PROVENANCE_DESCRIPTIONS } from '../utils/dictionary.js';
 import { MultiDemandForm } from './MultiDemandForm.js';
 import { FormComponentState } from '../utils/states.js';
-import '../SlottedDropdown.js';
 import '../AllChecklist.js';
 
 /**
@@ -55,12 +54,16 @@ let TransparencyForm = class TransparencyForm extends MultiDemandForm {
             demand.message = this._additionalMessage;
         });
     }
+    // TODO: Make the transparency form follow our new template
+    buildDemands() {
+        return this.demands;
+    }
     validate() {
         return true;
     }
-    getEditTemplate(demands) {
+    getFormTemplate() {
         var _a;
-        const selectedActions = Object.values(demands).map(d => d.action);
+        const selectedActions = Object.values(this.demands).map(d => d.action);
         return html `
       <p id="edit-heading-1">
         <b>${msg('Details of my TRANSPARENCY Demand')}</b>
@@ -98,7 +101,7 @@ let TransparencyForm = class TransparencyForm extends MultiDemandForm {
                   id=${p}
                   name='provenance-term'
                   type='radio'
-                  ?checked=${((_b = (_a = demands[0].restrictions) === null || _a === void 0 ? void 0 : _a.provenance) === null || _b === void 0 ? void 0 : _b.term) === p}
+                  ?checked=${((_b = (_a = this.demands[0].restrictions) === null || _a === void 0 ? void 0 : _a.provenance) === null || _b === void 0 ? void 0 : _b.term) === p}
                   @click=${this.handleProvenanceTermClick}>
                 </input>
                 <label for=${p}>${PROVENANCE_DESCRIPTIONS[p]()}</label><br/>
@@ -123,7 +126,9 @@ let TransparencyForm = class TransparencyForm extends MultiDemandForm {
             cols="50"
             rows="10"
             @input=${this.handleAdditionalMessageInput}
-            .value=${demands.length !== 0 ? (_a = demands[0].message) !== null && _a !== void 0 ? _a : '' : ''}
+            .value=${this.demands.length !== 0
+            ? (_a = this.demands[0].message) !== null && _a !== void 0 ? _a : ''
+            : ''}
           ></textarea>
         </div>
       </slotted-dropdown>

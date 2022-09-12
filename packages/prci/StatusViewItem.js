@@ -116,10 +116,7 @@ let StatusViewItem = class StatusViewItem extends LitElement {
     `;
     }
     transparencyProvTemplate(demand) {
-        console.log(demand);
         const answer = demand.answer;
-        console.log(Object.keys(demand.answer));
-        console.log(Object.entries(demand.answer));
         return html `
       <p>
         <b>Requested info:</b> ${ACTION_DESCRIPTIONS[demand.requested_action]()}
@@ -173,7 +170,6 @@ let StatusViewItem = class StatusViewItem extends LitElement {
     `;
     }
     transparencyRetTemplate(demand) {
-        console.log(demand);
         const answer = demand.answer;
         return html `
       <p>

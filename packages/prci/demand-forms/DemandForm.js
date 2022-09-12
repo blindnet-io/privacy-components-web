@@ -64,7 +64,7 @@ class DemandForm extends LitElement {
         return html `
       <div>
         ${choose(this.demandState, [
-            [DemandState.EDIT_OPEN, () => this.getEditTemplate(this.demand)],
+            [DemandState.EDIT_OPEN, () => this.getFormTemplate(this.demand)],
         ])}
       </div>
       <!-- Buttons -->
@@ -91,7 +91,7 @@ DemandForm.styles = [
     buttonStyles,
     css `
       :host {
-        margin: 0px 0px 0px 0px;
+        margin: 0px;
       }
 
       .btns-ctr {
