@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/blindnet-io/privacy-components-web/compare/v0.6.1...v0.7.0) (2022-09-12)
+
+
+### Features
+
+* **@blindnet/prci:** revoke requests ([291d720](https://github.com/blindnet-io/privacy-components-web/commit/291d7205df2b14009dc3dd85386bad2bd3060d6f))
+
+
+
+
+
 ## [0.6.1](https://github.com/blindnet-io/privacy-components-web/compare/v0.6.0...v0.6.1) (2022-09-07)
 
 **Note:** Version bump only for package @blindnet/prci
