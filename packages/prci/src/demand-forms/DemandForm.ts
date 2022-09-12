@@ -11,19 +11,11 @@ import { ComponentState, DemandState } from '../utils/states.js';
  * Abstract class for a form that allows the user to create or edit a demand.
  */
 export abstract class DemandForm extends LitElement {
-  @property({ type: Number, attribute: 'demand-state' })
-  demandState: DemandState = DemandState.EDIT_OPEN;
-
-  @property({ attribute: false }) demand: Demand = { action: ACTION.ACCESS };
-
-  // eslint-disable-next-line no-restricted-globals
-  @property({ type: String }) demandGroupId = self.crypto.randomUUID();
-
   static styles = [
     buttonStyles,
     css`
       :host {
-        margin: 0px 0px 0px 0px;
+        margin: 0px;
       }
 
       .btns-ctr {
@@ -47,6 +39,14 @@ export abstract class DemandForm extends LitElement {
       }
     ` as CSSResultGroup,
   ];
+
+  @property({ type: Number, attribute: 'demand-state' })
+  demandState: DemandState = DemandState.EDIT_OPEN;
+
+  @property({ attribute: false }) demand: Demand = { action: ACTION.ACCESS };
+
+  // eslint-disable-next-line no-restricted-globals
+  @property({ type: String }) demandGroupId = self.crypto.randomUUID();
 
   /**
    * Send this demand up to the top level component to add to the Privacy Request
@@ -109,13 +109,13 @@ export abstract class DemandForm extends LitElement {
    * @param useDefault Indicates if form should be populated with default values or from input demands
    * @returns HTML template
    */
-  abstract getEditTemplate(demand: Demand): TemplateResult;
+  abstract getFormTemplate(demand: Demand): TemplateResult;
 
   render(): TemplateResult<1 | 2> {
     return html`
       <div>
         ${choose(this.demandState, [
-          [DemandState.EDIT_OPEN, () => this.getEditTemplate(this.demand)],
+          [DemandState.EDIT_OPEN, () => this.getFormTemplate(this.demand)],
         ])}
       </div>
       <!-- Buttons -->

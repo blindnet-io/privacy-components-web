@@ -23,7 +23,6 @@ import {
 import { DemandForm } from './DemandForm.js';
 import { FormComponentState } from '../utils/states.js';
 
-import '../SlottedDropdown.js';
 import '../AllChecklist.js';
 
 /**
@@ -31,9 +30,6 @@ import '../AllChecklist.js';
  */
 @customElement('delete-form')
 export class DeleteForm extends DemandForm {
-  @property({ type: Array, attribute: false })
-  allowedDataCategories: DATA_CATEGORY[] = [];
-
   static styles = [
     DemandForm.styles,
     containerStyles,
@@ -82,6 +78,9 @@ export class DeleteForm extends DemandForm {
       }
     `,
   ];
+
+  @property({ type: Array, attribute: false })
+  allowedDataCategories: DATA_CATEGORY[] = [];
 
   constructor() {
     super();
@@ -157,7 +156,7 @@ export class DeleteForm extends DemandForm {
     return true;
   }
 
-  getEditTemplate(demand: Demand): TemplateResult<1 | 2> {
+  getFormTemplate(demand: Demand): TemplateResult<1 | 2> {
     return html`
       <div id="delete-form">
         <p id="edit-heading-1">

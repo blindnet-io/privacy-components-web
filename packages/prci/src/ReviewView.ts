@@ -22,21 +22,12 @@ import {
 } from './utils/dictionary.js';
 import { ComponentState } from './utils/states.js';
 
+const editSvg = new URL('./assets/icons/edit-fill.svg', import.meta.url).href;
+
+const trashSvg = new URL('./assets/icons/delete.svg', import.meta.url).href;
+
 @customElement('review-view')
 export class ReviewView extends LitElement {
-  @property({ attribute: false }) demandGroupId: string = '';
-
-  @property({ attribute: false }) demands: Demand[] = [];
-
-  @property({ attribute: false }) demand: Demand = { action: ACTION.ACCESS };
-
-  @property({ type: Boolean, reflect: true, attribute: 'confirm-delete' })
-  confirmDelete: boolean = false;
-
-  @property({ attribute: false }) target: TARGET = TARGET.PARTNERS;
-
-  @state() _action: ACTION = ACTION.ACCESS;
-
   static styles = [
     containerStyles,
     buttonStyles,
@@ -44,7 +35,6 @@ export class ReviewView extends LitElement {
     css`
       :host {
         display: grid;
-        row-gap: 20px;
       }
 
       :host([confirm-delete]) .dmd-review-ctr {
@@ -61,7 +51,6 @@ export class ReviewView extends LitElement {
 
       .dmd-review-ctr {
         display: grid;
-        row-gap: 20px;
         padding: 40px;
       }
 
@@ -80,7 +69,6 @@ export class ReviewView extends LitElement {
       #review-content {
         display: grid;
         grid-area: 2/1/3/2;
-        row-gap: 20px;
         z-index: 1;
       }
 
@@ -94,6 +82,10 @@ export class ReviewView extends LitElement {
 
       .review-list {
         margin: 0px;
+      }
+
+      #request-settings {
+        margin: 20px 0px 0px 0px;
       }
 
       #delete-confirm-popup {
@@ -141,8 +133,30 @@ export class ReviewView extends LitElement {
       #submit-btn {
         transform: translateY(35px);
       }
+
+      h2,
+      h3 {
+        margin-top: 0px;
+      }
+
+      h4 {
+        font-weight: normal;
+      }
     `,
   ];
+
+  @property({ attribute: false }) demandGroupId: string = '';
+
+  @property({ attribute: false }) demands: Demand[] = [];
+
+  @property({ attribute: false }) demand: Demand = { action: ACTION.ACCESS };
+
+  @property({ type: Boolean, reflect: true, attribute: 'confirm-delete' })
+  confirmDelete: boolean = false;
+
+  @property({ attribute: false }) target: TARGET = TARGET.PARTNERS;
+
+  @state() _action: ACTION = ACTION.ACCESS;
 
   getAccessReviewTemplate() {
     const from = this.demand.restrictions?.date_range?.from;
@@ -150,7 +164,7 @@ export class ReviewView extends LitElement {
     const provenance = this.demand.restrictions?.provenance;
     const privacyScope = this.demand.restrictions?.privacy_scope;
     return html`
-      <span>${msg('I want to access:')}</span>
+      <h4>${msg('I want to access:')}</h4>
       <ul id="access-review-list" class="review-list">
         ${when(
           privacyScope &&
@@ -191,7 +205,7 @@ export class ReviewView extends LitElement {
       ${when(
         this.demand.message,
         () => html`
-          <span>${msg('Plus additional info:')}</span>
+          <h4>${msg('Plus additional info:')}</h4>
           <span class="extra-msg-txt"><i>${this.demand.message}</i></span>
         `
       )}
@@ -204,7 +218,7 @@ export class ReviewView extends LitElement {
     const provenance = this.demand.restrictions?.provenance;
     const privacyScope = this.demand.restrictions?.privacy_scope;
     return html`
-      <span>${msg('I want to delete:')}</span>
+      <h4>${msg('I want to delete:')}</h4>
       <ul id="delete-review-list" class="review-list">
         ${when(
           privacyScope &&
@@ -245,7 +259,7 @@ export class ReviewView extends LitElement {
       ${when(
         this.demand.message,
         () => html`
-          <span>${msg('Plus additional info:')}</span>
+          <h4>${msg('Plus additional info:')}</h4>
           <span class="extra-msg-txt"><i>${this.demand.message}</i></span>
         `
       )}
@@ -268,14 +282,38 @@ export class ReviewView extends LitElement {
     return html``;
   }
 
+  /**
+   * FIXME: Use actual revoke texts once the endpoint provides them
+   * @returns
+   */
   getRevokeReviewTemplate() {
-    return html``;
+    return html`
+      <h4>${msg('I no longer consent to:')}</h4>
+      <ul class="review-list">
+        ${map(
+          this.demands,
+          () => html`
+            <li>
+              The storage and processing of my data for the purposes of the
+              prize draw
+            </li>
+          `
+        )}
+      </ul>
+      ${when(
+        this.demands[0].message,
+        () => html`
+          <span>${msg('Plus additional info:')}</span>
+          <span class="extra-msg-txt"><i>${this.demands[0].message}</i></span>
+        `
+      )}
+    `;
   }
 
   getTransparencyReviewTemplate() {
     const provenance = this.demands[0].restrictions?.provenance;
     return html`
-      <span>${msg('I want to know:')}</span>
+      <h4>${msg('I want to know:')}</h4>
       <ul id="transparency-review-list" class="review-list">
         ${map(
           this.demands,
@@ -293,7 +331,7 @@ export class ReviewView extends LitElement {
       ${when(
         this.demands[0].message,
         () => html`
-          <span>${msg('Plus additional info:')}</span>
+          <h4>${msg('Plus additional info:')}</h4>
           <span class="extra-msg-txt"><i>${this.demands[0].message}</i></span>
         `
       )}
@@ -404,22 +442,19 @@ export class ReviewView extends LitElement {
 
   render() {
     return html`
-      <span><b>${msg('My demand(s):')}</b></span>
+      <h2><b>${msg('My demand(s):')}</b></h2>
       
       <div class="dmd-review-ctr light-border">
         <div id="review-heading-row">
-          <span id="review-action-heading"><b>${ACTION_TITLES[
+          <h3 id="review-action-heading">${ACTION_TITLES[
             this._action
-          ]()} demand</b></span>
+          ]()} Demand</h3>
           <div id="review-btns">
             <button class='svg-btn' @click=${this.handleEditClick}>
-              <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24"><path d="m19.3 8.925-4.25-4.2 1.4-1.4q.575-.575 1.413-.575.837 0 1.412.575l1.4 1.4q.575.575.6 1.388.025.812-.55 1.387ZM17.85 10.4 7.25 21H3v-4.25l10.6-10.6Z"/></svg>
+              <img src=${editSvg} alt='edit'/>
             </button>
             <button class='svg-btn' @click=${this.handleDeleteClick}>
-              <svg viewBox="0 0 30 30" width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M26.25 2.8125H3.75C2.71447 2.8125 1.875 3.65197 1.875 4.6875V5.625C1.875 6.66053 2.71447 7.5 3.75 7.5H26.25C27.2855 7.5 28.125 6.66053 28.125 5.625V4.6875C28.125 3.65197 27.2855 2.8125 26.25 2.8125Z" fill="black"/>
-                <path d="M4.36191 9.37501C4.29603 9.37465 4.23083 9.38818 4.17054 9.41472C4.11024 9.44126 4.05622 9.48021 4.01199 9.52902C3.96777 9.57784 3.93432 9.63543 3.91385 9.69804C3.89337 9.76065 3.88632 9.82687 3.89316 9.89239L5.43476 24.6908C5.43444 24.6951 5.43444 24.6994 5.43476 24.7037C5.51531 25.3882 5.84437 26.0193 6.35949 26.4771C6.8746 26.935 7.5399 27.1878 8.22909 27.1875H21.7695C22.4585 27.1875 23.1235 26.9346 23.6384 26.4767C24.1533 26.0189 24.4822 25.388 24.5627 24.7037V24.6914L26.102 9.89239C26.1088 9.82687 26.1017 9.76065 26.0813 9.69804C26.0608 9.63543 26.0273 9.57784 25.9831 9.52902C25.9389 9.48021 25.8849 9.44126 25.8246 9.41472C25.7643 9.38818 25.6991 9.37465 25.6332 9.37501H4.36191ZM18.9436 19.9623C19.0327 20.0489 19.1037 20.1524 19.1525 20.2666C19.2013 20.3809 19.2268 20.5038 19.2277 20.6281C19.2286 20.7523 19.2048 20.8755 19.1576 20.9905C19.1105 21.1055 19.0409 21.2099 18.953 21.2978C18.8651 21.3856 18.7606 21.4551 18.6457 21.5022C18.5307 21.5493 18.4075 21.5731 18.2832 21.5722C18.1589 21.5712 18.0361 21.5456 17.9218 21.4968C17.8076 21.4479 17.7041 21.3769 17.6176 21.2877L14.9996 18.6697L12.3811 21.2877C12.2044 21.4593 11.9674 21.5545 11.7211 21.5528C11.4748 21.551 11.2392 21.4525 11.065 21.2784C10.8908 21.1043 10.7921 20.8686 10.7903 20.6224C10.7884 20.3761 10.8835 20.139 11.0551 19.9623L13.6736 17.3438L11.0551 14.7252C10.8835 14.5485 10.7884 14.3114 10.7903 14.0651C10.7921 13.8189 10.8908 13.5832 11.065 13.4091C11.2392 13.235 11.4748 13.1365 11.7211 13.1347C11.9674 13.133 12.2044 13.2282 12.3811 13.3998L14.9996 16.0178L17.6176 13.3998C17.7942 13.2282 18.0313 13.133 18.2775 13.1347C18.5238 13.1365 18.7595 13.235 18.9336 13.4091C19.1078 13.5832 19.2065 13.8189 19.2084 14.0651C19.2102 14.3114 19.1151 14.5485 18.9436 14.7252L16.325 17.3438L18.9436 19.9623Z" fill="black"/>
-              </svg>
+              <img src=${trashSvg} alt='delete'/>
             </button>
           </div>
         </div>
@@ -477,7 +512,8 @@ export class ReviewView extends LitElement {
       </div> -->
       <!-- Submit button -->
       <slotted-dropdown
-        header=${msg('Privacy Request Advanced settings')}
+        id='request-settings'  
+        .header=${msg('Privacy Request Advanced settings')}
         include-buttons
       >
         <div>

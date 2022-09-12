@@ -29,19 +29,6 @@ import { getRetentionPolicyString } from './utils/utils.js';
  */
 @customElement('status-view-item')
 export class StatusViewItem extends LitElement {
-  @property({ attribute: false }) demand: PrivacyResponseItem = {
-    demand_id: '',
-    date: '',
-    requested_action: ACTION.ACCESS,
-    status: DEMAND_STATUS.GRANTED,
-    includes: [],
-    system: '',
-  };
-
-  @property({ attribute: false }) demands: PrivacyResponseItem[] = [];
-
-  @property({ type: Boolean, reflect: true }) open: boolean = false;
-
   static styles = [
     containerStyles,
     buttonStyles,
@@ -180,6 +167,19 @@ export class StatusViewItem extends LitElement {
     `,
   ];
 
+  @property({ attribute: false }) demand: PrivacyResponseItem = {
+    demand_id: '',
+    date: '',
+    requested_action: ACTION.ACCESS,
+    status: DEMAND_STATUS.GRANTED,
+    includes: [],
+    system: '',
+  };
+
+  @property({ attribute: false }) demands: PrivacyResponseItem[] = [];
+
+  @property({ type: Boolean, reflect: true }) open: boolean = false;
+
   accessResponseTemplate(demand: PrivacyResponseItem) {
     return html`
       ${when(
@@ -293,14 +293,11 @@ export class StatusViewItem extends LitElement {
   }
 
   transparencyProvTemplate(demand: PrivacyResponseItem) {
-    console.log(demand);
     const answer = demand.answer as {
       'AFFILIATION.selector_1': Provenance[];
       'AFFILIATION.MEMBERSHIP.selector_2': Provenance[];
       'FINANCIAL.BANK-ACCOUNT.selector_3': Provenance[];
     };
-    console.log(Object.keys(demand.answer as Object));
-    console.log(Object.entries(demand.answer as Object));
     return html`
       <p>
         <b>Requested info:</b> ${ACTION_DESCRIPTIONS[demand.requested_action]()}
@@ -377,7 +374,6 @@ export class StatusViewItem extends LitElement {
   }
 
   transparencyRetTemplate(demand: PrivacyResponseItem) {
-    console.log(demand);
     const answer = demand.answer as {
       NAME: RetentionPolicy[];
     };

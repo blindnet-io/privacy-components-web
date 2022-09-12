@@ -1,15 +1,20 @@
 import { LitElement, html, css } from 'lit';
 import 'carbon-web-components/es/components/form/index.js';
 import 'carbon-web-components/es/components/input/index.js';
+import 'carbon-web-components/es/components/checkbox/index.js';
+import 'carbon-web-components/es/components/tag/index.js';
 import 'carbon-web-components/es/components/button/button.js';
 import 'carbon-web-components/es/components/file-uploader/index.js';
 import 'carbon-web-components/es/components/notification/inline-notification.js';
 import { FILE_UPLOADER_ITEM_STATE } from 'carbon-web-components/es/components/file-uploader/file-uploader-item.js';
+import { when } from 'lit/directives/when.js';
 
 export class AppParticipateForm extends LitElement {
   static get properties() {
     return {
       pristine: { type: Boolean, state: true },
+      consentGiven: { type: Boolean, state: true },
+      requireConsent: { type: Boolean, state: true },
       _files: { type: Array, state: true },
     };
   }
@@ -54,6 +59,10 @@ export class AppParticipateForm extends LitElement {
     return this.renderRoot?.querySelector('#input-file-upload') ?? null;
   }
 
+  get _checkboxConsent() {
+    return this.renderRoot?.querySelector('#consent-checkbox');
+  }
+
   /** @type {any} */
   get _notificationError() {
     return this.renderRoot?.querySelector('#notification-error') ?? null;
@@ -67,6 +76,8 @@ export class AppParticipateForm extends LitElement {
   constructor() {
     super();
     this.pristine = true;
+    this.consentGiven = false;
+    this.requireConsent = false;
     /**
      * @type {any[]}
      */
@@ -120,6 +131,28 @@ export class AppParticipateForm extends LitElement {
     this._notificationSuccess.open = true;
   }
 
+  async giveConsent() {
+    const headers = {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+    };
+    await fetch(
+      'https://devkit-pce-staging.azurewebsites.net/v0/user-events/consent',
+      {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({
+          dataSubject: {
+            id: 'fdfc95a6-8fd8-4581-91f7-b3d236a6a10e',
+            schema: 'dsid',
+          },
+          consentId: '28b5bee0-9db8-40ec-840e-64eafbfb9ddd',
+          date: new Date().toISOString(),
+        }),
+      }
+    );
+  }
+
   /**
    * @param {boolean} value
    */
@@ -168,9 +201,16 @@ export class AppParticipateForm extends LitElement {
     const formData = new FormData(this._form);
 
     try {
-      await this.saveDataToServer(formData);
-      this.setSubmitting(true);
-      this.setValidity();
+      if (this.consentGiven) {
+        this.requireConsent = false;
+        await this.saveDataToServer(formData);
+        await this.giveConsent();
+        this.setSubmitting(true);
+        this.setValidity();
+      } else {
+        this._notificationError.open = true;
+        this.requireConsent = true;
+      }
     } catch ({ errors }) {
       this.setValidity(errors);
     } finally {
@@ -290,6 +330,21 @@ export class AppParticipateForm extends LitElement {
               `
             )}
           </bx-file-uploader>
+        </bx-form-item>
+        <bx-form-item>
+          <bx-checkbox
+            id="consent-checkbox"
+            @bx-checkbox-changed=${() => {
+              this.consentGiven = !this.consentGiven;
+            }}
+            label-text="I consent to the storage and processing of my data for the purposes of this draw"
+          ></bx-checkbox>
+          ${when(
+            this.requireConsent,
+            () => html`
+              <bx-tag type="red">Consent is required to submit the form</bx-tag>
+            `
+          )}
         </bx-form-item>
         <div className="btn-container">
           <bx-btn id="btn-submit" @click=${this.submit}>Submit</bx-btn>

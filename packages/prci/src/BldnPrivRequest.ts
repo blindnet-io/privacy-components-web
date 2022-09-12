@@ -6,8 +6,8 @@ import { choose } from 'lit/directives/choose.js';
 import { map } from 'lit/directives/map.js';
 import { localized, msg } from '@lit/localize';
 
+import '@blindnet/core';
 import './FrequentRequestsMenu.js';
-import './ResponseView.js';
 import './ReviewView.js';
 import './ActionMenu.js';
 import './RequestsView.js';
@@ -15,6 +15,8 @@ import './StatusView.js';
 import './demand-forms/TransparencyForm.js';
 import './demand-forms/AccessForm.js';
 import './demand-forms/DeleteForm.js';
+import './demand-forms/RevokeConsentForm.js';
+
 import { ACTION, TARGET } from './models/priv-terms.js';
 import { PrivacyRequest } from './models/privacy-request.js';
 import { ComponentState } from './utils/states.js';
@@ -35,131 +37,19 @@ import { sendPrivacyRequest } from './utils/privacy-request-api.js';
 @customElement('bldn-priv-request')
 @localized()
 export class BldnPrivRequest extends LitElement {
-  // JSON string of actions to display
-  @property({ type: String, attribute: 'actions' }) actions = '';
-
-  // Array of actions, given by actions attribute if a valid list was passed, otherwise includes the 9 defaults
-  @state() _includedActions: ACTION[] = getDefaultActions();
-
-  // State of the PRCI component
-  @state() _componentState: ComponentState = ComponentState.MENU;
-
-  // Currently selected action
-  @state() _selectedAction: ACTION = ACTION.TRANSPARENCY;
-
-  // Privacy request object, empty until some demands are added
-  @state() _privacyRequest: PrivacyRequest = {
-    demands: [],
-    data_subject: [
-      {
-        // FIXME: For now we hardcode this, but will come from token once auth added
-        id: 'fdfc95a6-8fd8-4581-91f7-b3d236a6a10e',
-        schema: 'dsid',
-      },
-    ],
-    email: '',
-    target: TARGET.PARTNERS,
-  };
-
-  // Map of demand group ids to sets of demands
-  @state() _demands: Map<string, Demand[]> = new Map<string, Demand[]>();
-
-  @state() _currentDemandGroupId: string = '';
-
-  @state() _currentRequestId: string = '';
-
-  @state() _config = PRCI_CONFIG;
-
-  constructor() {
-    super();
-
-    // Initialize demands and current demand group to the same uuid
-    const initialGroup = self.crypto.randomUUID();
-    this._demands.set(initialGroup, []);
-    this._currentDemandGroupId = initialGroup;
-
-    // State change listener
-    this.addEventListener('component-state-change', e => {
-      const details = (e as CustomEvent).detail;
-      this._componentState = details.newState;
-
-      switch (this._componentState) {
-        case ComponentState.EDIT:
-          this._selectedAction = details.newAction;
-          if (details.demandGroupId !== undefined) {
-            this._currentDemandGroupId = details.demandGroupId;
-          }
-          break;
-        case ComponentState.SUBMITTED:
-          break;
-        case ComponentState.MENU:
-          // For now, going back to the menu means we reset. This will change
-          // when supporting multiple demands.
-          this._demands.set(this._currentDemandGroupId, []);
-          break;
-        case ComponentState.STATUS:
-          this._currentRequestId = details.requestId;
-          break;
-        default:
-          break;
-      }
-    });
-
-    // Demand update listener
-    this.addEventListener('demand-set-multiple', e => {
-      const { demandGroupId, demands } = (e as CustomEvent).detail;
-      this._demands.set(demandGroupId, demands);
-    });
-    this.addEventListener('demand-set', e => {
-      const { demandGroupId, demand } = (e as CustomEvent).detail;
-      this._demands.set(demandGroupId, [demand]);
-    });
-    this.addEventListener('demand-delete', e => {
-      const { demandGroupId } = (e as CustomEvent).detail;
-      this._demands.delete(demandGroupId);
-      this.requestUpdate();
-    });
-
-    // Request target listener
-    this.addEventListener('request-target-change', e => {
-      const { id } = (e as CustomEvent).detail;
-      this._privacyRequest.target = id as TARGET;
-    });
-
-    // Submit request listener
-    this.addEventListener('submit-request', () => {
-      const allDemands = Array.from(this._demands.values()).reduce(
-        (dmds, dmdGroup) => dmds.concat(dmdGroup),
-        []
-      );
-      this._privacyRequest.demands = allDemands.map((d, i) => {
-        d.id = i.toString();
-        return d;
-      });
-
-      sendPrivacyRequest(this._privacyRequest, false).then(response => {
-        this.dispatchEvent(
-          new CustomEvent('component-state-change', {
-            detail: {
-              newState: ComponentState.STATUS,
-              requestId: response.request_id,
-            },
-          })
-        );
-      });
-    });
-  }
-
   static styles = [
     buttonStyles,
     textStyles,
     containerStyles,
     css`
       :host {
+        display: flex;
+        justify-content: center;
+        justify-items: center;
+
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
           Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         font-size: 16;
-        background-color: white;
         text-align: left;
       }
 
@@ -267,6 +157,122 @@ export class BldnPrivRequest extends LitElement {
     `,
   ];
 
+  // JSON string of actions to display
+  @property({ type: String, attribute: 'actions' }) actions = '';
+
+  // Array of actions, given by actions attribute if a valid list was passed, otherwise includes the 9 defaults
+  @state() _includedActions: ACTION[] = getDefaultActions();
+
+  // State of the PRCI component
+  @state() _componentState: ComponentState = ComponentState.MENU;
+
+  // Currently selected action
+  @state() _selectedAction: ACTION = ACTION.TRANSPARENCY;
+
+  // Privacy request object, empty until some demands are added
+  @state() _privacyRequest: PrivacyRequest = {
+    demands: [],
+    data_subject: [
+      {
+        // FIXME: For now we hardcode this, but will come from token once auth added
+        id: 'fdfc95a6-8fd8-4581-91f7-b3d236a6a10e',
+        schema: 'dsid',
+      },
+    ],
+    email: '',
+    target: TARGET.PARTNERS,
+  };
+
+  // Map of demand group ids to sets of demands
+  @state() _demands: Map<string, Demand[]> = new Map<string, Demand[]>();
+
+  @state() _currentDemandGroupId: string = '';
+
+  @state() _currentRequestId: string = '';
+
+  @state() _config = PRCI_CONFIG;
+
+  constructor() {
+    super();
+
+    // Initialize demands and current demand group to the same uuid
+    const initialGroup = self.crypto.randomUUID();
+    this._demands.set(initialGroup, []);
+    this._currentDemandGroupId = initialGroup;
+
+    // State change listener
+    this.addEventListener('component-state-change', e => {
+      const details = (e as CustomEvent).detail;
+      this._componentState = details.newState;
+      console.log(this._demands);
+
+      switch (this._componentState) {
+        case ComponentState.EDIT:
+          this._selectedAction = details.newAction;
+          if (details.demandGroupId !== undefined) {
+            this._currentDemandGroupId = details.demandGroupId;
+          }
+          break;
+        case ComponentState.SUBMITTED:
+          break;
+        case ComponentState.MENU:
+          // For now, going back to the menu means we reset. This will change
+          // when supporting multiple demands.
+          this._demands.set(this._currentDemandGroupId, []);
+          break;
+        case ComponentState.STATUS:
+          this._currentRequestId = details.requestId;
+          break;
+        default:
+          break;
+      }
+    });
+
+    // Demand update listener
+    this.addEventListener('demand-set-multiple', e => {
+      const { demandGroupId, demands } = (e as CustomEvent).detail;
+      this._demands.set(demandGroupId, demands);
+    });
+    this.addEventListener('demand-set', e => {
+      const { demandGroupId, demand } = (e as CustomEvent).detail;
+      this._demands.set(demandGroupId, [demand]);
+    });
+    this.addEventListener('demand-delete', e => {
+      const { demandGroupId } = (e as CustomEvent).detail;
+      this._demands.delete(demandGroupId);
+      this.requestUpdate();
+    });
+
+    // Request target listener
+    this.addEventListener('request-target-change', e => {
+      const { id } = (e as CustomEvent).detail;
+      this._privacyRequest.target = id as TARGET;
+    });
+
+    // Submit request listener
+    this.addEventListener('submit-request', () => {
+      const allDemands = Array.from(this._demands.values()).reduce(
+        (dmds, dmdGroup) => dmds.concat(dmdGroup),
+        []
+      );
+      this._privacyRequest.demands = allDemands.map((d, i) => {
+        d.id = i.toString();
+        return d;
+      });
+
+      sendPrivacyRequest(this._privacyRequest, false).then(response => {
+        this.dispatchEvent(
+          new CustomEvent('component-state-change', {
+            detail: {
+              newState: ComponentState.STATUS,
+              requestId: response.request_id,
+            },
+          })
+        );
+      });
+    });
+  }
+
   /**
    * Reset most states
    * // TODO: Remove this and use something like getDefaultDemand() from the forms
@@ -349,7 +355,15 @@ export class BldnPrivRequest extends LitElement {
           [ACTION.OBJECT, () => html``],
           [ACTION.PORTABILITY, () => html``],
           [ACTION.RESTRICT, () => html``],
-          [ACTION.REVOKE, () => html``],
+          [
+            ACTION.REVOKE,
+            () => html`
+              <revoke-consent-form
+                .demand=${demand}
+                .demandGroupId=${this._currentDemandGroupId}
+              ></revoke-consent-form>
+            `,
+          ],
           [ACTION['OTHER.DEMAND'], () => html``],
         ],
         () => html`${msg('Error: Invalid Action')}`

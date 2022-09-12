@@ -17,7 +17,6 @@ import {
 import { MultiDemandForm } from './MultiDemandForm.js';
 import { FormComponentState } from '../utils/states.js';
 
-import '../SlottedDropdown.js';
 import '../AllChecklist.js';
 import { Restrictions } from '../models/restrictions.js';
 
@@ -30,17 +29,6 @@ import { Restrictions } from '../models/restrictions.js';
  */
 @customElement('transparency-form')
 export class TransparencyForm extends MultiDemandForm {
-  @property({ type: Array, attribute: false })
-  transparencyActions: ACTION[] = Object.values(ACTION).filter(a =>
-    a.includes('TRANSPARENCY.')
-  );
-
-  @property({ type: Array }) advancedSettings = [];
-
-  @property({ attribute: false }) restrictions: Restrictions = {};
-
-  @state() _additionalMessage = '';
-
   static styles = [
     MultiDemandForm.styles,
     containerStyles,
@@ -90,6 +78,17 @@ export class TransparencyForm extends MultiDemandForm {
     `,
   ];
 
+  @property({ type: Array, attribute: false })
+  transparencyActions: ACTION[] = Object.values(ACTION).filter(a =>
+    a.includes('TRANSPARENCY.')
+  );
+
+  @property({ type: Array }) advancedSettings = [];
+
+  @property({ attribute: false }) restrictions: Restrictions = {};
+
+  @state() _additionalMessage = '';
+
   constructor() {
     super();
 
@@ -126,12 +125,17 @@ export class TransparencyForm extends MultiDemandForm {
     });
   }
 
+  // TODO: Make the transparency form follow our new template
+  buildDemands(): Demand[] {
+    return this.demands;
+  }
+
   validate(): boolean {
     return true;
   }
 
-  getEditTemplate(demands: Demand[]): TemplateResult<1 | 2> {
-    const selectedActions = Object.values(demands).map(d => d.action);
+  getFormTemplate(): TemplateResult<1 | 2> {
+    const selectedActions = Object.values(this.demands).map(d => d.action);
     return html`
       <p id="edit-heading-1">
         <b>${msg('Details of my TRANSPARENCY Demand')}</b>
@@ -167,7 +171,9 @@ export class TransparencyForm extends MultiDemandForm {
                   id=${p}
                   name='provenance-term'
                   type='radio'
-                  ?checked=${demands[0].restrictions?.provenance?.term === p}
+                  ?checked=${
+                    this.demands[0].restrictions?.provenance?.term === p
+                  }
                   @click=${this.handleProvenanceTermClick}>
                 </input>
                 <label for=${p}>${PROVENANCE_DESCRIPTIONS[p]()}</label><br/>
@@ -194,7 +200,9 @@ export class TransparencyForm extends MultiDemandForm {
             cols="50"
             rows="10"
             @input=${this.handleAdditionalMessageInput}
-            .value=${demands.length !== 0 ? demands[0].message ?? '' : ''}
+            .value=${this.demands.length !== 0
+              ? this.demands[0].message ?? ''
+              : ''}
           ></textarea>
         </div>
       </slotted-dropdown>

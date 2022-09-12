@@ -22,8 +22,6 @@ import {
 } from '../utils/dictionary.js';
 import { DemandForm } from './DemandForm.js';
 import { FormComponentState } from '../utils/states.js';
-
-import '../SlottedDropdown.js';
 import '../AllChecklist.js';
 
 /**
@@ -31,9 +29,6 @@ import '../AllChecklist.js';
  */
 @customElement('access-form')
 export class AccessForm extends DemandForm {
-  @property({ type: Array, attribute: false })
-  allowedDataCategories: DATA_CATEGORY[] = [];
-
   static styles = [
     DemandForm.styles,
     containerStyles,
@@ -82,6 +77,9 @@ export class AccessForm extends DemandForm {
       }
     `,
   ];
+
+  @property({ type: Array, attribute: false })
+  allowedDataCategories: DATA_CATEGORY[] = [];
 
   constructor() {
     super();
@@ -157,7 +155,7 @@ export class AccessForm extends DemandForm {
     return true;
   }
 
-  getEditTemplate(demand: Demand): TemplateResult<1 | 2> {
+  getFormTemplate(demand: Demand): TemplateResult<1 | 2> {
     return html`
       <div id="access-form">
         <p id="edit-heading-1">

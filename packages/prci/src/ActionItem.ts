@@ -12,11 +12,6 @@ import { ComponentState } from './utils/states.js';
  */
 @localized()
 export class ActionItem extends LitElement {
-  @property({ attribute: false }) action: ACTION = ACTION.ACCESS;
-
-  // Boolean mapping to the disabled attribute of the HTMLButtonElement
-  @property({ type: Boolean }) disabled: boolean = false;
-
   static styles = [
     buttonStyles,
     css`
@@ -49,6 +44,11 @@ export class ActionItem extends LitElement {
       }
     `,
   ];
+
+  @property({ attribute: false }) action: ACTION = ACTION.ACCESS;
+
+  // Boolean mapping to the disabled attribute of the HTMLButtonElement
+  @property({ type: Boolean }) disabled: boolean = false;
 
   handleClick() {
     const event = new CustomEvent('component-state-change', {
