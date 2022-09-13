@@ -4,7 +4,7 @@ import { localized, msg } from '@lit/localize';
 import './ActionItem.js';
 import { ACTION } from './models/priv-terms.js';
 import { enabledActions } from './utils/conf.js';
-import { buttonStyles, containerStyles, textStyles } from './styles.js';
+import { PRCIStyles } from './styles.js';
 import { ComponentState } from './utils/states.js';
 
 const arrowForwardSvg = new URL(
@@ -16,12 +16,10 @@ const arrowForwardSvg = new URL(
  * Menu of clickable action types
  */
 @localized()
-@customElement('action-menu')
+@customElement('action-menu-view')
 export class ActionMenu extends LitElement {
   static styles = [
-    textStyles,
-    containerStyles,
-    buttonStyles,
+    PRCIStyles,
     css`
       .actions-container {
         display: grid;
@@ -40,6 +38,7 @@ export class ActionMenu extends LitElement {
       #other-dmd-btn {
         margin: 20px 0px 0px 0px;
         justify-self: right;
+        color: #5b5b5b;
       }
 
       #below-menu-btns-ctr {
@@ -87,7 +86,7 @@ export class ActionMenu extends LitElement {
 
   render() {
     return html`
-      <div class="view-ctr medium-border">
+      <div class="view-ctr border--medium border--rounded">
         <div class="prompt-heading"><b>${this.prompt}</b></div>
         <div class="actions-container">
           ${this.includedActions
@@ -102,14 +101,14 @@ export class ActionMenu extends LitElement {
         </div>
       </div>
       <div id="below-menu-btns-ctr">
-        <button id="other-dmd-btn" class="link-btn medium-font underline">
+        <button id="other-dmd-btn" class="link-btn text--underline">
           ${msg(
             'Click here if you want to make some other demand (please note that it might take longer to be answered)'
           )}
         </button>
         <button
           id="requests-btn"
-          class="curve-btn medium-border animated-btn"
+          class="btn--curved border--medium border--rounded btn--clickable"
           @click=${this.handleRequestsClick}
         >
           <span>${msg('Access my submitted Privacy Requests')}</span>

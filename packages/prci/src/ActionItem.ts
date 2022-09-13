@@ -2,7 +2,7 @@ import { localized } from '@lit/localize';
 import { html, css, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { ACTION } from './models/priv-terms.js';
-import { buttonStyles } from './styles.js';
+import { PRCIStyles } from './styles.js';
 import { ACTION_DESCRIPTIONS, ACTION_TITLES } from './utils/dictionary.js';
 import { ComponentState } from './utils/states.js';
 
@@ -13,13 +13,13 @@ import { ComponentState } from './utils/states.js';
 @localized()
 export class ActionItem extends LitElement {
   static styles = [
-    buttonStyles,
+    PRCIStyles,
     css`
-      :host button {
+      /* :host button {
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
           Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         font-size: 16px;
-      }
+      } */
 
       .action-button {
         border-radius: 15px;
@@ -65,7 +65,7 @@ export class ActionItem extends LitElement {
   render() {
     return html`
       <button
-        class="action-button animated-btn"
+        class="action-button btn--clickable"
         @click="${this.handleClick}"
         ?disabled=${this.disabled}
       >

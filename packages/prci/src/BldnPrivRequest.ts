@@ -9,7 +9,7 @@ import { localized, msg } from '@lit/localize';
 import '@blindnet/core';
 import './FrequentRequestsMenu.js';
 import './ReviewView.js';
-import './ActionMenu.js';
+import './ActionMenuView.js';
 import './RequestsView.js';
 import './StatusView.js';
 import './demand-forms/TransparencyForm.js';
@@ -26,9 +26,9 @@ import {
   getDefaultDemand,
   getDefaultDemands,
 } from './utils/utils.js';
-import { buttonStyles, containerStyles, textStyles } from './styles.js';
 import { PRCI_CONFIG } from './utils/conf.js';
 import { sendPrivacyRequest } from './utils/privacy-request-api.js';
+import { PRCIStyles } from './styles.js';
 
 /**
  * Top level component encapsulating a single PrivacyRequest. Contains one or
@@ -38,81 +38,34 @@ import { sendPrivacyRequest } from './utils/privacy-request-api.js';
 @localized()
 export class BldnPrivRequest extends LitElement {
   static styles = [
-    buttonStyles,
-    textStyles,
-    containerStyles,
+    PRCIStyles,
     css`
       :host {
         display: flex;
         justify-content: center;
         justify-items: center;
 
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-          Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        font-family: var(
+          --prci-font-family,
+          -apple-system,
+          BlinkMacSystemFont,
+          'Segoe UI',
+          Roboto,
+          Oxygen,
+          Ubuntu,
+          Cantarell,
+          'Open Sans',
+          'Helvetica Neue',
+          sans-serif
+        );
+        color: var(--prci-font-color, #000000);
         font-size: 16;
         text-align: left;
-      }
-
-      :host button {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-          Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-      }
-
-      :host p {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-          Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        margin: 0px;
-      }
-
-      :host span {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-          Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
       }
 
       #prci-ctr {
         padding: 20px;
         max-width: 1350px;
-      }
-
-      #nav-bar {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        align-items: center;
-        padding: 0px 0px 20px 0px;
-      }
-
-      #new-dmd-ctr {
-        display: flex;
-        column-gap: 10px;
-        padding: 20px;
-        align-items: center;
-        justify-content: center;
-      }
-
-      #request-progress-indicator {
-        background-color: red;
-      }
-
-      #frequent-requests {
-        background-color: green;
-      }
-
-      #restart-btn {
-        background: #fafafa;
-        border: none;
-        width: fit-content;
-        height: fit-content;
-        text-decoration: underline;
-        margin: 20px 0px;
-      }
-
-      #req-sent-hdr {
-        padding: 40px 0px;
-      }
-
-      #other-dmd-btn {
-        margin: 20px 0px 0px 0px;
-        float: right;
       }
 
       #heading-ctr {
@@ -128,31 +81,8 @@ export class BldnPrivRequest extends LitElement {
         text-align: center;
       }
 
-      .new-dmd-btn {
-        width: 20px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-      }
-
       button:disabled {
-        /* background-color: #d9d9d9; */
         background-color: #a9d1ff;
-      }
-
-      .ctr-btn {
-        justify-self: center;
-      }
-
-      .demand-builder-next-btn {
-        grid-column: 2/3;
-        padding-bottom: -50px;
-        margin-bottom: -50px;
-      }
-
-      .ctr-txt {
-        text-align: center;
       }
     `,
   ];
@@ -204,7 +134,6 @@ export class BldnPrivRequest extends LitElement {
     this.addEventListener('component-state-change', e => {
       const details = (e as CustomEvent).detail;
       this._componentState = details.newState;
-      console.log(this._demands);
 
       switch (this._componentState) {
         case ComponentState.EDIT:
@@ -417,16 +346,16 @@ export class BldnPrivRequest extends LitElement {
             ComponentState.MENU,
             () => html`
               <div>
-                <action-menu
+                <action-menu-view
                   .includedActions=${this._includedActions}
-                ></action-menu>
+                ></action-menu-view>
               </div>
             `,
           ],
           [
             ComponentState.EDIT,
             () => html`
-              <div class="medium-border view-ctr">
+              <div class="border--medium border--rounded view-ctr">
                 ${this.actionFormFactory(this._selectedAction)}
               </div>
             `,
@@ -434,7 +363,7 @@ export class BldnPrivRequest extends LitElement {
           [
             ComponentState.REVIEW,
             () => html`
-              <div class="medium-border view-ctr">
+              <div class="border--medium border--rounded view-ctr">
                 ${map(
                   this._demands.entries(),
                   ([groupId, demands]) => html`<review-view
@@ -459,12 +388,10 @@ export class BldnPrivRequest extends LitElement {
           [
             ComponentState.SUBMITTED,
             () => html`
-              <p class="ctr-txt">
+              <p>
                 <b>${msg('Your Privacy Request has been sent!')} 🎉</b>
               </p>
-              <p class="ctr-txt">
-                ${msg('You may track the status of your request below.')}
-              </p>
+              <p>${msg('You may track the status of your request below.')}</p>
             `,
           ],
           [ComponentState.AUTH, () => html` <auth-view></auth-view> `],

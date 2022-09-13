@@ -5,11 +5,11 @@ import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
 import { ACTION, DEMAND_STATUS } from './models/priv-terms.js';
 import { PrivacyResponseItem } from './models/privacy-response.js';
-import { buttonStyles, containerStyles, textStyles } from './styles.js';
 import { getRequest } from './utils/privacy-request-api.js';
 
 import './StatusViewItem.js';
 import { ComponentState } from './utils/states.js';
+import { PRCIStyles } from './styles.js';
 
 /**
  * View the status of a Privacy Request
@@ -17,9 +17,7 @@ import { ComponentState } from './utils/states.js';
 @customElement('status-view')
 export class StatusView extends LitElement {
   static styles = [
-    containerStyles,
-    buttonStyles,
-    textStyles,
+    PRCIStyles,
     css`
       :host {
         display: grid;
@@ -203,7 +201,10 @@ export class StatusView extends LitElement {
       ${when(
         this._completedDemands.length > 0,
         () => html`
-          <div id="completed-dmds-ctr" class="dmds-ctr medium-border">
+          <div
+            id="completed-dmds-ctr"
+            class="dmds-ctr border--medium border--rounded"
+          >
             <span><b>${msg('Completed Demand(s)')}</b></span>
             ${map(
               this._completedDemands,
@@ -215,7 +216,10 @@ export class StatusView extends LitElement {
       ${when(
         this._processingDemands.length > 0,
         () => html`
-          <div id="processing-dmds-ctr" class="dmds-ctr medium-border">
+          <div
+            id="processing-dmds-ctr"
+            class="dmds-ctr border--medium border--rounded"
+          >
             <span><b>${msg('Processing Demand(s)')}</b></span>
             ${map(
               this._processingDemands,
@@ -227,7 +231,10 @@ export class StatusView extends LitElement {
       ${when(
         this._cancelledDemands.length > 0,
         () => html`
-          <div id="cancelled-dmds-ctr" class="dmds-ctr medium-border">
+          <div
+            id="cancelled-dmds-ctr"
+            class="dmds-ctr border--medium border--rounded"
+          >
             <span><b>${msg('Cancelled Demand(s)')}</b></span>
             ${map(
               this._cancelledDemands,
@@ -238,13 +245,13 @@ export class StatusView extends LitElement {
       )}
       <div id="nav-btns-ctr">
         <button
-          class="status-nav-btn link-btn dark-font underline"
+          class="status-nav-btn link-btn dark-font text --underline"
           @click=${this.handleBackClick}
         >
           ${msg('Back to my Requests')}
         </button>
         <button
-          class="status-nav-btn link-btn dark-font underline"
+          class="status-nav-btn link-btn dark-font text --underline"
           @click=${this.handleNewRequestClick}
         >
           ${msg('Submit a new Privacy Request')}
