@@ -23,10 +23,6 @@
 <trans-unit id="sa4dd232b5a30f481">
   <source>Action(s)</source>
 </trans-unit>
-<trans-unit id="s990061f6621b0156">
-  <source>My Privacy Request</source>
-  <target>Ma Demande sur les données</target>
-</trans-unit>
 <trans-unit id="sbe8f4a548469f66b">
   <source>ACCESS</source>
   <target>ACCÉDER</target>
@@ -630,6 +626,10 @@
 </trans-unit>
 <trans-unit id="s4ba25fd9630b5aec">
   <source>My Privacy Request Status</source>
+</trans-unit>
+<trans-unit id="s990061f6621b0156">
+  <source>My Privacy Request</source>
+  <target>Ma Demande sur les données</target>
 </trans-unit>
 <trans-unit id="s237c73da8350499a">
   <source>Your Privacy Request has been sent!</source>
