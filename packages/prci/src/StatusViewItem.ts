@@ -16,7 +16,7 @@ import {
 import { PrivacyResponseItem } from './models/privacy-response.js';
 import { Provenance } from './models/provenance.js';
 import { RetentionPolicy } from './models/retention-policy.js';
-import { buttonStyles, containerStyles } from './styles.js';
+import { PRCIStyles } from './styles.js';
 import {
   ACTION_DESCRIPTIONS,
   ACTION_TITLES,
@@ -30,8 +30,7 @@ import { getRetentionPolicyString } from './utils/utils.js';
 @customElement('status-view-item')
 export class StatusViewItem extends LitElement {
   static styles = [
-    containerStyles,
-    buttonStyles,
+    PRCIStyles,
     css`
       .demand-status-ctr {
         display: flex;
@@ -417,7 +416,7 @@ export class StatusViewItem extends LitElement {
   render() {
     return html`
       <div
-        class="demand-status-ctr ${this.demand.status.toLowerCase()}-dmd medium-border"
+        class="demand-status-ctr ${this.demand.status.toLowerCase()}-dmd border--medium border--rounded"
       >
         <span class="status-type-ctr"><b>${this.demand.status}</b></span>
         <div class="dmd-action-ctr ${this.open ? '' : 'round-bottom'}">
@@ -438,7 +437,7 @@ export class StatusViewItem extends LitElement {
                 class="status-btn ${this.demand.status.toLowerCase()}-${this
                   .open
                   ? 'open'
-                  : 'closed'}-btn details-btn curve-btn animated-btn"
+                  : 'closed'}-btn details-btn btn--curved btn--clickable"
                 @click=${() => {
                   this.open = !this.open;
                 }}
@@ -451,7 +450,7 @@ export class StatusViewItem extends LitElement {
             this.demand.status === DEMAND_STATUS['UNDER-REVIEW'],
             () => html`
               <button
-                class="status-btn cancel-btn curve-btn animated-btn"
+                class="status-btn cancel-btn btn--curved btn--clickable"
                 @click=${() => {
                   this.open = !this.open;
                 }}

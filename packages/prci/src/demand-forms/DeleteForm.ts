@@ -10,12 +10,6 @@ import {
   TARGET,
 } from '../models/priv-terms.js';
 import {
-  buttonStyles,
-  containerStyles,
-  imgStyles,
-  textStyles,
-} from '../styles.js';
-import {
   DATA_CATEGORY_DESCRIPTIONS,
   PROVENANCE_DESCRIPTIONS,
   TARGET_DESCRIPTIONS,
@@ -24,6 +18,7 @@ import { DemandForm } from './DemandForm.js';
 import { FormComponentState } from '../utils/states.js';
 
 import '../AllChecklist.js';
+import { PRCIStyles } from '../styles.js';
 
 /**
  * ActionForm for the Delete PRIV action.
@@ -32,10 +27,7 @@ import '../AllChecklist.js';
 export class DeleteForm extends DemandForm {
   static styles = [
     DemandForm.styles,
-    containerStyles,
-    buttonStyles,
-    textStyles,
-    imgStyles,
+    PRCIStyles,
     css`
       #delete-form {
         display: grid;
@@ -163,7 +155,7 @@ export class DeleteForm extends DemandForm {
           <b>${msg('Details of my DELETE Demand')}</b>
         </p>
 
-        <div class="light-border delete-options">
+        <div class="border--light border--rounded delete-options">
           <span slot="prompt">${msg('I want to delete:')}</span>
           <all-checklist
             .choices=${this.allowedDataCategories.map(dc => ({
@@ -185,7 +177,7 @@ export class DeleteForm extends DemandForm {
         </div>
 
         <slotted-dropdown header=${msg('Advanced settings')} include-buttons>
-          <div class="date-restriction-ctr">
+          <div class="date-restriction">
             <p>
               ${msg(
                 'Specify a date range for the selected category(ies) of data:'
@@ -261,10 +253,12 @@ export class DeleteForm extends DemandForm {
         >
           <div class="additional-msg-ctr">
             <span class="">${msg('My additional message:')}</span>
-            <span class="italic"
-              >${msg(
-                'Please note that adding a personalized message might lead to the demand taking longer to be processed'
-              )}</span
+            <span
+              ><i
+                >${msg(
+                  'Please note that adding a personalized message might lead to the demand taking longer to be processed'
+                )}</i
+              ></span
             >
             <textarea
               id="additional-msg"

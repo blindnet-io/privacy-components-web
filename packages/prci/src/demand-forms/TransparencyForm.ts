@@ -3,12 +3,6 @@ import { css, html, TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { Demand } from '../models/demand.js';
 import { ACTION, PROVENANCE } from '../models/priv-terms.js';
-import {
-  buttonStyles,
-  containerStyles,
-  imgStyles,
-  textStyles,
-} from '../styles.js';
 import { enabledActions } from '../utils/conf.js';
 import {
   ACTION_DESCRIPTIONS,
@@ -19,6 +13,7 @@ import { FormComponentState } from '../utils/states.js';
 
 import '../AllChecklist.js';
 import { Restrictions } from '../models/restrictions.js';
+import { PRCIStyles } from '../styles.js';
 
 /**
  * MultiDemandForm for the Transparency PRIV action. Includes a dropdown and text element.
@@ -31,10 +26,7 @@ import { Restrictions } from '../models/restrictions.js';
 export class TransparencyForm extends MultiDemandForm {
   static styles = [
     MultiDemandForm.styles,
-    containerStyles,
-    buttonStyles,
-    textStyles,
-    imgStyles,
+    PRCIStyles,
     css`
       :host {
         display: grid;
@@ -141,7 +133,7 @@ export class TransparencyForm extends MultiDemandForm {
         <b>${msg('Details of my TRANSPARENCY Demand')}</b>
       </p>
 
-      <div class="light-border transparency-options">
+      <div class="border--light border--rounded transparency-options">
         <span slot="prompt"><b>${msg('I want to know:')}</b></span>
         <all-checklist
           .choices=${this.transparencyActions.map(a => ({
@@ -188,10 +180,12 @@ export class TransparencyForm extends MultiDemandForm {
       >
         <div class="additional-msg-ctr">
           <span class="">${msg('My additional message:')}</span>
-          <span class="italic"
-            >${msg(
-              'Please note that adding a personalized message might lead to the demand taking longer to be processed'
-            )}</span
+          <span
+            ><i
+              >${msg(
+                'Please note that adding a personalized message might lead to the demand taking longer to be processed'
+              )}</i
+            ></span
           >
           <textarea
             id="additional-msg"
