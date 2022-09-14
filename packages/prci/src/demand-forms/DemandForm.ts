@@ -1,5 +1,12 @@
 import { msg } from '@lit/localize';
-import { css, CSSResultGroup, html, LitElement, TemplateResult } from 'lit';
+import {
+  css,
+  CSSResultGroup,
+  html,
+  LitElement,
+  PropertyValueMap,
+  TemplateResult,
+} from 'lit';
 import { property } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
 import { Demand } from '../models/demand.js';
@@ -47,6 +54,8 @@ export abstract class DemandForm extends LitElement {
 
   // eslint-disable-next-line no-restricted-globals
   @property({ type: String }) demandGroupId = self.crypto.randomUUID();
+
+  @property({ type: Boolean }) default = false;
 
   /**
    * Send this demand up to the top level component to add to the Privacy Request
@@ -110,6 +119,16 @@ export abstract class DemandForm extends LitElement {
    * @returns HTML template
    */
   abstract getFormTemplate(demand: Demand): TemplateResult;
+
+  abstract getDefaultDemand(): Demand;
+
+  protected willUpdate(
+    _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
+  ): void {
+    if (_changedProperties.has('default') && this.default) {
+      this.demand = this.getDefaultDemand();
+    }
+  }
 
   render(): TemplateResult<1 | 2> {
     return html`

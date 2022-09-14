@@ -3,6 +3,7 @@ import { css, html, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { Demand } from '../models/demand.js';
 import {
+  ACTION,
   DATA_CATEGORY,
   PROCESSING_CATEGORY,
   PROVENANCE,
@@ -145,6 +146,24 @@ export class AccessForm extends DemandForm {
 
   validate(): boolean {
     return true;
+  }
+
+  getDefaultDemand(): Demand {
+    return {
+      action: ACTION.ACCESS,
+      restrictions: {
+        privacy_scope: this.allowedDataCategories.map(dc => ({
+          dc,
+          pc: PROCESSING_CATEGORY.ALL,
+          pp: PURPOSE.ALL,
+        })),
+        provenance: {
+          term: PROVENANCE.ALL,
+          target: TARGET.SYSTEM,
+        },
+        date_range: {},
+      },
+    };
   }
 
   getFormTemplate(demand: Demand): TemplateResult<1 | 2> {
