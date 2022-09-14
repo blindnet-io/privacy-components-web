@@ -25,5 +25,5 @@ export default /** @type {import('@web/dev-server').DevServerConfig} */ ({
   // See documentation for all available options
   // https://modern-web.dev/docs/dev-server/cli-and-configuration/
 
-  basePath: '/privacy-components-web/demos/devkit-simple-tutorial/',
+  basePath: '/demos/devkit-simple-tutorial/',
 });
