@@ -21,6 +21,10 @@ export function getDefaultActions() {
   return Object.values(ACTION).filter(a => !a.includes('TRANSPARENCY.'));
 }
 
+export function getDefaultDataCategories() {
+  return Object.values(DATA_CATEGORY).filter(dc => !dc.includes('.'));
+}
+
 export function getDefaultDemand(action: ACTION): Demand {
   switch (action) {
     case ACTION.ACCESS:
