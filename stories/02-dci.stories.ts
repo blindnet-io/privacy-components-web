@@ -2,7 +2,8 @@ import { html, TemplateResult } from 'lit';
 import '../packages/dci/dist/index.js';
 
 export default {
-  title: 'BldnDataConsum',
+  title: 'Data Consumer Interface (DCI)',
+  id: 'dci',
   component: 'bldn-data-consum',
   argTypes: {},
 };
