@@ -160,6 +160,10 @@ Releases are **automatically** made and published to npm as follow:
 
 Version numbers follow [**semantic versioning**](https://semver.org/) and are automatically incremented based on commits messages.
 
+## Localization
+
+To contribute by adding translations, see [here](localization/README.md).
+
 ## <a name="commit"></a> Commit Message Guidelines
 
 Automating releases and change log generation require following very **precise rules** over how the git commit messages can be formatted.
