@@ -4,7 +4,8 @@ import { allLocales } from '../packages/prci/dist/generated/locale-codes.js';
 import { setLocale } from '../packages/prci/dist/utils/localization.js';
 
 export default {
-  title: 'BldnPrivRequest',
+  title: 'Privacy Request Capture Interface (PRCI)',
+  id: 'prci',
   component: 'bldn-priv-request',
   argTypes: {
     actions: {
