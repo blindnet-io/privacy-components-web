@@ -1,4 +1,4 @@
-## Contributing
+# Contributing
 
 The _Privacy Components for the web_ are made in a monorepository where web components are delivered as separate npm packages and CDN bundles as part of the [blindnet devkit](https://blindnet.dev).
 
