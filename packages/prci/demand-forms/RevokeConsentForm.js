@@ -4,10 +4,10 @@ import { css, html } from 'lit';
 import { state, customElement } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
-import { containerStyles, buttonStyles, textStyles, imgStyles } from '../styles.js';
 import { MultiDemandForm } from './MultiDemandForm.js';
 import '../AllChecklist.js';
 import { ACTION } from '../models/priv-terms.js';
+import { PRCIStyles } from '../styles.js';
 
 /**
  * ActionForm for the REVOKE PRIV action.
@@ -122,7 +122,7 @@ let RevokeConsentForm = class RevokeConsentForm extends MultiDemandForm {
             </fieldset>
 
             ${when(!this._revokeAll, () => html `
-                <div id="consents-ctr" class="light-border">
+                <div id="consents-ctr" class="border--light border--rounded">
                   <h3>
                     ${msg(html `Check the consents you wish to
                         <strong>revoke</strong>:`)}
@@ -141,8 +141,10 @@ let RevokeConsentForm = class RevokeConsentForm extends MultiDemandForm {
             >
               <div class="additional-msg-ctr">
                 <span class="">${msg('My additional message:')}</span>
-                <span class="italic"
-                  >${msg('Please note that adding a personalized message might lead to the demand taking longer to be processed')}</span
+                <span
+                  ><i
+                    >${msg('Please note that adding a personalized message might lead to the demand taking longer to be processed')}</i
+                  ></span
                 >
                 <textarea
                   id="additional-msg"
@@ -162,10 +164,7 @@ let RevokeConsentForm = class RevokeConsentForm extends MultiDemandForm {
 };
 RevokeConsentForm.styles = [
     MultiDemandForm.styles,
-    containerStyles,
-    buttonStyles,
-    textStyles,
-    imgStyles,
+    PRCIStyles,
     css `
       #revoke-consent-form-ctr {
         display: grid;

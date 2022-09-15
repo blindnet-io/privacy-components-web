@@ -3,7 +3,7 @@ import { localized } from '@lit/localize';
 import { css, LitElement, html } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
 import { ACTION } from './models/priv-terms.js';
-import { buttonStyles } from './styles.js';
+import { PRCIStyles } from './styles.js';
 import { ACTION_TITLES, ACTION_DESCRIPTIONS } from './utils/dictionary.js';
 import { ComponentState } from './utils/states.js';
 
@@ -28,7 +28,7 @@ let ActionItem = class ActionItem extends LitElement {
     render() {
         return html `
       <button
-        class="action-button animated-btn"
+        class="action-button btn--clickable"
         @click="${this.handleClick}"
         ?disabled=${this.disabled}
       >
@@ -38,13 +38,13 @@ let ActionItem = class ActionItem extends LitElement {
     }
 };
 ActionItem.styles = [
-    buttonStyles,
+    PRCIStyles,
     css `
-      :host button {
+      /* :host button {
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
           Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         font-size: 16px;
-      }
+      } */
 
       .action-button {
         border-radius: 15px;

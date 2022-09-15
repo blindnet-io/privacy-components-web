@@ -1,10 +1,13 @@
 import { html } from 'lit';
-import { ACTION, PROCESSING_CATEGORY, PURPOSE, PROVENANCE, TARGET } from '../models/priv-terms.js';
+import { ACTION, DATA_CATEGORY, PROCESSING_CATEGORY, PURPOSE, PROVENANCE, TARGET } from '../models/priv-terms.js';
 import { PRCI_CONFIG } from './conf.js';
 import { DATA_CATEGORY_TITLES, POLICY_TYPE_TITLES, AFTER_TITLES } from './dictionary.js';
 
 function getDefaultActions() {
     return Object.values(ACTION).filter(a => !a.includes('TRANSPARENCY.'));
+}
+function getDefaultDataCategories() {
+    return Object.values(DATA_CATEGORY).filter(dc => !dc.includes('.'));
 }
 function getDefaultDemand(action) {
     switch (action) {
@@ -83,5 +86,5 @@ function getRetentionPolicyString(dataCategory, policyType, duration, after) {
     <i>${AFTER_TITLES[after]().toLocaleUpperCase()}</i>`;
 }
 
-export { getDefaultActions, getDefaultDemand, getDefaultDemands, getRetentionPolicyString };
+export { getDefaultActions, getDefaultDataCategories, getDefaultDemand, getDefaultDemands, getRetentionPolicyString };
 //# sourceMappingURL=utils.js.map

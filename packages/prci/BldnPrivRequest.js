@@ -7,7 +7,7 @@ import { localized, msg } from '@lit/localize';
 import '@blindnet/core';
 import './FrequentRequestsMenu.js';
 import './ReviewView.js';
-import './ActionMenu.js';
+import './ActionMenuView.js';
 import './RequestsView.js';
 import './StatusView.js';
 import './demand-forms/TransparencyForm.js';
@@ -16,10 +16,10 @@ import './demand-forms/DeleteForm.js';
 import './demand-forms/RevokeConsentForm.js';
 import { ACTION, TARGET } from './models/priv-terms.js';
 import { ComponentState } from './utils/states.js';
-import { getDefaultActions, getDefaultDemands, getDefaultDemand } from './utils/utils.js';
-import { buttonStyles, textStyles, containerStyles } from './styles.js';
+import { getDefaultActions, getDefaultDataCategories, getDefaultDemands } from './utils/utils.js';
 import { PRCI_CONFIG } from './utils/conf.js';
 import { sendPrivacyRequest } from './utils/privacy-request-api.js';
+import { PRCIStyles } from './styles.js';
 
 /**
  * Top level component encapsulating a single PrivacyRequest. Contains one or
@@ -30,12 +30,15 @@ let BldnPrivRequest = class BldnPrivRequest extends LitElement {
         super();
         // JSON string of actions to display
         this.actions = '';
-        // Array of actions, given by actions attribute if a valid list was passed, otherwise includes the 9 defaults
+        // JSON string of allowed data categories
+        this.dataCategories = '';
+        // Array of available actions, given by actions property if a valid list was passed
         this._includedActions = getDefaultActions();
-        // State of the PRCI component
-        this._componentState = ComponentState.MENU;
-        // Currently selected action
-        this._selectedAction = ACTION.TRANSPARENCY;
+        // Array of available data categories, given by dataCategories property if a valid list was passed
+        this._includedDataCategories = getDefaultDataCategories();
+        this._currentRequestId = '';
+        this._currentDemandGroupId = '';
+        this._currentAction = ACTION.TRANSPARENCY;
         // Privacy request object, empty until some demands are added
         this._privacyRequest = {
             demands: [],
@@ -51,9 +54,9 @@ let BldnPrivRequest = class BldnPrivRequest extends LitElement {
         };
         // Map of demand group ids to sets of demands
         this._demands = new Map();
-        this._currentDemandGroupId = '';
-        this._currentRequestId = '';
         this._config = PRCI_CONFIG;
+        // UI state indicating which view to show
+        this._componentState = ComponentState.MENU;
         // Initialize demands and current demand group to the same uuid
         const initialGroup = self.crypto.randomUUID();
         this._demands.set(initialGroup, []);
@@ -62,10 +65,9 @@ let BldnPrivRequest = class BldnPrivRequest extends LitElement {
         this.addEventListener('component-state-change', e => {
             const details = e.detail;
             this._componentState = details.newState;
-            console.log(this._demands);
             switch (this._componentState) {
                 case ComponentState.EDIT:
-                    this._selectedAction = details.newAction;
+                    this._currentAction = details.newAction;
                     if (details.demandGroupId !== undefined) {
                         this._currentDemandGroupId = details.demandGroupId;
                     }
@@ -143,12 +145,12 @@ let BldnPrivRequest = class BldnPrivRequest extends LitElement {
      * @returns
      */
     actionFormFactory(action) {
-        const currentDemand = this._demands.get(this._currentDemandGroupId);
-        // Handle the transparency action case where we have multiple demands per form
+        const demandGroup = this._demands.get(this._currentDemandGroupId);
+        // Use one of the multi demand forms
         if (action === ACTION.TRANSPARENCY) {
             // Decide if we should use the default demand or not
-            const multiDemand = currentDemand && currentDemand.length !== 0
-                ? currentDemand
+            const multiDemand = demandGroup && demandGroup.length !== 0
+                ? demandGroup
                 : getDefaultDemands(action);
             return html `
         <transparency-form
@@ -158,10 +160,9 @@ let BldnPrivRequest = class BldnPrivRequest extends LitElement {
         ></transparency-form>
       `;
         }
-        // Decide if we should use the default demand or not
-        const demand = currentDemand && currentDemand.length !== 0
-            ? currentDemand[0]
-            : getDefaultDemand(action);
+        // Use one of the single demand forms
+        const demand = demandGroup && demandGroup.length !== 0 ? demandGroup[0] : undefined;
+        const useDefault = !demandGroup || demandGroup.length === 0;
         // Get the form for all other action types
         return html `
       ${choose(action, [
@@ -169,9 +170,10 @@ let BldnPrivRequest = class BldnPrivRequest extends LitElement {
                 ACTION.ACCESS,
                 () => html `
               <access-form
-                .demand=${demand}
+                .demand=${demandGroup !== null && demandGroup !== void 0 ? demandGroup : ''}
                 .demandGroupId=${this._currentDemandGroupId}
-                .allowedDataCategories=${this._config['access-allowed-data-categories']}
+                .allowedDataCategories=${this._includedDataCategories}
+                .default=${useDefault}
               ></access-form>
             `,
             ],
@@ -181,7 +183,8 @@ let BldnPrivRequest = class BldnPrivRequest extends LitElement {
               <delete-form
                 .demand=${demand}
                 .demandGroupId=${this._currentDemandGroupId}
-                .allowedDataCategories=${this._config['delete-allowed-data-categories']}
+                .allowedDataCategories=${this._includedDataCategories}
+                .default=${useDefault}
               ></delete-form>
             `,
             ],
@@ -216,15 +219,30 @@ let BldnPrivRequest = class BldnPrivRequest extends LitElement {
     willUpdate(_changedProperties) {
         if (_changedProperties.has('actions') && this.actions) {
             try {
+                // Select the valid actions from those passed in
                 const actionsList = Array.from(JSON.parse(this.actions)).map(a => a.toLocaleLowerCase());
                 const validActionsList = getDefaultActions().filter(a => actionsList.includes(a.toLocaleLowerCase()));
-                // If a valid list of actions has been passed, use it
+                // If any valid actions were passed in, use them
                 if (validActionsList.length > 0) {
                     this._includedActions = validActionsList;
                 }
             }
             catch (_a) {
                 this._includedActions = getDefaultActions();
+            }
+        }
+        if (_changedProperties.has('dataCategories') && this.dataCategories) {
+            try {
+                // Select the valid data categories from those passed in
+                const dataCategoriesList = Array.from(JSON.parse(this.dataCategories)).map(dc => dc.toLocaleLowerCase());
+                const validDataCategories = getDefaultDataCategories().filter(dc => dataCategoriesList.includes(dc.toLocaleLowerCase()));
+                // If any valid data categories were passed in, use them
+                if (validDataCategories.length > 0) {
+                    this._includedDataCategories = validDataCategories;
+                }
+            }
+            catch (_b) {
+                this._includedDataCategories = getDefaultDataCategories();
             }
         }
     }
@@ -241,24 +259,24 @@ let BldnPrivRequest = class BldnPrivRequest extends LitElement {
                 ComponentState.MENU,
                 () => html `
               <div>
-                <action-menu
+                <action-menu-view
                   .includedActions=${this._includedActions}
-                ></action-menu>
+                ></action-menu-view>
               </div>
             `,
             ],
             [
                 ComponentState.EDIT,
                 () => html `
-              <div class="medium-border view-ctr">
-                ${this.actionFormFactory(this._selectedAction)}
+              <div class="border--medium border--rounded view-ctr">
+                ${this.actionFormFactory(this._currentAction)}
               </div>
             `,
             ],
             [
                 ComponentState.REVIEW,
                 () => html `
-              <div class="medium-border view-ctr">
+              <div class="border--medium border--rounded view-ctr">
                 ${map(this._demands.entries(), ([groupId, demands]) => html `<review-view
                     .demandGroupId=${groupId}
                     .demands=${demands}
@@ -279,12 +297,10 @@ let BldnPrivRequest = class BldnPrivRequest extends LitElement {
             [
                 ComponentState.SUBMITTED,
                 () => html `
-              <p class="ctr-txt">
+              <p>
                 <b>${msg('Your Privacy Request has been sent!')} 🎉</b>
               </p>
-              <p class="ctr-txt">
-                ${msg('You may track the status of your request below.')}
-              </p>
+              <p>${msg('You may track the status of your request below.')}</p>
             `,
             ],
             [ComponentState.AUTH, () => html ` <auth-view></auth-view> `],
@@ -294,81 +310,34 @@ let BldnPrivRequest = class BldnPrivRequest extends LitElement {
     }
 };
 BldnPrivRequest.styles = [
-    buttonStyles,
-    textStyles,
-    containerStyles,
+    PRCIStyles,
     css `
       :host {
         display: flex;
         justify-content: center;
         justify-items: center;
 
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-          Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        font-family: var(
+          --prci-font-family,
+          -apple-system,
+          BlinkMacSystemFont,
+          'Segoe UI',
+          Roboto,
+          Oxygen,
+          Ubuntu,
+          Cantarell,
+          'Open Sans',
+          'Helvetica Neue',
+          sans-serif
+        );
+        color: var(--prci-font-color, #000000);
         font-size: 16;
         text-align: left;
-      }
-
-      :host button {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-          Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-      }
-
-      :host p {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-          Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        margin: 0px;
-      }
-
-      :host span {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-          Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
       }
 
       #prci-ctr {
         padding: 20px;
         max-width: 1350px;
-      }
-
-      #nav-bar {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        align-items: center;
-        padding: 0px 0px 20px 0px;
-      }
-
-      #new-dmd-ctr {
-        display: flex;
-        column-gap: 10px;
-        padding: 20px;
-        align-items: center;
-        justify-content: center;
-      }
-
-      #request-progress-indicator {
-        background-color: red;
-      }
-
-      #frequent-requests {
-        background-color: green;
-      }
-
-      #restart-btn {
-        background: #fafafa;
-        border: none;
-        width: fit-content;
-        height: fit-content;
-        text-decoration: underline;
-        margin: 20px 0px;
-      }
-
-      #req-sent-hdr {
-        padding: 40px 0px;
-      }
-
-      #other-dmd-btn {
-        margin: 20px 0px 0px 0px;
-        float: right;
       }
 
       #heading-ctr {
@@ -384,46 +353,32 @@ BldnPrivRequest.styles = [
         text-align: center;
       }
 
-      .new-dmd-btn {
-        width: 20px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-      }
-
       button:disabled {
-        /* background-color: #d9d9d9; */
         background-color: #a9d1ff;
-      }
-
-      .ctr-btn {
-        justify-self: center;
-      }
-
-      .demand-builder-next-btn {
-        grid-column: 2/3;
-        padding-bottom: -50px;
-        margin-bottom: -50px;
-      }
-
-      .ctr-txt {
-        text-align: center;
       }
     `,
 ];
 __decorate([
-    property({ type: String, attribute: 'actions' })
+    property({ type: String })
 ], BldnPrivRequest.prototype, "actions", void 0);
+__decorate([
+    property({ type: String, attribute: 'data-categories' })
+], BldnPrivRequest.prototype, "dataCategories", void 0);
 __decorate([
     state()
 ], BldnPrivRequest.prototype, "_includedActions", void 0);
 __decorate([
     state()
-], BldnPrivRequest.prototype, "_componentState", void 0);
+], BldnPrivRequest.prototype, "_includedDataCategories", void 0);
 __decorate([
     state()
-], BldnPrivRequest.prototype, "_selectedAction", void 0);
+], BldnPrivRequest.prototype, "_currentRequestId", void 0);
+__decorate([
+    state()
+], BldnPrivRequest.prototype, "_currentDemandGroupId", void 0);
+__decorate([
+    state()
+], BldnPrivRequest.prototype, "_currentAction", void 0);
 __decorate([
     state()
 ], BldnPrivRequest.prototype, "_privacyRequest", void 0);
@@ -432,13 +387,10 @@ __decorate([
 ], BldnPrivRequest.prototype, "_demands", void 0);
 __decorate([
     state()
-], BldnPrivRequest.prototype, "_currentDemandGroupId", void 0);
-__decorate([
-    state()
-], BldnPrivRequest.prototype, "_currentRequestId", void 0);
-__decorate([
-    state()
 ], BldnPrivRequest.prototype, "_config", void 0);
+__decorate([
+    state()
+], BldnPrivRequest.prototype, "_componentState", void 0);
 BldnPrivRequest = __decorate([
     customElement('bldn-priv-request'),
     localized()

@@ -5,10 +5,10 @@ import { property, state, customElement } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
 import { DEMAND_STATUS, ACTION } from './models/priv-terms.js';
-import { containerStyles, buttonStyles, textStyles } from './styles.js';
 import { getRequest } from './utils/privacy-request-api.js';
 import './StatusViewItem.js';
 import { ComponentState } from './utils/states.js';
+import { PRCIStyles } from './styles.js';
 
 /**
  * View the status of a Privacy Request
@@ -105,32 +105,41 @@ let StatusView = class StatusView extends LitElement {
           </p>
         `)}
       ${when(this._completedDemands.length > 0, () => html `
-          <div id="completed-dmds-ctr" class="dmds-ctr medium-border">
+          <div
+            id="completed-dmds-ctr"
+            class="dmds-ctr border--medium border--rounded"
+          >
             <span><b>${msg('Completed Demand(s)')}</b></span>
             ${map(this._completedDemands, d => html `<status-view-item .demand=${d}></status-view-item>`)}
           </div>
         `)}
       ${when(this._processingDemands.length > 0, () => html `
-          <div id="processing-dmds-ctr" class="dmds-ctr medium-border">
+          <div
+            id="processing-dmds-ctr"
+            class="dmds-ctr border--medium border--rounded"
+          >
             <span><b>${msg('Processing Demand(s)')}</b></span>
             ${map(this._processingDemands, d => html `<status-view-item .demand=${d}></status-view-item>`)}
           </div>
         `)}
       ${when(this._cancelledDemands.length > 0, () => html `
-          <div id="cancelled-dmds-ctr" class="dmds-ctr medium-border">
+          <div
+            id="cancelled-dmds-ctr"
+            class="dmds-ctr border--medium border--rounded"
+          >
             <span><b>${msg('Cancelled Demand(s)')}</b></span>
             ${map(this._cancelledDemands, d => html `<status-view-item .demand=${d}></status-view-item>`)}
           </div>
         `)}
       <div id="nav-btns-ctr">
         <button
-          class="status-nav-btn link-btn dark-font underline"
+          class="status-nav-btn link-btn dark-font text --underline"
           @click=${this.handleBackClick}
         >
           ${msg('Back to my Requests')}
         </button>
         <button
-          class="status-nav-btn link-btn dark-font underline"
+          class="status-nav-btn link-btn dark-font text --underline"
           @click=${this.handleNewRequestClick}
         >
           ${msg('Submit a new Privacy Request')}
@@ -140,9 +149,7 @@ let StatusView = class StatusView extends LitElement {
     }
 };
 StatusView.styles = [
-    containerStyles,
-    buttonStyles,
-    textStyles,
+    PRCIStyles,
     css `
       :host {
         display: grid;

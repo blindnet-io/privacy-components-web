@@ -1,6 +1,7 @@
 import { Demand } from '../models/demand.js';
 import { ACTION, AFTER, DATA_CATEGORY, POLICY_TYPE } from '../models/priv-terms.js';
 export declare function getDefaultActions(): ACTION[];
+export declare function getDefaultDataCategories(): DATA_CATEGORY[];
 export declare function getDefaultDemand(action: ACTION): Demand;
 export declare function getDefaultDemands(action: ACTION): Demand[];
 /**

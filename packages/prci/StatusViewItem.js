@@ -6,7 +6,7 @@ import { choose } from 'lit/directives/choose.js';
 import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
 import { ACTION, DEMAND_STATUS, PROVENANCE, DATA_CATEGORY } from './models/priv-terms.js';
-import { containerStyles, buttonStyles } from './styles.js';
+import { PRCIStyles } from './styles.js';
 import { ACTION_DESCRIPTIONS, ACTION_TITLES, DEMAND_STATUS_DESCRIPTIONS } from './utils/dictionary.js';
 import { getRetentionPolicyString } from './utils/utils.js';
 
@@ -199,7 +199,7 @@ let StatusViewItem = class StatusViewItem extends LitElement {
     render() {
         return html `
       <div
-        class="demand-status-ctr ${this.demand.status.toLowerCase()}-dmd medium-border"
+        class="demand-status-ctr ${this.demand.status.toLowerCase()}-dmd border--medium border--rounded"
       >
         <span class="status-type-ctr"><b>${this.demand.status}</b></span>
         <div class="dmd-action-ctr ${this.open ? '' : 'round-bottom'}">
@@ -218,7 +218,7 @@ let StatusViewItem = class StatusViewItem extends LitElement {
                 class="status-btn ${this.demand.status.toLowerCase()}-${this
             .open
             ? 'open'
-            : 'closed'}-btn details-btn curve-btn animated-btn"
+            : 'closed'}-btn details-btn btn--curved btn--clickable"
                 @click=${() => {
             this.open = !this.open;
         }}
@@ -228,7 +228,7 @@ let StatusViewItem = class StatusViewItem extends LitElement {
             `)}
           ${when(this.demand.status === DEMAND_STATUS['UNDER-REVIEW'], () => html `
               <button
-                class="status-btn cancel-btn curve-btn animated-btn"
+                class="status-btn cancel-btn btn--curved btn--clickable"
                 @click=${() => {
             this.open = !this.open;
         }}
@@ -312,8 +312,7 @@ let StatusViewItem = class StatusViewItem extends LitElement {
     }
 };
 StatusViewItem.styles = [
-    containerStyles,
-    buttonStyles,
+    PRCIStyles,
     css `
       .demand-status-ctr {
         display: flex;

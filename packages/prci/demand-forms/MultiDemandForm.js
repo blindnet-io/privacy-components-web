@@ -3,7 +3,7 @@ import { msg } from '@lit/localize';
 import { css, LitElement, html } from 'lit';
 import { property } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
-import { buttonStyles } from '../styles.js';
+import { PRCIStyles } from '../styles.js';
 import { DemandState, ComponentState } from '../utils/states.js';
 
 /**
@@ -73,14 +73,14 @@ class MultiDemandForm extends LitElement {
       <div class="btns-ctr">
         <button
           id="back-btn"
-          class="nav-btn ctr-btn animated-btn"
+          class="nav-btn btn--centered btn--clickable"
           @click=${this.handleBackClick}
         >
           ${msg('Back')}
         </button>
         <button
           id="add-btn"
-          class="nav-btn ctr-btn animated-btn"
+          class="nav-btn btn--centered btn--clickable"
           @click=${this.handleAddClick}
         >
           ${msg('Next')}
@@ -90,7 +90,7 @@ class MultiDemandForm extends LitElement {
     }
 }
 MultiDemandForm.styles = [
-    buttonStyles,
+    PRCIStyles,
     css `
       :host {
         margin: 0px;

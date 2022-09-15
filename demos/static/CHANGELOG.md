@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/blindnet-io/privacy-components-web/compare/v0.6.1...v0.7.0) (2022-09-12)
+
+
+### Bug Fixes
+
+* **@blindnet-demos/static:** wrong script URLs ([185144c](https://github.com/blindnet-io/privacy-components-web/commit/185144c0123b3392a135f961d7daa67f29903743))
+
+
+
+
+
 # [0.6.0](https://github.com/blindnet-io/privacy-components-web/compare/v0.5.1...v0.6.0) (2022-09-06)
 
 **Note:** Version bump only for package @blindnet-demos/static

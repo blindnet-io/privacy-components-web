@@ -1,4 +1,4 @@
-import { CSSResultGroup, LitElement, TemplateResult } from 'lit';
+import { CSSResultGroup, LitElement, PropertyValueMap, TemplateResult } from 'lit';
 import { Demand } from '../models/demand.js';
 import { DemandState } from '../utils/states.js';
 /**
@@ -9,6 +9,7 @@ export declare abstract class DemandForm extends LitElement {
     demandState: DemandState;
     demand: Demand;
     demandGroupId: string;
+    default: boolean;
     /**
      * Send this demand up to the top level component to add to the Privacy Request
      * @param demandGroupId uuid of this demand group
@@ -33,5 +34,7 @@ export declare abstract class DemandForm extends LitElement {
      * @returns HTML template
      */
     abstract getFormTemplate(demand: Demand): TemplateResult;
+    abstract getDefaultDemand(): Demand;
+    protected willUpdate(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void;
     render(): TemplateResult<1 | 2>;
 }

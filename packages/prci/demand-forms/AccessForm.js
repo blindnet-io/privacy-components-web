@@ -2,12 +2,12 @@ import { __decorate } from '../node_modules/tslib/tslib.es6.js';
 import { msg } from '@lit/localize';
 import { css, html } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
-import { PROCESSING_CATEGORY, PURPOSE, PROVENANCE, TARGET } from '../models/priv-terms.js';
-import { containerStyles, buttonStyles, textStyles, imgStyles } from '../styles.js';
+import { PROCESSING_CATEGORY, PURPOSE, ACTION, PROVENANCE, TARGET } from '../models/priv-terms.js';
 import { DATA_CATEGORY_DESCRIPTIONS, PROVENANCE_DESCRIPTIONS, TARGET_DESCRIPTIONS } from '../utils/dictionary.js';
 import { DemandForm } from './DemandForm.js';
 import { FormComponentState } from '../utils/states.js';
 import '../AllChecklist.js';
+import { PRCIStyles } from '../styles.js';
 
 /**
  * ActionForm for the Access PRIV action. Includes a dropdown and text element.
@@ -79,6 +79,23 @@ let AccessForm = class AccessForm extends DemandForm {
     validate() {
         return true;
     }
+    getDefaultDemand() {
+        return {
+            action: ACTION.ACCESS,
+            restrictions: {
+                privacy_scope: this.allowedDataCategories.map(dc => ({
+                    dc,
+                    pc: PROCESSING_CATEGORY.ALL,
+                    pp: PURPOSE.ALL,
+                })),
+                provenance: {
+                    term: PROVENANCE.ALL,
+                    target: TARGET.SYSTEM,
+                },
+                date_range: {},
+            },
+        };
+    }
     getFormTemplate(demand) {
         var _a, _b, _c, _d, _e, _f, _g, _h, _j;
         return html `
@@ -87,7 +104,7 @@ let AccessForm = class AccessForm extends DemandForm {
           <b>${msg('Details of my ACCESS Demand')}</b>
         </p>
 
-        <div class="light-border access-options">
+        <div class="border--light border--rounded access-options">
           <span slot="prompt">${msg('I want to access:')}</span>
           <all-checklist
             .choices=${this.allowedDataCategories.map(dc => {
@@ -107,7 +124,7 @@ let AccessForm = class AccessForm extends DemandForm {
         </div>
 
         <slotted-dropdown header=${msg('Advanced settings')} include-buttons>
-          <div class="date-restriction-ctr">
+          <div class="date-restriction">
             <p>
               ${msg('Specify a date range for the selected category(ies) of data:')}
             </p>
@@ -179,8 +196,10 @@ let AccessForm = class AccessForm extends DemandForm {
         >
           <div class="additional-msg-ctr">
             <span class="">${msg('My additional message:')}</span>
-            <span class="italic"
-              >${msg('Please note that adding a personalized message might lead to the demand taking longer to be processed')}</span
+            <span
+              ><i
+                >${msg('Please note that adding a personalized message might lead to the demand taking longer to be processed')}</i
+              ></span
             >
             <textarea
               id="additional-msg"
@@ -199,10 +218,7 @@ let AccessForm = class AccessForm extends DemandForm {
 };
 AccessForm.styles = [
     DemandForm.styles,
-    containerStyles,
-    buttonStyles,
-    textStyles,
-    imgStyles,
+    PRCIStyles,
     css `
       #access-form {
         display: grid;

@@ -2,14 +2,14 @@ import { LitElement, PropertyValueMap, TemplateResult } from 'lit';
 import '@blindnet/core';
 import './FrequentRequestsMenu.js';
 import './ReviewView.js';
-import './ActionMenu.js';
+import './ActionMenuView.js';
 import './RequestsView.js';
 import './StatusView.js';
 import './demand-forms/TransparencyForm.js';
 import './demand-forms/AccessForm.js';
 import './demand-forms/DeleteForm.js';
 import './demand-forms/RevokeConsentForm.js';
-import { ACTION } from './models/priv-terms.js';
+import { ACTION, DATA_CATEGORY } from './models/priv-terms.js';
 import { PrivacyRequest } from './models/privacy-request.js';
 import { ComponentState } from './utils/states.js';
 import { Demand } from './models/demand.js';
@@ -20,17 +20,19 @@ import { Demand } from './models/demand.js';
 export declare class BldnPrivRequest extends LitElement {
     static styles: import("lit").CSSResult[];
     actions: string;
+    dataCategories: string;
     _includedActions: ACTION[];
-    _componentState: ComponentState;
-    _selectedAction: ACTION;
+    _includedDataCategories: DATA_CATEGORY[];
+    _currentRequestId: string;
+    _currentDemandGroupId: string;
+    _currentAction: ACTION;
     _privacyRequest: PrivacyRequest;
     _demands: Map<string, Demand[]>;
-    _currentDemandGroupId: string;
-    _currentRequestId: string;
     _config: {
-        'access-allowed-data-categories': import("./models/priv-terms.js").DATA_CATEGORY[];
-        'delete-allowed-data-categories': import("./models/priv-terms.js").DATA_CATEGORY[];
+        'access-allowed-data-categories': DATA_CATEGORY[];
+        'delete-allowed-data-categories': DATA_CATEGORY[];
     };
+    _componentState: ComponentState;
     constructor();
     /**
      * Reset most states

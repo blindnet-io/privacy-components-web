@@ -15,5 +15,6 @@ export declare class DeleteForm extends DemandForm {
     handleProvenanceTargetClick(e: Event): void;
     handleDateRestrictionInput(e: Event): void;
     validate(): boolean;
+    getDefaultDemand(): Demand;
     getFormTemplate(demand: Demand): TemplateResult<1 | 2>;
 }

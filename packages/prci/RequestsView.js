@@ -3,7 +3,7 @@ import { msg } from '@lit/localize';
 import { css, LitElement, html } from 'lit';
 import { state, customElement } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
-import { containerStyles, buttonStyles, textStyles } from './styles.js';
+import { PRCIStyles } from './styles.js';
 import { STATUS_DESCRIPTIONS } from './utils/dictionary.js';
 import { getRequestHistory } from './utils/privacy-request-api.js';
 import { ComponentState } from './utils/states.js';
@@ -56,7 +56,7 @@ let RequestsView = class RequestsView extends LitElement {
                 <span class="list-item">${r.demands}</span>
                 <button
                   id=${r.id}
-                  class="link-btn dark-font underline list-item"
+                  class="link-btn dark-font text --underline list-item"
                   @click=${this.handleRequestClick}
                 >
                   ${msg('See Details')}
@@ -68,7 +68,7 @@ let RequestsView = class RequestsView extends LitElement {
       <div id="new-request-ctr">
         <button
           id="new-request-btn"
-          class="link-btn dark-font underline"
+          class="link-btn dark-font text --underline"
           @click=${this.handleNewRequestClick}
         >
           ${msg('Submit a new Privacy Request')}
@@ -78,9 +78,7 @@ let RequestsView = class RequestsView extends LitElement {
     }
 };
 RequestsView.styles = [
-    containerStyles,
-    buttonStyles,
-    textStyles,
+    PRCIStyles,
     css `
       :host {
         display: grid;

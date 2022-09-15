@@ -4,7 +4,7 @@ import { css, LitElement, html } from 'lit';
 import { property } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
 import { ACTION } from '../models/priv-terms.js';
-import { buttonStyles } from '../styles.js';
+import { PRCIStyles } from '../styles.js';
 import { DemandState, ComponentState } from '../utils/states.js';
 
 /**
@@ -17,6 +17,7 @@ class DemandForm extends LitElement {
         this.demand = { action: ACTION.ACCESS };
         // eslint-disable-next-line no-restricted-globals
         this.demandGroupId = self.crypto.randomUUID();
+        this.default = false;
     }
     /**
      * Send this demand up to the top level component to add to the Privacy Request
@@ -60,6 +61,11 @@ class DemandForm extends LitElement {
             }));
         }
     }
+    willUpdate(_changedProperties) {
+        if (_changedProperties.has('default') && this.default) {
+            this.demand = this.getDefaultDemand();
+        }
+    }
     render() {
         return html `
       <div>
@@ -71,14 +77,14 @@ class DemandForm extends LitElement {
       <div class="btns-ctr">
         <button
           id="back-btn"
-          class="nav-btn ctr-btn animated-btn"
+          class="nav-btn btn--centered btn--clickable"
           @click=${this.handleBackClick}
         >
           ${msg('Back')}
         </button>
         <button
           id="add-btn"
-          class="nav-btn ctr-btn animated-btn"
+          class="nav-btn btn--centered btn--clickable"
           @click=${this.handleAddClick}
         >
           ${msg('Next')}
@@ -88,7 +94,7 @@ class DemandForm extends LitElement {
     }
 }
 DemandForm.styles = [
-    buttonStyles,
+    PRCIStyles,
     css `
       :host {
         margin: 0px;
@@ -124,6 +130,9 @@ __decorate([
 __decorate([
     property({ type: String })
 ], DemandForm.prototype, "demandGroupId", void 0);
+__decorate([
+    property({ type: Boolean })
+], DemandForm.prototype, "default", void 0);
 
 export { DemandForm };
 //# sourceMappingURL=DemandForm.js.map

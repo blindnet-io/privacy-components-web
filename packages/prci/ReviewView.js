@@ -6,7 +6,7 @@ import { choose } from 'lit/directives/choose.js';
 import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
 import { ACTION, TARGET, DATA_CATEGORY, PROVENANCE } from './models/priv-terms.js';
-import { containerStyles, buttonStyles, textStyles } from './styles.js';
+import { PRCIStyles } from './styles.js';
 import { DATA_CATEGORY_DESCRIPTIONS, PROVENANCE_DESCRIPTIONS, TARGET_DESCRIPTIONS, ACTION_DESCRIPTIONS, ACTION_TITLES } from './utils/dictionary.js';
 import { ComponentState } from './utils/states.js';
 
@@ -236,7 +236,7 @@ let ReviewView = class ReviewView extends LitElement {
         return html `
       <h2><b>${msg('My demand(s):')}</b></h2>
       
-      <div class="dmd-review-ctr light-border">
+      <div class="dmd-review-ctr border--light border--rounded">
         <div id="review-heading-row">
           <h3 id="review-action-heading">${ACTION_TITLES[this._action]()} Demand</h3>
           <div id="review-btns">
@@ -262,7 +262,7 @@ let ReviewView = class ReviewView extends LitElement {
         ])}
         </div>
         ${when(this.confirmDelete, () => html `
-            <div id="delete-confirm-popup" class="no-line-border">
+            <div id="delete-confirm-popup" class="border--rounded">
               <span class="popup-txt"
                 >${msg('You are about to remove a demand')}</span
               >
@@ -272,14 +272,14 @@ let ReviewView = class ReviewView extends LitElement {
               <div id="popup-btns-ctr">
                 <button
                   id="confirm-delete-btn"
-                  class="curve-btn popup-btn"
+                  class="btn--curved popup-btn"
                   @click=${this.handleConfirmDeleteClick}
                 >
                   ${msg('Delete')}
                 </button>
                 <button
                   id="cancel-delete-btn"
-                  class="curve-btn popup-btn"
+                  class="btn--curved popup-btn"
                   @click=${this.handleCancelDeleteClick}
                 >
                   ${msg('Cancel')}
@@ -291,7 +291,7 @@ let ReviewView = class ReviewView extends LitElement {
 
       </div>
       <!-- Uncomment when supporting multiple demands -->
-      <!-- <div id="new-dmd-ctr" class="medium-border">
+      <!-- <div id="new-dmd-ctr" class="border--medium border--rounded">
         <span><b>${msg('I want to add another demand')}</b></span>
         <button class="svg-btn">
           <img src="packages/prci/src/assets/icons/add-circle.svg" alt="add icon"></img>
@@ -323,7 +323,7 @@ let ReviewView = class ReviewView extends LitElement {
       </slotted-dropdown>
       <button
         id="submit-btn"
-        class="nav-btn ctr-btn  animated-btn"
+        class="nav-btn btn--centered  btn--clickable"
         @click=${this.handleSubmitClick}
       >
         ${msg('Submit Privacy Request')}
@@ -332,9 +332,7 @@ let ReviewView = class ReviewView extends LitElement {
     }
 };
 ReviewView.styles = [
-    containerStyles,
-    buttonStyles,
-    textStyles,
+    PRCIStyles,
     css `
       :host {
         display: grid;
