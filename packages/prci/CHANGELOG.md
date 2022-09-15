@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0](https://github.com/blindnet-io/privacy-components-web/compare/v0.7.0...v0.8.0) (2022-09-15)
+
+
+### Features
+
+* **@blindnet/prci:** add allowed data categories parameter ([847d21c](https://github.com/blindnet-io/privacy-components-web/commit/847d21cf7f64c6f43eab0da31a174318b1ca7789))
+
+
+
+
+
 # [0.7.0](https://github.com/blindnet-io/privacy-components-web/compare/v0.6.1...v0.7.0) (2022-09-12)
 
 
