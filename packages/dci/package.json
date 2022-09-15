@@ -13,6 +13,9 @@
     "url": "https://github.com/blindnet-io/privacy-components-web/issues"
   },
   "homepage": "https://github.com/blindnet-io/privacy-components-web#readme",
+  "scripts": {
+    "localize": "lit-localize extract && lit-localize build"
+  },
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

@@ -4,7 +4,8 @@ import { allLocales } from '../packages/prci/dist/generated/locale-codes.js';
 import { setLocale } from '../packages/prci/dist/utils/localization.js';
 
 export default {
-  title: 'BldnPrivRequest',
+  title: 'Privacy Request Capture Interface (PRCI)',
+  id: 'prci',
   component: 'bldn-priv-request',
   argTypes: {
     actions: {
@@ -28,28 +29,46 @@ interface Story<T> {
 
 interface ArgTypes {
   actions?: string;
+  dataCategories?: string;
   locale?: string;
 }
 
-const Template: Story<ArgTypes> = ({ actions }: ArgTypes) => html`
+const RegularTemplate: Story<ArgTypes> = () => html`
+  <bldn-priv-request></bldn-priv-request>
+`;
+
+const CustomActionsTemplate: Story<ArgTypes> = ({ actions }: ArgTypes) => html`
   <bldn-priv-request
     actions="${actions || '["access","delete","transparency"]'}"
   ></bldn-priv-request>
 `;
 
-const LocaleTemplate: Story<ArgTypes> = ({ locale }: ArgTypes) => {
+const CustomDataCategoriesTemplate: Story<ArgTypes> = ({
+  dataCategories,
+}) => html`
+  <bldn-priv-request
+    data-categories="${dataCategories || ''}"
+  ></bldn-priv-request>
+`;
+
+const CustomLocaleTemplate: Story<ArgTypes> = ({ locale }: ArgTypes) => {
   setLocale(locale || 'fr');
   return html` <bldn-priv-request></bldn-priv-request> `;
 };
 
-export const Regular = Template.bind({});
+export const Regular = RegularTemplate.bind({});
 
-export const CustomActions = Template.bind({});
+export const CustomActions = CustomActionsTemplate.bind({});
 CustomActions.args = {
-  actions: '["ACCESS","DELETE","TRANSPARENCY"]',
+  actions: '["access","delete","transparency"]',
 };
 
-export const CustomLocale = LocaleTemplate.bind({});
+export const CustomDataCategories = CustomDataCategoriesTemplate.bind({});
+CustomDataCategories.args = {
+  dataCategories: '["contact", "name", "uid", "other-data"]',
+};
+
+export const CustomLocale = CustomLocaleTemplate.bind({});
 CustomLocale.args = {
   locale: 'fr',
 };

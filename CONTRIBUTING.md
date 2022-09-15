@@ -1,4 +1,4 @@
-## Contributing
+# Contributing
 
 The _Privacy Components for the web_ are made in a monorepository where web components are delivered as separate npm packages and CDN bundles as part of the [blindnet devkit](https://blindnet.dev).
 
@@ -159,6 +159,10 @@ Releases are **automatically** made and published to npm as follow:
   (major, minor or patch)
 
 Version numbers follow [**semantic versioning**](https://semver.org/) and are automatically incremented based on commits messages.
+
+## Localization
+
+To contribute by adding translations, see [here](localization/README.md).
 
 ## <a name="commit"></a> Commit Message Guidelines
 

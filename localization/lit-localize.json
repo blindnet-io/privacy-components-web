@@ -10,6 +10,6 @@
   },
   "interchange": {
     "format": "xliff",
-    "xliffDir": "./xliff/"
+    "xliffDir": "../../localization/translations/"
   }
 }

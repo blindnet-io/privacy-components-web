@@ -1,10 +1,17 @@
 import { msg } from '@lit/localize';
-import { css, CSSResultGroup, html, LitElement, TemplateResult } from 'lit';
+import {
+  css,
+  CSSResultGroup,
+  html,
+  LitElement,
+  PropertyValueMap,
+  TemplateResult,
+} from 'lit';
 import { property } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
 import { Demand } from '../models/demand.js';
 import { ACTION } from '../models/priv-terms.js';
-import { buttonStyles } from '../styles.js';
+import { PRCIStyles } from '../styles.js';
 import { ComponentState, DemandState } from '../utils/states.js';
 
 /**
@@ -12,7 +19,7 @@ import { ComponentState, DemandState } from '../utils/states.js';
  */
 export abstract class DemandForm extends LitElement {
   static styles = [
-    buttonStyles,
+    PRCIStyles,
     css`
       :host {
         margin: 0px;
@@ -47,6 +54,8 @@ export abstract class DemandForm extends LitElement {
 
   // eslint-disable-next-line no-restricted-globals
   @property({ type: String }) demandGroupId = self.crypto.randomUUID();
+
+  @property({ type: Boolean }) default = false;
 
   /**
    * Send this demand up to the top level component to add to the Privacy Request
@@ -111,6 +120,16 @@ export abstract class DemandForm extends LitElement {
    */
   abstract getFormTemplate(demand: Demand): TemplateResult;
 
+  abstract getDefaultDemand(): Demand;
+
+  protected willUpdate(
+    _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
+  ): void {
+    if (_changedProperties.has('default') && this.default) {
+      this.demand = this.getDefaultDemand();
+    }
+  }
+
   render(): TemplateResult<1 | 2> {
     return html`
       <div>
@@ -122,14 +141,14 @@ export abstract class DemandForm extends LitElement {
       <div class="btns-ctr">
         <button
           id="back-btn"
-          class="nav-btn ctr-btn animated-btn"
+          class="nav-btn btn--centered btn--clickable"
           @click=${this.handleBackClick}
         >
           ${msg('Back')}
         </button>
         <button
           id="add-btn"
-          class="nav-btn ctr-btn animated-btn"
+          class="nav-btn btn--centered btn--clickable"
           @click=${this.handleAddClick}
         >
           ${msg('Next')}

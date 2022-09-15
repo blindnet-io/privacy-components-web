@@ -3,7 +3,7 @@ import { css, html, LitElement, PropertyValueMap, TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
 import { when } from 'lit/directives/when.js';
-import { buttonStyles, containerStyles, textStyles } from './styles.js';
+import { PRCIStyles } from './styles.js';
 import { FormComponentState } from './utils/states.js';
 
 const allCheckboxCheckedSvg = new URL(
@@ -50,9 +50,7 @@ enum SelectionState {
 @customElement('all-checklist')
 export class AllChecklist extends LitElement {
   static styles = [
-    containerStyles,
-    textStyles,
-    buttonStyles,
+    PRCIStyles,
     css`
       :host {
         display: grid;
@@ -117,6 +115,9 @@ export class AllChecklist extends LitElement {
       #other-data-input input {
         height: 30px;
         width: 100%;
+        background: #f8f8fc;
+        border: 1px solid #e5e5e5;
+        border-radius: 4px;
       }
 
       #other-data-input span {
@@ -424,7 +425,7 @@ export class AllChecklist extends LitElement {
             </div>
             <div id="other-data-input-ctr">
               <span>${msg('Other data type:')}</span>
-              <input id="other-data-input" type="text" class="std-txt-input"></input>
+              <input id="other-data-input" type="text"></input>
             </div>
           </div>
         `

@@ -4,7 +4,7 @@ import { customElement, state } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
 import { RequestHistoryItem } from './models/history-response.js';
 import { REQUEST_STATUS } from './models/priv-terms.js';
-import { buttonStyles, containerStyles, textStyles } from './styles.js';
+import { PRCIStyles } from './styles.js';
 import { STATUS_DESCRIPTIONS } from './utils/dictionary.js';
 import { getRequestHistory } from './utils/privacy-request-api.js';
 import { ComponentState } from './utils/states.js';
@@ -12,9 +12,7 @@ import { ComponentState } from './utils/states.js';
 @customElement('requests-view')
 export class RequestsView extends LitElement {
   static styles = [
-    containerStyles,
-    buttonStyles,
-    textStyles,
+    PRCIStyles,
     css`
       :host {
         display: grid;
@@ -125,7 +123,7 @@ export class RequestsView extends LitElement {
                 <span class="list-item">${r.demands}</span>
                 <button
                   id=${r.id}
-                  class="link-btn dark-font underline list-item"
+                  class="link-btn dark-font text --underline list-item"
                   @click=${this.handleRequestClick}
                 >
                   ${msg('See Details')}
@@ -138,7 +136,7 @@ export class RequestsView extends LitElement {
       <div id="new-request-ctr">
         <button
           id="new-request-btn"
-          class="link-btn dark-font underline"
+          class="link-btn dark-font text --underline"
           @click=${this.handleNewRequestClick}
         >
           ${msg('Submit a new Privacy Request')}
