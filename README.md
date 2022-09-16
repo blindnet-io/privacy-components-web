@@ -23,6 +23,8 @@
   <a href="https://github.com/blindnet-io/{project-short-name}/issues">Submit an Issue</a>
   &nbsp;•&nbsp;
   <a href="https://join.slack.com/t/blindnet/shared_invite/zt-1arqlhqt3-A8dPYXLbrnqz1ZKsz6ItOg">Online Chat</a>
+  &nbsp;•&nbsp;
+  <a href="https://pc4w.blindnet.dev/demos/devkit-simple-tutorial/">Demo</a>
   <br>
   <br>
 </p>
