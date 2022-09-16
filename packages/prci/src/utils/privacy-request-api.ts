@@ -64,6 +64,9 @@ export async function sendPrivacyRequest(
     : {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
+        // TODO: remove this when auth is implemented
+        Authorization:
+          localStorage.getItem('priv_user_id') || 'john.doe@example.com',
       };
   return fetch(url, {
     method: 'POST',
@@ -82,7 +85,12 @@ export async function getRequestHistory() {
     'https://devkit-pce-staging.azurewebsites.net/v0/privacy-request/history',
     {
       method: 'GET',
-      headers: { accept: 'application/json' },
+      headers: {
+        accept: 'application/json',
+        // TODO: remove this when auth is implemented
+        Authorization:
+          localStorage.getItem('priv_user_id') || 'john.doe@example.com',
+      },
     }
   ).then(response => {
     if (!response.ok) {
@@ -97,7 +105,12 @@ export async function getRequest(requestId: string) {
     `https://devkit-pce-staging.azurewebsites.net/v0/privacy-request/${requestId}`,
     {
       method: 'GET',
-      headers: { accept: 'application/json' },
+      headers: {
+        accept: 'application/json',
+        // TODO: remove this when auth is implemented
+        Authorization:
+          localStorage.getItem('priv_user_id') || 'john.doe@example.com',
+      },
     }
   ).then(response => {
     if (!response.ok) {
