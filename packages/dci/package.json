@@ -1,6 +1,6 @@
 {
   "name": "@blindnet/dci",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "Webcomponent for Data Consumers to manage data captures and privacy requests",
   "author": "blindnet <hello@blindnet.io>",
   "license": "MIT",
@@ -34,7 +34,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@blindnet/prci": "^0.8.0",
+    "@blindnet/prci": "^0.8.1",
     "@lit/localize": "^0.11.3",
     "lit": "^2.2.8"
   }
