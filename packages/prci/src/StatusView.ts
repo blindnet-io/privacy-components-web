@@ -10,7 +10,7 @@ import { getRequest } from './utils/privacy-request-api.js';
 import './StatusViewItem.js';
 import { ComponentState } from './utils/states.js';
 import { PRCIStyles } from './styles.js';
-import { getRequestLink } from './utils/utils.js';
+import { getRequestLink, removeQueryParam } from './utils/utils.js';
 
 const copySvg = new URL('./assets/icons/copy.svg', import.meta.url).href;
 
@@ -146,6 +146,7 @@ export class StatusView extends LitElement {
   }
 
   handleBackClick() {
+    removeQueryParam('requestId');
     this.dispatchEvent(
       new CustomEvent('component-state-change', {
         bubbles: true,
@@ -158,6 +159,7 @@ export class StatusView extends LitElement {
   }
 
   handleNewRequestClick() {
+    removeQueryParam('requestId');
     this.dispatchEvent(
       new CustomEvent('component-state-change', {
         bubbles: true,
