@@ -1,4 +1,4 @@
-import { msg } from '@lit/localize';
+import { msg, str } from '@lit/localize';
 import { css, html, LitElement, PropertyValueMap } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
@@ -10,6 +10,11 @@ import { getRequest } from './utils/privacy-request-api.js';
 import './StatusViewItem.js';
 import { ComponentState } from './utils/states.js';
 import { PRCIStyles } from './styles.js';
+import { getRequestLink, removeQueryParam } from './utils/utils.js';
+
+const copySvg = new URL('./assets/icons/copy.svg', import.meta.url).href;
+
+const linkSvg = new URL('./assets/icons/link.svg', import.meta.url).href;
 
 /**
  * View the status of a Privacy Request
@@ -21,7 +26,7 @@ export class StatusView extends LitElement {
     css`
       :host {
         display: grid;
-        row-gap: 40px;
+        row-gap: 20px;
         max-width: 900px;
         text-align: center;
         margin: auto;
@@ -60,13 +65,21 @@ export class StatusView extends LitElement {
       }
 
       p {
-        margin: 0;
-        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      button {
+        display: inline-flex;
+        align-items: center;
       }
     `,
   ];
 
   @property({ type: String, attribute: 'request-id' }) requestId: string = '';
+
+  @property({ type: Boolean }) newRequest: boolean = false;
 
   @state() _requestDate: Date = new Date();
 
@@ -124,7 +137,16 @@ export class StatusView extends LitElement {
     }
   }
 
+  handleCopyIdClick() {
+    navigator.clipboard.writeText(this.requestId);
+  }
+
+  handleCopyLinkClick() {
+    navigator.clipboard.writeText(getRequestLink(this.requestId).toString());
+  }
+
   handleBackClick() {
+    removeQueryParam('requestId');
     this.dispatchEvent(
       new CustomEvent('component-state-change', {
         bubbles: true,
@@ -137,6 +159,7 @@ export class StatusView extends LitElement {
   }
 
   handleNewRequestClick() {
+    removeQueryParam('requestId');
     this.dispatchEvent(
       new CustomEvent('component-state-change', {
         bubbles: true,
@@ -155,7 +178,7 @@ export class StatusView extends LitElement {
         () => html`
           <p>
             ${msg(
-              html`Your Privacy Request, sent on
+              str`Your Privacy Request, sent on
               ${this._requestDate.toLocaleDateString('en-gb')}, is currently
               being processed.`
             )}
@@ -198,6 +221,18 @@ export class StatusView extends LitElement {
           </p>
         `
       )}
+      <p>
+        <b>${msg('Request ID')}:</b>&nbsp;${this.requestId}&nbsp;&nbsp;
+        <button class='svg-btn' @click=${this.handleCopyIdClick}>
+          <img src=${copySvg} alt='Copy request ID'></img>
+        </button>
+      </p>
+      <div>
+        <button class='svg-btn' @click=${this.handleCopyLinkClick}>
+          <img src=${linkSvg} alt='Copy status page link'></img>&nbsp;
+          <span class='text--underline'>${msg('Copy link to this page')}</span>
+        </button>
+      </div>
       ${when(
         this._completedDemands.length > 0,
         () => html`
@@ -245,13 +280,13 @@ export class StatusView extends LitElement {
       )}
       <div id="nav-btns-ctr">
         <button
-          class="status-nav-btn link-btn dark-font text --underline"
+          class="status-nav-btn link-btn dark-font text--underline"
           @click=${this.handleBackClick}
         >
           ${msg('Back to my Requests')}
         </button>
         <button
-          class="status-nav-btn link-btn dark-font text --underline"
+          class="status-nav-btn link-btn dark-font text--underline"
           @click=${this.handleNewRequestClick}
         >
           ${msg('Submit a new Privacy Request')}
