@@ -45,7 +45,9 @@ let BldnPrivRequest = class BldnPrivRequest extends LitElement {
             data_subject: [
                 {
                     // FIXME: For now we hardcode this, but will come from token once auth added
-                    id: 'fdfc95a6-8fd8-4581-91f7-b3d236a6a10e',
+                    // id: 'fdfc95a6-8fd8-4581-91f7-b3d236a6a10e',
+                    // TODO: remove this when auth is implemented
+                    id: localStorage.getItem('priv_user_id') || 'john.doe@example.com',
                     schema: 'dsid',
                 },
             ],
@@ -130,7 +132,9 @@ let BldnPrivRequest = class BldnPrivRequest extends LitElement {
             data_subject: [
                 {
                     // FIXME: For now we hardcode this, but will come from token once auth added
-                    id: 'fdfc95a6-8fd8-4581-91f7-b3d236a6a10e',
+                    // id: 'fdfc95a6-8fd8-4581-91f7-b3d236a6a10e',
+                    // TODO: remove this when auth is implemented
+                    id: localStorage.getItem('priv_user_id') || 'john.doe@example.com',
                     schema: 'dsid',
                 },
             ],
