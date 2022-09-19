@@ -1,4 +1,4 @@
-import { msg } from '@lit/localize';
+import { msg, str } from '@lit/localize';
 import { css, html, LitElement, PropertyValueMap } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
@@ -10,6 +10,12 @@ import { getRequest } from './utils/privacy-request-api.js';
 import './StatusViewItem.js';
 import { ComponentState } from './utils/states.js';
 import { PRCIStyles } from './styles.js';
+import { getRequestLink } from './utils/utils.js';
+
+const clipboardSvg = new URL('./assets/icons/clipboard.svg', import.meta.url)
+  .href;
+
+const linkSvg = new URL('./assets/icons/link.svg', import.meta.url).href;
 
 /**
  * View the status of a Privacy Request
@@ -68,6 +74,8 @@ export class StatusView extends LitElement {
 
   @property({ type: String, attribute: 'request-id' }) requestId: string = '';
 
+  @property({ type: Boolean }) newRequest: boolean = false;
+
   @state() _requestDate: Date = new Date();
 
   @state() _completedDemands: PrivacyResponseItem[] = [];
@@ -124,6 +132,14 @@ export class StatusView extends LitElement {
     }
   }
 
+  handleCopyIdClick() {
+    navigator.clipboard.writeText(this.requestId);
+  }
+
+  handleCopyLinkClick() {
+    navigator.clipboard.writeText(getRequestLink(this.requestId).toString());
+  }
+
   handleBackClick() {
     this.dispatchEvent(
       new CustomEvent('component-state-change', {
@@ -153,13 +169,34 @@ export class StatusView extends LitElement {
       ${when(
         this._processingDemands.length > 0,
         () => html`
+          ${when(
+            this.newRequest,
+            () => html`
+              <p>
+                <b>${msg('Your Privacy Request has been sent!')} 🎉</b>
+              </p>
+              <p>${msg('You may track the status of your request below.')}</p>
+            `,
+            () => html``
+          )}
           <p>
             ${msg(
-              html`Your Privacy Request, sent on
+              str`Your Privacy Request, sent on
               ${this._requestDate.toLocaleDateString('en-gb')}, is currently
               being processed.`
             )}
           </p>
+          <p><b>Request ID:</b> ${this.requestId}</p>
+          <div>
+            <button class='svg-btn' @click=${this.handleCopyIdClick}>
+              <img src=${clipboardSvg} alt='Copy request ID'></img>
+              <span>${msg('Copy Request ID')}</span>
+            </button>
+            <button class='svg-btn' @click=${this.handleCopyLinkClick}>
+              <img src=${linkSvg} alt='Copy status page link'></img>
+              <span>${msg('Copy Status Link')}</span>
+            </button>
+          </div>
           ${when(
             this._completedDemands.length > 0,
             () => html`
