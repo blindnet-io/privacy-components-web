@@ -113,7 +113,7 @@ export function getRetentionPolicyString(
 }
 
 /**
- * Get a link
+ * Get a link to the status page for the request denoted by requestId
  * @param requestId ID of the privacy request
  * @returns
  */
@@ -121,4 +121,14 @@ export function getRequestLink(requestId: string): URL {
   const url = new URL(document.URL);
   url.searchParams.set('requestId', requestId);
   return url;
+}
+
+/**
+ * Remove a query parameter from current window URL without reloading the page
+ * @param param string denoting the query parameter
+ */
+export function removeQueryParam(param: string) {
+  const url = new URL(document.URL);
+  url.searchParams.delete(param);
+  window.history.pushState({}, '', url);
 }
