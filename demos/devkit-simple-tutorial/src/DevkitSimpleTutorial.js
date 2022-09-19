@@ -92,19 +92,29 @@ export class DevkitSimpleTutorial extends LitElement {
           >tutorial</bx-header-name
         >
         <bx-header-nav menu-bar-label="blindnet devkit tutorial">
-          <bx-header-nav-item href="./participate">Prizes</bx-header-nav-item>
-          <bx-header-nav-item href="./privacy">Privacy</bx-header-nav-item>
+          <bx-header-nav-item href="./participate"
+            >Submit an entry</bx-header-nav-item
+          >
+          <bx-header-nav-item href="./privacy"
+            >Submit a privacy request</bx-header-nav-item
+          >
           <bx-header-nav-item href="./backoffice"
-            >Back Office</bx-header-nav-item
+            >Back office management</bx-header-nav-item
           >
         </bx-header-nav>
       </bx-header>
       <bx-side-nav aria-label="Side navigation">
         <bx-side-nav-items>
           <bx-side-nav-link href="./">Home</bx-side-nav-link>
-          <bx-side-nav-link href="./participate">Prizes</bx-side-nav-link>
-          <bx-side-nav-link href="./privacy">Privacy</bx-side-nav-link>
-          <bx-side-nav-link href="./backoffice">Back Office</bx-side-nav-link>
+          <bx-side-nav-link href="./participate"
+            >Submit an entry</bx-side-nav-link
+          >
+          <bx-side-nav-link href="./privacy"
+            >Submit a privacy request</bx-side-nav-link
+          >
+          <bx-side-nav-link href="./backoffice"
+            >Back office management</bx-side-nav-link
+          >
         </bx-side-nav-items>
       </bx-side-nav>
       <main>

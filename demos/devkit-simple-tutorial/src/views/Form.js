@@ -131,7 +131,10 @@ export class AppParticipateForm extends LitElement {
     this._notificationSuccess.open = true;
   }
 
-  async giveConsent() {
+  /**
+   * @param {String} uid
+   */
+  async giveConsent(uid) {
     const headers = {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
@@ -143,7 +146,8 @@ export class AppParticipateForm extends LitElement {
         headers,
         body: JSON.stringify({
           dataSubject: {
-            id: 'fdfc95a6-8fd8-4581-91f7-b3d236a6a10e',
+            // id: 'fdfc95a6-8fd8-4581-91f7-b3d236a6a10e',
+            id: uid,
             schema: 'dsid',
           },
           consentId: '28b5bee0-9db8-40ec-840e-64eafbfb9ddd',
@@ -204,7 +208,10 @@ export class AppParticipateForm extends LitElement {
       if (this.consentGiven) {
         this.requireConsent = false;
         await this.saveDataToServer(formData);
-        await this.giveConsent();
+        // TODO: remove this when auth is implemented
+        const uid = formData.get('email')?.toString() || 'john.doe@example.com';
+        localStorage.setItem('priv_user_id', uid);
+        await this.giveConsent(uid);
         this.setSubmitting(true);
         this.setValidity();
       } else {
