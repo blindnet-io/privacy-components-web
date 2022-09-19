@@ -371,11 +371,6 @@ export class BldnPrivRequest extends LitElement {
   }
 
   render() {
-    console.log(document.URL);
-    console.log(window.URL);
-    console.log(window.location);
-    console.log(window.location.search);
-    console.log(location);
     return html`
       <div id="prci-ctr">
         <div id="heading-ctr">
