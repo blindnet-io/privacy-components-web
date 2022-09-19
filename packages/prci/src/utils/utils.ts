@@ -111,3 +111,14 @@ export function getRetentionPolicyString(
     <i>${duration}</i> months after
     <i>${AFTER_TITLES[after]().toLocaleUpperCase()}</i>`;
 }
+
+/**
+ * Get a link
+ * @param requestId ID of the privacy request
+ * @returns
+ */
+export function getRequestLink(requestId: string): URL {
+  const url = new URL(window.URL.toString());
+  url.searchParams.set('requestId', requestId);
+  return url;
+}
