@@ -12,8 +12,7 @@ import { ComponentState } from './utils/states.js';
 import { PRCIStyles } from './styles.js';
 import { getRequestLink } from './utils/utils.js';
 
-const clipboardSvg = new URL('./assets/icons/clipboard.svg', import.meta.url)
-  .href;
+const copySvg = new URL('./assets/icons/copy.svg', import.meta.url).href;
 
 const linkSvg = new URL('./assets/icons/link.svg', import.meta.url).href;
 
@@ -27,7 +26,7 @@ export class StatusView extends LitElement {
     css`
       :host {
         display: grid;
-        row-gap: 40px;
+        row-gap: 20px;
         max-width: 900px;
         text-align: center;
         margin: auto;
@@ -66,8 +65,14 @@ export class StatusView extends LitElement {
       }
 
       p {
-        margin: 0;
-        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      button {
+        display: inline-flex;
+        align-items: center;
       }
     `,
   ];
@@ -169,16 +174,6 @@ export class StatusView extends LitElement {
       ${when(
         this._processingDemands.length > 0,
         () => html`
-          ${when(
-            this.newRequest,
-            () => html`
-              <p>
-                <b>${msg('Your Privacy Request has been sent!')} 🎉</b>
-              </p>
-              <p>${msg('You may track the status of your request below.')}</p>
-            `,
-            () => html``
-          )}
           <p>
             ${msg(
               str`Your Privacy Request, sent on
@@ -186,17 +181,6 @@ export class StatusView extends LitElement {
               being processed.`
             )}
           </p>
-          <p><b>Request ID:</b> ${this.requestId}</p>
-          <div>
-            <button class='svg-btn' @click=${this.handleCopyIdClick}>
-              <img src=${clipboardSvg} alt='Copy request ID'></img>
-              <span>${msg('Copy Request ID')}</span>
-            </button>
-            <button class='svg-btn' @click=${this.handleCopyLinkClick}>
-              <img src=${linkSvg} alt='Copy status page link'></img>
-              <span>${msg('Copy Status Link')}</span>
-            </button>
-          </div>
           ${when(
             this._completedDemands.length > 0,
             () => html`
@@ -235,6 +219,18 @@ export class StatusView extends LitElement {
           </p>
         `
       )}
+      <p>
+        <b>${msg('Request ID')}:</b>&nbsp;${this.requestId}&nbsp;&nbsp;
+        <button class='svg-btn' @click=${this.handleCopyIdClick}>
+          <img src=${copySvg} alt='Copy request ID'></img>
+        </button>
+      </p>
+      <div>
+        <button class='svg-btn' @click=${this.handleCopyLinkClick}>
+          <img src=${linkSvg} alt='Copy status page link'></img>&nbsp;
+          <span class='text--underline'>${msg('Copy link to this page')}</span>
+        </button>
+      </div>
       ${when(
         this._completedDemands.length > 0,
         () => html`
@@ -282,13 +278,13 @@ export class StatusView extends LitElement {
       )}
       <div id="nav-btns-ctr">
         <button
-          class="status-nav-btn link-btn dark-font text --underline"
+          class="status-nav-btn link-btn dark-font text--underline"
           @click=${this.handleBackClick}
         >
           ${msg('Back to my Requests')}
         </button>
         <button
-          class="status-nav-btn link-btn dark-font text --underline"
+          class="status-nav-btn link-btn dark-font text--underline"
           @click=${this.handleNewRequestClick}
         >
           ${msg('Submit a new Privacy Request')}

@@ -118,7 +118,7 @@ export function getRetentionPolicyString(
  * @returns
  */
 export function getRequestLink(requestId: string): URL {
-  const url = new URL(window.URL.toString());
+  const url = new URL(document.URL);
   url.searchParams.set('requestId', requestId);
   return url;
 }

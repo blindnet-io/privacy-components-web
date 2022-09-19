@@ -526,10 +526,22 @@
 <trans-unit id="se40a735383dec962">
   <source>Cancel Demand</source>
 </trans-unit>
-<trans-unit id="h55d988154af40459">
+<trans-unit id="s237c73da8350499a">
+  <source>Your Privacy Request has been sent!</source>
+</trans-unit>
+<trans-unit id="sc1ef8ab7d582eee5">
+  <source>You may track the status of your request below.</source>
+</trans-unit>
+<trans-unit id="s55d988154af40459">
   <source>Your Privacy Request, sent on
               <x id="0" equiv-text="${this._requestDate.toLocaleDateString('en-gb')}"/>, is currently
               being processed.</source>
+</trans-unit>
+<trans-unit id="s63c24a9b98eb5a42">
+  <source>Copy Request ID</source>
+</trans-unit>
+<trans-unit id="sf2ab7281154a6cfa">
+  <source>Copy Status Link</source>
 </trans-unit>
 <trans-unit id="s284bf4b83b609401">
   <source>At the moment:</source>
@@ -630,12 +642,6 @@
 <trans-unit id="s990061f6621b0156">
   <source>My Privacy Request</source>
   <target>Ma Demande sur les données</target>
-</trans-unit>
-<trans-unit id="s237c73da8350499a">
-  <source>Your Privacy Request has been sent!</source>
-</trans-unit>
-<trans-unit id="sc1ef8ab7d582eee5">
-  <source>You may track the status of your request below.</source>
 </trans-unit>
 </body>
 </file>
