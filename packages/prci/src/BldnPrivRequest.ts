@@ -87,12 +87,15 @@ export class BldnPrivRequest extends LitElement {
     `,
   ];
 
-  // JSON string of actions to display
+  /** JSON list of allowed actions */
   @property({ type: String }) actions = '';
 
-  // JSON string of allowed data categories
+  /** JSON list of allowed data categories */
   @property({ type: String, attribute: 'data-categories' })
   dataCategories: string = '';
+
+  /** @prop {string} requestId - a request ID. If provided, the initial PRCI view will be the status page for the provided request ID */
+  @property({ type: String, attribute: 'request-id' }) requestId: string = '';
 
   // Array of available actions, given by actions property if a valid list was passed
   @state() _includedActions: ACTION[] = getDefaultActions();
@@ -133,6 +136,13 @@ export class BldnPrivRequest extends LitElement {
 
   constructor() {
     super();
+
+    const params = new URLSearchParams(window.location.search);
+    const requestId = params.get('requestId');
+    if (requestId) {
+      this._currentRequestId = requestId;
+      this._componentState = ComponentState.STATUS;
+    }
 
     // Initialize demands and current demand group to the same uuid
     const initialGroup = self.crypto.randomUUID();
