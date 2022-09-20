@@ -368,20 +368,20 @@
 <trans-unit id="ha30c4d3b566b6b1a">
   <source>Canceled</source>
 </trans-unit>
-<trans-unit id="see4e21f60d66f454">
-  <source>Granted</source>
+<trans-unit id="sc3755f907034fcf4">
+  <source>granted</source>
 </trans-unit>
-<trans-unit id="s93390561e1afc0b6">
-  <source>Denied</source>
+<trans-unit id="sae36324e0a5783d6">
+  <source>denied</source>
 </trans-unit>
-<trans-unit id="s538bd2706b2090da">
-  <source>Partially Granted</source>
+<trans-unit id="sfb005196e7ebf2da">
+  <source>partially granted</source>
 </trans-unit>
-<trans-unit id="s36d273fcd01916af">
-  <source>Under Review</source>
+<trans-unit id="se350209cc62601ef">
+  <source>under review</source>
 </trans-unit>
-<trans-unit id="sa30c4d3b566b6b1a">
-  <source>Canceled</source>
+<trans-unit id="see8b386a20d5d43a">
+  <source>canceled</source>
 </trans-unit>
 <trans-unit id="s80ad94771c626ec2">
   <source>no longer than</source>
@@ -528,6 +528,12 @@
 </trans-unit>
 <trans-unit id="se40a735383dec962">
   <source>Cancel Demand</source>
+</trans-unit>
+<trans-unit id="h0d0fc085e669eae5">
+  <source>Do you confirm <x id="0" equiv-text="&lt;strong&gt;"/>canceling your demand?<x id="1" equiv-text="&lt;/strong&gt;"/></source>
+</trans-unit>
+<trans-unit id="s51c031323a487267">
+  <source>Your demand has been </source>
 </trans-unit>
 <trans-unit id="s55d988154af40459">
   <source>Your Privacy Request, sent on

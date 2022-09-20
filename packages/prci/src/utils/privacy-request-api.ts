@@ -119,3 +119,25 @@ export async function getRequest(requestId: string) {
     return response.json() as Promise<PrivacyResponse>;
   });
 }
+
+export async function cancelDemand(demand_id: string) {
+  const url =
+    'https://devkit-pce-staging.azurewebsites.net/v0/privacy-request/cancel';
+  const headers = {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+    // TODO: remove this when auth is implemented
+    Authorization:
+      localStorage.getItem('priv_user_id') || 'john.doe@example.com',
+  };
+  const body = JSON.stringify({ demand_id });
+  return fetch(url, {
+    method: 'POST',
+    headers,
+    body,
+  }).then(response => {
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+  });
+}
