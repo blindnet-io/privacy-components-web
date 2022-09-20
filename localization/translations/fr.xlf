@@ -529,8 +529,9 @@
 <trans-unit id="se40a735383dec962">
   <source>Cancel Demand</source>
 </trans-unit>
-<trans-unit id="h0d0fc085e669eae5">
-  <source>Do you confirm <x id="0" equiv-text="&lt;strong&gt;"/>canceling your demand?<x id="1" equiv-text="&lt;/strong&gt;"/></source>
+<trans-unit id="h0fd6feceae15cd33">
+  <source>Do you confirm
+                        <x id="0" equiv-text="&lt;strong&gt;"/>canceling your demand?<x id="1" equiv-text="&lt;/strong&gt;"/></source>
 </trans-unit>
 <trans-unit id="s51c031323a487267">
   <source>Your demand has been </source>
