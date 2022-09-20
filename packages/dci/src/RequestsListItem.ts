@@ -172,7 +172,9 @@ export class RequestsListItem extends LitElement {
               <span class="dmd-info-element"
                 >${new Date(this.demand.date).toLocaleDateString('en-gb')}</span
               >
-              <span class="dmd-info-element">John Smith</span>
+              <span class="dmd-info-element"
+                >${this.demand.data_subject.id}</span
+              >
               <span class="dmd-info-element">${this.demand.action}</span>
             </div>
             ${when(
