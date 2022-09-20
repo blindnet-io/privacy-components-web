@@ -22,6 +22,7 @@ import {
   ACTION_TITLES,
   DEMAND_STATUS_DESCRIPTIONS,
 } from './utils/dictionary.js';
+import { cancelDemand } from './utils/privacy-request-api.js';
 import { getRetentionPolicyString } from './utils/utils.js';
 
 /**
@@ -101,9 +102,15 @@ export class StatusViewItem extends LitElement {
         color: white;
       }
 
+      /* :host([open]) .cancel-btn {
+        background-color: #f90707;
+        color: white;
+      } */
+
       .status-btn {
         background: none;
         padding: 10px 40px;
+        width: 100%;
         justify-self: center;
         align-self: flex-end;
         float: right;
@@ -118,6 +125,18 @@ export class StatusViewItem extends LitElement {
 
       .cancel-btn {
         border: 2px solid #f90707;
+      }
+
+      .cancel-confirm-btn {
+        background: none;
+        padding: 10px 40px;
+      }
+
+      #keep-dmd-btn {
+      }
+
+      #cancel-dmd-btn {
+        border-color: #f90707;
       }
 
       .round-bottom {
@@ -142,9 +161,23 @@ export class StatusViewItem extends LitElement {
         border-color: #e6e6e6;
       }
 
-      .cancelled-dmd {
+      .canceled-dmd {
         background-color: #ffc1bd;
-        border-color: #ffc1bd;
+        border-color: #f90707;
+      }
+
+      .canceled-dmd .status-type-ctr {
+        border-bottom: 2px solid #f90707;
+      }
+
+      .canceled-dmd .dmd-action-ctr {
+        grid-template-columns: 1fr;
+      }
+
+      #cancel-btns-ctr {
+        display: flex;
+        justify-content: center;
+        column-gap: 10px;
       }
 
       .action-title {
@@ -155,7 +188,6 @@ export class StatusViewItem extends LitElement {
         display: grid;
         background-color: white;
         row-gap: 20px;
-        /* height: 100px; */
         padding: 10px 20px 30px 20px;
       }
 
@@ -413,6 +445,10 @@ export class StatusViewItem extends LitElement {
     `;
   }
 
+  handleConfirmCancelClick() {
+    cancelDemand(this.demand.demand_id);
+  }
+
   render() {
     return html`
       <div
@@ -449,14 +485,30 @@ export class StatusViewItem extends LitElement {
           ${when(
             this.demand.status === DEMAND_STATUS['UNDER-REVIEW'],
             () => html`
-              <button
-                class="status-btn cancel-btn btn--curved btn--clickable"
-                @click=${() => {
-                  this.open = !this.open;
-                }}
-              >
-                ${msg('Cancel Demand')}
-              </button>
+              ${when(
+                this.open,
+                () => html`
+                  <button
+                    class="status-btn cancel-btn btn--curved btn--clickable"
+                    @click=${() => {
+                      this.open = !this.open;
+                    }}
+                    disabled
+                  >
+                    ${msg('Cancel Demand')}
+                  </button>
+                `,
+                () => html`
+                  <button
+                    class="status-btn cancel-btn btn--curved btn--clickable"
+                    @click=${() => {
+                      this.open = !this.open;
+                    }}
+                  >
+                    ${msg('Cancel Demand')}
+                  </button>
+                `
+              )}
             `
           )}
         </div>
@@ -467,12 +519,50 @@ export class StatusViewItem extends LitElement {
               id="${this.demand.demand_id}-details-ctr"
               class="dmd-details-ctr round-bottom"
             >
-              <b
-                >Your demand has been
-                ${DEMAND_STATUS_DESCRIPTIONS[
-                  this.demand.status
-                ]().toLocaleLowerCase()}.</b
-              >
+              ${when(
+                this.demand.status === DEMAND_STATUS['UNDER-REVIEW'],
+                () => html`
+                  <span
+                    >${msg(
+                      html`Do you confirm
+                        <strong>canceling your demand?</strong>`
+                    )}</span
+                  >
+                  <div id="cancel-btns-ctr">
+                    <button
+                      id="keep-dmd-btn"
+                      class="cancel-confirm-btn btn--curved btn--clickable"
+                      @click=${() => {
+                        this.open = !this.open;
+                      }}
+                    >
+                      Keep Demand
+                    </button>
+                    <button
+                      id="cancel-dmd-btn"
+                      class="cancel-confirm-btn btn--curved btn--clickable"
+                      @click=${this.handleConfirmCancelClick}
+                    >
+                      <strong>Confirm</strong>
+                    </button>
+                  </div>
+                `,
+                () => html`
+                  ${when(
+                    this.demand.status === DEMAND_STATUS.GRANTED ||
+                      this.demand.status === DEMAND_STATUS['PARTIALLY-GRANTED'],
+                    () => html`
+                      <strong
+                        >${msg('Your demand has been ')}
+                        ${DEMAND_STATUS_DESCRIPTIONS[
+                          this.demand.status
+                        ]()}.</strong
+                      >
+                    `,
+                    () => html``
+                  )}
+                `
+              )}
               ${choose(this.demand.requested_action, [
                 [ACTION.ACCESS, () => this.accessResponseTemplate(this.demand)],
                 [
