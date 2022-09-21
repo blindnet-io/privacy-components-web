@@ -21,6 +21,10 @@ export interface paths {
     /** Get privacy request status */
     get: operations['getV0Privacy-requestRequestid'];
   };
+  '/v0/privacy-request/cancel': {
+    /** Cancel a pending demand */
+    post: operations['postV0Privacy-requestCancel'];
+  };
   '/v0/consumer-interface/pending-requests': {
     /** Get the list of pending privacy request demands */
     get: operations['getV0Consumer-interfacePending-requests'];
@@ -95,6 +99,12 @@ export interface paths {
     /** Delete regulation assigned to an app */
     delete: operations['deleteV0ConfigureRegulationsRegulationid'];
   };
+  '/v0/configure/demand-resolution-strategy': {
+    /** Get information about demand resolution strategies */
+    get: operations['getV0ConfigureDemand-resolution-strategy'];
+    /** Update demand resolution strategies */
+    put: operations['putV0ConfigureDemand-resolution-strategy'];
+  };
   '/v0/user-events/consent': {
     /** Add consent for a user */
     post: operations['postV0User-eventsConsent'];
@@ -132,12 +142,20 @@ export interface components {
       msg?: string;
       lang?: string;
     };
+    CancelDemandPayload: {
+      /** Format: uuid */
+      demand_id: string;
+    };
     ConsentRestriction: {
       /** Format: uuid */
       id: string;
     };
     CreateLegalBasePayload: {
-      /** @enum {string} */
+      /**
+       * @description type of the legal base
+       * @example CONSENT
+       * @enum {string}
+       */
       lb_type:
         | 'CONTRACT'
         | 'CONSENT'
@@ -147,8 +165,26 @@ export interface components {
         | 'NECESSARY.PUBLIC-INTEREST'
         | 'NECESSARY.VITAL-INTEREST'
         | 'OTHER-LEGAL-BASE';
+      /**
+       * @description legal base name
+       * @example Contact form
+       */
       name?: string;
+      /**
+       * @description legal base description
+       * @example Collection of the contact data for advertising
+       */
       description?: string;
+      /**
+       * @description privacy scope of the legal base
+       * @example [
+       *   {
+       *     "dc": "CONTACT",
+       *     "pc": "COLLECTION",
+       *     "pp": "ADVERTISING"
+       *   }
+       * ]
+       */
       scope?: components['schemas']['ScopePayload'][];
     };
     CreatePrivacyRequestPayload: {
@@ -164,23 +200,53 @@ export interface components {
       demands?: components['schemas']['PrivacyRequestDemand'][];
       data_subject?: components['schemas']['DataSubjectPayload'][];
     };
+    /** @description origin of the data category */
     CreateProvenancePayload: {
+      /**
+       * @description data category for which the provenance is created
+       * @example CONTACT.PHONE
+       */
       data_category: string;
-      /** @enum {string} */
+      /**
+       * @description provenance type
+       * @example USER
+       * @enum {string}
+       */
       provenance:
         | '*'
         | 'DERIVED'
         | 'TRANSFERRED'
         | 'USER'
         | 'USER.DATA-SUBJECT';
+      /**
+       * @description id of the system data category originated from. null for own system
+       * @example https://blindnet.io
+       */
       system?: string;
     };
+    /** @description keep CONTACT for no longer than 30 days after a service defined by a legal base ends */
     CreateRetentionPolicyPayload: {
+      /**
+       * @description data category for which the policy is created
+       * @example CONTACT
+       */
       data_category: string;
-      /** @enum {string} */
+      /**
+       * @description retention policy
+       * @example NO-LONGER-THAN
+       * @enum {string}
+       */
       policy: 'NO-LONGER-THAN' | 'NO-LESS-THAN';
+      /**
+       * @description duration in JSON Schema duration format
+       * @example P30D
+       */
       duration: string;
-      /** @enum {string} */
+      /**
+       * @description event type to which the retention duration is relative to
+       * @example SERVICE-END
+       * @enum {string}
+       */
       after:
         | 'CAPTURE-DATE'
         | 'RELATIONSHIP-START'
@@ -189,7 +255,15 @@ export interface components {
         | 'SERVICE-END';
     };
     CreateSelectorPayload: {
+      /**
+       * @description selector name
+       * @example HOME
+       */
       name: string;
+      /**
+       * @description selector is the subcategory of this data category
+       * @example CONTACT.ADDRESS
+       */
       data_category: string;
     };
     DataCallbackPayload: {
@@ -214,6 +288,14 @@ export interface components {
       from?: string;
       /** Format: date-time */
       to?: string;
+    };
+    /** @enum {string} */
+    DemandResolution: 'auto' | 'manual';
+    DemandResolutionStrategy: {
+      transparency: components['schemas']['DemandResolution'];
+      access: components['schemas']['DemandResolution'];
+      delete: components['schemas']['DemandResolution'];
+      consents: components['schemas']['DemandResolution'];
     };
     DenyDemandPayload: {
       /** Format: uuid */
@@ -246,12 +328,35 @@ export interface components {
       date: string;
     };
     GeneralInformation: {
+      /**
+       * @description countries where data servers are located (including those of the processors who are processing data on your behalf
+       * @example [
+       *   "France",
+       *   "USA"
+       * ]
+       */
       countries?: string[];
+      /**
+       * @description name and contact details of your Organization and its representative
+       * @example blindnet
+       */
       organization: string;
+      /**
+       * @description identity and contact of a Data Protection Officer - if you are using blindnet devkit Privacy Request Builder, include the URL where you are hosting the interface
+       * @example Vuk Janosevic, www.blindnet.io/privacy-request-builder
+       */
       dpo: string;
+      /** @example Blindnet account managers, and Blindnet's DPO */
       data_consumer_categories?: string[];
-      access_policies?: string[];
+      /**
+       * @description public URL where your Privacy Policy can be consulted
+       * @example https://blindnet.io/privacy
+       */
       privacy_policy_link?: string;
+      /**
+       * @description general description of the technical and organizational security measures referred to in Article 32 of GDPR
+       * @example We use administrative, technical, and physical safeguards to protect your personal data, taking into account the nature of the personal data and the processing, and the threats posed.
+       */
       data_security_info?: string;
     };
     GiveConsentPayload: {
@@ -735,10 +840,21 @@ export interface operations {
   };
   /** Get history of privacy requests */
   'getV0Privacy-requestHistory': {
+    parameters: {
+      header: {
+        Authorization: string;
+      };
+    };
     responses: {
       200: {
         content: {
           'application/json': components['schemas']['RequestHistoryPayload'];
+        };
+      };
+      /** Invalid value for: header Authorization */
+      400: {
+        content: {
+          'text/plain': string;
         };
       };
     };
@@ -749,6 +865,9 @@ export interface operations {
       path: {
         requestId: string;
       };
+      header: {
+        Authorization: string;
+      };
     };
     responses: {
       200: {
@@ -756,13 +875,36 @@ export interface operations {
           'application/json': components['schemas']['PrivacyResponsePayload'][];
         };
       };
-      /** Invalid value for: path parameter requestId */
+      /** Invalid value for: path parameter requestId, Invalid value for: header Authorization */
       400: {
         content: {
           'text/plain': string;
         };
       };
       422: unknown;
+    };
+  };
+  /** Cancel a pending demand */
+  'postV0Privacy-requestCancel': {
+    parameters: {
+      header: {
+        Authorization: string;
+      };
+    };
+    responses: {
+      200: unknown;
+      /** Invalid value for: header Authorization, Invalid value for: body */
+      400: {
+        content: {
+          'text/plain': string;
+        };
+      };
+      422: unknown;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['CancelDemandPayload'];
+      };
     };
   };
   /** Get the list of pending privacy request demands */
@@ -1056,6 +1198,33 @@ export interface operations {
         content: {
           'text/plain': string;
         };
+      };
+    };
+  };
+  /** Get information about demand resolution strategies */
+  'getV0ConfigureDemand-resolution-strategy': {
+    responses: {
+      200: {
+        content: {
+          'application/json': components['schemas']['DemandResolutionStrategy'];
+        };
+      };
+    };
+  };
+  /** Update demand resolution strategies */
+  'putV0ConfigureDemand-resolution-strategy': {
+    responses: {
+      200: unknown;
+      /** Invalid value for: body */
+      400: {
+        content: {
+          'text/plain': string;
+        };
+      };
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['DemandResolutionStrategy'];
       };
     };
   };
