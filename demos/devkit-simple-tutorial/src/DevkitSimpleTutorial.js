@@ -38,6 +38,12 @@ export class DevkitSimpleTutorial extends LitElement {
       .app-footer a {
         margin-left: 5px;
       }
+
+      @media (min-width: 1056px) {
+        main {
+          margin-left: 16rem;
+        }
+      }
     `;
   }
 
