@@ -5,12 +5,12 @@ import { map } from 'lit/directives/map.js';
 import { RequestHistoryItem } from './models/history-response.js';
 import { REQUEST_STATUS } from './models/priv-terms.js';
 import { PRCIStyles } from './styles.js';
+import { ComputationAPI } from './utils/computation-api.js';
 import { STATUS_DESCRIPTIONS } from './utils/dictionary.js';
 import { ComponentState } from './utils/states.js';
-import { WithComputationApi } from './mixins/with-computation-api.js';
 
 @customElement('requests-view')
-export class RequestsView extends WithComputationApi(LitElement) {
+export class RequestsView extends LitElement {
   static styles = [
     PRCIStyles,
     css`
@@ -73,9 +73,11 @@ export class RequestsView extends WithComputationApi(LitElement) {
     // eslint-disable-next-line wc/guard-super-call
     super.connectedCallback();
 
-    this.computationApi.getRequestHistory().then(response => {
-      this._requests = response.history;
-    });
+    ComputationAPI.getInstance()
+      .getRequestHistory()
+      .then(response => {
+        this._requests = response.history;
+      });
   }
 
   handleRequestClick(e: Event) {

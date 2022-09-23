@@ -57,9 +57,11 @@ const CustomLocaleTemplate: Story<ArgTypes> = ({ locale }: ArgTypes) => {
   return html` <bldn-priv-request></bldn-priv-request> `;
 };
 
-const CustomPCETemplate: Story<ArgTypes> = ({ computationBaseUrl }: ArgTypes) => html`
+const CustomPCETemplate: Story<ArgTypes> = ({
+  computationBaseUrl,
+}: ArgTypes) => html`
   <bldn-priv-request
-    computation-base-url=${computationBaseUrl || ""}
+    computation-base-url=${computationBaseUrl || ''}
   ></bldn-priv-request>
 `;
 
@@ -82,5 +84,5 @@ CustomLocale.args = {
 
 export const CustomPCE = CustomPCETemplate.bind({});
 CustomPCE.args = {
-  computationBaseUrl: 'https://localhost:9000/v0',
+  computationBaseUrl: 'http://localhost:9000/v0/',
 };

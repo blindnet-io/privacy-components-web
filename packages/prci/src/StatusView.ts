@@ -10,7 +10,7 @@ import './StatusViewItem.js';
 import { ComponentState } from './utils/states.js';
 import { PRCIStyles } from './styles.js';
 import { getRequestLink, removeQueryParam } from './utils/utils.js';
-import { WithComputationApi } from './mixins/with-computation-api.js';
+import { ComputationAPI } from './utils/computation-api.js';
 
 const copySvg = new URL('./assets/icons/copy.svg', import.meta.url).href;
 
@@ -20,7 +20,7 @@ const linkSvg = new URL('./assets/icons/link.svg', import.meta.url).href;
  * View the status of a Privacy Request
  */
 @customElement('status-view')
-export class StatusView extends WithComputationApi(LitElement) {
+export class StatusView extends LitElement {
   static styles = [
     PRCIStyles,
     css`
@@ -93,41 +93,43 @@ export class StatusView extends WithComputationApi(LitElement) {
   @state() _intervalId: any = undefined;
 
   reloadRequest() {
-    this.computationApi.getRequest(this.requestId).then(response => {
-      if (response.length > 0) {
-        this._requestDate = new Date(response[0].date);
-        this._completedDemands = response.filter(d =>
-          [
-            DEMAND_STATUS.GRANTED,
-            DEMAND_STATUS['PARTIALLY-GRANTED'],
-            DEMAND_STATUS.DENIED,
-          ].includes(d.status)
-        );
-        this._processingDemands = response.filter(
-          d => d.status === DEMAND_STATUS['UNDER-REVIEW']
-        );
-        this._cancelledDemands = response.filter(
-          d => d.status === DEMAND_STATUS.CANCELED
-        );
-      }
+    ComputationAPI.getInstance()
+      .getRequest(this.requestId)
+      .then(response => {
+        if (response.length > 0) {
+          this._requestDate = new Date(response[0].date);
+          this._completedDemands = response.filter(d =>
+            [
+              DEMAND_STATUS.GRANTED,
+              DEMAND_STATUS['PARTIALLY-GRANTED'],
+              DEMAND_STATUS.DENIED,
+            ].includes(d.status)
+          );
+          this._processingDemands = response.filter(
+            d => d.status === DEMAND_STATUS['UNDER-REVIEW']
+          );
+          this._cancelledDemands = response.filter(
+            d => d.status === DEMAND_STATUS.CANCELED
+          );
+        }
 
-      // If no more demands are processing, the reload interval exists, and the data for
-      // all ACCESS responses has arrived, stop reloading the request.
-      if (
-        this._processingDemands.length === 0 &&
-        this._intervalId &&
-        !this._completedDemands.some(
-          d => d.requested_action === ACTION.ACCESS && !d.data
-        )
-      ) {
-        clearInterval(this._intervalId);
-        this._intervalId = undefined;
-      } else if (!this._intervalId && this._processingDemands.length !== 0) {
-        // FIXME: reload should happen after a user interaction, not automatically
-        // Setup an interval to get the status of processing demands every 3 seconds
-        this._intervalId = setInterval(() => this.reloadRequest(), 3000);
-      }
-    });
+        // If no more demands are processing, the reload interval exists, and the data for
+        // all ACCESS responses has arrived, stop reloading the request.
+        if (
+          this._processingDemands.length === 0 &&
+          this._intervalId &&
+          !this._completedDemands.some(
+            d => d.requested_action === ACTION.ACCESS && !d.data
+          )
+        ) {
+          clearInterval(this._intervalId);
+          this._intervalId = undefined;
+        } else if (!this._intervalId && this._processingDemands.length !== 0) {
+          // FIXME: reload should happen after a user interaction, not automatically
+          // Setup an interval to get the status of processing demands every 3 seconds
+          this._intervalId = setInterval(() => this.reloadRequest(), 3000);
+        }
+      });
   }
 
   protected willUpdate(
@@ -244,9 +246,6 @@ export class StatusView extends WithComputationApi(LitElement) {
             <span><b>${msg('Completed Demand(s)')}</b></span>
             ${map(
               this._completedDemands,
-              // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-              // FIXME: OK, so no I can't do this, let's refact !!!
-              // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
               d => html`<status-view-item .demand=${d}></status-view-item>`
             )}
           </div>
