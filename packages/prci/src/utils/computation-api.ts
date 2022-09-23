@@ -5,23 +5,67 @@ import { PrivacyRequest } from '../models/privacy-request.js';
 import { PrivacyResponse } from '../models/privacy-response.js';
 
 export class ComputationAPI {
+  private static instance: ComputationAPI | null = null;
+
+  static readonly MOCK_URL =
+    'https://stoplight.io/mocks/blindnet/product-management:open-api/74767654';
+
+  static readonly DEFAULT_URL =
+    'https://devkit-pce-staging.azurewebsites.net/v0';
+
   /**
-   *
-   * @param baseURL base URL (schema + host + port + base-path) to call (for default behavior, see mock)
-   * @param mock flag indicating if the mock endpoint should be used when no base URL is specified (staging environment if false, stoplight if true)
+   * @param baseURL base URL (schema + host + port + base-path) to call
    */
-  constructor(baseURL?: string, private mock = false) {
-    this.baseURL =
-      baseURL ||
-      (mock
-        ? 'https://stoplight.io/mocks/blindnet/product-management:open-api/74767654/'
-        : 'https://devkit-pce-staging.azurewebsites.net/v0/');
+  private constructor(baseURL?: string) {
+    if (!baseURL) {
+      this._baseURL = ComputationAPI.DEFAULT_URL;
+    } else if (baseURL === 'false') {
+      this._baseURL = ComputationAPI.MOCK_URL;
+    } else {
+      this._baseURL = baseURL;
+    }
+    // make sure the base URL never has a trailing slash
+    this._baseURL = this._baseURL.replace(/\/+$/, '');
+  }
+
+  get isMocked(): boolean {
+    return this._baseURL === ComputationAPI.MOCK_URL;
+  }
+
+  private fullURL(endpoint: string) {
+    // endpoint should always have one leading slash
+    return `${this._baseURL}${endpoint.replace(/^\/*/, '/')}`;
   }
 
   /**
    * base URL (schema + host + port + base-path) for all calls
    */
-  private baseURL: string;
+  private _baseURL: string;
+
+  get baseURL(): string {
+    return this._baseURL;
+  }
+
+  /**
+   *
+   * @param baseURL base URL (schema + host + port + base-path) to call (for default behavior, see mock)
+   * @param mock flag indicating if the mock endpoint should be used when no base URL is specified (staging environment if false, stoplight if true)
+   */
+  public static init(baseURL?: string) {
+    if (ComputationAPI.instance) {
+      throw new Error('Computation API has already been initialized');
+    }
+
+    ComputationAPI.instance = new ComputationAPI(baseURL);
+  }
+
+  public static getInstance(): ComputationAPI {
+    if (!ComputationAPI.instance) {
+      throw new Error("Computation API hasn't been initialized");
+    }
+
+    return ComputationAPI.instance;
+  }
 
   private headers(acceptJSON = false, request?: PrivacyRequest): Headers {
     return new Headers({
@@ -30,7 +74,9 @@ export class ComputationAPI {
       // TODO: remove this when auth is implemented
       Authorization:
         localStorage.getItem('priv_user_id') || 'john.doe@example.com',
-      ...(this.mock && request ? { Prefer: this.getMockHeader(request) } : {}),
+      ...(this.isMocked && request
+        ? { Prefer: this.getMockHeader(request) }
+        : {}),
       ...(acceptJSON ? { accept: 'application/json' } : {}),
     });
   }
@@ -82,11 +128,11 @@ export class ComputationAPI {
   async sendPrivacyRequest(
     request: PrivacyRequest
   ): Promise<{ request_id: string }> {
+    const endpoint = `/privacy-request`;
+
     const preparedRequest = this.preProcessRequest(request);
 
-    const url = new URL('/privacy-request', this.baseURL);
-
-    const response = await fetch(url, {
+    const response = await fetch(this.fullURL(endpoint), {
       method: 'POST',
       headers: this.headers(false, request),
       body: JSON.stringify(preparedRequest),
@@ -99,9 +145,9 @@ export class ComputationAPI {
   }
 
   async getRequestHistory(): Promise<HistoryResponse> {
-    const url = new URL('/privacy-request/history', this.baseURL);
+    const endpoint = '/privacy-request/history';
 
-    const response = await fetch(url, {
+    const response = await fetch(this.fullURL(endpoint), {
       method: 'GET',
       headers: this.headers(true),
     });
@@ -113,9 +159,9 @@ export class ComputationAPI {
   }
 
   async getRequest(requestId: string): Promise<PrivacyResponse> {
-    const url = new URL(`/privacy-request/${requestId}`, this.baseURL);
+    const endpoint = `/privacy-request/${requestId}`;
 
-    const response = await fetch(url, {
+    const response = await fetch(this.fullURL(endpoint), {
       method: 'GET',
       headers: this.headers(true),
     });
@@ -127,11 +173,12 @@ export class ComputationAPI {
   }
 
   async cancelDemand(demand_id: string): Promise<void> {
-    const url = new URL(`/privacy-request/${requestId}`, this.baseURL);
+    const endpoint = `/privacy-request/${demand_id}`;
+
     const headers = this.headers(true);
     const body = JSON.stringify({ demand_id });
 
-    const response = await fetch(url, {
+    const response = await fetch(this.fullURL(endpoint), {
       method: 'POST',
       headers,
       body,
@@ -142,4 +189,7 @@ export class ComputationAPI {
     }
   }
 
+  static clean() {
+    ComputationAPI.instance = null;
+  }
 }
