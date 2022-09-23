@@ -4,6 +4,7 @@ import { customElement, property } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
 import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
+import { WithComputationApi } from './mixins/with-computation-api.js';
 import { LegalBase } from './models/legal-base.js';
 import {
   ACTION,
@@ -22,14 +23,13 @@ import {
   ACTION_TITLES,
   DEMAND_STATUS_DESCRIPTIONS,
 } from './utils/dictionary.js';
-import { cancelDemand } from './utils/privacy-request-api.js';
 import { getRetentionPolicyString } from './utils/utils.js';
 
 /**
  * Status for a single demand in a Privacy Request
  */
 @customElement('status-view-item')
-export class StatusViewItem extends LitElement {
+export class StatusViewItem extends WithComputationApi(LitElement) {
   static styles = [
     PRCIStyles,
     css`
@@ -446,7 +446,7 @@ export class StatusViewItem extends LitElement {
   }
 
   handleConfirmCancelClick() {
-    cancelDemand(this.demand.demand_id);
+    this.computationApi.cancelDemand(this.demand.demand_id);
   }
 
   render() {

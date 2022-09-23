@@ -5,12 +5,12 @@ import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
 import { ACTION, DEMAND_STATUS } from './models/priv-terms.js';
 import { PrivacyResponseItem } from './models/privacy-response.js';
-import { getRequest } from './utils/privacy-request-api.js';
 
 import './StatusViewItem.js';
 import { ComponentState } from './utils/states.js';
 import { PRCIStyles } from './styles.js';
 import { getRequestLink, removeQueryParam } from './utils/utils.js';
+import { WithComputationApi } from './mixins/with-computation-api.js';
 
 const copySvg = new URL('./assets/icons/copy.svg', import.meta.url).href;
 
@@ -20,7 +20,7 @@ const linkSvg = new URL('./assets/icons/link.svg', import.meta.url).href;
  * View the status of a Privacy Request
  */
 @customElement('status-view')
-export class StatusView extends LitElement {
+export class StatusView extends WithComputationApi(LitElement) {
   static styles = [
     PRCIStyles,
     css`
@@ -93,7 +93,7 @@ export class StatusView extends LitElement {
   @state() _intervalId: any = undefined;
 
   reloadRequest() {
-    getRequest(this.requestId).then(response => {
+    this.computationApi.getRequest(this.requestId).then(response => {
       if (response.length > 0) {
         this._requestDate = new Date(response[0].date);
         this._completedDemands = response.filter(d =>
@@ -123,6 +123,7 @@ export class StatusView extends LitElement {
         clearInterval(this._intervalId);
         this._intervalId = undefined;
       } else if (!this._intervalId && this._processingDemands.length !== 0) {
+        // FIXME: reload should happen after a user interaction, not automatically
         // Setup an interval to get the status of processing demands every 3 seconds
         this._intervalId = setInterval(() => this.reloadRequest(), 3000);
       }
@@ -243,6 +244,9 @@ export class StatusView extends LitElement {
             <span><b>${msg('Completed Demand(s)')}</b></span>
             ${map(
               this._completedDemands,
+              // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+              // FIXME: OK, so no I can't do this, let's refact !!!
+              // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
               d => html`<status-view-item .demand=${d}></status-view-item>`
             )}
           </div>
