@@ -28,7 +28,7 @@ import {
 } from './utils/utils.js';
 import { PRCI_CONFIG } from './utils/conf.js';
 import { PRCIStyles } from './styles.js';
-import { WithComputationApi } from './mixins/with-computation-api.js';
+import { ComputationAPI } from './utils/computation-api.js';
 
 /**
  * Top level component encapsulating a single PrivacyRequest. Contains one or
@@ -36,7 +36,7 @@ import { WithComputationApi } from './mixins/with-computation-api.js';
  */
 @customElement('bldn-priv-request')
 @localized()
-export class BldnPrivRequest extends WithComputationApi(LitElement) {
+export class BldnPrivRequest extends LitElement {
   static styles = [
     PRCIStyles,
     css`
@@ -96,6 +96,16 @@ export class BldnPrivRequest extends WithComputationApi(LitElement) {
 
   /** @prop {string} requestId - a request ID. If provided, the initial PRCI view will be the status page for the provided request ID */
   @property({ type: String, attribute: 'request-id' }) requestId: string = '';
+
+  /**
+   * base URL of the computation API
+   * if "false", then a mocked endpoint will be used
+   * if empty, then the blindnet staging endpoint will be used
+   *
+   * @example 'https://localhost:9000/v0
+   */
+  @property({ type: String, attribute: 'computation-base-url' })
+  computationBaseURL = '';
 
   // Array of available actions, given by actions property if a valid list was passed
   @state() _includedActions: ACTION[] = getDefaultActions();
@@ -182,14 +192,14 @@ export class BldnPrivRequest extends WithComputationApi(LitElement) {
       const { demandGroupId, demands } = e.detail;
       this._demands.set(demandGroupId, demands);
     }
-  }
+  };
 
   private setDemand = (e: Event) => {
     if (e instanceof CustomEvent) {
       const { demandGroupId, demand } = e.detail;
       this._demands.set(demandGroupId, [demand]);
     }
-  }
+  };
 
   private deleteDemand = (e: Event) => {
     if (e instanceof CustomEvent) {
@@ -197,14 +207,14 @@ export class BldnPrivRequest extends WithComputationApi(LitElement) {
       this._demands.delete(demandGroupId);
       this.requestUpdate();
     }
-  }
+  };
 
   private changeRequestTarget = (e: Event) => {
     if (e instanceof CustomEvent) {
       const { id } = e.detail;
       this._privacyRequest.target = id as TARGET;
     }
-  }
+  };
 
   private submitRequest = async () => {
     const allDemands = Array.from(this._demands.values()).reduce(
@@ -216,7 +226,7 @@ export class BldnPrivRequest extends WithComputationApi(LitElement) {
       return d;
     });
 
-    const response = await this.computationApi.sendPrivacyRequest(
+    const response = await ComputationAPI.getInstance().sendPrivacyRequest(
       this._privacyRequest
     );
 
@@ -228,7 +238,7 @@ export class BldnPrivRequest extends WithComputationApi(LitElement) {
         },
       })
     );
-  }
+  };
 
   connectedCallback(): void {
     // eslint-disable-next-line wc/guard-super-call
@@ -244,6 +254,8 @@ export class BldnPrivRequest extends WithComputationApi(LitElement) {
 
     // Submit request listener
     this.addEventListener('submit-request', this.submitRequest);
+
+    ComputationAPI.init(this.computationBaseURL);
   }
 
   disconnectedCallback(): void {
@@ -252,6 +264,8 @@ export class BldnPrivRequest extends WithComputationApi(LitElement) {
     this.removeEventListener('demand-delete', this.deleteDemand);
     this.removeEventListener('request-target-change', this.changeRequestTarget);
     this.removeEventListener('submit-request', this.submitRequest);
+
+    ComputationAPI.clean();
   }
 
   /**
@@ -446,16 +460,12 @@ export class BldnPrivRequest extends WithComputationApi(LitElement) {
           ],
           [
             ComponentState.REQUESTS,
-            () =>
-              html`<requests-view
-                computation-base-url=${this.computationBaseURL}
-              ></requests-view>`,
+            () => html`<requests-view></requests-view>`,
           ],
           [
             ComponentState.STATUS,
             () =>
               html` <status-view
-                computation-base-url=${this.computationBaseURL}
                 request-id=${this._currentRequestId}
               ></status-view>`,
           ],
