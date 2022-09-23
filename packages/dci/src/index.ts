@@ -1,1 +1,1 @@
-export { DataConsumerInterface } from './DataConsumerInterface.js';
+export { DataConsumerInterface } from './bldn-data-consum.js';

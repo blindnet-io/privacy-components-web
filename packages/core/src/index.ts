@@ -5,3 +5,6 @@ export default function core() {
 }
 
 export { SlottedDropdown } from './components/SlottedDropdown.js';
+export { ToggleButton } from './components/bldn-toggle-button.js';
+export { DataConsumerRequests } from './components/bldn-data-consum-requests.js';
+export { HorizontalList } from './components/bldn-horizontal-list.js';
