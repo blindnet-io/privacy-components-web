@@ -5,6 +5,13 @@ import { PrivacyRequest } from '../src/models/privacy-request.js';
 import { ComputationAPI } from '../src/utils/computation-api.js';
 
 describe('Mock API Tests', () => {
+  let computationAPI: ComputationAPI | null;
+
+  beforeEach(() => {
+    ComputationAPI.init('');
+    computationAPI = ComputationAPI.getInstance();
+  });
+
   it('test single demand', async () => {
     const request: PrivacyRequest = {
       demands: [],
@@ -19,11 +26,14 @@ describe('Mock API Tests', () => {
       target: TARGET.ORGANIZATION,
     };
 
-    const computationAPI = new ComputationAPI();
+    // FIXME: call a local mock, or consider this an integration to move to another context
+    const privacyResponse = await computationAPI?.sendPrivacyRequest(request);
+    expect(privacyResponse?.request_id).to.be.ok;
+  });
 
-    computationAPI.sendPrivacyRequest(request).then(privacyResponse => {
-      console.log(privacyResponse);
-    });
+  afterEach(() => {
+    ComputationAPI.clean();
+    computationAPI = null;
   });
 });
 
