@@ -2,7 +2,7 @@ import { expect } from '@open-wc/testing';
 import '../src/index.js';
 import { TARGET } from '../src/models/priv-terms.js';
 import { PrivacyRequest } from '../src/models/privacy-request.js';
-import { sendPrivacyRequest } from '../src/utils/privacy-request-api.js';
+import { ComputationAPI } from '../src/utils/computation-api.js';
 
 describe('Mock API Tests', () => {
   it('test single demand', async () => {
@@ -19,7 +19,9 @@ describe('Mock API Tests', () => {
       target: TARGET.ORGANIZATION,
     };
 
-    sendPrivacyRequest(request, false).then(privacyResponse => {
+    const computationAPI = new ComputationAPI();
+
+    computationAPI.sendPrivacyRequest(request).then(privacyResponse => {
       console.log(privacyResponse);
     });
   });
