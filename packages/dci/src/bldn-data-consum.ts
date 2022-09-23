@@ -17,14 +17,12 @@ export class DataConsumerInterface extends LitElement {
 
   render() {
     return html`
-      <div class="test">
-        <bldn-toggle-button
-          left-text="Requests"
-          right-text="Alerts"
-          left-id="requests"
-          right-id="alerts"
-        ></bldn-toggle-button>
-      </div>
+      <bldn-toggle-button
+        left-text="Requests"
+        right-text="Alerts"
+        left-id="requests"
+        right-id="alerts"
+      ></bldn-toggle-button>
       ${choose(this.uiState, [
         [
           DCI_UI_STATE.REQUESTS,
@@ -41,6 +39,10 @@ export class DataConsumerInterface extends LitElement {
   static styles = css`
     :host {
       width: 100%;
+    }
+
+    bldn-toggle-button {
+      padding-bottom: 40px;
     }
   `;
 }

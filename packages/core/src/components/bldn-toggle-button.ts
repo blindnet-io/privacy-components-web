@@ -60,8 +60,8 @@ export class ToggleButton extends LitElement {
         color: var(--color-dark);
         border: 1px solid var(--color-light);
         padding: 10px 20px;
-        font-size: 0.6vw;
-        /* font-size: 16px; */
+        /* font-size: 0.6vw; */
+        font-size: 16px;
       }
 
       #toggle-button-half__left {

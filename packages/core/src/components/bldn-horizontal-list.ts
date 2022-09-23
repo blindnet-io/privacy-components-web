@@ -1,6 +1,7 @@
-import { css, html, LitElement } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { css, html, LitElement, PropertyValueMap } from 'lit';
+import { customElement, property, state } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
+import { bldnStyles } from './blindnet-wc-styles.js';
 
 interface ListChoice {
   id: string;
@@ -11,19 +12,60 @@ interface ListChoice {
 export class HorizontalList extends LitElement {
   @property({ type: Array }) choices: ListChoice[] = [];
 
+  @state() _selected: number = 0;
+
   render() {
     return html`
-      ${map(this.choices, choice => html` <button>${choice.display}</button> `)}
+      ${map(
+        this.choices,
+        (choice, i) => html`
+          <button
+            id=${choice.id}
+            class="choice ${i === this._selected ? 'choice--selected' : ''}"
+            @click=${() => {
+              this._selected = i;
+            }}
+          >
+            ${choice.display}
+          </button>
+        `
+      )}
     `;
   }
 
-  static style = css`
-    :host {
-      display: grid;
-      /* grid-template-rows: 1fr; */
-      /* grid-auto-flow: column; */
-      /* grid-auto-columns: 1fr; */
-      grid-template-columns: repeat(4, 1fr);
+  protected willUpdate(
+    _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
+  ): void {
+    if (_changedProperties.has('_selected')) {
+      this.dispatchEvent(
+        new CustomEvent('horizontal-list-choice-change', {
+          detail: {
+            selected: this.choices[this._selected],
+          },
+        })
+      );
     }
-  `;
+  }
+
+  static styles = [
+    bldnStyles,
+    css`
+      :host {
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: 1fr;
+      }
+
+      .choice {
+        padding: 5px 20px;
+        border: none;
+        border-bottom: 1px solid var(--color-medium);
+      }
+
+      .choice--selected {
+        color: var(--color-primary);
+        border-bottom-color: var(--color-primary);
+      }
+    `,
+  ];
 }
