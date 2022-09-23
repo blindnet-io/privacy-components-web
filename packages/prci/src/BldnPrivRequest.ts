@@ -27,8 +27,8 @@ import {
   getDefaultDemands,
 } from './utils/utils.js';
 import { PRCI_CONFIG } from './utils/conf.js';
-import { sendPrivacyRequest } from './utils/privacy-request-api.js';
 import { PRCIStyles } from './styles.js';
+import { WithComputationApi } from './mixins/with-computation-api.js';
 
 /**
  * Top level component encapsulating a single PrivacyRequest. Contains one or
@@ -36,7 +36,7 @@ import { PRCIStyles } from './styles.js';
  */
 @customElement('bldn-priv-request')
 @localized()
-export class BldnPrivRequest extends LitElement {
+export class BldnPrivRequest extends WithComputationApi(LitElement) {
   static styles = [
     PRCIStyles,
     css`
@@ -175,50 +175,83 @@ export class BldnPrivRequest extends LitElement {
           break;
       }
     });
+  }
 
-    // Demand update listener
-    this.addEventListener('demand-set-multiple', e => {
-      const { demandGroupId, demands } = (e as CustomEvent).detail;
+  private setMultipleDemands = (e: Event) => {
+    if (e instanceof CustomEvent) {
+      const { demandGroupId, demands } = e.detail;
       this._demands.set(demandGroupId, demands);
-    });
-    this.addEventListener('demand-set', e => {
-      const { demandGroupId, demand } = (e as CustomEvent).detail;
+    }
+  }
+
+  private setDemand = (e: Event) => {
+    if (e instanceof CustomEvent) {
+      const { demandGroupId, demand } = e.detail;
       this._demands.set(demandGroupId, [demand]);
-    });
-    this.addEventListener('demand-delete', e => {
-      const { demandGroupId } = (e as CustomEvent).detail;
+    }
+  }
+
+  private deleteDemand = (e: Event) => {
+    if (e instanceof CustomEvent) {
+      const { demandGroupId } = e.detail;
       this._demands.delete(demandGroupId);
       this.requestUpdate();
+    }
+  }
+
+  private changeRequestTarget = (e: Event) => {
+    if (e instanceof CustomEvent) {
+      const { id } = e.detail;
+      this._privacyRequest.target = id as TARGET;
+    }
+  }
+
+  private submitRequest = async () => {
+    const allDemands = Array.from(this._demands.values()).reduce(
+      (dmds, dmdGroup) => dmds.concat(dmdGroup),
+      []
+    );
+    this._privacyRequest.demands = allDemands.map((d, i) => {
+      d.id = i.toString();
+      return d;
     });
+
+    const response = await this.computationApi.sendPrivacyRequest(
+      this._privacyRequest
+    );
+
+    this.dispatchEvent(
+      new CustomEvent('component-state-change', {
+        detail: {
+          newState: ComponentState.STATUS,
+          requestId: response.request_id,
+        },
+      })
+    );
+  }
+
+  connectedCallback(): void {
+    // eslint-disable-next-line wc/guard-super-call
+    super.connectedCallback();
+
+    // Demand update listener
+    this.addEventListener('demand-set-multiple', this.setMultipleDemands);
+    this.addEventListener('demand-set', this.setDemand);
+    this.addEventListener('demand-delete', this.deleteDemand);
 
     // Request target listener
-    this.addEventListener('request-target-change', e => {
-      const { id } = (e as CustomEvent).detail;
-      this._privacyRequest.target = id as TARGET;
-    });
+    this.addEventListener('request-target-change', this.changeRequestTarget);
 
     // Submit request listener
-    this.addEventListener('submit-request', () => {
-      const allDemands = Array.from(this._demands.values()).reduce(
-        (dmds, dmdGroup) => dmds.concat(dmdGroup),
-        []
-      );
-      this._privacyRequest.demands = allDemands.map((d, i) => {
-        d.id = i.toString();
-        return d;
-      });
+    this.addEventListener('submit-request', this.submitRequest);
+  }
 
-      sendPrivacyRequest(this._privacyRequest, false).then(response => {
-        this.dispatchEvent(
-          new CustomEvent('component-state-change', {
-            detail: {
-              newState: ComponentState.STATUS,
-              requestId: response.request_id,
-            },
-          })
-        );
-      });
-    });
+  disconnectedCallback(): void {
+    this.removeEventListener('demand-set-multiple', this.setMultipleDemands);
+    this.removeEventListener('demand-set', this.setDemand);
+    this.removeEventListener('demand-delete', this.deleteDemand);
+    this.removeEventListener('request-target-change', this.changeRequestTarget);
+    this.removeEventListener('submit-request', this.submitRequest);
   }
 
   /**
@@ -413,12 +446,16 @@ export class BldnPrivRequest extends LitElement {
           ],
           [
             ComponentState.REQUESTS,
-            () => html` <requests-view></requests-view> `,
+            () =>
+              html`<requests-view
+                computation-base-url=${this.computationBaseURL}
+              ></requests-view>`,
           ],
           [
             ComponentState.STATUS,
             () =>
               html` <status-view
+                computation-base-url=${this.computationBaseURL}
                 request-id=${this._currentRequestId}
               ></status-view>`,
           ],
