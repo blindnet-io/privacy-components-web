@@ -31,6 +31,7 @@ interface ArgTypes {
   actions?: string;
   dataCategories?: string;
   locale?: string;
+  computationBaseUrl?: string;
 }
 
 const RegularTemplate: Story<ArgTypes> = () => html`
@@ -56,6 +57,12 @@ const CustomLocaleTemplate: Story<ArgTypes> = ({ locale }: ArgTypes) => {
   return html` <bldn-priv-request></bldn-priv-request> `;
 };
 
+const CustomPCETemplate: Story<ArgTypes> = ({ computationBaseUrl }: ArgTypes) => html`
+  <bldn-priv-request
+    computation-base-url=${computationBaseUrl || ""}
+  ></bldn-priv-request>
+`;
+
 export const Regular = RegularTemplate.bind({});
 
 export const CustomActions = CustomActionsTemplate.bind({});
@@ -71,4 +78,9 @@ CustomDataCategories.args = {
 export const CustomLocale = CustomLocaleTemplate.bind({});
 CustomLocale.args = {
   locale: 'fr',
+};
+
+export const CustomPCE = CustomPCETemplate.bind({});
+CustomPCE.args = {
+  computationBaseUrl: 'https://localhost:9000/v0',
 };

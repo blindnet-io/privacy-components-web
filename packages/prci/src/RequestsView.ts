@@ -6,11 +6,11 @@ import { RequestHistoryItem } from './models/history-response.js';
 import { REQUEST_STATUS } from './models/priv-terms.js';
 import { PRCIStyles } from './styles.js';
 import { STATUS_DESCRIPTIONS } from './utils/dictionary.js';
-import { getRequestHistory } from './utils/privacy-request-api.js';
 import { ComponentState } from './utils/states.js';
+import { WithComputationApi } from './mixins/with-computation-api.js';
 
 @customElement('requests-view')
-export class RequestsView extends LitElement {
+export class RequestsView extends WithComputationApi(LitElement) {
   static styles = [
     PRCIStyles,
     css`
@@ -69,9 +69,11 @@ export class RequestsView extends LitElement {
 
   @state() _requests: RequestHistoryItem[] = [];
 
-  constructor() {
-    super();
-    getRequestHistory().then(response => {
+  connectedCallback(): void {
+    // eslint-disable-next-line wc/guard-super-call
+    super.connectedCallback();
+
+    this.computationApi.getRequestHistory().then(response => {
       this._requests = response.history;
     });
   }
