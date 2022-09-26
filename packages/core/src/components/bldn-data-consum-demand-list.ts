@@ -22,7 +22,7 @@ export class DataConsumerDemandList extends LitElement {
           <div class="list__row">
             <span>${new Date(d.date).toLocaleDateString('en-gb')}</span>
             <span>${d.data_subject?.id}</span>
-            <span>${msg(d.action)}</span>
+            <span>${d.action}</span>
             <button></button>
           </div>
         `
