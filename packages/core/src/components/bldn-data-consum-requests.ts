@@ -13,6 +13,7 @@ export class DataConsumerRequests extends LitElement {
           { id: 'canceled', display: 'Canceled' },
         ])}
       ></bldn-horizontal-list>
+      <bldn-data-consum-demand-list></bldn-data-consum-demand-list>
     `;
   }
 }
