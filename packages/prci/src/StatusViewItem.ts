@@ -4,7 +4,6 @@ import { customElement, property } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
 import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
-import { LegalBase } from './models/legal-base.js';
 import {
   ACTION,
   DATA_CATEGORY,
@@ -12,12 +11,13 @@ import {
   PROCESSING_CATEGORY,
   PROVENANCE,
   PURPOSE,
-} from './models/priv-terms.js';
-import { PrivacyResponseItem } from './models/privacy-response.js';
+  PrivacyResponseItem,
+  ComputationAPI,
+} from '@blindnet/core';
+import { LegalBase } from './models/legal-base.js';
 import { Provenance } from './models/provenance.js';
 import { RetentionPolicy } from './models/retention-policy.js';
 import { PRCIStyles } from './styles.js';
-import { ComputationAPI } from './utils/computation-api.js';
 import {
   ACTION_DESCRIPTIONS,
   ACTION_TITLES,

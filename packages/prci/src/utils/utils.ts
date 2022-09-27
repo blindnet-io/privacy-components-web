@@ -1,6 +1,6 @@
 import { html } from 'lit';
-import { Demand } from '../models/demand.js';
 import {
+  Demand,
   ACTION,
   AFTER,
   DATA_CATEGORY,
@@ -9,7 +9,7 @@ import {
   PROVENANCE,
   PURPOSE,
   TARGET,
-} from '../models/priv-terms.js';
+} from '@blindnet/core';
 import { PRCI_CONFIG } from './conf.js';
 import {
   AFTER_TITLES,

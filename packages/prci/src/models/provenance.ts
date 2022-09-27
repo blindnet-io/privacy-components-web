@@ -1,4 +1,4 @@
-import { PROVENANCE } from './priv-terms.js';
+import { PROVENANCE } from '@blindnet/core';
 
 export interface Provenance {
   id: string;

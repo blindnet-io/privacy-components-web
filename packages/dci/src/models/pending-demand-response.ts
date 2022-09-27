@@ -1,6 +1,5 @@
 /* eslint-disable camelcase */
-import { DataSubject } from '@blindnet/prci/src/models/data-subject.js';
-import { ACTION } from '@blindnet/prci/src/models/priv-terms.js';
+import { DataSubject, ACTION } from '@blindnet/core';
 import { Recomendation } from './Recomendation.js';
 
 export interface PendingDemandResponse {
