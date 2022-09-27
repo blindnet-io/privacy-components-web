@@ -1,4 +1,4 @@
-import { MOTIVE } from '@blindnet/prci/dist/models/priv-terms.js';
+import { MOTIVE } from '@blindnet/core';
 import { PendingDemandResponse } from '../models/pending-demand-response.js';
 import { PendingRequestsResponse } from '../models/pending-requests-response.js';
 

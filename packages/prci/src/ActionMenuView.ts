@@ -2,7 +2,7 @@ import { html, css, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { localized, msg } from '@lit/localize';
 import './ActionItem.js';
-import { ACTION } from './models/priv-terms.js';
+import { ACTION } from '@blindnet/core';
 import { enabledActions } from './utils/conf.js';
 import { PRCIStyles } from './styles.js';
 import { ComponentState } from './utils/states.js';

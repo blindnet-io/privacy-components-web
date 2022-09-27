@@ -1,7 +1,6 @@
 import { msg } from '@lit/localize';
 import { css, html, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { Demand } from '../models/demand.js';
 import {
   ACTION,
   DATA_CATEGORY,
@@ -9,7 +8,8 @@ import {
   PROVENANCE,
   PURPOSE,
   TARGET,
-} from '../models/priv-terms.js';
+  Demand,
+} from '@blindnet/core';
 import {
   DATA_CATEGORY_DESCRIPTIONS,
   PROVENANCE_DESCRIPTIONS,

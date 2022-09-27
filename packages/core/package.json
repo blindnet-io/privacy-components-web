@@ -24,10 +24,6 @@
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
-    },
-    "./hello-world": {
-      "types": "./dist/hello-world/hello-world.d.ts",
-      "default": "./dist/hello-world/hello-world.js"
     }
   },
   "directories": {

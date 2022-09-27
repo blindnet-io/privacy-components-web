@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import { DATA_CATEGORY, PROCESSING_CATEGORY, PURPOSE } from './priv-terms.js';
+import { DATA_CATEGORY, PROCESSING_CATEGORY, PURPOSE } from '@blindnet/core';
 
 interface PrivacyScopeTriple {
   data_category: DATA_CATEGORY;
