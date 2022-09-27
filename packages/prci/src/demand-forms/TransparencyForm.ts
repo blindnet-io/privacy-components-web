@@ -1,8 +1,7 @@
 import { msg } from '@lit/localize';
 import { css, html, TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import { Demand } from '../models/demand.js';
-import { ACTION, PROVENANCE } from '../models/priv-terms.js';
+import { Demand, ACTION, PROVENANCE, Restrictions } from '@blindnet/core';
 import { enabledActions } from '../utils/conf.js';
 import {
   ACTION_DESCRIPTIONS,
@@ -12,7 +11,6 @@ import { MultiDemandForm } from './MultiDemandForm.js';
 import { FormComponentState } from '../utils/states.js';
 
 import '../AllChecklist.js';
-import { Restrictions } from '../models/restrictions.js';
 import { PRCIStyles } from '../styles.js';
 
 /**

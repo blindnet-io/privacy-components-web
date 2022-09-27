@@ -1,12 +1,26 @@
-/* eslint-disable no-restricted-globals */
-/* eslint-disable no-param-reassign */
 import { html, css, LitElement, PropertyValueMap, TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
 import { map } from 'lit/directives/map.js';
 import { localized, msg } from '@lit/localize';
+import {
+  ACTION,
+  DATA_CATEGORY,
+  TARGET,
+  Demand,
+  PrivacyRequest,
+  ComputationAPI,
+  CoreConfigurationMixin,
+} from '@blindnet/core';
+import { ComponentState } from './utils/states.js';
+import {
+  getDefaultActions,
+  getDefaultDataCategories,
+  getDefaultDemands,
+} from './utils/utils.js';
+import { PRCI_CONFIG } from './utils/conf.js';
+import { PRCIStyles } from './styles.js';
 
-import '@blindnet/core';
 import './FrequentRequestsMenu.js';
 import './ReviewView.js';
 import './ActionMenuView.js';
@@ -17,26 +31,14 @@ import './demand-forms/AccessForm.js';
 import './demand-forms/DeleteForm.js';
 import './demand-forms/RevokeConsentForm.js';
 
-import { ACTION, DATA_CATEGORY, TARGET } from './models/priv-terms.js';
-import { PrivacyRequest } from './models/privacy-request.js';
-import { ComponentState } from './utils/states.js';
-import { Demand } from './models/demand.js';
-import {
-  getDefaultActions,
-  getDefaultDataCategories,
-  getDefaultDemands,
-} from './utils/utils.js';
-import { PRCI_CONFIG } from './utils/conf.js';
-import { PRCIStyles } from './styles.js';
-import { ComputationAPI } from './utils/computation-api.js';
-
 /**
  * Top level component encapsulating a single PrivacyRequest. Contains one or
  * more DemandBuilder elements, each for a single demand action type.
+ *
  */
 @customElement('bldn-priv-request')
 @localized()
-export class BldnPrivRequest extends LitElement {
+export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
   static styles = [
     PRCIStyles,
     css`
@@ -97,16 +99,6 @@ export class BldnPrivRequest extends LitElement {
   /** @prop {string} requestId - a request ID. If provided, the initial PRCI view will be the status page for the provided request ID */
   @property({ type: String, attribute: 'request-id' }) requestId: string = '';
 
-  /**
-   * base URL of the computation API
-   * if "false", then a mocked endpoint will be used
-   * if empty, then the blindnet staging endpoint will be used
-   *
-   * @example 'https://localhost:9000/v0
-   */
-  @property({ type: String, attribute: 'computation-base-url' })
-  computationBaseURL = '';
-
   // Array of available actions, given by actions property if a valid list was passed
   @state() _includedActions: ACTION[] = getDefaultActions();
 
@@ -155,7 +147,7 @@ export class BldnPrivRequest extends LitElement {
     }
 
     // Initialize demands and current demand group to the same uuid
-    const initialGroup = self.crypto.randomUUID();
+    const initialGroup = crypto.randomUUID();
     this._demands.set(initialGroup, []);
     this._currentDemandGroupId = initialGroup;
 
@@ -222,6 +214,7 @@ export class BldnPrivRequest extends LitElement {
       []
     );
     this._privacyRequest.demands = allDemands.map((d, i) => {
+      // eslint-disable-next-line no-param-reassign
       d.id = i.toString();
       return d;
     });
@@ -254,8 +247,6 @@ export class BldnPrivRequest extends LitElement {
 
     // Submit request listener
     this.addEventListener('submit-request', this.submitRequest);
-
-    ComputationAPI.init(this.computationBaseURL);
   }
 
   disconnectedCallback(): void {
@@ -264,8 +255,6 @@ export class BldnPrivRequest extends LitElement {
     this.removeEventListener('demand-delete', this.deleteDemand);
     this.removeEventListener('request-target-change', this.changeRequestTarget);
     this.removeEventListener('submit-request', this.submitRequest);
-
-    ComputationAPI.clean();
   }
 
   /**
@@ -464,10 +453,9 @@ export class BldnPrivRequest extends LitElement {
           ],
           [
             ComponentState.STATUS,
-            () =>
-              html` <status-view
-                request-id=${this._currentRequestId}
-              ></status-view>`,
+            () => html` <status-view
+              request-id=${this._currentRequestId}
+            ></status-view>`,
           ],
           [
             ComponentState.SUBMITTED,

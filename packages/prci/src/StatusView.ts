@@ -3,14 +3,17 @@ import { css, html, LitElement, PropertyValueMap } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
-import { ACTION, DEMAND_STATUS } from './models/priv-terms.js';
-import { PrivacyResponseItem } from './models/privacy-response.js';
+import {
+  ACTION,
+  DEMAND_STATUS,
+  PrivacyResponseItem,
+  ComputationAPI,
+} from '@blindnet/core';
 
 import './StatusViewItem.js';
 import { ComponentState } from './utils/states.js';
 import { PRCIStyles } from './styles.js';
 import { getRequestLink, removeQueryParam } from './utils/utils.js';
-import { ComputationAPI } from './utils/computation-api.js';
 
 const copySvg = new URL('./assets/icons/copy.svg', import.meta.url).href;
 

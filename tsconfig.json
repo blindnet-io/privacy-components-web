@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "target": "es2018",
-    "module": "esnext",
-    "moduleResolution": "node",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "noEmitOnError": true,
     "lib": ["es2017", "dom"],
     "strict": true,
@@ -17,7 +17,8 @@
     "incremental": true,
     "allowJs": true,
     "checkJs": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "preserveSymlinks": true
   },
   "include": ["**/*.ts", "**/*.js"],
   "exclude": [

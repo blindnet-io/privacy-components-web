@@ -1,7 +1,4 @@
-import { helloCore } from './hello-world/hello-world.js';
-
-export default function core() {
-  helloCore();
-}
-
-export { SlottedDropdown } from './components/SlottedDropdown.js';
+export * from './configuration/index.js';
+export * from './computation/index.js';
+export * from './BlindnetCore.js';
+export * from './components/index.js';

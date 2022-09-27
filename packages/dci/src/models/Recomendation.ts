@@ -1,10 +1,5 @@
 /* eslint-disable camelcase */
-import {
-  DEMAND_STATUS,
-  MOTIVE,
-  PROVENANCE,
-  TARGET,
-} from '@blindnet/prci/src/models/priv-terms.js';
+import { DEMAND_STATUS, MOTIVE, PROVENANCE, TARGET } from '@blindnet/core';
 
 export interface Recomendation {
   id: string;

@@ -2,6 +2,7 @@
 import { css, html, LitElement } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
+import { CoreConfigurationMixin } from '@blindnet/core';
 
 import './ProcessRequestsView.js';
 import './RequestHistoryView.js';
@@ -15,7 +16,7 @@ enum DCI_UI_STATE {
 }
 
 @customElement('bldn-data-consum')
-export class DataConsumerInterface extends LitElement {
+export class DataConsumerInterface extends CoreConfigurationMixin(LitElement) {
   static styles = [
     DCIStyles,
     css`
