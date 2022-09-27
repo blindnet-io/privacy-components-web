@@ -4,6 +4,7 @@
   "version": "0.8.1",
   "license": "MIT",
   "private": true,
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/blindnet-io/privacy-components-web.git",
