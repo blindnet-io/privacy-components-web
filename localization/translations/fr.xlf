@@ -2,6 +2,33 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
 <file target-language="fr" source-language="en" original="lit-localize-inputs" datatype="plaintext">
 <body>
+<trans-unit id="sa58a43eaa517ec9e">
+  <source>Response</source>
+</trans-unit>
+<trans-unit id="sf52eebbee47877f8">
+  <source>Response details </source>
+</trans-unit>
+<trans-unit id="sef16778fe7074a8d">
+  <source>Grant</source>
+</trans-unit>
+<trans-unit id="sefc78cdc8d07e8db">
+  <source>Partially Grant</source>
+</trans-unit>
+<trans-unit id="sd0680e7343dedb27">
+  <source>Deny</source>
+</trans-unit>
+<trans-unit id="sb3d4f79d9d8b71e5">
+  <source>Submit</source>
+</trans-unit>
+<trans-unit id="sb41b2cfbbc52565b">
+  <source>Created</source>
+</trans-unit>
+<trans-unit id="sd25a75c08073005d">
+  <source>Data Subject</source>
+</trans-unit>
+<trans-unit id="sa442044b586ec8bf">
+  <source>Action</source>
+</trans-unit>
 <trans-unit id="s28360fa3d4d84322">
   <source>Optional Message</source>
 </trans-unit>
@@ -16,9 +43,6 @@
 </trans-unit>
 <trans-unit id="sd1ace032539d7122">
   <source>Submitted</source>
-</trans-unit>
-<trans-unit id="sd25a75c08073005d">
-  <source>Data Subject</source>
 </trans-unit>
 <trans-unit id="sa4dd232b5a30f481">
   <source>Action(s)</source>
@@ -481,9 +505,6 @@
 </trans-unit>
 <trans-unit id="s09240e07b5b8d640">
   <source>ID</source>
-</trans-unit>
-<trans-unit id="sb41b2cfbbc52565b">
-  <source>Created</source>
 </trans-unit>
 <trans-unit id="sad3e3c8146fc920f">
   <source>Status</source>
