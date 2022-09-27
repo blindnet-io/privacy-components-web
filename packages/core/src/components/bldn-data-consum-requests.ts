@@ -1,8 +1,11 @@
 import { html, LitElement } from 'lit';
-import { customElement } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
+import { PendingDemandPayload } from '../computation/models/PendingDemandPayload.js';
 
 @customElement('bldn-data-consum-requests')
 export class DataConsumerRequests extends LitElement {
+  @property({ type: Array }) demands: PendingDemandPayload[] = [];
+
   render() {
     return html`
       <bldn-horizontal-list
@@ -13,7 +16,9 @@ export class DataConsumerRequests extends LitElement {
           { id: 'canceled', display: 'Canceled' },
         ])}
       ></bldn-horizontal-list>
-      <bldn-data-consum-demand-list></bldn-data-consum-demand-list>
+      <bldn-data-consum-demand-list
+        demands=${JSON.stringify(this.demands)}
+      ></bldn-data-consum-demand-list>
     `;
   }
 }

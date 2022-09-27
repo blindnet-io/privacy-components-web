@@ -1,8 +1,12 @@
 /* eslint-disable camelcase */
-import { HistoryResponse } from './models/history-response.js';
-import { DATA_CATEGORY } from './models/priv-terms.js';
-import { PrivacyRequest } from './models/privacy-request.js';
-import { PrivacyResponse } from './models/privacy-response.js';
+import { DenyDemandPayloadMotiveEnum } from './models/DenyDemandPayload.js';
+import { PendingDemandDetailsPayload } from './models/PendingDemandDetailsPayload.js';
+import { PendingDemandPayload } from './models/PendingDemandPayload.js';
+
+import { HistoryResponse } from './old-models/history-response.js';
+import { DATA_CATEGORY } from './old-models/priv-terms.js';
+import { PrivacyRequest } from './old-models/privacy-request.js';
+import { PrivacyResponse } from './old-models/privacy-response.js';
 
 export class ComputationAPI {
   private static instance: ComputationAPI | null = null;
@@ -205,6 +209,107 @@ export class ComputationAPI {
     if (!response.ok) {
       throw new Error(response.statusText);
     }
+  }
+
+  // Data consumer endpoints
+
+  /**
+   * Gets a list of all demands which are pending a response
+   * @returns {PendingDemandPayload[]}
+   */
+  async getPendingDemands() {
+    return fetch(
+      `https://devkit-pce-staging.azurewebsites.net/v0/consumer-interface/pending-requests`,
+      {
+        method: 'GET',
+        headers: { accept: 'application/json' },
+      }
+    ).then(response => {
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+      return response.json() as Promise<PendingDemandPayload[]>;
+    });
+  }
+
+  /**
+   * Get the info and recomendation for a specific demand
+   * @param {string} id uuid of the demand
+   * @returns {PendingDemandDetailsPayload}
+   */
+  async getPendingDemandDetails(id: string) {
+    return fetch(
+      `https://devkit-pce-staging.azurewebsites.net/v0/consumer-interface/pending-requests/${id}`,
+      {
+        method: 'GET',
+        headers: { accept: 'application/json' },
+      }
+    ).then(response => {
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+      return response.json() as Promise<PendingDemandDetailsPayload>;
+    });
+  }
+
+  /**
+   * Approve a demand
+   * @param id uuid of the demand to approve
+   * @param msg optional message explaining the approval
+   * @param lang language of the message
+   * @returns
+   */
+  async approveDemand(id: string, msg: string, lang: string = 'en') {
+    if (id === undefined) {
+      throw TypeError('You must pass an ID of the demand to deny.');
+    }
+
+    return fetch(
+      `https://devkit-pce-staging.azurewebsites.net/v0/consumer-interface/pending-requests/approve`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, msg, lang }),
+      }
+    ).then(response => {
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+    });
+  }
+
+  /**
+   * Deny a demand
+   * @param id uuid of the demand to deny
+   * @param msg optional message explaining the denial
+   * @param motive motive for the denial. for the DCI, we are in the situation where demands
+   * are being manually processed, so we assume the motive will be explained in msg and default to
+   * 'OTHER-MOTIVE'.
+   * @param lang language of the message
+   * @returns
+   */
+  async denyDemand(
+    id: string,
+    msg: string,
+    motive: DenyDemandPayloadMotiveEnum = DenyDemandPayloadMotiveEnum.OtherMotive,
+    lang: string = 'en'
+  ) {
+    if (id === undefined) {
+      throw TypeError('You must pass an ID of the demand to deny.');
+    }
+
+    return fetch(
+      `https://devkit-pce-staging.azurewebsites.net/v0/consumer-interface/pending-requests/deny`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, motive, msg, lang }),
+      }
+    ).then(response => {
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+    });
   }
 
   static clean() {

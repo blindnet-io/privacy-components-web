@@ -2,10 +2,10 @@ import { msg } from '@lit/localize';
 import { css, html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
-import { PendingDemandPayload } from '../api-generated/types.js';
 import { bldnStyles } from './blindnet-wc-styles.js';
 
 import './bldn-data-consum-demand-list-item.js';
+import { PendingDemandPayload } from '../computation/models/PendingDemandPayload.js';
 
 @customElement('bldn-data-consum-demand-list')
 export class DataConsumerDemandList extends LitElement {

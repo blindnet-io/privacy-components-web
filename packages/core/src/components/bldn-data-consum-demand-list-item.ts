@@ -1,12 +1,11 @@
 import { msg } from '@lit/localize';
-import { css, html, LitElement } from 'lit';
+import { css, html, LitElement, PropertyValueMap } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
-import { RecommendationStatusEnum } from '../api-generated/index.js';
-import {
-  PendingDemandDetailsPayload,
-  PendingDemandPayload,
-} from '../api-generated/types.js';
+import { ComputationAPI } from '../computation/computation-api.js';
+import { PendingDemandDetailsPayload } from '../computation/models/PendingDemandDetailsPayload.js';
+import { PendingDemandPayload } from '../computation/models/PendingDemandPayload.js';
+import { RecommendationStatusEnum } from '../computation/models/Recommendation.js';
 import { bldnStyles } from './blindnet-wc-styles.js';
 
 @customElement('bldn-data-consum-demand-list-item')
@@ -22,16 +21,21 @@ export class DataConsumerDemandListItem extends LitElement {
   @state() _selectedResponseType: RecommendationStatusEnum | undefined =
     undefined;
 
-  // protected willUpdate(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
-  //   if (_changedProperties.has('demand') && this.demand) {
-  //     ComputationAPI.getInstance().getPendingDemandDetails(this.demand.id).then(details => {
-  //       this._demandDetails = details
-  //       if (this._demandDetails.recommendation?.status) {
-  //         this._selectedResponseType = this._demandDetails.recommendation?.status
-  //       }
-  //     })
-  //   }
-  // }
+  protected willUpdate(
+    _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
+  ): void {
+    if (_changedProperties.has('demand') && this.demand) {
+      ComputationAPI.getInstance()
+        .getPendingDemandDetails(this.demand.id)
+        .then(details => {
+          this._demandDetails = details;
+          if (this._demandDetails.recommendation?.status) {
+            this._selectedResponseType =
+              this._demandDetails.recommendation?.status;
+          }
+        });
+    }
+  }
 
   handleDropdownToggleChange(e: CustomEvent) {
     const { newValue } = e.detail;
@@ -59,9 +63,7 @@ export class DataConsumerDemandListItem extends LitElement {
             <span class="list-item__text"
               >${new Date(this.demand!.date).toLocaleDateString('en-gb')}</span
             >
-            <span class="list-item__text"
-              >${this.demand!.data_subject?.id}</span
-            >
+            <span class="list-item__text">${this.demand!.dataSubject?.id}</span>
             <span class="list-item__text">${this.demand!.action}</span>
             <button
               id="list-item__expand-btn"
@@ -124,15 +126,18 @@ export class DataConsumerDemandListItem extends LitElement {
                       <div id="dropdown__response-btns">
                         <button
                           class="response-btn response-btn--grant ${this
-                            ._selectedResponseType === 'GRANTED'
+                            ._selectedResponseType ===
+                          RecommendationStatusEnum.Granted
                             ? 'response-btn--selected'
                             : ''}"
                           @click=${() => {
-                            this._selectedResponseType = 'GRANTED';
+                            this._selectedResponseType =
+                              RecommendationStatusEnum.Granted;
                           }}
                         >
                           ${when(
-                            this._selectedResponseType === 'GRANTED',
+                            this._selectedResponseType ===
+                              RecommendationStatusEnum.Granted,
                             () => html`
                               <svg
                                 width="24"
@@ -164,15 +169,18 @@ export class DataConsumerDemandListItem extends LitElement {
                         </button>
                         <button
                           class="response-btn response-btn--partial ${this
-                            ._selectedResponseType === 'PARTIALLY-GRANTED'
+                            ._selectedResponseType ===
+                          RecommendationStatusEnum.PartiallyGranted
                             ? 'response-btn--selected'
                             : ''}"
                           @click=${() => {
-                            this._selectedResponseType = 'PARTIALLY-GRANTED';
+                            this._selectedResponseType =
+                              RecommendationStatusEnum.PartiallyGranted;
                           }}
                         >
                           ${when(
-                            this._selectedResponseType === 'PARTIALLY-GRANTED',
+                            this._selectedResponseType ===
+                              RecommendationStatusEnum.PartiallyGranted,
                             () => html`
                               <svg
                                 width="24"
@@ -204,15 +212,18 @@ export class DataConsumerDemandListItem extends LitElement {
                         </button>
                         <button
                           class="response-btn response-btn--deny ${this
-                            ._selectedResponseType === 'DENIED'
+                            ._selectedResponseType ===
+                          RecommendationStatusEnum.Denied
                             ? 'response-btn--selected'
                             : ''}"
                           @click=${() => {
-                            this._selectedResponseType = 'DENIED';
+                            this._selectedResponseType =
+                              RecommendationStatusEnum.Denied;
                           }}
                         >
                           ${when(
-                            this._selectedResponseType === 'DENIED',
+                            this._selectedResponseType ===
+                              RecommendationStatusEnum.Denied,
                             () => html`
                               <svg
                                 width="24"

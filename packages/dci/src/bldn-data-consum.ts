@@ -3,7 +3,11 @@ import { css, html, LitElement } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
 
-import '@blindnet/core';
+import {
+  ComputationAPI,
+  CoreConfigurationMixin,
+  PendingDemandPayload,
+} from '@blindnet/core';
 
 enum DCI_UI_STATE {
   REQUESTS,
@@ -12,8 +16,19 @@ enum DCI_UI_STATE {
 
 @customElement('bldn-data-consum')
 @localized()
-export class DataConsumerInterface extends LitElement {
+export class DataConsumerInterface extends CoreConfigurationMixin(LitElement) {
   @state() uiState: DCI_UI_STATE = DCI_UI_STATE.REQUESTS;
+
+  @state() _demands: PendingDemandPayload[] = [];
+
+  constructor() {
+    super();
+    ComputationAPI.getInstance()
+      .getPendingDemands()
+      .then(demands => {
+        this._demands = demands;
+      });
+  }
 
   render() {
     return html`
