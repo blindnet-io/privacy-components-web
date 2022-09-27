@@ -1,4 +1,4 @@
-import { ACTION, DATA_CATEGORY } from '../models/priv-terms.js';
+import { ACTION, DATA_CATEGORY } from '@blindnet/core';
 
 export const enabledActions = new Map<ACTION, boolean>([
   [ACTION.ACCESS, true],

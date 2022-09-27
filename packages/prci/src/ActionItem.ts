@@ -1,7 +1,7 @@
 import { localized } from '@lit/localize';
 import { html, css, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { ACTION } from './models/priv-terms.js';
+import { ACTION } from '@blindnet/core';
 import { PRCIStyles } from './styles.js';
 import { ACTION_DESCRIPTIONS, ACTION_TITLES } from './utils/dictionary.js';
 import { ComponentState } from './utils/states.js';

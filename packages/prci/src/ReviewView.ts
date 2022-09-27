@@ -5,13 +5,13 @@ import { customElement, property, state } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
 import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
-import { Demand } from './models/demand.js';
 import {
   ACTION,
   DATA_CATEGORY,
   PROVENANCE,
   TARGET,
-} from './models/priv-terms.js';
+  Demand,
+} from '@blindnet/core';
 import { PRCIStyles } from './styles.js';
 import {
   ACTION_DESCRIPTIONS,
@@ -441,7 +441,7 @@ export class ReviewView extends LitElement {
   render() {
     return html`
       <h2><b>${msg('My demand(s):')}</b></h2>
-      
+
       <div class="dmd-review-ctr border--light border--rounded">
         <div id="review-heading-row">
           <h3 id="review-action-heading">${ACTION_TITLES[
@@ -510,7 +510,7 @@ export class ReviewView extends LitElement {
       </div> -->
       <!-- Submit button -->
       <slotted-dropdown
-        id='request-settings'  
+        id='request-settings'
         .header=${msg('Privacy Request Advanced settings')}
         include-buttons
       >

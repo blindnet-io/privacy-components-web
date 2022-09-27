@@ -1,14 +1,12 @@
 import { expect } from '@open-wc/testing';
 import '../src/index.js';
-import { TARGET } from '../src/models/priv-terms.js';
-import { PrivacyRequest } from '../src/models/privacy-request.js';
-import { ComputationAPI } from '../src/utils/computation-api.js';
+import { TARGET, PrivacyRequest, ComputationAPI } from '@blindnet/core';
 
 describe('Mock API Tests', () => {
   let computationAPI: ComputationAPI | null;
 
   beforeEach(() => {
-    ComputationAPI.init('');
+    ComputationAPI.configure('');
     computationAPI = ComputationAPI.getInstance();
   });
 

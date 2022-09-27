@@ -2,10 +2,12 @@ import { msg } from '@lit/localize';
 import { css, html, LitElement } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
-import { RequestHistoryItem } from './models/history-response.js';
-import { REQUEST_STATUS } from './models/priv-terms.js';
+import {
+  REQUEST_STATUS,
+  RequestHistoryItem,
+  ComputationAPI,
+} from '@blindnet/core';
 import { PRCIStyles } from './styles.js';
-import { ComputationAPI } from './utils/computation-api.js';
 import { STATUS_DESCRIPTIONS } from './utils/dictionary.js';
 import { ComponentState } from './utils/states.js';
 

@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import { LEGAL_BASE_TYPE } from './priv-terms.js';
+import { LEGAL_BASE_TYPE } from '@blindnet/core';
 import { PrivacyScope } from './privacy-scope.js';
 
 export interface LegalBase {
