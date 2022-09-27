@@ -1,6 +1,5 @@
 /* eslint-disable lit-a11y/click-events-have-key-events */
-// import { ACTION } from '@blindnet/prci/src/models/priv-terms';
-import { ACTION } from '@blindnet/prci/dist/models/priv-terms.js';
+import { ACTION } from '@blindnet/core';
 import { msg } from '@lit/localize';
 import { css, html, LitElement, PropertyValueMap } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';

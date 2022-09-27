@@ -1,8 +1,8 @@
 /* eslint-disable camelcase */
-import { HistoryResponse } from '../models/history-response.js';
-import { DATA_CATEGORY } from '../models/priv-terms.js';
-import { PrivacyRequest } from '../models/privacy-request.js';
-import { PrivacyResponse } from '../models/privacy-response.js';
+import { HistoryResponse } from './models/history-response.js';
+import { DATA_CATEGORY } from './models/priv-terms.js';
+import { PrivacyRequest } from './models/privacy-request.js';
+import { PrivacyResponse } from './models/privacy-response.js';
 
 export class ComputationAPI {
   private static instance: ComputationAPI | null = null;
@@ -49,19 +49,37 @@ export class ComputationAPI {
   /**
    *
    * @param baseURL base URL (schema + host + port + base-path) to call (for default behavior, see mock)
-   * @param mock flag indicating if the mock endpoint should be used when no base URL is specified (staging environment if false, stoplight if true)
+   * @param force override any preexisting configuration if it exists
+   *
    */
-  public static init(baseURL?: string) {
-    if (ComputationAPI.instance) {
-      throw new Error('Computation API has already been initialized');
+  public static configure(baseURL?: string, force = false): boolean {
+    if (ComputationAPI.instance && !force) {
+      if (
+        baseURL !== ComputationAPI.getInstance().baseURL &&
+        baseURL &&
+        baseURL !== 'false'
+      ) {
+        /* eslint-disable no-console */
+        console.log('[Computation API] Configuration conflict');
+        console.log(
+          `[Computation API] configured value: ${
+            ComputationAPI.getInstance().baseURL
+          }`
+        );
+        console.log(`[Computation API] conflicting value: ${baseURL}`);
+        /* eslint-enable no-console */
+      }
+      return false;
     }
-
     ComputationAPI.instance = new ComputationAPI(baseURL);
+    return true;
   }
 
   public static getInstance(): ComputationAPI {
     if (!ComputationAPI.instance) {
-      throw new Error("Computation API hasn't been initialized");
+      throw new Error(
+        '[Computation API] trying to use the API before configuring it'
+      );
     }
 
     return ComputationAPI.instance;

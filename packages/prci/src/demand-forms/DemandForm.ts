@@ -9,8 +9,7 @@ import {
 } from 'lit';
 import { property } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
-import { Demand } from '../models/demand.js';
-import { ACTION } from '../models/priv-terms.js';
+import { Demand, ACTION } from '@blindnet/core';
 import { PRCIStyles } from '../styles.js';
 import { ComponentState, DemandState } from '../utils/states.js';
 

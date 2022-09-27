@@ -3,11 +3,11 @@ import { css, html, PropertyValueMap, TemplateResult } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
-import { MultiDemandForm } from './MultiDemandForm.js';
 
+import { Demand, ACTION } from '@blindnet/core';
+
+import { MultiDemandForm } from './MultiDemandForm.js';
 import '../AllChecklist.js';
-import { Demand } from '../models/demand.js';
-import { ACTION } from '../models/priv-terms.js';
 import { PRCIStyles } from '../styles.js';
 
 /**
