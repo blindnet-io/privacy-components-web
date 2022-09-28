@@ -1,6 +1,6 @@
 import { css, html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { PendingDemandPayload } from '../index.js';
+import { PendingDemandPayload } from '../computation/generated-models/index.js';
 
 @customElement('bldn-data-consum-requests')
 export class DataConsumerRequests extends LitElement {

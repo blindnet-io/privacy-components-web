@@ -3,12 +3,17 @@ import { css, html, LitElement, PropertyValueMap } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 import { ComputationAPI } from '../computation/computation-api.js';
-
 import {
-  PendingDemandPayload,
   PendingDemandDetailsPayload,
-  RecommendationStatusEnum,
-} from '../index.js';
+  PendingDemandPayload,
+  Recommendation,
+} from '../computation/generated-models/index.js';
+
+// import {
+//   PendingDemandPayload,
+//   PendingDemandDetailsPayload,
+//   Recommendation,
+// } from '../index.js';
 
 import { bldnStyles } from './blindnet-wc-styles.js';
 
@@ -22,8 +27,7 @@ export class DataConsumerDemandListItem extends LitElement {
 
   @state() _dropdownUiState: 'respond' | 'history' = 'respond';
 
-  @state() _selectedResponseType: RecommendationStatusEnum | undefined =
-    undefined;
+  @state() _selectedResponseType: Recommendation.status | undefined = undefined;
 
   protected willUpdate(
     _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
@@ -33,9 +37,9 @@ export class DataConsumerDemandListItem extends LitElement {
         .getPendingDemandDetails(this.demand.id)
         .then(details => {
           this._demandDetails = details;
-          if (this._demandDetails.recommendation?.status) {
+          if (this._demandDetails!.recommendation?.status) {
             this._selectedResponseType =
-              this._demandDetails.recommendation?.status;
+              this._demandDetails!.recommendation?.status;
           }
         });
     }
@@ -133,17 +137,17 @@ export class DataConsumerDemandListItem extends LitElement {
                         <button
                           class="response-btn response-btn--grant ${this
                             ._selectedResponseType ===
-                          RecommendationStatusEnum.Granted
+                          Recommendation.status.GRANTED
                             ? 'response-btn--selected'
                             : ''}"
                           @click=${() => {
                             this._selectedResponseType =
-                              RecommendationStatusEnum.Granted;
+                              Recommendation.status.GRANTED;
                           }}
                         >
                           ${when(
                             this._selectedResponseType ===
-                              RecommendationStatusEnum.Granted,
+                              Recommendation.status.GRANTED,
                             () => html`
                               <svg
                                 width="24"
@@ -176,17 +180,17 @@ export class DataConsumerDemandListItem extends LitElement {
                         <button
                           class="response-btn response-btn--partial ${this
                             ._selectedResponseType ===
-                          RecommendationStatusEnum.PartiallyGranted
+                          Recommendation.status.PARTIALLY_GRANTED
                             ? 'response-btn--selected'
                             : ''}"
                           @click=${() => {
                             this._selectedResponseType =
-                              RecommendationStatusEnum.PartiallyGranted;
+                              Recommendation.status.PARTIALLY_GRANTED;
                           }}
                         >
                           ${when(
                             this._selectedResponseType ===
-                              RecommendationStatusEnum.PartiallyGranted,
+                              Recommendation.status.PARTIALLY_GRANTED,
                             () => html`
                               <svg
                                 width="24"
@@ -219,17 +223,17 @@ export class DataConsumerDemandListItem extends LitElement {
                         <button
                           class="response-btn response-btn--deny ${this
                             ._selectedResponseType ===
-                          RecommendationStatusEnum.Denied
+                          Recommendation.status.DENIED
                             ? 'response-btn--selected'
                             : ''}"
                           @click=${() => {
                             this._selectedResponseType =
-                              RecommendationStatusEnum.Denied;
+                              Recommendation.status.DENIED;
                           }}
                         >
                           ${when(
                             this._selectedResponseType ===
-                              RecommendationStatusEnum.Denied,
+                              Recommendation.status.DENIED,
                             () => html`
                               <svg
                                 width="24"

@@ -4,13 +4,13 @@ import { choose } from 'lit/directives/choose.js';
 import { map } from 'lit/directives/map.js';
 import { localized, msg } from '@lit/localize';
 import {
-  ACTION,
   DATA_CATEGORY,
   TARGET,
   Demand,
   PrivacyRequest,
   ComputationAPI,
   CoreConfigurationMixin,
+  ACTION,
 } from '@blindnet/core';
 import { ComponentState } from './utils/states.js';
 import {

@@ -29,24 +29,6 @@
 <trans-unit id="sa442044b586ec8bf">
   <source>Action</source>
 </trans-unit>
-<trans-unit id="s28360fa3d4d84322">
-  <source>Optional Message</source>
-</trans-unit>
-<trans-unit id="s5984337f652f9b4e">
-  <source>Demand Approved ✅</source>
-</trans-unit>
-<trans-unit id="s0d26b5e70ae6ae1d">
-  <source>Demand Denied ❌</source>
-</trans-unit>
-<trans-unit id="se51b16211cc404a5">
-  <source>PRIVACY REQUESTS TO PROCESS</source>
-</trans-unit>
-<trans-unit id="sd1ace032539d7122">
-  <source>Submitted</source>
-</trans-unit>
-<trans-unit id="sa4dd232b5a30f481">
-  <source>Action(s)</source>
-</trans-unit>
 <trans-unit id="sbe8f4a548469f66b">
   <source>ACCESS</source>
   <target>ACCÉDER</target>

@@ -5,7 +5,7 @@ import { map } from 'lit/directives/map.js';
 import { bldnStyles } from './blindnet-wc-styles.js';
 
 import './bldn-data-consum-demand-list-item.js';
-import { PendingDemandPayload } from '../index.js';
+import { PendingDemandPayload } from '../computation/generated-models/index.js';
 
 @customElement('bldn-data-consum-demand-list')
 export class DataConsumerDemandList extends LitElement {

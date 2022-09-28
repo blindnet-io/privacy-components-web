@@ -1,5 +1,8 @@
 /* eslint-disable camelcase */
-import { PendingDemandPayload, PendingDemandDetailsPayload } from './index.js';
+import {
+  PendingDemandDetailsPayload,
+  PendingDemandPayload,
+} from './generated-models/index.js';
 import { HistoryResponse } from './models/history-response.js';
 import { DATA_CATEGORY } from './models/priv-terms.js';
 import { PrivacyRequest } from './models/privacy-request.js';
