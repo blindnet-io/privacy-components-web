@@ -1,4 +1,11 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable camelcase */
+import {
+  ApproveDemandPayload,
+  DenyDemandPayload,
+  PendingDemandDetailsPayload,
+  PendingDemandPayload,
+} from './generated-models/index.js';
 import { HistoryResponse } from './models/history-response.js';
 import { DATA_CATEGORY } from './models/priv-terms.js';
 import { PrivacyRequest } from './models/privacy-request.js';
@@ -205,6 +212,115 @@ export class ComputationAPI {
     if (!response.ok) {
       throw new Error(response.statusText);
     }
+  }
+
+  // Data consumer endpoints
+
+  /**
+   * Gets a list of all demands which are pending a response
+   * @returns {PendingDemandPayload[]}
+   */
+  async getPendingDemands() {
+    return fetch(
+      `https://devkit-pce-staging.azurewebsites.net/v0/consumer-interface/pending-requests`,
+      {
+        method: 'GET',
+        headers: { accept: 'application/json' },
+      }
+    ).then(response => {
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+      return response.json() as Promise<PendingDemandPayload[]>;
+    });
+  }
+
+  /**
+   * Get the info and recomendation for a specific demand
+   * @param {string} id uuid of the demand
+   * @returns {PendingDemandDetailsPayload}
+   */
+  async getPendingDemandDetails(id: string) {
+    return fetch(
+      `https://devkit-pce-staging.azurewebsites.net/v0/consumer-interface/pending-requests/${id}`,
+      {
+        method: 'GET',
+        headers: { accept: 'application/json' },
+      }
+    ).then(response => {
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+      return response.json() as Promise<PendingDemandDetailsPayload>;
+    });
+  }
+
+  /**
+   * Approve a demand
+   * @param id uuid of the demand to approve
+   * @param msg optional message explaining the approval
+   * @param lang language of the message
+   * @returns
+   */
+  async grantDemand(id: string, msg?: string, lang?: string) {
+    if (id === undefined) {
+      throw TypeError('You must pass an ID of the demand to deny.');
+    }
+
+    if (!msg) {
+      msg = undefined;
+    }
+
+    const payload: ApproveDemandPayload = { id, msg, lang };
+
+    return fetch(
+      `https://devkit-pce-staging.azurewebsites.net/v0/consumer-interface/pending-requests/approve`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      }
+    ).then(response => {
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+    });
+  }
+
+  /**
+   * Deny a demand
+   * @param id uuid of the demand to deny
+   * @param msg optional message explaining the denial
+   * @param motive motive for the denial. for the DCI, we are in the situation where demands
+   * are being manually processed, so we assume the motive will be explained in msg and default to
+   * 'OTHER-MOTIVE'.
+   * @param lang language of the message
+   * @returns
+   */
+  async denyDemand(
+    id: string,
+    motive: DenyDemandPayload.motive = DenyDemandPayload.motive.OTHER_MOTIVE,
+    msg?: string,
+    lang?: string
+  ) {
+    if (id === undefined) {
+      throw TypeError('You must pass an ID of the demand to deny.');
+    }
+
+    const payload: DenyDemandPayload = { id, motive, msg, lang };
+
+    return fetch(
+      `https://devkit-pce-staging.azurewebsites.net/v0/consumer-interface/pending-requests/deny`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      }
+    ).then(response => {
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+    });
   }
 
   static clean() {

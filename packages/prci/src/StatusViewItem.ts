@@ -132,9 +132,6 @@ export class StatusViewItem extends LitElement {
         padding: 10px 40px;
       }
 
-      #keep-dmd-btn {
-      }
-
       #cancel-dmd-btn {
         border-color: #f90707;
       }
@@ -536,21 +533,24 @@ export class StatusViewItem extends LitElement {
                         this.open = !this.open;
                       }}
                     >
-                      Keep Demand
+                      ${msg('Keep Demand')}
                     </button>
                     <button
                       id="cancel-dmd-btn"
                       class="cancel-confirm-btn btn--curved btn--clickable"
                       @click=${this.handleConfirmCancelClick}
                     >
-                      <strong>Confirm</strong>
+                      <strong>${msg('Confirm')}</strong>
                     </button>
                   </div>
                 `,
                 () => html`
                   ${when(
-                    this.demand.status === DEMAND_STATUS.GRANTED ||
-                      this.demand.status === DEMAND_STATUS['PARTIALLY-GRANTED'],
+                    [
+                      DEMAND_STATUS.GRANTED,
+                      DEMAND_STATUS['PARTIALLY-GRANTED'],
+                      DEMAND_STATUS.DENIED,
+                    ].includes(this.demand.status),
                     () => html`
                       <strong
                         >${msg('Your demand has been ')}

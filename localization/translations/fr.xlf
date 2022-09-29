@@ -2,26 +2,35 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
 <file target-language="fr" source-language="en" original="lit-localize-inputs" datatype="plaintext">
 <body>
+<trans-unit id="sef16778fe7074a8d">
+  <source>Grant</source>
+</trans-unit>
+<trans-unit id="sd0680e7343dedb27">
+  <source>Deny</source>
+</trans-unit>
+<trans-unit id="sa58a43eaa517ec9e">
+  <source>Response</source>
+</trans-unit>
+<trans-unit id="s12f6b3b9aa6fe76c">
+  <source>Recommended</source>
+</trans-unit>
+<trans-unit id="sb0e683c9fb3cc3b5">
+  <source>Not Recommended</source>
+</trans-unit>
 <trans-unit id="s28360fa3d4d84322">
   <source>Optional Message</source>
 </trans-unit>
-<trans-unit id="s5984337f652f9b4e">
-  <source>Demand Approved ✅</source>
+<trans-unit id="sb3d4f79d9d8b71e5">
+  <source>Submit</source>
 </trans-unit>
-<trans-unit id="s0d26b5e70ae6ae1d">
-  <source>Demand Denied ❌</source>
-</trans-unit>
-<trans-unit id="se51b16211cc404a5">
-  <source>PRIVACY REQUESTS TO PROCESS</source>
-</trans-unit>
-<trans-unit id="sd1ace032539d7122">
-  <source>Submitted</source>
+<trans-unit id="sb41b2cfbbc52565b">
+  <source>Created</source>
 </trans-unit>
 <trans-unit id="sd25a75c08073005d">
   <source>Data Subject</source>
 </trans-unit>
-<trans-unit id="sa4dd232b5a30f481">
-  <source>Action(s)</source>
+<trans-unit id="sa442044b586ec8bf">
+  <source>Action</source>
 </trans-unit>
 <trans-unit id="sbe8f4a548469f66b">
   <source>ACCESS</source>
@@ -479,12 +488,6 @@
   <source>Submit Privacy Request</source>
   <target>Envoyer ma Demande sur les données</target>
 </trans-unit>
-<trans-unit id="s09240e07b5b8d640">
-  <source>ID</source>
-</trans-unit>
-<trans-unit id="sb41b2cfbbc52565b">
-  <source>Created</source>
-</trans-unit>
 <trans-unit id="sad3e3c8146fc920f">
   <source>Status</source>
 </trans-unit>
@@ -533,6 +536,12 @@
   <source>Do you confirm
                         <x id="0" equiv-text="&lt;strong&gt;"/>canceling your demand?<x id="1" equiv-text="&lt;/strong&gt;"/></source>
 </trans-unit>
+<trans-unit id="s00fc2da0e187830b">
+  <source>Keep Demand</source>
+</trans-unit>
+<trans-unit id="sb85774dc5d18ff0f">
+  <source>Confirm</source>
+</trans-unit>
 <trans-unit id="s51c031323a487267">
   <source>Your demand has been </source>
 </trans-unit>
@@ -556,9 +565,6 @@
   <source>Your Privacy Request, sent on
               <x id="0" equiv-text="${this._requestDate.toLocaleDateString('en-gb')}"/>, has been
               processed.</source>
-</trans-unit>
-<trans-unit id="s4090dd0c0e45988b">
-  <source>Request ID</source>
 </trans-unit>
 <trans-unit id="s4ea9cef5335e0276">
   <source>Copy link to this page</source>
