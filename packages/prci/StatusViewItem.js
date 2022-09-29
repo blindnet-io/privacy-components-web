@@ -5,7 +5,7 @@ import { property, customElement } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
 import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
-import { ACTION, DEMAND_STATUS, PROVENANCE, DATA_CATEGORY } from './models/priv-terms.js';
+import { ACTION, DEMAND_STATUS, PROVENANCE, DATA_CATEGORY, ComputationAPI } from '@blindnet/core';
 import { PRCIStyles } from './styles.js';
 import { ACTION_DESCRIPTIONS, ACTION_TITLES, DEMAND_STATUS_DESCRIPTIONS } from './utils/dictionary.js';
 import { getRetentionPolicyString } from './utils/utils.js';
@@ -196,6 +196,9 @@ let StatusViewItem = class StatusViewItem extends LitElement {
       ${map(demand.answer, who => html ` ${who}<br /> `)}
     `;
     }
+    handleConfirmCancelClick() {
+        ComputationAPI.getInstance().cancelDemand(this.demand.demand_id);
+    }
     render() {
         return html `
       <div
@@ -227,14 +230,26 @@ let StatusViewItem = class StatusViewItem extends LitElement {
               </button>
             `)}
           ${when(this.demand.status === DEMAND_STATUS['UNDER-REVIEW'], () => html `
-              <button
-                class="status-btn cancel-btn btn--curved btn--clickable"
-                @click=${() => {
+              ${when(this.open, () => html `
+                  <button
+                    class="status-btn cancel-btn btn--curved btn--clickable"
+                    @click=${() => {
             this.open = !this.open;
         }}
-              >
-                ${msg('Cancel Demand')}
-              </button>
+                    disabled
+                  >
+                    ${msg('Cancel Demand')}
+                  </button>
+                `, () => html `
+                  <button
+                    class="status-btn cancel-btn btn--curved btn--clickable"
+                    @click=${() => {
+            this.open = !this.open;
+        }}
+                  >
+                    ${msg('Cancel Demand')}
+                  </button>
+                `)}
             `)}
         </div>
         ${when(this.open, () => html `
@@ -242,10 +257,41 @@ let StatusViewItem = class StatusViewItem extends LitElement {
               id="${this.demand.demand_id}-details-ctr"
               class="dmd-details-ctr round-bottom"
             >
-              <b
-                >Your demand has been
-                ${DEMAND_STATUS_DESCRIPTIONS[this.demand.status]().toLocaleLowerCase()}.</b
-              >
+              ${when(this.demand.status === DEMAND_STATUS['UNDER-REVIEW'], () => html `
+                  <span
+                    >${msg(html `Do you confirm
+                        <strong>canceling your demand?</strong>`)}</span
+                  >
+                  <div id="cancel-btns-ctr">
+                    <button
+                      id="keep-dmd-btn"
+                      class="cancel-confirm-btn btn--curved btn--clickable"
+                      @click=${() => {
+            this.open = !this.open;
+        }}
+                    >
+                      ${msg('Keep Demand')}
+                    </button>
+                    <button
+                      id="cancel-dmd-btn"
+                      class="cancel-confirm-btn btn--curved btn--clickable"
+                      @click=${this.handleConfirmCancelClick}
+                    >
+                      <strong>${msg('Confirm')}</strong>
+                    </button>
+                  </div>
+                `, () => html `
+                  ${when([
+            DEMAND_STATUS.GRANTED,
+            DEMAND_STATUS['PARTIALLY-GRANTED'],
+            DEMAND_STATUS.DENIED,
+        ].includes(this.demand.status), () => html `
+                      <strong
+                        >${msg('Your demand has been ')}
+                        ${DEMAND_STATUS_DESCRIPTIONS[this.demand.status]()}.</strong
+                      >
+                    `, () => html ``)}
+                `)}
               ${choose(this.demand.requested_action, [
             [ACTION.ACCESS, () => this.accessResponseTemplate(this.demand)],
             [
@@ -383,9 +429,15 @@ StatusViewItem.styles = [
         color: white;
       }
 
+      /* :host([open]) .cancel-btn {
+        background-color: #f90707;
+        color: white;
+      } */
+
       .status-btn {
         background: none;
         padding: 10px 40px;
+        width: 100%;
         justify-self: center;
         align-self: flex-end;
         float: right;
@@ -400,6 +452,15 @@ StatusViewItem.styles = [
 
       .cancel-btn {
         border: 2px solid #f90707;
+      }
+
+      .cancel-confirm-btn {
+        background: none;
+        padding: 10px 40px;
+      }
+
+      #cancel-dmd-btn {
+        border-color: #f90707;
       }
 
       .round-bottom {
@@ -424,9 +485,23 @@ StatusViewItem.styles = [
         border-color: #e6e6e6;
       }
 
-      .cancelled-dmd {
+      .canceled-dmd {
         background-color: #ffc1bd;
-        border-color: #ffc1bd;
+        border-color: #f90707;
+      }
+
+      .canceled-dmd .status-type-ctr {
+        border-bottom: 2px solid #f90707;
+      }
+
+      .canceled-dmd .dmd-action-ctr {
+        grid-template-columns: 1fr;
+      }
+
+      #cancel-btns-ctr {
+        display: flex;
+        justify-content: center;
+        column-gap: 10px;
       }
 
       .action-title {
@@ -437,7 +512,6 @@ StatusViewItem.styles = [
         display: grid;
         background-color: white;
         row-gap: 20px;
-        /* height: 100px; */
         padding: 10px 20px 30px 20px;
       }
 

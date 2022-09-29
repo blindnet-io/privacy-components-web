@@ -1,6 +1,6 @@
 import { LitElement } from 'lit';
 import './ActionItem.js';
-import { ACTION } from './models/priv-terms.js';
+import { ACTION } from '@blindnet/core';
 /**
  * Menu of clickable action types
  */

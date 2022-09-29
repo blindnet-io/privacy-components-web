@@ -2,7 +2,7 @@ import { __decorate } from '../node_modules/tslib/tslib.es6.js';
 import { msg } from '@lit/localize';
 import { css, html } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
-import { PROCESSING_CATEGORY, PURPOSE, ACTION, PROVENANCE, TARGET } from '../models/priv-terms.js';
+import { PROCESSING_CATEGORY, PURPOSE, ACTION, PROVENANCE, TARGET } from '@blindnet/core';
 import { DATA_CATEGORY_DESCRIPTIONS, PROVENANCE_DESCRIPTIONS, TARGET_DESCRIPTIONS } from '../utils/dictionary.js';
 import { DemandForm } from './DemandForm.js';
 import { FormComponentState } from '../utils/states.js';

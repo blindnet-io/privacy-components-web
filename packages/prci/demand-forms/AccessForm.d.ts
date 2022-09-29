@@ -1,6 +1,5 @@
 import { TemplateResult } from 'lit';
-import { Demand } from '../models/demand.js';
-import { DATA_CATEGORY } from '../models/priv-terms.js';
+import { DATA_CATEGORY, Demand } from '@blindnet/core';
 import { DemandForm } from './DemandForm.js';
 import '../AllChecklist.js';
 /**

@@ -3,7 +3,7 @@ import { msg } from '@lit/localize';
 import { css, LitElement, html } from 'lit';
 import { property } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
-import { ACTION } from '../models/priv-terms.js';
+import { ACTION } from '@blindnet/core';
 import { PRCIStyles } from '../styles.js';
 import { DemandState, ComponentState } from '../utils/states.js';
 

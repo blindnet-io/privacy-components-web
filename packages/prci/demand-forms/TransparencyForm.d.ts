@@ -1,9 +1,7 @@
 import { TemplateResult } from 'lit';
-import { Demand } from '../models/demand.js';
-import { ACTION } from '../models/priv-terms.js';
+import { Demand, ACTION, Restrictions } from '@blindnet/core';
 import { MultiDemandForm } from './MultiDemandForm.js';
 import '../AllChecklist.js';
-import { Restrictions } from '../models/restrictions.js';
 /**
  * MultiDemandForm for the Transparency PRIV action. Includes a dropdown and text element.
  *

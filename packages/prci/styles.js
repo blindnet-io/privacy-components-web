@@ -183,7 +183,6 @@ const PRCIStyles = css `
 
   .view-ctr {
     padding: 60px;
-    width: 1050px;
   }
 
   .provenance-restriction {

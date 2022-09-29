@@ -2,7 +2,7 @@ import { __decorate } from './node_modules/tslib/tslib.es6.js';
 import { localized } from '@lit/localize';
 import { css, LitElement, html } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
-import { ACTION } from './models/priv-terms.js';
+import { ACTION } from '@blindnet/core';
 import { PRCIStyles } from './styles.js';
 import { ACTION_TITLES, ACTION_DESCRIPTIONS } from './utils/dictionary.js';
 import { ComponentState } from './utils/states.js';

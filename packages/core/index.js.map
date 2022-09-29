@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["../src/index.ts"],"sourcesContent":["import { helloCore } from './hello-world/hello-world.js';\n\nexport default function core() {\n  helloCore();\n}\n\nexport { SlottedDropdown } from './components/SlottedDropdown.js';\n"],"names":[],"mappings":";;;AAEc,SAAU,IAAI,GAAA;AAC1B,IAAA,SAAS,EAAE,CAAC;AACd;;;;"}
+{"version":3,"file":"index.js","sources":[],"sourcesContent":[],"names":[],"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;"}

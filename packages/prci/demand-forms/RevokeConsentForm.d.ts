@@ -1,7 +1,7 @@
 import { PropertyValueMap, TemplateResult } from 'lit';
+import { Demand } from '@blindnet/core';
 import { MultiDemandForm } from './MultiDemandForm.js';
 import '../AllChecklist.js';
-import { Demand } from '../models/demand.js';
 /**
  * ActionForm for the REVOKE PRIV action.
  */

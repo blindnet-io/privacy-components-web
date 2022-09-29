@@ -1,0 +1,40 @@
+/**
+ * keep CONTACT for no longer than 30 days after a service defined by a legal base ends
+ */
+export declare type CreateRetentionPolicyPayload = {
+    /**
+     * data category for which the policy is created
+     */
+    data_category: string;
+    /**
+     * retention policy
+     */
+    policy: CreateRetentionPolicyPayload.policy;
+    /**
+     * duration in JSON Schema duration format
+     */
+    duration: string;
+    /**
+     * event type to which the retention duration is relative to
+     */
+    after: CreateRetentionPolicyPayload.after;
+};
+export declare namespace CreateRetentionPolicyPayload {
+    /**
+     * retention policy
+     */
+    enum policy {
+        NO_LONGER_THAN = "NO-LONGER-THAN",
+        NO_LESS_THAN = "NO-LESS-THAN"
+    }
+    /**
+     * event type to which the retention duration is relative to
+     */
+    enum after {
+        CAPTURE_DATE = "CAPTURE-DATE",
+        RELATIONSHIP_START = "RELATIONSHIP-START",
+        RELATIONSHIP_END = "RELATIONSHIP-END",
+        SERVICE_START = "SERVICE-START",
+        SERVICE_END = "SERVICE-END"
+    }
+}

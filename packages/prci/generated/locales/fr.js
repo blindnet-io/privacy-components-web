@@ -1,4 +1,5 @@
 import { html } from 'lit';
+import { str } from '@lit/localize';
 
 // Do not modify this file by hand!
 /* eslint-disable no-irregular-whitespace */
@@ -50,13 +51,19 @@ const templates = {
     'se51c61b6c140b7e8': `TRANSPARENCE.PROVENANCE`,
     'sef4fb4ae50ad09c5': `L'identité et les coordonnées de l'organisation traitant mes données`,
     'sff7e60a212b3fa64': `Prendre mes données et les faire transférer ailleurs`,
+    'sef16778fe7074a8d': `Grant`,
+    'sd0680e7343dedb27': `Deny`,
+    'sa58a43eaa517ec9e': `Response`,
+    's12f6b3b9aa6fe76c': `Recommended`,
+    'sb0e683c9fb3cc3b5': `Not Recommended`,
     's28360fa3d4d84322': `Optional Message`,
-    's5984337f652f9b4e': `Demand Approved ✅`,
-    's0d26b5e70ae6ae1d': `Demand Denied ❌`,
-    'se51b16211cc404a5': `PRIVACY REQUESTS TO PROCESS`,
-    'sd1ace032539d7122': `Submitted`,
+    'sb3d4f79d9d8b71e5': `Submit`,
+    's2b7bb3f9a459d7dd': `History view coming soon!`,
+    's61d28f3db3da4264': `Response Submmitted`,
+    'sb41b2cfbbc52565b': `Created`,
     'sd25a75c08073005d': `Data Subject`,
-    'sa4dd232b5a30f481': `Action(s)`,
+    'sa442044b586ec8bf': `Action`,
+    'sb852d100f91db23f': `No requests to display.`,
     's943ff37beeb8970c': `The purpose of the processing of the data the organization has on me`,
     's3fc1f890d4f5a074': `All provenances`,
     's45aea633edb60ede': `The data provided by a user of the system (potentially the Data Subject)`,
@@ -124,11 +131,11 @@ const templates = {
     'hff3b775b64d0793c': html `Partially completed`,
     'h5033dab8c17f05f2': html `Completed`,
     'ha30c4d3b566b6b1a': html `Canceled`,
-    'see4e21f60d66f454': `Granted`,
-    's93390561e1afc0b6': `Denied`,
-    's538bd2706b2090da': `Partially Granted`,
-    's36d273fcd01916af': `Under Review`,
-    'sa30c4d3b566b6b1a': `Canceled`,
+    'sc3755f907034fcf4': `granted`,
+    'sae36324e0a5783d6': `denied`,
+    'sfb005196e7ebf2da': `partially granted`,
+    'se350209cc62601ef': `under review`,
+    'see8b386a20d5d43a': `canceled`,
     's80ad94771c626ec2': `no longer than`,
     's49940a6f4a947f4a': `no less than`,
     's9f2760d67ffa4687': `capture date`,
@@ -157,7 +164,6 @@ const templates = {
     'sa3ccecbf5789d25a': `I want to add another demand`,
     'se50be8ad91c57511': `Privacy Request Advanced settings`,
     's7629854d26f1c5e6': `I address my Privacy Request to:`,
-    'sb41b2cfbbc52565b': `Created`,
     'sad3e3c8146fc920f': `Status`,
     's1e55a47eccb89757': `Demands`,
     'sfe876187f89fc9f6': `See Details`,
@@ -176,7 +182,12 @@ const templates = {
     's1caf5d7ab36059be': `Demand`,
     's355b21b89ce5d9c5': `Details`,
     'se40a735383dec962': `Cancel Demand`,
-    'h55d988154af40459': html `Your Privacy Request, sent on
+    'h0fd6feceae15cd33': html `Do you confirm
+                        <strong>canceling your demand?</strong>`,
+    's00fc2da0e187830b': `Keep Demand`,
+    'sb85774dc5d18ff0f': `Confirm`,
+    's51c031323a487267': `Your demand has been `,
+    's55d988154af40459': str `Your Privacy Request, sent on
               ${0}, is currently
               being processed.`,
     's284bf4b83b609401': `At the moment:`,
@@ -187,6 +198,7 @@ const templates = {
     'h4cc3ff60e08a40dc': html `Your Privacy Request, sent on
               ${0}, has been
               processed.`,
+    's4ea9cef5335e0276': `Copy link to this page`,
     'sc1f8e79af6851ad7': `Completed Demand(s)`,
     's9cea0dd1643459a3': `Processing Demand(s)`,
     'sdba3c1a749077731': `Cancelled Demand(s)`,

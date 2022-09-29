@@ -1,5 +1,5 @@
 import { LitElement } from 'lit';
-import { PrivacyResponseItem } from './models/privacy-response.js';
+import { PrivacyResponseItem } from '@blindnet/core';
 /**
  * Status for a single demand in a Privacy Request
  */
@@ -23,5 +23,6 @@ export declare class StatusViewItem extends LitElement {
     transparencyRetTemplate(demand: PrivacyResponseItem): import("lit-html").TemplateResult<1>;
     transparencyWhereTemplate(demand: PrivacyResponseItem): import("lit-html").TemplateResult<1>;
     transparencyWhoTemplate(demand: PrivacyResponseItem): import("lit-html").TemplateResult<1>;
+    handleConfirmCancelClick(): void;
     render(): import("lit-html").TemplateResult<1>;
 }

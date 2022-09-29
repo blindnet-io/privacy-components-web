@@ -1,15 +1,16 @@
 import { LitElement } from 'lit';
-import './ProcessRequestsView.js';
-import './RequestHistoryView.js';
-import './SettingsView.js';
-declare enum DCI_UI_STATE {
-    PROCESS_REQUESTS = 0,
-    REQUEST_HISTORY = 1,
-    SETTINGS = 2
+import { PendingDemandPayload } from '@blindnet/core';
+declare enum DCIUIState {
+    requests = 0,
+    alerts = 1
 }
-export declare class DataConsumerInterface extends LitElement {
-    static styles: import("lit").CSSResult[];
-    _uiState: DCI_UI_STATE;
+declare const DataConsumerInterface_base: typeof LitElement & (new (...args: any[]) => import("@blindnet/core").CoreConfigurationMixinInterface);
+export declare class DataConsumerInterface extends DataConsumerInterface_base {
+    _uiState: DCIUIState;
+    _demands: PendingDemandPayload[];
+    handleViewToggleChange(e: CustomEvent): void;
+    connectedCallback(): void;
     render(): import("lit-html").TemplateResult<1>;
+    static styles: import("lit").CSSResult;
 }
 export {};

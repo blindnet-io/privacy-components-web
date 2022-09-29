@@ -1,5 +1,5 @@
 import { html } from 'lit';
-import { ACTION, DATA_CATEGORY, PROCESSING_CATEGORY, PURPOSE, PROVENANCE, TARGET } from '../models/priv-terms.js';
+import { ACTION, DATA_CATEGORY, PROCESSING_CATEGORY, PURPOSE, PROVENANCE, TARGET } from '@blindnet/core';
 import { PRCI_CONFIG } from './conf.js';
 import { DATA_CATEGORY_TITLES, POLICY_TYPE_TITLES, AFTER_TITLES } from './dictionary.js';
 
@@ -85,6 +85,25 @@ function getRetentionPolicyString(dataCategory, policyType, duration, after) {
     <i>${duration}</i> months after
     <i>${AFTER_TITLES[after]().toLocaleUpperCase()}</i>`;
 }
+/**
+ * Get a link to the status page for the request denoted by requestId
+ * @param requestId ID of the privacy request
+ * @returns
+ */
+function getRequestLink(requestId) {
+    const url = new URL(document.URL);
+    url.searchParams.set('requestId', requestId);
+    return url;
+}
+/**
+ * Remove a query parameter from current window URL without reloading the page
+ * @param param string denoting the query parameter
+ */
+function removeQueryParam(param) {
+    const url = new URL(document.URL);
+    url.searchParams.delete(param);
+    window.history.pushState({}, '', url);
+}
 
-export { getDefaultActions, getDefaultDataCategories, getDefaultDemand, getDefaultDemands, getRetentionPolicyString };
+export { getDefaultActions, getDefaultDataCategories, getDefaultDemand, getDefaultDemands, getRequestLink, getRetentionPolicyString, removeQueryParam };
 //# sourceMappingURL=utils.js.map

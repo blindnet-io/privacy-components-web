@@ -3,16 +3,22 @@ import { msg } from '@lit/localize';
 import { css, LitElement, html } from 'lit';
 import { state, customElement } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
+import { ComputationAPI } from '@blindnet/core';
 import { PRCIStyles } from './styles.js';
 import { STATUS_DESCRIPTIONS } from './utils/dictionary.js';
-import { getRequestHistory } from './utils/privacy-request-api.js';
 import { ComponentState } from './utils/states.js';
 
 let RequestsView = class RequestsView extends LitElement {
     constructor() {
-        super();
+        super(...arguments);
         this._requests = [];
-        getRequestHistory().then(response => {
+    }
+    connectedCallback() {
+        // eslint-disable-next-line wc/guard-super-call
+        super.connectedCallback();
+        ComputationAPI.getInstance()
+            .getRequestHistory()
+            .then(response => {
             this._requests = response.history;
         });
     }
@@ -39,24 +45,24 @@ let RequestsView = class RequestsView extends LitElement {
         return html `
       <div id="table-ctr">
         <div id="requests-list">
-          <div class="list-header-ctr">
-            <span class="list-header"><b>${msg('Created')}</b></span>
-            <span class="list-header"><b>${msg('Status')}</b></span>
-            <span class="list-header"><b>${msg('Demands')}</b></span>
+          <div class="list__row--header">
+            <span><b>${msg('Created')}</b></span>
+            <span><b>${msg('Status')}</b></span>
+            <span><b>${msg('Demands')}</b></span>
             <span></span>
           </div>
           ${map(this._requests, r => html `
-              <div class="list-item-ctr">
-                <span class="list-item"
-                  >${new Date(r.date).toLocaleDateString('en-gb')}</span
+              <div class="list__row">
+                <span class="list__field"
+                  >${new Date(r.date).toLocaleString()}</span
                 >
-                <span class="list-item"
+                <span class="list__field"
                   >${STATUS_DESCRIPTIONS[r.status]()}</span
                 >
-                <span class="list-item">${r.demands}</span>
+                <span class="list__field">${r.demands}</span>
                 <button
                   id=${r.id}
-                  class="link-btn dark-font text --underline list-item"
+                  class="link-btn dark-font text--underline list__field"
                   @click=${this.handleRequestClick}
                 >
                   ${msg('See Details')}
@@ -68,7 +74,7 @@ let RequestsView = class RequestsView extends LitElement {
       <div id="new-request-ctr">
         <button
           id="new-request-btn"
-          class="link-btn dark-font text --underline"
+          class="link-btn dark-font text--underline"
           @click=${this.handleNewRequestClick}
         >
           ${msg('Submit a new Privacy Request')}
@@ -82,7 +88,7 @@ RequestsView.styles = [
     css `
       :host {
         display: grid;
-        max-width: 600px;
+        max-width: 1000px;
         margin: auto;
         row-gap: 40px;
         justify-items: center;
@@ -90,8 +96,6 @@ RequestsView.styles = [
 
       #table-ctr {
         width: 100%;
-        /* overflow-y: auto;
-        max-height: 500px; */
       }
 
       #requests-list {
@@ -99,22 +103,25 @@ RequestsView.styles = [
         row-gap: 30px;
       }
 
-      .list-header-ctr {
+      .list__row--header {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        padding: 0px 10px;
+        grid-column-gap: 5px;
+        grid-template-columns: 3fr 2fr 1fr 2fr;
         text-align: center;
       }
 
-      .list-item-ctr {
+      .list__row {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        padding: 20px 0px;
+        grid-template-columns: 3fr 2fr 1fr 2fr;
+        grid-column-gap: 5px;
+        padding: 20px 10px;
         border: 2px solid #5b5b5b;
         border-radius: 10px;
         box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5);
       }
 
-      .list-item {
+      .list__field {
         display: inline-flex;
         justify-items: center;
         text-align: center;
@@ -122,7 +129,7 @@ RequestsView.styles = [
         align-items: center;
       }
 
-      .list-item:last-child {
+      .list__field:last-child {
         padding: 0px 20px 0px 0px;
       }
 

@@ -176,11 +176,11 @@ const STATUS_DESCRIPTIONS = {
     CANCELED: () => msg(html `Canceled`),
 };
 const DEMAND_STATUS_DESCRIPTIONS = {
-    GRANTED: () => msg('Granted'),
-    DENIED: () => msg('Denied'),
-    'PARTIALLY-GRANTED': () => msg('Partially Granted'),
-    'UNDER-REVIEW': () => msg('Under Review'),
-    CANCELED: () => msg('Canceled'),
+    GRANTED: () => msg('granted'),
+    DENIED: () => msg('denied'),
+    'PARTIALLY-GRANTED': () => msg('partially granted'),
+    'UNDER-REVIEW': () => msg('under review'),
+    CANCELED: () => msg('canceled'),
 };
 const POLICY_TYPE_TITLES = {
     'NO-LONGER-THAN': () => msg('no longer than'),

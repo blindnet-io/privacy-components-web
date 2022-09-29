@@ -1,15 +1,16 @@
 import { __decorate } from './node_modules/tslib/tslib.es6.js';
-import { msg } from '@lit/localize';
+import { msg, str } from '@lit/localize';
 import { css, LitElement, html } from 'lit';
 import { property, state, customElement } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
-import { DEMAND_STATUS, ACTION } from './models/priv-terms.js';
-import { getRequest } from './utils/privacy-request-api.js';
+import { ComputationAPI, DEMAND_STATUS, ACTION } from '@blindnet/core';
 import './StatusViewItem.js';
 import { ComponentState } from './utils/states.js';
 import { PRCIStyles } from './styles.js';
+import { getRequestLink, removeQueryParam } from './utils/utils.js';
 
+const linkSvg = new URL(new URL('assets/link.svg', import.meta.url).href, import.meta.url).href;
 /**
  * View the status of a Privacy Request
  */
@@ -17,6 +18,7 @@ let StatusView = class StatusView extends LitElement {
     constructor() {
         super(...arguments);
         this.requestId = '';
+        this.newRequest = false;
         this._requestDate = new Date();
         this._completedDemands = [];
         this._processingDemands = [];
@@ -25,7 +27,9 @@ let StatusView = class StatusView extends LitElement {
         this._intervalId = undefined;
     }
     reloadRequest() {
-        getRequest(this.requestId).then(response => {
+        ComputationAPI.getInstance()
+            .getRequest(this.requestId)
+            .then(response => {
             if (response.length > 0) {
                 this._requestDate = new Date(response[0].date);
                 this._completedDemands = response.filter(d => [
@@ -45,6 +49,7 @@ let StatusView = class StatusView extends LitElement {
                 this._intervalId = undefined;
             }
             else if (!this._intervalId && this._processingDemands.length !== 0) {
+                // FIXME: reload should happen after a user interaction, not automatically
                 // Setup an interval to get the status of processing demands every 3 seconds
                 this._intervalId = setInterval(() => this.reloadRequest(), 3000);
             }
@@ -55,7 +60,14 @@ let StatusView = class StatusView extends LitElement {
             this.reloadRequest();
         }
     }
+    handleCopyIdClick() {
+        navigator.clipboard.writeText(this.requestId);
+    }
+    handleCopyLinkClick() {
+        navigator.clipboard.writeText(getRequestLink(this.requestId).toString());
+    }
     handleBackClick() {
+        removeQueryParam('requestId');
         this.dispatchEvent(new CustomEvent('component-state-change', {
             bubbles: true,
             composed: true,
@@ -65,6 +77,7 @@ let StatusView = class StatusView extends LitElement {
         }));
     }
     handleNewRequestClick() {
+        removeQueryParam('requestId');
         this.dispatchEvent(new CustomEvent('component-state-change', {
             bubbles: true,
             composed: true,
@@ -77,7 +90,7 @@ let StatusView = class StatusView extends LitElement {
         return html `
       ${when(this._processingDemands.length > 0, () => html `
           <p>
-            ${msg(html `Your Privacy Request, sent on
+            ${msg(str `Your Privacy Request, sent on
               ${this._requestDate.toLocaleDateString('en-gb')}, is currently
               being processed.`)}
           </p>
@@ -104,6 +117,12 @@ let StatusView = class StatusView extends LitElement {
               processed.`)}
           </p>
         `)}
+      <div>
+        <button class='svg-btn' @click=${this.handleCopyLinkClick}>
+          <img src=${linkSvg} alt='Copy status page link'></img>&nbsp;
+          <span class='text--underline'>${msg('Copy link to this page')}</span>
+        </button>
+      </div>
       ${when(this._completedDemands.length > 0, () => html `
           <div
             id="completed-dmds-ctr"
@@ -133,13 +152,13 @@ let StatusView = class StatusView extends LitElement {
         `)}
       <div id="nav-btns-ctr">
         <button
-          class="status-nav-btn link-btn dark-font text --underline"
+          class="status-nav-btn link-btn dark-font text--underline"
           @click=${this.handleBackClick}
         >
           ${msg('Back to my Requests')}
         </button>
         <button
-          class="status-nav-btn link-btn dark-font text --underline"
+          class="status-nav-btn link-btn dark-font text--underline"
           @click=${this.handleNewRequestClick}
         >
           ${msg('Submit a new Privacy Request')}
@@ -153,7 +172,7 @@ StatusView.styles = [
     css `
       :host {
         display: grid;
-        row-gap: 40px;
+        row-gap: 20px;
         max-width: 900px;
         text-align: center;
         margin: auto;
@@ -192,14 +211,23 @@ StatusView.styles = [
       }
 
       p {
-        margin: 0;
-        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      button {
+        display: inline-flex;
+        align-items: center;
       }
     `,
 ];
 __decorate([
     property({ type: String, attribute: 'request-id' })
 ], StatusView.prototype, "requestId", void 0);
+__decorate([
+    property({ type: Boolean })
+], StatusView.prototype, "newRequest", void 0);
 __decorate([
     state()
 ], StatusView.prototype, "_requestDate", void 0);

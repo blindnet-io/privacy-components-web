@@ -1,6 +1,5 @@
 import { LitElement, PropertyValueMap } from 'lit';
-import { Demand } from './models/demand.js';
-import { ACTION, TARGET } from './models/priv-terms.js';
+import { ACTION, TARGET, Demand } from '@blindnet/core';
 export declare class ReviewView extends LitElement {
     static styles: import("lit").CSSResult[];
     demandGroupId: string;

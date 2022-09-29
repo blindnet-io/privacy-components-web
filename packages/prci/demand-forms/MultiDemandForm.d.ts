@@ -1,6 +1,5 @@
 import { CSSResultGroup, LitElement, TemplateResult } from 'lit';
-import { Demand } from '../models/demand.js';
-import { ACTION } from '../models/priv-terms.js';
+import { Demand, ACTION } from '@blindnet/core';
 import { DemandState } from '../utils/states.js';
 /**
  * Abstract class for a form that allows the user to create or edit multiple demands.

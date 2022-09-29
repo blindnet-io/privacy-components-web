@@ -4,9 +4,9 @@ import { css, html } from 'lit';
 import { state, customElement } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
+import { ACTION } from '@blindnet/core';
 import { MultiDemandForm } from './MultiDemandForm.js';
 import '../AllChecklist.js';
-import { ACTION } from '../models/priv-terms.js';
 import { PRCIStyles } from '../styles.js';
 
 /**
@@ -129,7 +129,7 @@ let RevokeConsentForm = class RevokeConsentForm extends MultiDemandForm {
                   </h3>
                   <ul>
                     ${map(this._allConsentIds, id => html `
-                  <li><input id=${id} type='checkbox' @click=${this.handleConsentClick} ?checked=${this._selectedConsentIds.has(id)}><label for=${id}><strong>I no longer consent to</strong> the storage and processing of my data for the purposes of this draw</label></input></li>
+                  <li><input id=${id} type='checkbox' @click=${this.handleConsentClick} ?checked=${this._selectedConsentIds.has(id)}><label for=${id}><strong>I no longer consent to</strong> the storage and processing of my data for the purposes of the prize draw.</label></input></li>
                 `)}
                   </ul>
                 </div>

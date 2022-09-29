@@ -1,5 +1,5 @@
 import { LitElement } from 'lit';
-import { ACTION } from './models/priv-terms.js';
+import { ACTION } from '@blindnet/core';
 export declare class ActionItem extends LitElement {
     static styles: import("lit").CSSResult[];
     action: ACTION;

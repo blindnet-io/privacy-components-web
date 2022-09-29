@@ -1,5 +1,5 @@
 import { CSSResultGroup, LitElement, PropertyValueMap, TemplateResult } from 'lit';
-import { Demand } from '../models/demand.js';
+import { Demand } from '@blindnet/core';
 import { DemandState } from '../utils/states.js';
 /**
  * Abstract class for a form that allows the user to create or edit a demand.

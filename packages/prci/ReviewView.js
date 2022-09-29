@@ -5,7 +5,7 @@ import { property, state, customElement } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
 import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
-import { ACTION, TARGET, DATA_CATEGORY, PROVENANCE } from './models/priv-terms.js';
+import { ACTION, TARGET, DATA_CATEGORY, PROVENANCE } from '@blindnet/core';
 import { PRCIStyles } from './styles.js';
 import { DATA_CATEGORY_DESCRIPTIONS, PROVENANCE_DESCRIPTIONS, TARGET_DESCRIPTIONS, ACTION_DESCRIPTIONS, ACTION_TITLES } from './utils/dictionary.js';
 import { ComponentState } from './utils/states.js';
@@ -235,7 +235,7 @@ let ReviewView = class ReviewView extends LitElement {
     render() {
         return html `
       <h2><b>${msg('My demand(s):')}</b></h2>
-      
+
       <div class="dmd-review-ctr border--light border--rounded">
         <div id="review-heading-row">
           <h3 id="review-action-heading">${ACTION_TITLES[this._action]()} Demand</h3>
@@ -299,7 +299,7 @@ let ReviewView = class ReviewView extends LitElement {
       </div> -->
       <!-- Submit button -->
       <slotted-dropdown
-        id='request-settings'  
+        id='request-settings'
         .header=${msg('Privacy Request Advanced settings')}
         include-buttons
       >

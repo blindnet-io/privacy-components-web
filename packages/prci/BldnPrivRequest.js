@@ -1,10 +1,14 @@
 import { __decorate } from './node_modules/tslib/tslib.es6.js';
-import { css, LitElement, html } from 'lit';
+import { LitElement, html, css } from 'lit';
 import { property, state, customElement } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
 import { map } from 'lit/directives/map.js';
-import { localized, msg } from '@lit/localize';
-import '@blindnet/core';
+import { msg, localized } from '@lit/localize';
+import { CoreConfigurationMixin, ACTION, TARGET, ComputationAPI } from '@blindnet/core';
+import { ComponentState } from './utils/states.js';
+import { getDefaultActions, getDefaultDataCategories, getDefaultDemands } from './utils/utils.js';
+import { PRCI_CONFIG } from './utils/conf.js';
+import { PRCIStyles } from './styles.js';
 import './FrequentRequestsMenu.js';
 import './ReviewView.js';
 import './ActionMenuView.js';
@@ -14,24 +18,21 @@ import './demand-forms/TransparencyForm.js';
 import './demand-forms/AccessForm.js';
 import './demand-forms/DeleteForm.js';
 import './demand-forms/RevokeConsentForm.js';
-import { ACTION, TARGET } from './models/priv-terms.js';
-import { ComponentState } from './utils/states.js';
-import { getDefaultActions, getDefaultDataCategories, getDefaultDemands } from './utils/utils.js';
-import { PRCI_CONFIG } from './utils/conf.js';
-import { sendPrivacyRequest } from './utils/privacy-request-api.js';
-import { PRCIStyles } from './styles.js';
 
 /**
  * Top level component encapsulating a single PrivacyRequest. Contains one or
  * more DemandBuilder elements, each for a single demand action type.
+ *
  */
-let BldnPrivRequest = class BldnPrivRequest extends LitElement {
+let BldnPrivRequest = class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
     constructor() {
         super();
-        // JSON string of actions to display
+        /** JSON list of allowed actions */
         this.actions = '';
-        // JSON string of allowed data categories
+        /** JSON list of allowed data categories */
         this.dataCategories = '';
+        /** @prop {string} requestId - a request ID. If provided, the initial PRCI view will be the status page for the provided request ID */
+        this.requestId = '';
         // Array of available actions, given by actions property if a valid list was passed
         this._includedActions = getDefaultActions();
         // Array of available data categories, given by dataCategories property if a valid list was passed
@@ -59,8 +60,54 @@ let BldnPrivRequest = class BldnPrivRequest extends LitElement {
         this._config = PRCI_CONFIG;
         // UI state indicating which view to show
         this._componentState = ComponentState.MENU;
+        this.setMultipleDemands = (e) => {
+            if (e instanceof CustomEvent) {
+                const { demandGroupId, demands } = e.detail;
+                this._demands.set(demandGroupId, demands);
+            }
+        };
+        this.setDemand = (e) => {
+            if (e instanceof CustomEvent) {
+                const { demandGroupId, demand } = e.detail;
+                this._demands.set(demandGroupId, [demand]);
+            }
+        };
+        this.deleteDemand = (e) => {
+            if (e instanceof CustomEvent) {
+                const { demandGroupId } = e.detail;
+                this._demands.delete(demandGroupId);
+                this.requestUpdate();
+            }
+        };
+        this.changeRequestTarget = (e) => {
+            if (e instanceof CustomEvent) {
+                const { id } = e.detail;
+                this._privacyRequest.target = id;
+            }
+        };
+        this.submitRequest = async () => {
+            const allDemands = Array.from(this._demands.values()).reduce((dmds, dmdGroup) => dmds.concat(dmdGroup), []);
+            this._privacyRequest.demands = allDemands.map((d, i) => {
+                // eslint-disable-next-line no-param-reassign
+                d.id = i.toString();
+                return d;
+            });
+            const response = await ComputationAPI.getInstance().sendPrivacyRequest(this._privacyRequest);
+            this.dispatchEvent(new CustomEvent('component-state-change', {
+                detail: {
+                    newState: ComponentState.STATUS,
+                    requestId: response.request_id,
+                },
+            }));
+        };
+        const params = new URLSearchParams(window.location.search);
+        const requestId = params.get('requestId');
+        if (requestId) {
+            this._currentRequestId = requestId;
+            this._componentState = ComponentState.STATUS;
+        }
         // Initialize demands and current demand group to the same uuid
-        const initialGroup = self.crypto.randomUUID();
+        const initialGroup = crypto.randomUUID();
         this._demands.set(initialGroup, []);
         this._currentDemandGroupId = initialGroup;
         // State change listener
@@ -86,41 +133,25 @@ let BldnPrivRequest = class BldnPrivRequest extends LitElement {
                     break;
             }
         });
+    }
+    connectedCallback() {
+        // eslint-disable-next-line wc/guard-super-call
+        super.connectedCallback();
         // Demand update listener
-        this.addEventListener('demand-set-multiple', e => {
-            const { demandGroupId, demands } = e.detail;
-            this._demands.set(demandGroupId, demands);
-        });
-        this.addEventListener('demand-set', e => {
-            const { demandGroupId, demand } = e.detail;
-            this._demands.set(demandGroupId, [demand]);
-        });
-        this.addEventListener('demand-delete', e => {
-            const { demandGroupId } = e.detail;
-            this._demands.delete(demandGroupId);
-            this.requestUpdate();
-        });
+        this.addEventListener('demand-set-multiple', this.setMultipleDemands);
+        this.addEventListener('demand-set', this.setDemand);
+        this.addEventListener('demand-delete', this.deleteDemand);
         // Request target listener
-        this.addEventListener('request-target-change', e => {
-            const { id } = e.detail;
-            this._privacyRequest.target = id;
-        });
+        this.addEventListener('request-target-change', this.changeRequestTarget);
         // Submit request listener
-        this.addEventListener('submit-request', () => {
-            const allDemands = Array.from(this._demands.values()).reduce((dmds, dmdGroup) => dmds.concat(dmdGroup), []);
-            this._privacyRequest.demands = allDemands.map((d, i) => {
-                d.id = i.toString();
-                return d;
-            });
-            sendPrivacyRequest(this._privacyRequest, false).then(response => {
-                this.dispatchEvent(new CustomEvent('component-state-change', {
-                    detail: {
-                        newState: ComponentState.STATUS,
-                        requestId: response.request_id,
-                    },
-                }));
-            });
-        });
+        this.addEventListener('submit-request', this.submitRequest);
+    }
+    disconnectedCallback() {
+        this.removeEventListener('demand-set-multiple', this.setMultipleDemands);
+        this.removeEventListener('demand-set', this.setDemand);
+        this.removeEventListener('demand-delete', this.deleteDemand);
+        this.removeEventListener('request-target-change', this.changeRequestTarget);
+        this.removeEventListener('submit-request', this.submitRequest);
     }
     /**
      * Reset most states
@@ -290,13 +321,13 @@ let BldnPrivRequest = class BldnPrivRequest extends LitElement {
             ],
             [
                 ComponentState.REQUESTS,
-                () => html ` <requests-view></requests-view> `,
+                () => html `<requests-view></requests-view>`,
             ],
             [
                 ComponentState.STATUS,
                 () => html ` <status-view
-                request-id=${this._currentRequestId}
-              ></status-view>`,
+              request-id=${this._currentRequestId}
+            ></status-view>`,
             ],
             [
                 ComponentState.SUBMITTED,
@@ -368,6 +399,9 @@ __decorate([
 __decorate([
     property({ type: String, attribute: 'data-categories' })
 ], BldnPrivRequest.prototype, "dataCategories", void 0);
+__decorate([
+    property({ type: String, attribute: 'request-id' })
+], BldnPrivRequest.prototype, "requestId", void 0);
 __decorate([
     state()
 ], BldnPrivRequest.prototype, "_includedActions", void 0);
