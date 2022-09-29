@@ -1,6 +1,7 @@
 import { msg } from '@lit/localize';
 import { css, html, LitElement, PropertyValueMap } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
+import { choose } from 'lit/directives/choose.js';
 import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
 import { ComputationAPI } from '../computation/computation-api.js';
@@ -15,6 +16,7 @@ import { bldnStyles } from './blindnet-wc-styles.js';
 enum DropdownUIState {
   Respond,
   History,
+  Responded,
 }
 
 @customElement('bldn-data-consum-demand-list-item')
@@ -53,19 +55,24 @@ export class DataConsumerDemandListItem extends LitElement {
   handleSubmitClick() {
     switch (this._selectedResponseType) {
       case Recommendation.status.GRANTED:
-        ComputationAPI.getInstance().grantDemand(
-          this.demand!.id,
-          this._message
-        );
+        ComputationAPI.getInstance()
+          .grantDemand(this.demand!.id, this._message)
+          .then(() => {
+            this._dropdownUiState = DropdownUIState.Responded;
+          });
         break;
       case Recommendation.status.PARTIALLY_GRANTED:
         break;
       case Recommendation.status.DENIED:
-        ComputationAPI.getInstance().denyDemand(
-          this.demand!.id,
-          Recommendation.motive.OTHER_MOTIVE,
-          this._message
-        );
+        ComputationAPI.getInstance()
+          .denyDemand(
+            this.demand!.id,
+            Recommendation.motive.OTHER_MOTIVE,
+            this._message
+          )
+          .then(() => {
+            this._dropdownUiState = DropdownUIState.Responded;
+          });
         break;
       default:
         break;
@@ -202,84 +209,97 @@ export class DataConsumerDemandListItem extends LitElement {
                   right="History"
                   @bldn-toggle-button-change=${this.handleDropdownToggleChange}
                 ></bldn-toggle-button>
-                ${when(
-                  this._dropdownUiState === DropdownUIState.Respond,
-                  () => html`
-                    <div id="dropdown__response-ctr">
-                      <span id="dropdown__response-heading"
-                        >${msg('Response')}
-                        -${when(
-                          this.isRecommended(),
-                          () => html`
-                            <span id="dropdown__response-heading--recommended">
-                              ${msg('Recommended')}
-                              <svg
-                                width="12"
-                                height="12"
-                                viewBox="0 0 12 12"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
+                ${choose(this._dropdownUiState, [
+                  [
+                    DropdownUIState.Respond,
+                    () => html`
+                      <div id="dropdown__response-ctr">
+                        <span id="dropdown__response-heading"
+                          >${msg('Response')}
+                          -${when(
+                            this.isRecommended(),
+                            () => html`
+                              <span
+                                id="dropdown__response-heading--recommended"
                               >
-                                <path
-                                  d="M6 1C3.24 1 1 3.24 1 6C1 8.76 3.24 11 6 11C8.76 11 11 8.76 11 6C11 3.24 8.76 1 6 1ZM5 8.5L2.5 6L3.205 5.295L5 7.085L8.795 3.29L9.5 4L5 8.5Z"
-                                  fill="currentColor"
-                                />
-                              </svg>
-                            </span>
-                          `,
-                          () => html`
-                            <span
-                              id="dropdown__response-heading--not-recommended"
-                            >
-                              ${msg('Not Recommended')}
-                              <svg
-                                width="12"
-                                height="12"
-                                viewBox="0 0 12 12"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
+                                ${msg('Recommended')}
+                                <svg
+                                  width="12"
+                                  height="12"
+                                  viewBox="0 0 12 12"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M6 1C3.24 1 1 3.24 1 6C1 8.76 3.24 11 6 11C8.76 11 11 8.76 11 6C11 3.24 8.76 1 6 1ZM5 8.5L2.5 6L3.205 5.295L5 7.085L8.795 3.29L9.5 4L5 8.5Z"
+                                    fill="currentColor"
+                                  />
+                                </svg>
+                              </span>
+                            `,
+                            () => html`
+                              <span
+                                id="dropdown__response-heading--not-recommended"
                               >
-                                <path
-                                  d="M6 1C3.235 1 1 3.235 1 6C1 8.765 3.235 11 6 11C8.765 11 11 8.765 11 6C11 3.235 8.765 1 6 1ZM8.5 7.795L7.795 8.5L6 6.705L4.205 8.5L3.5 7.795L5.295 6L3.5 4.205L4.205 3.5L6 5.295L7.795 3.5L8.5 4.205L6.705 6L8.5 7.795Z"
-                                  fill="currentColor"
-                                />
-                              </svg>
-                            </span>
-                          `
-                        )}</span
-                      >
-                      <textarea
-                        placeholder=${msg('Optional Message')}
-                        @input=${this.handleMessageInput}
-                      ></textarea>
-                      <div id="dropdown__response-btns">
-                        ${map(
-                          responseStatusOptions,
-                          option => html`
-                            <button
-                              class="response-btn response-btn--${option.class} ${this
-                                ._selectedResponseType === option.respStatus
-                                ? 'response-btn--selected'
-                                : ''}"
-                              @click=${() => {
-                                this._selectedResponseType = option.respStatus;
-                              }}
-                            >
-                              ${this.getRadioSVG(
-                                this._selectedResponseType === option.respStatus
-                              )}
-                              <span>${option.display}</span>
-                            </button>
-                          `
-                        )}
+                                ${msg('Not Recommended')}
+                                <svg
+                                  width="12"
+                                  height="12"
+                                  viewBox="0 0 12 12"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M6 1C3.235 1 1 3.235 1 6C1 8.765 3.235 11 6 11C8.765 11 11 8.765 11 6C11 3.235 8.765 1 6 1ZM8.5 7.795L7.795 8.5L6 6.705L4.205 8.5L3.5 7.795L5.295 6L3.5 4.205L4.205 3.5L6 5.295L7.795 3.5L8.5 4.205L6.705 6L8.5 7.795Z"
+                                    fill="currentColor"
+                                  />
+                                </svg>
+                              </span>
+                            `
+                          )}</span
+                        >
+                        <textarea
+                          placeholder=${msg('Optional Message')}
+                          @input=${this.handleMessageInput}
+                        ></textarea>
+                        <div id="dropdown__response-btns">
+                          ${map(
+                            responseStatusOptions,
+                            option => html`
+                              <button
+                                class="response-btn response-btn--${option.class} ${this
+                                  ._selectedResponseType === option.respStatus
+                                  ? 'response-btn--selected'
+                                  : ''}"
+                                @click=${() => {
+                                  this._selectedResponseType =
+                                    option.respStatus;
+                                }}
+                              >
+                                ${this.getRadioSVG(
+                                  this._selectedResponseType ===
+                                    option.respStatus
+                                )}
+                                <span>${option.display}</span>
+                              </button>
+                            `
+                          )}
+                        </div>
                       </div>
-                    </div>
-                    <bldn-button @click=${this.handleSubmitClick}
-                      >${msg('Submit')}</bldn-button
-                    >
-                  `,
-                  () => html` History view coming soon! `
-                )}
+                      <bldn-button @click=${this.handleSubmitClick}
+                        >${msg('Submit')}</bldn-button
+                      >
+                    `,
+                  ],
+                  [
+                    DropdownUIState.History,
+                    () => html`${msg('History view coming soon!')}`,
+                  ],
+                  [
+                    DropdownUIState.Responded,
+                    () => html`${msg('Response Submmitted')} 📨`,
+                  ],
+                ])}
               </div>
             `
           )}
