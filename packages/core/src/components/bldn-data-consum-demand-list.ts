@@ -13,19 +13,21 @@ export class DataConsumerDemandList extends LitElement {
 
   render() {
     return html`
-      <div class="list__row--heading">
+      <div id="list__row--heading">
         <span class="list__date-col"><b>${msg('Created')}</b></span>
         <span><b>${msg('Data Subject')}</b></span>
         <span><b>${msg('Action')}</b></span>
       </div>
-      ${map(
-        this.demands,
-        d => html`
-          <bldn-data-consum-demand-list-item
-            demand=${JSON.stringify(d)}
-          ></bldn-data-consum-demand-list-item>
-        `
-      )}
+      <div id="list__items">
+        ${map(
+          this.demands,
+          d => html`
+            <bldn-data-consum-demand-list-item
+              demand=${JSON.stringify(d)}
+            ></bldn-data-consum-demand-list-item>
+          `
+        )}
+      </div>
     `;
   }
 
@@ -33,15 +35,19 @@ export class DataConsumerDemandList extends LitElement {
     bldnStyles,
     css`
       :host {
-        display: grid;
         color: var(--color-dark);
       }
 
-      .list__row--heading {
+      #list__row--heading {
         display: grid;
         grid-template-columns: repeat(3, 2fr) 1fr;
         padding: 0px 0px 5px 0px;
         font-size: 14px;
+      }
+
+      #list__items {
+        display: grid;
+        row-gap: 10px;
       }
     `,
   ];

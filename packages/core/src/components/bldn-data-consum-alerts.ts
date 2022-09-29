@@ -4,6 +4,6 @@ import { customElement } from 'lit/decorators.js';
 @customElement('bldn-data-consum-alerts')
 export class DataConsumerAlerts extends LitElement {
   render() {
-    return html``;
+    return html`Alerts view coming soon!`;
   }
 }

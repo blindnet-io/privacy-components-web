@@ -6,6 +6,7 @@ import { bldnStyles } from './blindnet-wc-styles.js';
 interface ListChoice {
   id: string;
   display: string;
+  selected?: boolean;
 }
 
 @customElement('bldn-horizontal-list')
@@ -36,6 +37,12 @@ export class HorizontalList extends LitElement {
   protected willUpdate(
     _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
   ): void {
+    if (_changedProperties.has('choices')) {
+      this._selected = this.choices.findIndex(c => c.selected);
+      if (this._selected < 0) {
+        this._selected = 0;
+      }
+    }
     if (_changedProperties.has('_selected')) {
       this.dispatchEvent(
         new CustomEvent('horizontal-list-choice-change', {

@@ -81,6 +81,7 @@ export class ToggleButton extends LitElement {
             rgba(var(--color-primary-rgb), 0.1)
           ),
           #ffffff;
+        color: var(--color-primary);
       }
     `,
   ];

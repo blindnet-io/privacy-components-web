@@ -31,7 +31,7 @@ export const bldnStyles = css`
 
   button {
     font-family: var(
-      --bldn-button-font-family,
+      --bldn-font-family,
       -apple-system,
       BlinkMacSystemFont,
       'Segoe UI',

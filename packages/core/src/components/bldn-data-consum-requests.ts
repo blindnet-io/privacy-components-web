@@ -11,7 +11,7 @@ export class DataConsumerRequests extends LitElement {
       <bldn-horizontal-list
         choices=${JSON.stringify([
           { id: 'all', display: 'All' },
-          { id: 'pending', display: 'Pending' },
+          { id: 'pending', display: 'Pending', selected: true },
           { id: 'answered', display: 'Answered' },
           { id: 'canceled', display: 'Canceled' },
         ])}
