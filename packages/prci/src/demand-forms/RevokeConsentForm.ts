@@ -211,7 +211,7 @@ export class RevokeConsentForm extends MultiDemandForm {
                         this.handleConsentClick
                       } ?checked=${this._selectedConsentIds.has(
                         id
-                      )}><label for=${id}><strong>I no longer consent to</strong> the storage and processing of my data for the purposes of this draw</label></input></li>
+                      )}><label for=${id}><strong>I no longer consent to</strong> the storage and processing of my data for the purposes of the prize draw.</label></input></li>
                 `
                     )}
                   </ul>

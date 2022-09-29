@@ -37,13 +37,13 @@ export class RequestsView extends LitElement {
         display: grid;
         padding: 0px 10px;
         grid-column-gap: 5px;
-        grid-template-columns: 3fr repeat(4, 1fr);
+        grid-template-columns: 3fr 2fr 1fr 2fr;
         text-align: center;
       }
 
       .list__row {
         display: grid;
-        grid-template-columns: 3fr repeat(4, 1fr);
+        grid-template-columns: 3fr 2fr 1fr 2fr;
         grid-column-gap: 5px;
         padding: 20px 10px;
         border: 2px solid #5b5b5b;
@@ -112,7 +112,6 @@ export class RequestsView extends LitElement {
       <div id="table-ctr">
         <div id="requests-list">
           <div class="list__row--header">
-            <span><b>${msg('ID')}</b></span>
             <span><b>${msg('Created')}</b></span>
             <span><b>${msg('Status')}</b></span>
             <span><b>${msg('Demands')}</b></span>
@@ -122,9 +121,8 @@ export class RequestsView extends LitElement {
             this._requests,
             r => html`
               <div class="list__row">
-                <span class="list__field">${r.id}</span>
                 <span class="list__field"
-                  >${new Date(r.date).toLocaleDateString('en-gb')}</span
+                  >${new Date(r.date).toLocaleString()}</span
                 >
                 <span class="list__field"
                   >${STATUS_DESCRIPTIONS[r.status as REQUEST_STATUS]()}</span

@@ -8,7 +8,9 @@ export class AppPrivacy extends LitElement {
   }
 
   render() {
-    return html`<bldn-priv-request></bldn-priv-request>`;
+    return html`<bldn-priv-request
+      data-categories='["contact", "name", "uid", "other-data"]'
+    ></bldn-priv-request>`;
   }
 }
 

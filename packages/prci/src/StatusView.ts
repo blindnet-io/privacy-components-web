@@ -15,8 +15,6 @@ import { ComponentState } from './utils/states.js';
 import { PRCIStyles } from './styles.js';
 import { getRequestLink, removeQueryParam } from './utils/utils.js';
 
-const copySvg = new URL('./assets/icons/copy.svg', import.meta.url).href;
-
 const linkSvg = new URL('./assets/icons/link.svg', import.meta.url).href;
 
 /**
@@ -227,12 +225,6 @@ export class StatusView extends LitElement {
           </p>
         `
       )}
-      <p>
-        <b>${msg('Request ID')}:</b>&nbsp;${this.requestId}&nbsp;&nbsp;
-        <button class='svg-btn' @click=${this.handleCopyIdClick}>
-          <img src=${copySvg} alt='Copy request ID'></img>
-        </button>
-      </p>
       <div>
         <button class='svg-btn' @click=${this.handleCopyLinkClick}>
           <img src=${linkSvg} alt='Copy status page link'></img>&nbsp;
