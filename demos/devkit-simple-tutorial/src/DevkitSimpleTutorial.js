@@ -33,6 +33,7 @@ export class DevkitSimpleTutorial extends LitElement {
       .app-footer {
         font-size: calc(12px + 0.5vmin);
         align-items: center;
+        margin-left: 256px;
       }
 
       .app-footer a {
