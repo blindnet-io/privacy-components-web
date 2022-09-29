@@ -1,7 +1,7 @@
 {
   "name": "@blindnet-demos/devkit-simple-tutorial",
   "description": "Simple tutorial for blindnet devkit",
-  "version": "0.8.1",
+  "version": "0.9.0",
   "license": "MIT",
   "private": true,
   "type": "module",
@@ -23,8 +23,8 @@
     "start": "web-dev-server"
   },
   "dependencies": {
-    "@blindnet/dci": "^0.8.1",
-    "@blindnet/prci": "^0.8.1",
+    "@blindnet/dci": "^0.9.0",
+    "@blindnet/prci": "^0.9.0",
     "@vaadin/router": "^1.7.4",
     "carbon-web-components": "^1.21.0",
     "lit": "^2.0.2"
