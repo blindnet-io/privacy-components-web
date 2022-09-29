@@ -23,6 +23,12 @@
 <trans-unit id="sb3d4f79d9d8b71e5">
   <source>Submit</source>
 </trans-unit>
+<trans-unit id="s2b7bb3f9a459d7dd">
+  <source>History view coming soon!</source>
+</trans-unit>
+<trans-unit id="s61d28f3db3da4264">
+  <source>Response Submmitted</source>
+</trans-unit>
 <trans-unit id="sb41b2cfbbc52565b">
   <source>Created</source>
 </trans-unit>
@@ -31,6 +37,9 @@
 </trans-unit>
 <trans-unit id="sa442044b586ec8bf">
   <source>Action</source>
+</trans-unit>
+<trans-unit id="sb852d100f91db23f">
+  <source>No requests to display.</source>
 </trans-unit>
 <trans-unit id="sbe8f4a548469f66b">
   <source>ACCESS</source>
