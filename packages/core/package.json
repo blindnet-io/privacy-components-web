@@ -36,5 +36,9 @@
   ],
   "publishConfig": {
     "access": "public"
+  },
+  "dependencies": {
+    "@magic-sdk/types": "^9.0.0",
+    "magic-sdk": "^10.0.0"
   }
 }

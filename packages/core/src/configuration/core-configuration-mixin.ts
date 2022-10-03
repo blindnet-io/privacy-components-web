@@ -25,6 +25,7 @@ export function CoreConfigurationMixin<
       return {
         ...superProps,
         computationBaseURL: { type: String, attribute: 'computation-base-url' },
+        apiToken: { type: String, attribute: 'api-token'}
       };
     }
 
@@ -37,12 +38,19 @@ export function CoreConfigurationMixin<
      */
     computationBaseURL = '';
 
+    /**
+     * Auth token or user ID to use in the authorization header of API requests.
+     * if empty, a default value 'john.doe@example.com' will be used.
+     */
+    apiToken = ''
+
     connectedCallback() {
       super.connectedCallback();
 
       BlindnetCore.configure(
         {
           computationBaseUrl: this.computationBaseURL,
+          apiToken: this.apiToken,
         },
         false
       );

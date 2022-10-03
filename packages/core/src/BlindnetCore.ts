@@ -9,6 +9,12 @@ export interface CoreConfiguration {
    * @example 'https://localhost:9000/v0
    */
   computationBaseUrl?: string;
+
+  /**
+   * Auth token or user ID to use in the authorization header of API requests.
+   * if empty, a default value 'john.doe@example.com' will be used.
+   */
+  apiToken?: string;
 }
 
 /**
@@ -43,7 +49,7 @@ export abstract class BlindnetCore {
     let isConfigUpdated = true;
     isConfigUpdated =
       isConfigUpdated &&
-      ComputationAPI.configure(configuration.computationBaseUrl, force);
+      ComputationAPI.configure(configuration.computationBaseUrl, configuration.apiToken, force);
     return isConfigUpdated;
   }
 
