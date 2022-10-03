@@ -39,55 +39,6 @@ import './demand-forms/RevokeConsentForm.js';
 @customElement('bldn-priv-request')
 @localized()
 export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
-  static styles = [
-    PRCIStyles,
-    css`
-      :host {
-        display: flex;
-        justify-content: center;
-        justify-items: center;
-
-        font-family: var(
-          --prci-font-family,
-          -apple-system,
-          BlinkMacSystemFont,
-          'Segoe UI',
-          Roboto,
-          Oxygen,
-          Ubuntu,
-          Cantarell,
-          'Open Sans',
-          'Helvetica Neue',
-          sans-serif
-        );
-        color: var(--prci-font-color, #000000);
-        font-size: 16;
-        text-align: left;
-      }
-
-      #prci-ctr {
-        padding: 20px;
-        max-width: 1350px;
-      }
-
-      #heading-ctr {
-        padding: 0px 0px 40px 0px;
-        max-width: 1170px;
-      }
-
-      .req-hdr {
-        display: block;
-        font-weight: bold;
-        font-size: 24px;
-        grid-column: 2/3;
-        text-align: center;
-      }
-
-      button:disabled {
-        background-color: #a9d1ff;
-      }
-    `,
-  ];
 
   /** JSON list of allowed actions */
   @property({ type: String }) actions = '';
@@ -471,4 +422,54 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
       </div>
     `;
   }
+
+  static styles = [
+    PRCIStyles,
+    css`
+      :host {
+        display: flex;
+        justify-content: center;
+        justify-items: center;
+
+        font-family: var(
+          --prci-font-family,
+          -apple-system,
+          BlinkMacSystemFont,
+          'Segoe UI',
+          Roboto,
+          Oxygen,
+          Ubuntu,
+          Cantarell,
+          'Open Sans',
+          'Helvetica Neue',
+          sans-serif
+        );
+        color: var(--prci-font-color, #000000);
+        font-size: 16;
+        text-align: left;
+      }
+
+      #prci-ctr {
+        padding: 20px;
+        max-width: 1350px;
+      }
+
+      #heading-ctr {
+        padding: 0px 0px 40px 0px;
+        max-width: 1170px;
+      }
+
+      .req-hdr {
+        display: block;
+        font-weight: bold;
+        font-size: 24px;
+        grid-column: 2/3;
+        text-align: center;
+      }
+
+      button:disabled {
+        background-color: #a9d1ff;
+      }
+    `,
+  ];
 }

@@ -23,7 +23,7 @@ export class ComputationAPI {
   /**
    * @param baseURL base URL (schema + host + port + base-path) to call
    */
-  private constructor(baseURL?: string) {
+  private constructor(baseURL?: string, apiToken?: string) {
     if (!baseURL) {
       this._baseURL = ComputationAPI.DEFAULT_URL;
     } else if (baseURL === 'false') {
@@ -33,6 +33,12 @@ export class ComputationAPI {
     }
     // make sure the base URL never has a trailing slash
     this._baseURL = this._baseURL.replace(/\/+$/, '');
+
+    if (!apiToken) {
+      this._apiToken = 'john.doe@example.com'
+    } else {
+      this._apiToken = apiToken
+    }
   }
 
   get isMocked(): boolean {
@@ -53,13 +59,15 @@ export class ComputationAPI {
     return this._baseURL;
   }
 
+  private _apiToken: string;
+
   /**
    *
    * @param baseURL base URL (schema + host + port + base-path) to call (for default behavior, see mock)
    * @param force override any preexisting configuration if it exists
    *
    */
-  public static configure(baseURL?: string, force = false): boolean {
+  public static configure(baseURL?: string, apiToken?: string, force = false): boolean {
     if (ComputationAPI.instance && !force) {
       if (
         baseURL !== ComputationAPI.getInstance().baseURL &&
@@ -76,9 +84,21 @@ export class ComputationAPI {
         console.log(`[Computation API] conflicting value: ${baseURL}`);
         /* eslint-enable no-console */
       }
+      if ( apiToken !== ComputationAPI.getInstance()._apiToken && apiToken ) {
+          /* eslint-disable no-console */
+          console.log('[Computation API] Configuration conflict');
+          console.log(
+            `[Computation API] configured value: ${
+              ComputationAPI.getInstance()._apiToken
+            }`
+          );
+          console.log(`[Computation API] conflicting value: ${apiToken}`);
+          /* eslint-enable no-console */
+        }
+        
       return false;
     }
-    ComputationAPI.instance = new ComputationAPI(baseURL);
+    ComputationAPI.instance = new ComputationAPI(baseURL, apiToken);
     return true;
   }
 
@@ -96,7 +116,6 @@ export class ComputationAPI {
     return new Headers({
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
-      // TODO: remove this when auth is implemented
       Authorization:
         localStorage.getItem('priv_user_id') || 'john.doe@example.com',
       ...(this.isMocked && request
@@ -159,9 +178,12 @@ export class ComputationAPI {
 
     const response = await fetch(this.fullURL(endpoint), {
       method: 'POST',
-      headers: this.headers(false, request),
+      headers: this.headers(true, request),
       body: JSON.stringify(preparedRequest),
     });
+
+    // console.log(await response.json())
+
 
     if (!response.ok) {
       throw new Error(response.statusText);

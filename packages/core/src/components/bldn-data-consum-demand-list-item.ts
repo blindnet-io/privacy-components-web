@@ -311,22 +311,20 @@ export class DataConsumerDemandListItem extends LitElement {
   static styles = [
     bldnStyles,
     css`
-      :host {
-        textarea {
-          font-family: var(
-            --bldn-font-family,
-            -apple-system,
-            BlinkMacSystemFont,
-            'Segoe UI',
-            Roboto,
-            Oxygen,
-            Ubuntu,
-            Cantarell,
-            'Open Sans',
-            'Helvetica Neue',
-            sans-serif
-          );
-        }
+      :host textarea {
+        font-family: var(
+          --bldn-font-family,
+          -apple-system,
+          BlinkMacSystemFont,
+          'Segoe UI',
+          Roboto,
+          Oxygen,
+          Ubuntu,
+          Cantarell,
+          'Open Sans',
+          'Helvetica Neue',
+          sans-serif
+        );
       }
 
       #list-item {

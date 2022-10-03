@@ -23,11 +23,13 @@
     "start": "web-dev-server"
   },
   "dependencies": {
+    "@blindnet/core": "^0.9.0",
     "@blindnet/dci": "^0.8.1",
     "@blindnet/prci": "^0.8.1",
     "@vaadin/router": "^1.7.4",
     "carbon-web-components": "^1.21.0",
-    "lit": "^2.0.2"
+    "lit": "^2.0.2",
+    "magic-sdk": "^10.0.0"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.16.4",
