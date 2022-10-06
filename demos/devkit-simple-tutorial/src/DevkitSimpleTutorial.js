@@ -53,7 +53,7 @@ export class DevkitSimpleTutorial extends LitElement {
     const router = new Router(outlet);
     router.setRoutes([
       { path: '/', component: 'app-home' },
-      { 
+      {
         path: '/login',
         action: async () => {
           await import('./views/Login.js');
@@ -109,7 +109,7 @@ export class DevkitSimpleTutorial extends LitElement {
           <bx-header-nav-item href="./participate"
             >Submit an entry</bx-header-nav-item
           >
-          <bx-header-nav-item href="./login"
+          <bx-header-nav-item href="./privacy"
             >Submit a privacy request</bx-header-nav-item
           >
           <bx-header-nav-item href="./backoffice"
@@ -123,7 +123,7 @@ export class DevkitSimpleTutorial extends LitElement {
           <bx-side-nav-link href="./participate"
             >Submit an entry</bx-side-nav-link
           >
-          <bx-side-nav-link href="./login"
+          <bx-side-nav-link href="./privacy"
             >Submit a privacy request</bx-side-nav-link
           >
           <bx-side-nav-link href="./backoffice"

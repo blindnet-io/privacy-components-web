@@ -35,9 +35,9 @@ export class ComputationAPI {
     this._baseURL = this._baseURL.replace(/\/+$/, '');
 
     if (!apiToken) {
-      this._apiToken = 'john.doe@example.com'
+      this._apiToken = 'john.doe@example.com';
     } else {
-      this._apiToken = apiToken
+      this._apiToken = apiToken;
     }
   }
 
@@ -61,13 +61,21 @@ export class ComputationAPI {
 
   private _apiToken: string;
 
+  public setToken(apiToken: string) {
+    this._apiToken = apiToken;
+  }
+
   /**
    *
    * @param baseURL base URL (schema + host + port + base-path) to call (for default behavior, see mock)
    * @param force override any preexisting configuration if it exists
    *
    */
-  public static configure(baseURL?: string, apiToken?: string, force = false): boolean {
+  public static configure(
+    baseURL?: string,
+    apiToken?: string,
+    force = false
+  ): boolean {
     if (ComputationAPI.instance && !force) {
       if (
         baseURL !== ComputationAPI.getInstance().baseURL &&
@@ -84,18 +92,7 @@ export class ComputationAPI {
         console.log(`[Computation API] conflicting value: ${baseURL}`);
         /* eslint-enable no-console */
       }
-      if ( apiToken !== ComputationAPI.getInstance()._apiToken && apiToken ) {
-          /* eslint-disable no-console */
-          console.log('[Computation API] Configuration conflict');
-          console.log(
-            `[Computation API] configured value: ${
-              ComputationAPI.getInstance()._apiToken
-            }`
-          );
-          console.log(`[Computation API] conflicting value: ${apiToken}`);
-          /* eslint-enable no-console */
-        }
-        
+
       return false;
     }
     ComputationAPI.instance = new ComputationAPI(baseURL, apiToken);
@@ -116,8 +113,9 @@ export class ComputationAPI {
     return new Headers({
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
-      Authorization:
-        localStorage.getItem('priv_user_id') || 'john.doe@example.com',
+      Authorization: this._apiToken || 'john.doe@example.com',
+      // Authorization:
+      //   localStorage.getItem('priv_user_id') || 'john.doe@example.com',
       ...(this.isMocked && request
         ? { Prefer: this.getMockHeader(request) }
         : {}),
@@ -183,7 +181,6 @@ export class ComputationAPI {
     });
 
     // console.log(await response.json())
-
 
     if (!response.ok) {
       throw new Error(response.statusText);

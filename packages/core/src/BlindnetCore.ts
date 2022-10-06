@@ -37,6 +37,11 @@ export abstract class BlindnetCore {
     return isConfigUpdated;
   }
 
+  static setToken(apiToken: string) {
+    BlindnetCore._configuration.apiToken = apiToken;
+    ComputationAPI.getInstance().setToken(apiToken);
+  }
+
   /**
    * Use configuration to correctly set up everything internally.
    *
@@ -49,7 +54,11 @@ export abstract class BlindnetCore {
     let isConfigUpdated = true;
     isConfigUpdated =
       isConfigUpdated &&
-      ComputationAPI.configure(configuration.computationBaseUrl, configuration.apiToken, force);
+      ComputationAPI.configure(
+        configuration.computationBaseUrl,
+        configuration.apiToken,
+        force
+      );
     return isConfigUpdated;
   }
 

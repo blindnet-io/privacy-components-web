@@ -39,7 +39,6 @@ import './demand-forms/RevokeConsentForm.js';
 @customElement('bldn-priv-request')
 @localized()
 export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
-
   /** JSON list of allowed actions */
   @property({ type: String }) actions = '';
 
@@ -320,6 +319,7 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
   protected willUpdate(
     _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
   ): void {
+    super.willUpdate(_changedProperties);
     if (_changedProperties.has('actions') && this.actions) {
       try {
         // Select the valid actions from those passed in
