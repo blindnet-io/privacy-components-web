@@ -4,7 +4,7 @@ import '@blindnet/prci'; // WTF
 
 export class AppLogin extends LitElement {
   static get properties() {
-    return {}
+    return {};
   }
 
   static get styles() {
@@ -13,11 +13,13 @@ export class AppLogin extends LitElement {
 
   render() {
     return html`
-      <bldn-magic-auth 
-        prompt='Please enter your email to submit a request.' 
-        magic-pub-key='pk_live_7BFA1BB7D19A6FD9' 
-        redirect-uri='${window.location.origin}/demos/devkit-simple-tutorial/privacy'>
-      </bldn-magic-auth> 
+      <bldn-magic-auth
+        prompt="Please enter your email to submit a request."
+        magic-pub-key="pk_live_7BFA1BB7D19A6FD9"
+        redirect-uri="${window.location
+          .origin}/demos/devkit-simple-tutorial/privacy"
+      >
+      </bldn-magic-auth>
     `;
   }
 }

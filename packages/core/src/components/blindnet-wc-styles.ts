@@ -7,8 +7,8 @@ export const bldnStyles = css`
       while still having color variables exposed.
     */
 
-    --color-primary: rgb(var(--bldn-color-primary, 5, 80, 222));
-    --color-primary-rgb: var(--bldn-color-primary, 5, 80, 222);
+    --color-primary: rgb(var(--bldn-color-primary, 65, 105, 225));
+    --color-primary-rgb: var(--bldn-color-primary, 65, 105, 225);
 
     --color-positive: rgb(var(--bldn-color-positive, 9, 185, 70));
     --color-positive-rgb: var(--bldn-color-positive, 9, 185, 70);
@@ -29,7 +29,7 @@ export const bldnStyles = css`
     --color-dark-rgb: var(--bldn-color-dark, 91, 91, 91);
   }
 
-  button {
+  * {
     font-family: var(
       --bldn-font-family,
       -apple-system,

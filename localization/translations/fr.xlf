@@ -41,6 +41,9 @@
 <trans-unit id="sb852d100f91db23f">
   <source>No requests to display.</source>
 </trans-unit>
+<trans-unit id="s9ff4e107523f7fab">
+  <source>Log in / Sign up</source>
+</trans-unit>
 <trans-unit id="sbe8f4a548469f66b">
   <source>ACCESS</source>
   <target>ACCÉDER</target>

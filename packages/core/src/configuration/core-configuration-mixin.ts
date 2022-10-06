@@ -1,10 +1,11 @@
-import type { LitElement } from 'lit';
+import type { LitElement, PropertyValueMap } from 'lit';
 import { BlindnetCore } from '../BlindnetCore.js';
 
 declare type Constructor<T = {}> = new (...args: any[]) => T;
 
 export interface CoreConfigurationMixinInterface {
   computationBaseURL: string;
+  apiToken: string;
 }
 
 /**
@@ -25,7 +26,7 @@ export function CoreConfigurationMixin<
       return {
         ...superProps,
         computationBaseURL: { type: String, attribute: 'computation-base-url' },
-        apiToken: { type: String, attribute: 'api-token'}
+        apiToken: { type: String, attribute: 'api-token', reflect: true },
       };
     }
 
@@ -42,7 +43,7 @@ export function CoreConfigurationMixin<
      * Auth token or user ID to use in the authorization header of API requests.
      * if empty, a default value 'john.doe@example.com' will be used.
      */
-    apiToken = ''
+    apiToken = '';
 
     connectedCallback() {
       super.connectedCallback();
@@ -54,6 +55,14 @@ export function CoreConfigurationMixin<
         },
         false
       );
+    }
+
+    protected willUpdate(
+      _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
+    ): void {
+      if (_changedProperties.has('apiToken')) {
+        BlindnetCore.setToken(this.apiToken);
+      }
     }
   };
 }
