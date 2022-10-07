@@ -50,7 +50,7 @@ export class BldnMagicAuth extends LitElement {
         redirectURI: this.redirectUri,
       })
         // eslint-disable-next-line no-console
-        .catch(e => console.log(e));
+        .catch((e: Error) => console.log(e));
     } else {
       this._requireEmail = true;
     }
