@@ -38,9 +38,12 @@
     "access": "public"
   },
   "dependencies": {
-    "lit": "^2.3.1",
     "@lit/localize": "^0.11.4",
     "@magic-sdk/types": "^9.0.0",
+    "lit": "^2.3.1",
     "magic-sdk": "^10.0.0"
+  },
+  "devDependencies": {
+    "@magic-sdk/types": "^9.0.0"
   }
 }
