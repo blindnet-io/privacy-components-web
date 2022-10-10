@@ -43,7 +43,6 @@
   },
   "dependencies": {
     "@lit/localize": "^0.11.3",
-    "@magic-sdk/types": "^9.0.0",
     "@rollup/plugin-alias": "^3.1.9",
     "lit": "^2.0.2"
   },
@@ -133,8 +132,12 @@
       "demos/*"
     ],
     "nohoist": [
-      "@lit/**",
-      "lit"
+      "**/lit",
+      "**/lit/**",
+      "**/@lit/**",
+      "**/magic-sdk",
+      "**/magic-sdk/**",
+      "**/@magic-sdk/**"
     ]
   },
   "engines": {

@@ -22,7 +22,9 @@
   },
   "include": ["**/*.ts", "**/*.js"],
   "exclude": [
-    "**/dist/**/*",
+    "packages/prci/dist/**/*",
+    "packages/dci/dist/**/*",
+    "packages/core/dist/**/*",
     "build/**/*",
     "storybook-static/**/*",
     "**/node_modules/**/*",
