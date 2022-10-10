@@ -18,7 +18,8 @@
     "allowJs": true,
     "checkJs": true,
     "skipLibCheck": true,
-    "preserveSymlinks": true
+    "preserveSymlinks": true,
+    "noImplicitAny": false
   },
   "include": ["**/*.ts", "**/*.js"],
   "exclude": [
