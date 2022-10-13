@@ -26,6 +26,7 @@
     "packages/prci/dist/**/*",
     "packages/dci/dist/**/*",
     "packages/core/dist/**/*",
+    "demos/devkit-simple-tutorial/dist/**/*",
     "build/**/*",
     "storybook-static/**/*",
     "**/node_modules/**/*",
