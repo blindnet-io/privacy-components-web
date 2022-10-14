@@ -440,6 +440,18 @@
 <trans-unit id="s4618111b41da4ae5">
   <source>Other data type:</source>
 </trans-unit>
+<trans-unit id="sad3e3c8146fc920f">
+  <source>Status</source>
+</trans-unit>
+<trans-unit id="s1e55a47eccb89757">
+  <source>Demands</source>
+</trans-unit>
+<trans-unit id="sfe876187f89fc9f6">
+  <source>See Details</source>
+</trans-unit>
+<trans-unit id="s9acd83781aa57f69">
+  <source>Submit a new Privacy Request</source>
+</trans-unit>
 <trans-unit id="s3f2acea3f9106217">
   <source>I want to access:</source>
 </trans-unit>
@@ -499,18 +511,6 @@
 <trans-unit id="sca67c093da6d1c94">
   <source>Submit Privacy Request</source>
   <target>Envoyer ma Demande sur les données</target>
-</trans-unit>
-<trans-unit id="sad3e3c8146fc920f">
-  <source>Status</source>
-</trans-unit>
-<trans-unit id="s1e55a47eccb89757">
-  <source>Demands</source>
-</trans-unit>
-<trans-unit id="sfe876187f89fc9f6">
-  <source>See Details</source>
-</trans-unit>
-<trans-unit id="s9acd83781aa57f69">
-  <source>Submit a new Privacy Request</source>
 </trans-unit>
 <trans-unit id="h07a854b6f92dc95c">
   <source>Click <x id="0" equiv-text="&lt;a href=&quot;${demand.data}.json&quot;&gt;"/>here<x id="1" equiv-text="&lt;/a&gt;"/> to download
@@ -599,18 +599,26 @@
 <trans-unit id="s0fbf6dc6a1966408">
   <source>Next</source>
 </trans-unit>
-<trans-unit id="sac5b43e0e39b86c1">
-  <source>Details of my TRANSPARENCY Demand</source>
-  <target>Détails de ma requête TRANSPARENCE</target>
+<trans-unit id="scdb8222eac40cfc5">
+  <source>Details of my ACCESS Demand</source>
 </trans-unit>
-<trans-unit id="sf21f87f3901c35ff">
-  <source>ALL information related to data processing practices and know if the organization has data on me</source>
+<trans-unit id="s2c612c54beb52db0">
+  <source>ALL categories of data the organization has data on me</source>
 </trans-unit>
 <trans-unit id="scb6620fcd5bff04c">
   <source>Advanced settings</source>
 </trans-unit>
+<trans-unit id="sa0f4ebf6f318c732">
+  <source>Specify a date range for the selected category(ies) of data:</source>
+</trans-unit>
+<trans-unit id="s08c83907b56ac0a4">
+  <source>to</source>
+</trans-unit>
 <trans-unit id="s6303c9c96b50c164">
   <source>My demand applies to data from the following provenance:</source>
+</trans-unit>
+<trans-unit id="s405438f2bd5cabdc">
+  <source>I address my demand to:</source>
 </trans-unit>
 <trans-unit id="sf0a1faa35675593e">
   <source>Additional message (optional)</source>
@@ -620,21 +628,6 @@
 </trans-unit>
 <trans-unit id="sebbb864b5cee4a82">
   <source>Please note that adding a personalized message might lead to the demand taking longer to be processed</source>
-</trans-unit>
-<trans-unit id="scdb8222eac40cfc5">
-  <source>Details of my ACCESS Demand</source>
-</trans-unit>
-<trans-unit id="s2c612c54beb52db0">
-  <source>ALL categories of data the organization has data on me</source>
-</trans-unit>
-<trans-unit id="sa0f4ebf6f318c732">
-  <source>Specify a date range for the selected category(ies) of data:</source>
-</trans-unit>
-<trans-unit id="s08c83907b56ac0a4">
-  <source>to</source>
-</trans-unit>
-<trans-unit id="s405438f2bd5cabdc">
-  <source>I address my demand to:</source>
 </trans-unit>
 <trans-unit id="s17c05ae880ceee4a">
   <source>Details of my DELETE Demand</source>
@@ -652,24 +645,12 @@
   <source>Check the consents you wish to
                         <x id="0" equiv-text="&lt;strong&gt;"/>revoke<x id="1" equiv-text="&lt;/strong&gt;"/>:</source>
 </trans-unit>
-<trans-unit id="sad8d983b7ff1bd3c">
-  <source>Error: Invalid Action</source>
+<trans-unit id="sac5b43e0e39b86c1">
+  <source>Details of my TRANSPARENCY Demand</source>
+  <target>Détails de ma requête TRANSPARENCE</target>
 </trans-unit>
-<trans-unit id="s5600a2beff052fc5">
-  <source>My Submitted Privacy Request(s)</source>
-</trans-unit>
-<trans-unit id="s4ba25fd9630b5aec">
-  <source>My Privacy Request Status</source>
-</trans-unit>
-<trans-unit id="s990061f6621b0156">
-  <source>My Privacy Request</source>
-  <target>Ma Demande sur les données</target>
-</trans-unit>
-<trans-unit id="s237c73da8350499a">
-  <source>Your Privacy Request has been sent!</source>
-</trans-unit>
-<trans-unit id="sc1ef8ab7d582eee5">
-  <source>You may track the status of your request below.</source>
+<trans-unit id="sf21f87f3901c35ff">
+  <source>ALL information related to data processing practices and know if the organization has data on me</source>
 </trans-unit>
 </body>
 </file>
