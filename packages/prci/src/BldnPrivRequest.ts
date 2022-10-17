@@ -22,13 +22,33 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
 
   render() {
     return html`
-      <bldn-nav-toggle .left=${{label: 'Submit a Request', value: 'submit'}} .right=${{label: 'Submitted Requests', value: 'requests'}}></bldn-navbar>
+      <bldn-nav-toggle .left=${{label: 'Submit a Request', value: 'submit'}} .right=${{label: 'Submitted Requests', value: 'requests'}}></bldn-nav-toggle>
       ${choose(this._uiState, [
-        [PRCIUIState.actionMenu, () => html``],
-        [PRCIUIState.buildRequest, () => html``],
-        [PRCIUIState.reviewRequest, () => html``],
-        [PRCIUIState.requestsList, () => html``],
-        [PRCIUIState.requestStatus, () => html``],
+        [PRCIUIState.actionMenu, () => html`
+          <bldn-action-menu></bldn-action-menu>
+        `],
+        [PRCIUIState.buildRequest, () => html`
+          <bldn-nav-wrapper>
+            <bldn-request-builder>
+              <slot name='pre-request-module'></slot> 
+              <slot name='post-request-module'></slot>
+            </bldn-request-builder>
+            <bldn-button></bldn-button>
+            <bldn-button></bldn-button>
+          </bldn-nav-wrapper>
+        `],
+        [PRCIUIState.reviewRequest, () => html`
+          <bldn-nav-wrapper>
+            <bldn-request-review></bldn-request-review>
+            <bldn-button></bldn-button>
+          </bldn-nav-wrapper>
+        `],
+        [PRCIUIState.requestsList, () => html`
+          <bldn-submitted-requests></bldn-submitted-requests>
+        `],
+        [PRCIUIState.requestStatus, () => html`
+          <bldn-request-status></bldn-request-status>
+        `],
       ])}
     `
   }

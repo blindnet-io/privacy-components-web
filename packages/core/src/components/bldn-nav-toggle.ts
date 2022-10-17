@@ -1,6 +1,5 @@
 import { css, html, LitElement} from "lit";
-import { customElement, property, queryAssignedElements, state } from "lit/decorators.js";
-import { map } from "lit/directives/map.js";
+import { customElement, property, state } from "lit/decorators.js";
 
 interface Option {
   label: string,
