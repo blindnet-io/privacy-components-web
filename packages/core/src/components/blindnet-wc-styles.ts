@@ -19,6 +19,9 @@ export const bldnStyles = css`
     --color-warning: rgb(var(--bldn-color-warning, 244, 144, 30));
     --color-warning-rgb: var(--bldn-color-warning, 244, 144, 30);
 
+    --color-lightest: rgb(var(--bldn-color-lightest, ));
+    --color-lightest-rgb: rgb(var(--bldn-color-lightest, ));
+
     --color-light: rgb(var(--bldn-color-light, 200, 200, 200));
     --color-light-rgb: var(--bldn-color-light, 200, 200, 200);
 
@@ -27,6 +30,15 @@ export const bldnStyles = css`
 
     --color-dark: rgb(var(--bldn-color-dark, 91, 91, 91));
     --color-dark-rgb: var(--bldn-color-dark, 91, 91, 91);
+
+    --color-darkest: rgb(var(--bldn-color-darkest, ));
+    --color-darkest-rgb: rgb(var(--bldn-color-darkest, ));
+
+    --font-size-small: var(--bldn-font-size-small, 1em);
+
+    --font-size-medium: var(--bldn-font-size-medium, 1.25em);
+
+    --font-size-large: var(--bldn-font-size-large, 1.5em);
   }
 
   * {

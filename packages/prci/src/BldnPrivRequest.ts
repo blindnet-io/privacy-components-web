@@ -1,10 +1,10 @@
-import { CoreConfigurationMixin } from "@blindnet/core";
+import { CoreConfigurationMixin, PrivacyRequestDemand } from "@blindnet/core";
 import { localized } from "@lit/localize";
-import { html, LitElement } from "lit";
-import { customElement, queryAssignedElements, state } from "lit/decorators.js";
+import { css, html, LitElement, PropertyValueMap } from "lit";
+import { customElement, property, state } from "lit/decorators.js";
 import { choose } from "lit/directives/choose.js";
 
-import '@blindnet/core'
+import './bldn-nav-wrapper.js'
 
 enum PRCIUIState {
   actionMenu,
@@ -18,29 +18,57 @@ enum PRCIUIState {
 @customElement('bldn-priv-request')
 export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
   
-  @state() _uiState: PRCIUIState = PRCIUIState.actionMenu
+  /** @prop */
+  @property({ type: Array }) actions: PrivacyRequestDemand.action[] = []
+
+  /** @prop */
+  @property({ type: Array }) dataCategories: string[] = []
+
+  /** @prop */
+  @property({ type: Array }) requestId: undefined | string
+
+  @state() _uiState: PRCIUIState = PRCIUIState.buildRequest
+
+  @state() _allowedActions: PrivacyRequestDemand.action[] = []
+
+  @state() _allowedDataCategories: string[] = []
+
+  handleActionsChange() {
+
+  }
+
+  handleDataCategoriesChange() {
+
+  }
+
+  handleRequestIdChange() {
+
+  }
+
+  protected willUpdate(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
+    if (_changedProperties.has('actions')) this.handleActionsChange()
+    if (_changedProperties.has('dataCategories')) this.handleDataCategoriesChange()
+    if (_changedProperties.has('requestId')) this.handleRequestIdChange()
+  }
 
   render() {
     return html`
       <bldn-nav-toggle .left=${{label: 'Submit a Request', value: 'submit'}} .right=${{label: 'Submitted Requests', value: 'requests'}}></bldn-nav-toggle>
       ${choose(this._uiState, [
         [PRCIUIState.actionMenu, () => html`
-          <bldn-action-menu></bldn-action-menu>
+          <bldn-tile-menu></bldn-tile-menu>
         `],
         [PRCIUIState.buildRequest, () => html`
-          <bldn-nav-wrapper>
+          <bldn-nav-wrapper left-button='Back' right-button='Next'>
             <bldn-request-builder>
               <slot name='pre-request-module'></slot> 
               <slot name='post-request-module'></slot>
             </bldn-request-builder>
-            <bldn-button></bldn-button>
-            <bldn-button></bldn-button>
           </bldn-nav-wrapper>
         `],
         [PRCIUIState.reviewRequest, () => html`
-          <bldn-nav-wrapper>
+          <bldn-nav-wrapper mode='single' center-button='Submit'>
             <bldn-request-review></bldn-request-review>
-            <bldn-button></bldn-button>
           </bldn-nav-wrapper>
         `],
         [PRCIUIState.requestsList, () => html`
@@ -52,6 +80,20 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
       ])}
     `
   }
+
+  static styles = css`
+    h1 {
+      font-size: var(--font-size-large);
+    }
+
+    h2 {
+      font-size: var(--font-size-medium);
+    }
+
+    h3 {
+      font-size: var(--font-size-large);
+    }
+  `
 
 }
 

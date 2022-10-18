@@ -30,7 +30,7 @@ export class BldnButton extends LitElement {
       button {
         border: none;
         border-radius: var(--bldn-button-border-radius, 5px);
-        padding: 1vh 2vw;
+        padding: 10px 20px;
         color: white;
         font-size: 16px;
         background: var(--bldn-button-color-primary, var(--color-primary));

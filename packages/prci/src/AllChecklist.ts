@@ -4,7 +4,15 @@ import { customElement, property, state } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
 import { when } from 'lit/directives/when.js';
 import { PRCIStyles } from './styles.js';
-import { FormComponentState } from './utils/states.js';
+
+/**
+ * States for action form components
+ */
+export enum FormComponentState {
+  CLOSED,
+  PARTIAL,
+  OPEN,
+}
 
 const allCheckboxCheckedSvg = new URL(
   './assets/icons/all-checkbox-checked.svg',
