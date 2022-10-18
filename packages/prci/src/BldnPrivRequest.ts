@@ -4,14 +4,9 @@ import { css, html, LitElement, PropertyValueMap } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import { choose } from "lit/directives/choose.js";
 
-import './bldn-nav-wrapper.js'
-
 enum PRCIUIState {
-  actionMenu,
-  buildRequest,
-  reviewRequest,
-  requestsList,
-  requestStatus
+  createRequest,
+  submittedRequests
 }
 
 @localized()
@@ -27,7 +22,7 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
   /** @prop */
   @property({ type: Array }) requestId: undefined | string
 
-  @state() _uiState: PRCIUIState = PRCIUIState.buildRequest
+  @state() _uiState: PRCIUIState = PRCIUIState.createRequest
 
   @state() _allowedActions: PrivacyRequestDemand.action[] = []
 
@@ -55,37 +50,11 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
     return html`
       <bldn-nav-toggle .left=${{label: 'Submit a Request', value: 'submit'}} .right=${{label: 'Submitted Requests', value: 'requests'}}></bldn-nav-toggle>
       ${choose(this._uiState, [
-        [PRCIUIState.actionMenu, () => html`
-          <bldn-tile-menu></bldn-tile-menu>
+        [PRCIUIState.createRequest, () => html`
+          <bldn-request-builder></bldn-request-builder>
         `],
-        [PRCIUIState.buildRequest, () => html`
-          <bldn-nav-wrapper left-button='Back' right-button='Next'>
-            <bldn-request-builder>
-              <slot name='pre-request-module'></slot> 
-              <slot name='post-request-module'></slot>
-            </bldn-request-builder>
-          </bldn-nav-wrapper>
-
-          <bldn-request-builder mode='build'>
-            <slot name='pre-request-module'></slot> 
-            <slot name='post-request-module'></slot>
-          </bldn-request-builder>
-        `],
-        [PRCIUIState.reviewRequest, () => html`
-          <bldn-nav-wrapper mode='single' center-button='Submit'>
-            <bldn-request-review></bldn-request-review>
-          </bldn-nav-wrapper>
-
-          <bldn-request-builder mode='review'>
-            <slot name='pre-request-module'></slot> 
-            <slot name='post-request-module'></slot>
-          </bldn-request-builder>
-        `],
-        [PRCIUIState.requestsList, () => html`
+        [PRCIUIState.submittedRequests, () => html`
           <bldn-submitted-requests></bldn-submitted-requests>
-        `],
-        [PRCIUIState.requestStatus, () => html`
-          <bldn-request-status></bldn-request-status>
         `],
       ])}
     `
@@ -140,11 +109,15 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
 // import './demand-forms/DeleteForm.js';
 // import './demand-forms/RevokeConsentForm.js';
 
-// /**
-//  * Top level component encapsulating a single PrivacyRequest. Contains one or
-//  * more DemandBuilder elements, each for a single demand action type.
-//  *
-//  */
+// enum PRCIUIState {
+//   actionMenu,
+//   buildRequest,
+//   reviewRequest,
+//   requestsList,
+//   requestStatus
+// }
+
+// /** */
 // @customElement('bldn-priv-request')
 // @localized()
 // export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
@@ -165,11 +138,11 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
 //   @state() _includedDataCategories: DATA_CATEGORY[] =
 //     getDefaultDataCategories();
 
-//   @state() _currentRequestId: string = '';
+//   // @state() _currentRequestId: string = '';
 
-//   @state() _currentDemandGroupId: string = '';
+//   // @state() _currentDemandGroupId: string = '';
 
-//   @state() _currentAction: ACTION = ACTION.TRANSPARENCY;
+//   // @state() _currentAction: ACTION = ACTION.TRANSPARENCY;
 
 //   // Privacy request object, empty until some demands are added
 //   @state() _privacyRequest: PrivacyRequest = {
@@ -468,6 +441,45 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
 
 //   render() {
 //     return html`
+//       <bldn-nav-toggle .left=${{label: 'Submit a Request', value: 'submit'}} .right=${{label: 'Submitted Requests', value: 'requests'}}></bldn-nav-toggle>
+//       ${choose(this._uiState, [
+//         [PRCIUIState.actionMenu, () => html`
+//           <bldn-tile-menu></bldn-tile-menu>
+//         `],
+//         [PRCIUIState.buildRequest, () => html`
+//           <bldn-nav-wrapper left-button='Back' right-button='Next'>
+//             <bldn-request-builder>
+//               <slot name='pre-request-module'></slot> 
+//               <slot name='post-request-module'></slot>
+//             </bldn-request-builder>
+//           </bldn-nav-wrapper>
+
+//           <bldn-request-builder mode='build'>
+//             <slot name='pre-request-module'></slot> 
+//             <slot name='post-request-module'></slot>
+//           </bldn-request-builder>
+//         `],
+//         [PRCIUIState.reviewRequest, () => html`
+//           <bldn-nav-wrapper mode='single' center-button='Submit'>
+//             <bldn-request-review></bldn-request-review>
+//           </bldn-nav-wrapper>
+
+//           <bldn-request-builder mode='review'>
+//             <slot name='post-request-module'></slot>
+//           </bldn-request-builder>
+//         `],
+//         [PRCIUIState.requestsList, () => html`
+//           <bldn-submitted-requests></bldn-submitted-requests>
+//         `],
+//         [PRCIUIState.requestStatus, () => html`
+//           <bldn-request-status></bldn-request-status>
+//         `],
+//       ])}
+//     `
+//   }
+
+//   render() {
+//     return html`
 //       <div id="prci-ctr">
 //         <div id="heading-ctr">
 //           <span class="req-hdr"
@@ -535,7 +547,8 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
 //   static styles = [
 //     PRCIStyles,
 //     css`
-//       :host {
+//       :host {     
+    
 //         display: flex;
 //         justify-content: center;
 //         justify-items: center;
@@ -578,6 +591,18 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
 
 //       button:disabled {
 //         background-color: #a9d1ff;
+//       }
+
+//       h1 {
+//        font-size: var(--font-size-large);
+//       }
+
+//       h2 {
+//         font-size: var(--font-size-medium);
+//       }
+
+//       h3 {
+//         font-size: var(--font-size-large);
 //       }
 //     `,
 //   ];
