@@ -65,11 +65,21 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
               <slot name='post-request-module'></slot>
             </bldn-request-builder>
           </bldn-nav-wrapper>
+
+          <bldn-request-builder mode='build'>
+            <slot name='pre-request-module'></slot> 
+            <slot name='post-request-module'></slot>
+          </bldn-request-builder>
         `],
         [PRCIUIState.reviewRequest, () => html`
           <bldn-nav-wrapper mode='single' center-button='Submit'>
             <bldn-request-review></bldn-request-review>
           </bldn-nav-wrapper>
+
+          <bldn-request-builder mode='review'>
+            <slot name='pre-request-module'></slot> 
+            <slot name='post-request-module'></slot>
+          </bldn-request-builder>
         `],
         [PRCIUIState.requestsList, () => html`
           <bldn-submitted-requests></bldn-submitted-requests>
