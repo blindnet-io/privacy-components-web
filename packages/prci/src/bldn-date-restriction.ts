@@ -41,7 +41,7 @@ export class BldnDateRestriction extends LitElement {
 
     return html`
       <p>
-        ${msg('Specify a date range for the selected category(ies) of data:')}
+        ${msg('Specify a date range for the selected data categories:')}
       </p>
       <span>${msg('From')}</span>
       <input
@@ -60,6 +60,18 @@ export class BldnDateRestriction extends LitElement {
     `
   }
 
-  static styles = css``
+  static styles = css`
+
+    :host {
+      display: block;
+      text-align: left;
+      color: var(--bldn-data-restriction-font-color, var(--color-dark));
+    }
+
+    p {
+      margin: 1.3em 0em;
+    }
+
+  `
 
 }

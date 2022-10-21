@@ -32,6 +32,11 @@ export class BldnDropdown extends LitElement {
 
     :host {
       display: block;
+      padding: 0.625em 0em;
+    }
+
+    :host[open] {
+      padding: 0.625em 0em 1.25em 0em;
     }
 
     #heading {

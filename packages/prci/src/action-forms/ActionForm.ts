@@ -181,16 +181,19 @@ export abstract class ActionForm extends LitElement {
         color: var(--bldn-action-form-section-heading-font-color, var(--color-dark));
       }
 
-      /* Font for each other options heading */
+      /* Font for other options headings */
       bldn-dropdown bldn-dropdown span {
         font-size: var(--font-size-small);
         color: var(--bldn-action-form-subsection-heading-font-color, var(--color-dark));
       }
 
+      bldn-dropdown bldn-dropdown span~* {
+        padding-left: 1.25em;
+      }
+
       /* Divider between other options dropdowns */
       bldn-dropdown {
         border-bottom: 2px solid var(--bldn-action-form-subsection-divider-color, var(--color-lightest));
-        padding: 0.625em 0em;
       }
 
       /* Last dropdown in other options should have no border */
@@ -202,25 +205,6 @@ export abstract class ActionForm extends LitElement {
         padding: 2.813em 2.813em 0em 2.813em;
       }
 
-      /* .btns-ctr {
-        display: grid;
-        grid-template-columns: 1fr auto 1fr;
-        padding: 0px 0px 0px 0px;
-        margin: 0px 0px 0px 0px;
-        transform: translateY(35px);
-      }
-
-      #back-btn {
-        grid-column: 1/2;
-        min-width: 60%;
-        max-width: 300px;
-      }
-
-      #add-btn {
-        grid-column: 3/4;
-        min-width: 60%;
-        max-width: 300px;
-      } */
     ` as CSSResultGroup,
   ];
 }
