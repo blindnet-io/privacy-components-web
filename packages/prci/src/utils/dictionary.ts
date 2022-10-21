@@ -5,14 +5,14 @@ import { html } from 'lit';
  * Mapping of PRIV Actions to corresponding titles.
  */
 export const ACTION_TITLES = {
-  ACCESS: () => msg('ACCESS'),
-  DELETE: () => msg('DELETE'),
-  MODIFY: () => msg('MODIFY'),
-  OBJECT: () => msg('OBJECT'),
-  PORTABILITY: () => msg('PORTABILITY'),
-  RESTRICT: () => msg('RESTRICT'),
-  'REVOKE-CONSENT': () => msg('REVOKE-CONSENT'),
-  TRANSPARENCY: () => msg('TRANSPARENCY'),
+  ACCESS: () => msg('Access'),
+  DELETE: () => msg('Delete'),
+  MODIFY: () => msg('Modify'),
+  OBJECT: () => msg('Object'),
+  PORTABILITY: () => msg('Portability'),
+  RESTRICT: () => msg('Restrict'),
+  'REVOKE-CONSENT': () => msg('Revoke'),
+  TRANSPARENCY: () => msg('Transparency'),
   'TRANSPARENCY.DATA-CATEGORIES': () => msg('TRANSPARENCY.DATA-CATEGORIES'),
   'TRANSPARENCY.DPO': () => msg('TRANSPARENCY.DPO'),
   'TRANSPARENCY.KNOWN': () => msg('TRANSPARENCY.KNOWN'),
@@ -26,7 +26,7 @@ export const ACTION_TITLES = {
   'TRANSPARENCY.RETENTION': () => msg('TRANSPARENCY.RETENTION'),
   'TRANSPARENCY.WHERE': () => msg('TRANSPARENCY.WHERE'),
   'TRANSPARENCY.WHO': () => msg('TRANSPARENCY.WHO'),
-  'OTHER-DEMAND': () => msg('OTHER-DEMAND'),
+  'OTHER': () => msg('Other Demand'),
 };
 
 /**
@@ -45,7 +45,7 @@ export const ACTION_DESCRIPTIONS = {
     msg(
       'Demand information related to data processing practices and know if the system has data on me'
     ),
-  'OTHER-DEMAND': () => msg('Do or know something else'),
+  'OTHER': () => msg('Do or know something else. Please note it may take longer to be answered'),
   'TRANSPARENCY.DATA-CATEGORIES': () =>
     msg('The categories of the data the organization has on me'),
   'TRANSPARENCY.DPO': () =>

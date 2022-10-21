@@ -18,8 +18,8 @@ export class AppPrivacy extends LitElement {
 
   static get styles() {
     return css`
-      bldn-priv-request {
-        margin-bottom: 30px;
+      :host {
+        margin-top: 50px;
       }
     `;
   }
@@ -79,7 +79,7 @@ export class AppPrivacy extends LitElement {
           ? this._userData.email
           : 'john.doe@example.com'}
       ></bldn-priv-request>
-      <span>
+      <p>
         ${choose(
           this._userData,
           [
@@ -104,7 +104,7 @@ export class AppPrivacy extends LitElement {
             >
           `
         )}
-      </span>
+      </p>
     `;
   }
 }

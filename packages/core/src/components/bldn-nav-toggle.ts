@@ -30,33 +30,43 @@ export class BldnNavToggle extends LitElement {
   render() {
     
     return html`
-      <button class=${this._selected === 'left' ? 'selected' : ''} @click=${() => this.handleClick('left')}>${this.left.label}</button>
-      <button class=${this._selected === 'right' ? 'selected' : ''} @click=${() => this.handleClick('right')}>${this.right.label}</button>
+      <div>
+        <button class=${this._selected === 'left' ? 'selected' : ''} @click=${() => this.handleClick('left')}><strong>${this.left.label}</strong></button>
+        <button class=${this._selected === 'right' ? 'selected' : ''} @click=${() => this.handleClick('right')}><strong>${this.right.label}</strong></button>
+      </div>
     `
   }
 
   static styles = css`
 
     :host {
-      font-size: 0px; /* Remove gap between buttons */
+      display: block;
+      text-align: center;
+    }
+
+    div {
+      /* Remove space between buttons */
+      font-size: 0px;
     }
 
     button {
       border: none;
-      font-size: 24px;
-      color: lightgray;
+      font-size: var(--bldn-nav-toggle-font-size, var(--font-size-large));
+      color: var(--bldn-nav-toggle-color-deselected, var(--color-medium));
     }
 
     button:first-child {
-      border-right: 1px solid black;
+      border-right: 1px solid var(--bldn-nav-toggle-color-selected, var(--color-darkest));
+      padding-right: 0.75em;
     }
 
     button:last-child {
-      border-left: 1px solid black;
+      border-left: 1px solid var(--bldn-nav-toggle-color-selected, var(--color-darkest));
+      padding-left: 0.75em;
     }
 
     .selected {
-      color: darkgray
+      color: var(--bldn-nav-toggle-color-selected, var(--color-darkest));
     }
 
   `

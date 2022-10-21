@@ -53,37 +53,29 @@
 <trans-unit id="s4618111b41da4ae5">
   <source>Other data type:</source>
 </trans-unit>
-<trans-unit id="sbe8f4a548469f66b">
-  <source>ACCESS</source>
-  <target>ACCÉDER</target>
+<trans-unit id="s13c123f97668a70b">
+  <source>Access</source>
 </trans-unit>
-<trans-unit id="s5cd15819e278608a">
-  <source>DELETE</source>
-  <target>SUPPRIMER</target>
+<trans-unit id="sdc673e73b5c13aea">
+  <source>Delete</source>
 </trans-unit>
-<trans-unit id="s98d171b8d8066dc3">
-  <source>MODIFY</source>
-  <target>MODIFIER</target>
+<trans-unit id="sc420894701de5ea3">
+  <source>Modify</source>
 </trans-unit>
-<trans-unit id="sa1b69a3b54f266ba">
-  <source>OBJECT</source>
-  <target>S'OPPOSER</target>
+<trans-unit id="s730182ad28374cda">
+  <source>Object</source>
 </trans-unit>
-<trans-unit id="s16b5c38a17d66e04">
-  <source>PORTABILITY</source>
-  <target>PORTABILITÉ</target>
+<trans-unit id="s6b89c52fe7ea6744">
+  <source>Portability</source>
 </trans-unit>
-<trans-unit id="s91ec539b62e13385">
-  <source>RESTRICT</source>
-  <target>RESTREINDRE</target>
+<trans-unit id="s298104654055b365">
+  <source>Restrict</source>
 </trans-unit>
-<trans-unit id="sdebba7b8d1950c9c">
-  <source>REVOKE-CONSENT</source>
-  <target>REVOQUER-CONSENTEMENT</target>
+<trans-unit id="s0e871352ba4b17d3">
+  <source>Revoke</source>
 </trans-unit>
-<trans-unit id="s1832cff59d8362b7">
-  <source>TRANSPARENCY</source>
-  <target>TRANSPARENCE</target>
+<trans-unit id="s08e22a2dc90d9557">
+  <source>Transparency</source>
 </trans-unit>
 <trans-unit id="s645ed7852e6d19f2">
   <source>TRANSPARENCY.DATA-CATEGORIES</source>
@@ -133,9 +125,8 @@
   <source>TRANSPARENCY.WHO</source>
   <target>TRANSPARENCE.QUI</target>
 </trans-unit>
-<trans-unit id="s8eb800543defec1b">
-  <source>OTHER-DEMAND</source>
-  <target>AUTRE-DEMANDE</target>
+<trans-unit id="sefcd28524d5a7a14">
+  <source>Other Demand</source>
 </trans-unit>
 <trans-unit id="sa8fb9f24637f10f5">
   <source>Access my data</source>
@@ -169,9 +160,8 @@
   <source>Demand information related to data processing practices and know if the system has data on me</source>
   <target>Demander des information sur les pratiques de traitement de données et savoir si le système a des données sur moi</target>
 </trans-unit>
-<trans-unit id="s9e9e29c172f0dd45">
-  <source>Do or know something else</source>
-  <target>Demander autre chose</target>
+<trans-unit id="s792decfb4eff6aa6">
+  <source>Do or know something else. Please note it may take longer to be answered</source>
 </trans-unit>
 <trans-unit id="s1ac72a304e9962fd">
   <source>The categories of the data the organization has on me</source>
@@ -433,6 +423,48 @@
 </trans-unit>
 <trans-unit id="s86c0a813feb2e101">
   <source>service end</source>
+</trans-unit>
+<trans-unit id="s3b91d548b3c1db64">
+  <source>Click to expand</source>
+</trans-unit>
+<trans-unit id="s41d0e1ff19aa568b">
+  <source>Arrow to expand or collapse the dropdown</source>
+</trans-unit>
+<trans-unit id="s1204f9b176a19dfd">
+  <source>Details of my <x id="0" equiv-text="${this.action}"/> Demand</source>
+</trans-unit>
+<trans-unit id="s29ec563d56cf6c6b">
+  <source>Other Options</source>
+</trans-unit>
+<trans-unit id="sa0f4ebf6f318c732">
+  <source>Specify a date range for the selected category(ies) of data:</source>
+</trans-unit>
+<trans-unit id="sa6ab5184d6315895">
+  <source>From</source>
+</trans-unit>
+<trans-unit id="s08c83907b56ac0a4">
+  <source>to</source>
+</trans-unit>
+<trans-unit id="s6303c9c96b50c164">
+  <source>My demand applies to data from the following provenance:</source>
+</trans-unit>
+<trans-unit id="s405438f2bd5cabdc">
+  <source>I address my demand to:</source>
+</trans-unit>
+<trans-unit id="sd3b15d6d4ea696f7">
+  <source>My additional message:</source>
+</trans-unit>
+<trans-unit id="sebbb864b5cee4a82">
+  <source>Please note that adding a personalized message might lead to the demand taking longer to be processed</source>
+</trans-unit>
+<trans-unit id="s7c9992bcec8e44cf">
+  <source>Date Restriction</source>
+</trans-unit>
+<trans-unit id="s0aa4aeddbaeb0008">
+  <source>Provenance Restriction</source>
+</trans-unit>
+<trans-unit id="s7174e3af10fba733">
+  <source>Additional Message</source>
 </trans-unit>
 </body>
 </file>

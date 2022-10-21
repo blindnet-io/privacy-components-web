@@ -1,11 +1,14 @@
-import { css, html, LitElement } from "lit";
+import { css, html, LitElement, TemplateResult } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
-import { when } from "lit/directives/when.js";
-import { PrivacyRequestDemand, CreatePrivacyRequestPayload } from "@blindnet/core";
+import { PrivacyRequestDemand } from "@blindnet/core";
 import { choose } from "lit/directives/choose.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 
-enum requestBuilderUIState {
+import './bldn-tile-menu.js'
+import './action-forms/bldn-access-form.js'
+import { ACTION_DESCRIPTIONS, ACTION_TITLES } from "./utils/dictionary.js";
+
+enum RequestBuilderUIState {
   menu,
   edit,
   review
@@ -15,104 +18,178 @@ enum requestBuilderUIState {
 export class BldnRequestBuilder extends LitElement {
 
   /** @prop */
-  @property({ type: Array }) actions: PrivacyRequestDemand.action[] = []
+  @property({ type: Array }) actions: PrivacyRequestDemand.action[] = Object.values(PrivacyRequestDemand.action).filter(a => !a.includes('.'))
 
   /** @prop */
   @property({ type: Array }) dataCategories: string[] = []
 
-  @state() _uiState: requestBuilderUIState = requestBuilderUIState.menu
+  @state() _uiState: RequestBuilderUIState = RequestBuilderUIState.menu
 
-  @state() _demandGroups = []
+  @state() _demandGroups: PrivacyRequestDemand[][] = []
 
   @state() _action: undefined | PrivacyRequestDemand.action
 
   @state() _demandGroupIndex: undefined | number;
 
-  getActionForm(action: PrivacyRequestDemand.action) {
+  /**
+   * Factory method to get the action form for a specific action
+   * @param action Action of the form to return
+   * @returns Template with an action form
+   */
+  private getActionForm(action: PrivacyRequestDemand.action): TemplateResult<1|2> {
     return html`
       ${choose(action, [
         [PrivacyRequestDemand.action.ACCESS, () => html`
           <bldn-access-form
-            action=${this._action}
             data-categories=${JSON.stringify(this.dataCategories)}
-            demands=${this._demandGroups[ifDefined(this._demandGroupIndex)]}
             demandGroupIndex=${ifDefined(this._demandGroupIndex)}
+            demands=${this._demandGroups[ifDefined(this._demandGroupIndex)]}
           ></bldn-access-form>
         `],
         [PrivacyRequestDemand.action.DELETE, () => html`
           <bldn-delete-form
-            action=${this._action}
             data-categories=${JSON.stringify(this.dataCategories)}
-            demands=${this._demandGroups[ifDefined(this._demandGroupIndex)]}
             demandGroupIndex=${ifDefined(this._demandGroupIndex)}
+            demands=${this._demandGroups[ifDefined(this._demandGroupIndex)]}
           ></bldn-delete-form>
         `],
         [PrivacyRequestDemand.action.MODIFY, () => html`
           <bldn-modify-form
-            action=${this._action}
             data-categories=${JSON.stringify(this.dataCategories)}
-            demands=${this._demandGroups[ifDefined(this._demandGroupIndex)]}
             demandGroupIndex=${ifDefined(this._demandGroupIndex)}
+            demands=${this._demandGroups[ifDefined(this._demandGroupIndex)]}
           ></bldn-modify-form>
         `],
         [PrivacyRequestDemand.action.OBJECT, () => html`
           <bldn-object-form
-            action=${this._action}
             data-categories=${JSON.stringify(this.dataCategories)}
-            demands=${this._demandGroups[ifDefined(this._demandGroupIndex)]}
             demandGroupIndex=${ifDefined(this._demandGroupIndex)}
+            demands=${this._demandGroups[ifDefined(this._demandGroupIndex)]}
           ></bldn-object-form>
         `],
         [PrivacyRequestDemand.action.RESTRICT, () => html`
           <bldn-restrict-form
-            action=${this._action}
             data-categories=${JSON.stringify(this.dataCategories)}
-            demands=${this._demandGroups[ifDefined(this._demandGroupIndex)]}
             demandGroupIndex=${ifDefined(this._demandGroupIndex)}
+            demands=${this._demandGroups[ifDefined(this._demandGroupIndex)]}
           ></bldn-restrict-form>
         `],
         [PrivacyRequestDemand.action.TRANSPARENCY, () => html`
           <bldn-transparency-form
-            action=${this._action}
             data-categories=${JSON.stringify(this.dataCategories)}
-            demands=${this._demandGroups[ifDefined(this._demandGroupIndex)]}
             demandGroupIndex=${ifDefined(this._demandGroupIndex)}
+            demands=${this._demandGroups[ifDefined(this._demandGroupIndex)]}
           ></bldn-transparency-form>
         `],
-        [PrivacyRequestDemand.action.REVOKE, () => html`
+        [PrivacyRequestDemand.action.REVOKE_CONSENT, () => html`
           <bldn-revoke-form
-            action=${this._action}
             data-categories=${JSON.stringify(this.dataCategories)}
-            demands=${this._demandGroups[ifDefined(this._demandGroupIndex)]}
             demandGroupIndex=${ifDefined(this._demandGroupIndex)}
+            demands=${this._demandGroups[ifDefined(this._demandGroupIndex)]}
           ></bldn-revoke-form>
         `],
-        [PrivacyRequestDemand.action['OTHER-DEMAND'], () => html`
+        [PrivacyRequestDemand.action.OTHER, () => html`
           <bldn-other-form
-            action=${this._action}
             data-categories=${JSON.stringify(this.dataCategories)}
-            demands=${this._demandGroups[ifDefined(this._demandGroupIndex)]}
             demandGroupIndex=${ifDefined(this._demandGroupIndex)}
+            demands=${this._demandGroups[ifDefined(this._demandGroupIndex)]}
           ></bldn-other-form>
         `]
       ])}
     `
-  } 
+  }
+
+  /**
+   * Go to request builder after an action is clicked
+   * @param e CustomEvent containing the clicked action
+   */
+  private selectAction(e: Event) {
+    e.stopPropagation()
+    const { value } = (e as CustomEvent).detail
+    if (Object.values(PrivacyRequestDemand.action).includes(value)) {
+      this._action = value as PrivacyRequestDemand.action
+
+      // We want the request builder for a new demand group (not editing existing)
+      this._demandGroupIndex = undefined
+      this._uiState = RequestBuilderUIState.edit
+    }
+  }
+
+  /**
+   * Add a new demand group or update an existing one
+   * @param e CustomEvent containing demands info
+   */
+  private setDemands(e: Event) {
+    e.stopPropagation()
+    const { demandGroupIndex, demands } = (e as CustomEvent).detail
+    if (demandGroupIndex !== undefined) {
+      this._demandGroups[demandGroupIndex] = demands
+    } else {
+      this._demandGroups.push(demands)
+    }
+  }
+
+  /**
+   * Delete an existing demand group
+   * @param e Event containing the index of the demand group to delete
+   */
+  private deleteDemands(e: Event) {
+    e.stopPropagation()
+    const { demandGroupIndex } = (e as CustomEvent).detail
+    this._demandGroups.splice(demandGroupIndex, 1)
+  }
+
+  private goToMenu(e: Event) {
+    e.stopPropagation()
+    this._uiState = RequestBuilderUIState.menu
+  }
+
+  connectedCallback(): void {
+    // eslint-disable-next-line wc/guard-super-call
+    super.connectedCallback();
+
+    // Action menu listeners
+    this.addEventListener('bldn-tile-menu:tile-click', this.selectAction)
+
+    // Request builder listeners
+    this.addEventListener('bldn-action-form:set-demands', this.setDemands);
+    this.addEventListener('bldn-action-form:detele-demands', this.deleteDemands);
+    this.addEventListener('bldn-action-form:back-click', this.goToMenu)
+  }
+
+  disconnectedCallback(): void {
+    this.removeEventListener('bldn-tile-menu:tile-click', this.selectAction)
+    this.removeEventListener('bldn-action-form:set-demands', this.setDemands);
+    this.removeEventListener('bldn-action-form:detele-demands', this.deleteDemands);
+    this.removeEventListener('bldn-action-form:back-click', this.goToMenu);
+  }
 
   render() {
     return html`
       ${choose(this._uiState, [
-        [requestBuilderUIState.menu, () => html`
-          <bldn-tile-menu></bldn-tile-menu>
+        [RequestBuilderUIState.menu, () => html`
+          <bldn-tile-menu .tiles=${
+            this.actions.map(a => ({
+              title: ACTION_TITLES[a](),
+              description: ACTION_DESCRIPTIONS[a](),
+              value: a
+            }))
+          }></bldn-tile-menu>
         `],
-        [requestBuilderUIState.edit, () => this.getActionForm(this._action)],
-        [requestBuilderUIState.review, () => html`
+        [RequestBuilderUIState.edit, () => this.getActionForm(this._action ?? PrivacyRequestDemand.action.ACCESS)],
+        [RequestBuilderUIState.review, () => html`
           <bldn-request-review></bldn-request-review>
         `]
       ])}
     `
   }
 
-  static styles = css``
+  static styles = css`
+  
+    :host {
+        display: block;
+    }
+  
+  `
 
 }

@@ -39,7 +39,7 @@ export class BldnNavWrapper extends LitElement {
         ${when(this.mode === 'single', () => html`
           <bldn-button @bldn-button:click=${(e: Event) => this.handleNavClick(e, 'center')}>${this.centerButton}</bldn-button>
         `, () => html`
-          <bldn-button @bldn-button:click=${(e: Event) => this.handleNavClick(e, 'left')}>${this.leftButton}</bldn-button>
+          <bldn-button mode='secondary' @bldn-button:click=${(e: Event) => this.handleNavClick(e, 'left')}>${this.leftButton}</bldn-button>
           <bldn-button @bldn-button:click=${(e: Event) => this.handleNavClick(e, 'right')}>${this.rightButton}</bldn-button>
         `)}
       </div>
@@ -48,19 +48,25 @@ export class BldnNavWrapper extends LitElement {
 
   static styles = css`
     :host {
-      border: 2px solid var(--bldn-nav-wrapper-border-color, --color-medium);
+      display: block;
+      border: 2px solid var(--bldn-nav-wrapper-border-color, var(--color-medium));
       border-radius: 20px;
-      margin-bottom: 10px;
+      margin-bottom: 20px;
     }
 
     #content {
       display: grid;
-      row-gap: 40px
+      row-gap: 40px;
     }
 
     #nav-buttons {
       /* Make nav buttons sit on border */
-      transform: translateY(10px);
+      display: flex;
+      justify-content: center;
+      /* FIXME: Forces the wrapper to be a certain size */
+      column-gap: 12.5rem;
+      margin: 0px 275px;
+      transform: translateY(22px);
     }
   `
 

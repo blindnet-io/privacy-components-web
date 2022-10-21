@@ -1,8 +1,11 @@
-import { CoreConfigurationMixin, PrivacyRequestDemand } from "@blindnet/core";
+import { CoreConfigurationMixin, PrivacyRequestDemand, bldnStyles } from "@blindnet/core";
 import { localized } from "@lit/localize";
 import { css, html, LitElement, PropertyValueMap } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import { choose } from "lit/directives/choose.js";
+
+import './bldn-request-builder.js';
+import './bldn-nav-wrapper.js'
 
 enum PRCIUIState {
   createRequest,
@@ -60,19 +63,20 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
     `
   }
 
-  static styles = css`
-    h1 {
-      font-size: var(--font-size-large);
-    }
+  static styles = [
+    bldnStyles,
+    css`
 
-    h2 {
-      font-size: var(--font-size-medium);
-    }
+      :host {
+        display: block;
+      }
+    
+      bldn-request-builder, bldn-submitted-requests {
+        margin-top: 3.75em;
+      }
 
-    h3 {
-      font-size: var(--font-size-large);
-    }
-  `
+    `
+  ]
 
 }
 
