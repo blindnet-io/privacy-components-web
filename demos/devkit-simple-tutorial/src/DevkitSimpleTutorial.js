@@ -13,7 +13,7 @@ export class DevkitSimpleTutorial extends LitElement {
         align-items: center;
         justify-content: center;
         color: #1a2b42;
-        max-width: 1000px;
+        max-width: 1250px;
         margin: 0 auto;
         text-align: center;
         background-color: var(--devkit-simple-tutorial-background-color);

@@ -72,6 +72,20 @@ export class BldnDateRestriction extends LitElement {
       margin: 1.3em 0em;
     }
 
+    input {
+      border-radius: 10px;
+      padding: 0.75em;
+      border: 2px solid var(--bldn-date-restriction-input-border-color, var(--color-light));
+      background: var(--bldn-date-restriction-input-background-color, var(--color-lightest));
+      margin: 0em 1em;
+      transition: 0.3s ease-out;
+    }
+
+    input:hover {
+      border-color: var(--bldn-date-restriction-input-border-color-hover, var(--color-medium));
+      transition: 0.3s ease;
+    }
+
   `
 
 }

@@ -19,8 +19,12 @@ export class AppPrivacy extends LitElement {
   static get styles() {
     return css`
       :host {
+        display: block;
+        background: white;
         margin-top: 50px;
+        padding: 1em 6em 6em 6em;
       }
+
     `;
   }
 

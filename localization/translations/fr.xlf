@@ -436,8 +436,8 @@
 <trans-unit id="s29ec563d56cf6c6b">
   <source>Other Options</source>
 </trans-unit>
-<trans-unit id="sa0f4ebf6f318c732">
-  <source>Specify a date range for the selected category(ies) of data:</source>
+<trans-unit id="s40717e0539504811">
+  <source>Specify a date range for the selected data categories:</source>
 </trans-unit>
 <trans-unit id="sa6ab5184d6315895">
   <source>From</source>

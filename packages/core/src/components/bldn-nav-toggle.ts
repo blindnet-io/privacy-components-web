@@ -53,6 +53,7 @@ export class BldnNavToggle extends LitElement {
       border: none;
       font-size: var(--bldn-nav-toggle-font-size, var(--font-size-large));
       color: var(--bldn-nav-toggle-color-deselected, var(--color-medium));
+      background: var(--bldn-nav-toggle-background, var(--background));
     }
 
     button:first-child {
