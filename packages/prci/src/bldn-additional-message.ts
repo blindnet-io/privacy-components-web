@@ -34,6 +34,22 @@ export class BldnAdditionalMessage extends LitElement {
     `
   }
 
-  static styles = css``
+  static styles = css`
+  
+    :host {
+      display: block;
+      text-align: left;
+    }
+
+    textarea {
+      /* Change to border-box so text area doesn't overflow the component */
+      box-sizing: border-box;
+      width: 100%;
+      border: 1px solid var(--bldn-additional-message-textarea-border-color, var(--color-light));
+      background: rgba(var(--color-light-rgb), 0.2);      
+      border-radius: 10px;
+    }
+
+  `
 
 }

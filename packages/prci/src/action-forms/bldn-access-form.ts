@@ -1,16 +1,15 @@
-import { msg, str } from '@lit/localize';
+import { msg } from '@lit/localize';
 import { css, html, TemplateResult } from 'lit';
-import { customElement } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
 import {
-  PrivacyRequestDemand,
+  PrivacyRequestDemand, PrivacyScopeRestriction, ProvenanceRestriction
 } from '@blindnet/core';
 import {
   DATA_CATEGORY_DESCRIPTIONS,
 } from '../utils/dictionary.js';
-import { ActionForm } from './ActionForm.js';
-import { PRCIStyles } from '../styles.js';
+import { ActionForm } from './bldn-action-form.js';
 
-import '../AllChecklist.js';
+import '../bldn-all-checklist.js';
 import '../bldn-dropdown.js'
 import '../bldn-date-restriction.js'
 import '../bldn-provenance-restriction.js'
@@ -22,29 +21,32 @@ import '../bldn-additional-message.js'
 @customElement('bldn-access-form')
 export class AccessForm extends ActionForm {
 
+  /** @prop */
+  @property({ type: Array, attribute: 'data-categories' }) dataCategories: string[] = []
+
   action = PrivacyRequestDemand.action.ACCESS;
 
-  // constructor() {
-  //   super();
+  constructor() {
+    super();
 
-  //   // Access data category listeners
-  //   this.addEventListener('access-option-select', e => {
-  //     const { id } = (e as CustomEvent).detail;
-  //     this.demand.restrictions!.privacy_scope!.push({
-  //       dc: id as DATA_CATEGORY,
-  //       pc: PROCESSING_CATEGORY.ALL,
-  //       pp: PURPOSE.ALL,
-  //     });
-  //   });
-  //   this.addEventListener('access-option-deselect', e => {
-  //     const { id } = (e as CustomEvent).detail;
-  //     this.demand.restrictions!.privacy_scope!.splice(
-  //       this.demand.restrictions!.privacy_scope!.findIndex(
-  //         psr => psr.dc === (id as DATA_CATEGORY)
-  //       ),
-  //       1
-  //     );
-  //   });
+    // Access data cauthategory listeners
+    this.addEventListener('bldn-all-checklist:choice-select', e => {
+      const { value } = (e as CustomEvent).detail;
+      this.demands[0].restrictions!.privacy_scope!.push({
+        dc: value,
+        pc: PrivacyScopeRestriction.pc._,
+        pp: PrivacyScopeRestriction.pp._,
+      });
+    });
+    this.addEventListener('bldn-all-checklist:choice-deselect', e => {
+      const { value } = (e as CustomEvent).detail;
+      this.demands[0].restrictions!.privacy_scope!.splice(
+        this.demands[0].restrictions!.privacy_scope!.findIndex(
+          psr => psr.dc === value
+        ),
+        1
+      );
+    });
 
     // FIXME: Disabled until we resolve how to handle OTHER-DATA
     // this.addEventListener('access-option-other-click', e => {
@@ -92,7 +94,7 @@ export class AccessForm extends ActionForm {
   //       delete this.demand.restrictions?.date_range?.to;
   //     }
   //   }
-  // }
+  }
 
   validateActionInput(): string[] | undefined {
     return undefined;
@@ -102,50 +104,114 @@ export class AccessForm extends ActionForm {
     return undefined;
   }
 
+
+
   getDefaultDemands(): PrivacyRequestDemand[] {
-    return [{
-      id: '',
-      action: this.action
-    }]
-    // return {
-    //   action: ACTION.ACCESS,
-    //   restrictions: {
-    //     privacy_scope: this.allowedDataCategories.map(dc => ({
-    //       dc,
-    //       pc: PROCESSING_CATEGORY.ALL,
-    //       pp: PURPOSE.ALL,
-    //     })),
-    //     provenance: {
-    //       term: PROVENANCE.ALL,
-    //       target: TARGET.SYSTEM,
-    //     },
-    //     date_range: {},
-    //   },
-    // };
+    return [
+      {
+        id: '',
+        action: PrivacyRequestDemand.action.ACCESS,
+        restrictions: {
+          privacy_scope: [{
+            dc: '*',
+            pc: PrivacyScopeRestriction.pc._,
+            pp: PrivacyScopeRestriction.pp._,
+          }],
+          provenance: {
+            term: ProvenanceRestriction.term._
+          },
+          date_range: {},
+        },
+      }
+    ];
   }
 
-//   <!-- <all-checklist
-//   .choices=${this.dataCategories.map(dc => ({
-//     id: dc,
-//     description: DATA_CATEGORY_DESCRIPTIONS[dc](),
-//     checked:
-//       this.demands[0].restrictions?.privacy_scope?.findIndex(
-//         psr => psr.dc === dc
-//       ) !== -1,
-//     disabled: false,
-//   }))}
-//   all-message=${msg(
-//     'ALL categories of data the organization has data on me'
-//   )}
-//   component-mode=${FormComponentState.CLOSED}
-//   event-prefix="access-option"
-//   include-buttons
-// ></all-checklist> -->
+  addDataCategory(e: Event) {
+    const { value } = (e as CustomEvent).detail;
+    this.demands[0].restrictions!.privacy_scope!.push({
+      dc: value,
+      pc: PrivacyScopeRestriction.pc._,
+      pp: PrivacyScopeRestriction.pp._,
+    });
+  }
+
+  removeDataCategory(e: Event) {
+    const { value } = (e as CustomEvent).detail;
+    this.demands[0].restrictions!.privacy_scope!.splice(
+      this.demands[0].restrictions!.privacy_scope!.findIndex(
+        psr => psr.dc === value
+      ),
+      1
+    );
+  }
+
+  changeDateRestrictionStart(e: Event) {
+    const { date } = (e as CustomEvent).detail
+    this.demands[0].restrictions!.date_range!.from = date
+  }
+
+  changeDateRestrictionEnd(e: Event) {
+    const { date } = (e as CustomEvent).detail
+    this.demands[0].restrictions!.date_range!.to = date
+  }
+
+  changeProvenanceRestrictionTerm(e: Event) {
+    const { term } = (e as CustomEvent).detail;
+    this.demands[0].restrictions!.provenance!.term = term;
+  }
+
+  changeMessage(e: Event) {
+    const { message } = (e as CustomEvent).detail;
+    this.demands[0].message = message
+  }
+
+  connectedCallback(): void {
+    
+    // eslint-disable-next-line wc/guard-super-call
+    super.connectedCallback()
+
+    // Data category listeners
+    this.addEventListener('bldn-all-checklist:choice-select', this.addDataCategory);
+    this.addEventListener('bldn-all-checklist:choice-deselect', this.removeDataCategory);
+
+    // Date restriction listeners
+    this.addEventListener('bldn-date-restriction:start-date-change', this.changeDateRestrictionStart)
+    this.addEventListener('bldn-date-restriction:end-date-change', this.changeDateRestrictionEnd)
+
+    // Provenance restriction listener
+    this.addEventListener('bldn-provenance-restriction:term-change', this.changeProvenanceRestrictionTerm)
+
+    // Message listener
+    this.addEventListener('bldn-additional-message:message-change', this.changeMessage)
+  }
+
+  disconnectedCallback(): void {
+    this.removeEventListener('bldn-all-checklist:choice-select', this.addDataCategory);
+    this.removeEventListener('bldn-all-checklist:choice-deselect', this.removeDataCategory);
+    this.removeEventListener('bldn-date-restriction:start-date-change', this.changeDateRestrictionStart)
+    this.removeEventListener('bldn-date-restriction:end-date-change', this.changeDateRestrictionEnd)
+    this.removeEventListener('bldn-provenance-restriction:term-change', this.changeProvenanceRestrictionTerm)
+    this.removeEventListener('bldn-additional-message:message-change', this.changeMessage)
+  }
 
   getFormTemplate(): TemplateResult<1 | 2> {
     return html`
-        MAIN CONTENT
-      `
+      <p>${msg('I want to access:')}</p>
+      <bldn-all-checklist
+        .choices=${this.dataCategories.map(dc => ({
+          value: dc,
+          display: DATA_CATEGORY_DESCRIPTIONS[dc](),
+          checked:
+            this.demands![0].restrictions?.privacy_scope?.findIndex(
+              psr => psr.dc === dc
+            ) !== -1,
+        }))}
+        .allChoice=${{
+          display: DATA_CATEGORY_DESCRIPTIONS['*'](),
+          value: '*'
+        }}
+      ></bldn-all-checklist>
+    `
   }
 
   getOptionsTemplate(): TemplateResult<1 | 2> {
@@ -164,174 +230,22 @@ export class AccessForm extends ActionForm {
       </bldn-dropdown>
     `
   }
-    // return html`
-    //   <div id="access-form">
-    //     <p id="edit-heading-1">
-    //       <b>${msg('Details of my ACCESS Demand')}</b>
-    //     </p>
-
-    //     <div class="border--light border--rounded access-options">
-    //       <span slot="prompt">${msg('I want to access:')}</span>
-    //       <all-checklist
-    //         .choices=${this.allowedDataCategories.map(dc => ({
-    //           id: dc,
-    //           description: DATA_CATEGORY_DESCRIPTIONS[dc](),
-    //           checked:
-    //             demand.restrictions?.privacy_scope?.findIndex(
-    //               psr => psr.dc === dc
-    //             ) !== -1,
-    //           disabled: false,
-    //         }))}
-    //         all-message=${msg(
-    //           'ALL categories of data the organization has data on me'
-    //         )}
-    //         component-mode=${FormComponentState.CLOSED}
-    //         event-prefix="access-option"
-    //         include-buttons
-    //       ></all-checklist>
-    //     </div>
-
-    //     <slotted-dropdown header=${msg('Advanced settings')} include-buttons>
-    //       <div class="date-restriction">
-    //         <p>
-    //           ${msg(
-    //             'Specify a date range for the selected category(ies) of data:'
-    //           )}
-    //         </p>
-    //         <div>
-    //           <span>${msg('From')}</span>
-    //           <input
-    //             id="date-start"
-    //             type="date"
-    //             .value=${demand.restrictions?.date_range?.from
-    //               ? demand.restrictions?.date_range?.from
-    //                   .toISOString()
-    //                   .split('T')[0]
-    //               : ''}
-    //             @input=${this.handleDateRestrictionInput}
-    //           />
-    //           <span>${msg('to')}</span>
-    //           <input
-    //             id="date-end"
-    //             type="date"
-    //             .value=${demand.restrictions?.date_range?.to
-    //               ? demand.restrictions?.date_range?.to
-    //                   .toISOString()
-    //                   .split('T')[0]
-    //               : ''}
-    //             @input=${this.handleDateRestrictionInput}
-    //           />
-    //         </div>
-    //       </div>
-    //       <div>
-    //         <span>
-    //           ${msg('My demand applies to data from the following provenance:')}
-    //         </span>
-    //         <fieldset class="provenance-restriction">
-    //           ${Object.values(PROVENANCE).map(
-    //             p => html`
-    //               <input
-    //                 id=${p}
-    //                 name='provenance-term'
-    //                 type='radio'
-    //                 ?checked=${demand.restrictions?.provenance?.term === p}
-    //                 @click=${this.handleProvenanceTermClick}>
-    //               </input>
-    //               <label for=${p}>${PROVENANCE_DESCRIPTIONS[p]()}</label><br/>
-    //             `
-    //           )}
-    //         </fieldset>
-    //       </div>
-    //       <div>
-    //         <span> ${msg('I address my demand to:')} </span>
-    //         <fieldset class="provenance-restriction">
-    //           ${Object.values(TARGET)
-    //             .filter(t => t !== TARGET.ALL)
-    //             .map(
-    //               t => html`
-    //               <input
-    //                 id=${t}
-    //                 name='provenance-target'
-    //                 type='radio'
-    //                 ?checked=${demand.restrictions?.provenance?.target === t}
-    //                 @click=${this.handleProvenanceTargetClick}>
-    //               </input>
-    //               <label for=${t}>${TARGET_DESCRIPTIONS[t]()}</label><br/>
-    //             `
-    //             )}
-    //         </fieldset>
-    //       </div>
-    //     </slotted-dropdown>
-    //     <slotted-dropdown
-    //       header=${msg('Additional message (optional)')}
-    //       include-buttons
-    //     >
-    //       <div class="additional-msg-ctr">
-    //         <span class="">${msg('My additional message:')}</span>
-    //         <span
-    //           ><i
-    //             >${msg(
-    //               'Please note that adding a personalized message might lead to the demand taking longer to be processed'
-    //             )}</i
-    //           ></span
-    //         >
-    //         <textarea
-    //           id="additional-msg"
-    //           class="std-txt-area"
-    //           name="paragraph_text"
-    //           cols="50"
-    //           rows="10"
-    //           @input=${this.handleAdditionalMessageInput}
-    //           .value=${demand.message ?? ''}
-    //         ></textarea>
-    //       </div>
-    //     </slotted-dropdown>
-    //   </div>
-    // `;
-  // }
 
   static styles = [
     ActionForm.styles,
-    PRCIStyles,
     css`
-      #access-form {
-        display: grid;
-        row-gap: 35px;
-        align-content: flex-start;
-        margin: 0px;
-      }
 
-      .access-options {
-        padding: 40px 40px 20px 40px;
-      }
-
-      #dmd-ctr {
-        display: grid;
-        row-gap: 20px;
-      }
-
-      #dmd-ctr ul {
-        margin: 0;
-      }
-
-      #dmd-ctr li:not(:last-child) {
-        margin-bottom: 15px;
-      }
-
-      #edit-heading-1 {
-        font-weight: bold;
-        grid-column: 1/2;
-        padding: 0px;
+      :host {
+        text-align: left;
       }
 
       p {
-        margin: 0px;
+        margin: 2em 0em;
       }
 
-      .additional-msg-ctr {
-        display: grid;
-        row-gap: 20px;
-        margin: 0px 0px 25px 0px;
+      p + bldn-all-checklist {
+        margin-top: 1em;
+        padding-left: 1em;
       }
     `,
   ];

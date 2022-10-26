@@ -146,10 +146,7 @@ export const DATA_CATEGORY_TITLES = {
 export const DATA_CATEGORY_DESCRIPTIONS = {
   '*': () =>
     msg(
-      html`<b
-        >ALL information related to data processing practices and know if the
-        organization has data on me</b
-      >`
+      html`<b>ALL</b> categories of data the organization has on me`
     ),
   AFFILIATION: () =>
     msg(

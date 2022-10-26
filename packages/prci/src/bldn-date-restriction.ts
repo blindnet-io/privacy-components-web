@@ -33,7 +33,11 @@ export class BldnDateRestriction extends LitElement {
 
     // Emit change event if date and element id are valid
     if (date.toString() !== 'Invalid Date' && ['start-date', 'end-date'].includes(id)) {
-      this.dispatchEvent(new CustomEvent(`bldn-date-restriction:${id === 'start-date' ? 'start' : 'end'}-date-change`))
+      this.dispatchEvent(new CustomEvent(`bldn-date-restriction:${id === 'start-date' ? 'start' : 'end'}-date-change`, {
+        detail: {
+          date
+        }
+      }))
     }
   }
 

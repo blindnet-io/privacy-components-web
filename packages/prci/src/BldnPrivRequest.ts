@@ -1,4 +1,4 @@
-import { CoreConfigurationMixin, PrivacyRequestDemand, bldnStyles } from "@blindnet/core";
+import { CoreConfigurationMixin, PrivacyRequestDemand, bldnStyles, ComputationAPI } from "@blindnet/core";
 import { localized } from "@lit/localize";
 import { css, html, LitElement, PropertyValueMap } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
@@ -26,10 +26,6 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
   @property({ type: Array }) requestId: undefined | string
 
   @state() _uiState: PRCIUIState = PRCIUIState.createRequest
-
-  @state() _allowedActions: PrivacyRequestDemand.action[] = []
-
-  @state() _allowedDataCategories: string[] = []
 
   handleActionsChange() {
 

@@ -1,6 +1,6 @@
-import { css, html, LitElement, TemplateResult } from "lit";
+import { css, html, LitElement, PropertyValueMap, TemplateResult } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
-import { PrivacyRequestDemand } from "@blindnet/core";
+import { ComputationAPI, PrivacyRequestDemand } from "@blindnet/core";
 import { choose } from "lit/directives/choose.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 
@@ -31,67 +31,72 @@ export class BldnRequestBuilder extends LitElement {
 
   @state() _demandGroupIndex: undefined | number;
 
+  @state() _allowedActions: PrivacyRequestDemand.action[] = []
+
+  @state() _allowedDataCategories: string[] = []
+
   /**
    * Factory method to get the action form for a specific action
    * @param action Action of the form to return
    * @returns Template with an action form
    */
   private getActionForm(action: PrivacyRequestDemand.action): TemplateResult<1|2> {
+    console.log(this._demandGroupIndex)
     return html`
       ${choose(action, [
         [PrivacyRequestDemand.action.ACCESS, () => html`
           <bldn-access-form
-            data-categories=${JSON.stringify(this.dataCategories)}
-            demandGroupIndex=${ifDefined(this._demandGroupIndex)}
-            demands=${this._demandGroups[ifDefined(this._demandGroupIndex)]}
+            data-categories=${JSON.stringify(this._allowedDataCategories)}
+            demands=${ifDefined(this._demandGroupIndex) ?? this._demandGroups[this._demandGroupIndex ?? 0]}
+            demand-group-index=${ifDefined(this._demandGroupIndex)}
           ></bldn-access-form>
         `],
         [PrivacyRequestDemand.action.DELETE, () => html`
           <bldn-delete-form
             data-categories=${JSON.stringify(this.dataCategories)}
-            demandGroupIndex=${ifDefined(this._demandGroupIndex)}
+            demand-group-index=${ifDefined(this._demandGroupIndex)}
             demands=${this._demandGroups[ifDefined(this._demandGroupIndex)]}
           ></bldn-delete-form>
         `],
         [PrivacyRequestDemand.action.MODIFY, () => html`
           <bldn-modify-form
             data-categories=${JSON.stringify(this.dataCategories)}
-            demandGroupIndex=${ifDefined(this._demandGroupIndex)}
+            demand-group-index=${ifDefined(this._demandGroupIndex)}
             demands=${this._demandGroups[ifDefined(this._demandGroupIndex)]}
           ></bldn-modify-form>
         `],
         [PrivacyRequestDemand.action.OBJECT, () => html`
           <bldn-object-form
             data-categories=${JSON.stringify(this.dataCategories)}
-            demandGroupIndex=${ifDefined(this._demandGroupIndex)}
+            demand-group-index=${ifDefined(this._demandGroupIndex)}
             demands=${this._demandGroups[ifDefined(this._demandGroupIndex)]}
           ></bldn-object-form>
         `],
         [PrivacyRequestDemand.action.RESTRICT, () => html`
           <bldn-restrict-form
             data-categories=${JSON.stringify(this.dataCategories)}
-            demandGroupIndex=${ifDefined(this._demandGroupIndex)}
+            demand-group-index=${ifDefined(this._demandGroupIndex)}
             demands=${this._demandGroups[ifDefined(this._demandGroupIndex)]}
           ></bldn-restrict-form>
         `],
         [PrivacyRequestDemand.action.TRANSPARENCY, () => html`
           <bldn-transparency-form
             data-categories=${JSON.stringify(this.dataCategories)}
-            demandGroupIndex=${ifDefined(this._demandGroupIndex)}
+            demand-group-index=${ifDefined(this._demandGroupIndex)}
             demands=${this._demandGroups[ifDefined(this._demandGroupIndex)]}
           ></bldn-transparency-form>
         `],
         [PrivacyRequestDemand.action.REVOKE_CONSENT, () => html`
           <bldn-revoke-form
             data-categories=${JSON.stringify(this.dataCategories)}
-            demandGroupIndex=${ifDefined(this._demandGroupIndex)}
+            demand-group-index=${ifDefined(this._demandGroupIndex)}
             demands=${this._demandGroups[ifDefined(this._demandGroupIndex)]}
           ></bldn-revoke-form>
         `],
         [PrivacyRequestDemand.action.OTHER, () => html`
           <bldn-other-form
             data-categories=${JSON.stringify(this.dataCategories)}
-            demandGroupIndex=${ifDefined(this._demandGroupIndex)}
+            demand-group-index=${ifDefined(this._demandGroupIndex)}
             demands=${this._demandGroups[ifDefined(this._demandGroupIndex)]}
           ></bldn-other-form>
         `]
@@ -144,6 +149,31 @@ export class BldnRequestBuilder extends LitElement {
     this._uiState = RequestBuilderUIState.menu
   }
 
+  private handleDataCategoriesChange() {
+
+    ComputationAPI.getInstance().getDataCategories().then(response => {
+
+      const allDataCategories: string[] = response.map(dc => dc.data_category)
+
+      // TODO: Have some default list of data categories in case there is no PCE      
+      
+      // Filter all possible data categories to only include those from the dataCategories property
+      if (this.dataCategories.length > 0) {
+        this._allowedDataCategories = allDataCategories.filter(dc => this.dataCategories.includes(dc))
+      } else {
+
+        // If data categories to allow was not specified, include all non-subcategories
+        this._allowedDataCategories = allDataCategories.filter(dc => !dc.includes('.'))
+      }
+      console.log(this._allowedDataCategories)
+    })
+
+  }
+
+  private handleActionsChange() {
+
+  }
+
   connectedCallback(): void {
     // eslint-disable-next-line wc/guard-super-call
     super.connectedCallback();
@@ -162,6 +192,11 @@ export class BldnRequestBuilder extends LitElement {
     this.removeEventListener('bldn-action-form:set-demands', this.setDemands);
     this.removeEventListener('bldn-action-form:detele-demands', this.deleteDemands);
     this.removeEventListener('bldn-action-form:back-click', this.goToMenu);
+  }
+
+  protected willUpdate(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
+    if (_changedProperties.has('actions')) this.handleActionsChange()
+    if (_changedProperties.has('dataCategories')) this.handleDataCategoriesChange()
   }
 
   render() {

@@ -43,25 +43,47 @@ export class BldnProvenanceRestriction extends LitElement {
           `
         )}
       </fieldset>
-      <p> ${msg('I address my demand to:')} </p>
-      <fieldset class="provenance-restriction">
-        ${Object.values(ProvenanceRestriction.target)
-          .map(
-            target => html`
-              <input
-                id=${target}
-                name='provenance-target'
-                type='radio'
-                ?checked=${this.target === target}
-                @click=${() => this.handleTargetChange(target)}>
-              </input>
-              <label for=${target}>${TARGET_DESCRIPTIONS[target]()}</label><br/>
-            `
-          )}
-      </fieldset>
     `
+
+    // NOTE: Until (if) we support multiple demand groups per request, we only need to allow setting target on the whole request
+    //
+    // <p> ${msg('I address my demand to:')} </p>
+    // <fieldset class="provenance-restriction">
+    //   ${Object.values(ProvenanceRestriction.target)
+    //     .map(
+    //       target => html`
+    //         <input
+    //           id=${target}
+    //           name='provenance-target'
+    //           type='radio'
+    //           ?checked=${this.target === target}
+    //           @click=${() => this.handleTargetChange(target)}>
+    //         </input>
+    //         <label for=${target}>${TARGET_DESCRIPTIONS[target]()}</label><br/>
+    //       `
+    //     )}
+    // </fieldset>
   }
 
-  static styles = css``
+  static styles = css`
+
+    :host {
+      display: block;
+      text-align: left;
+    }
+  
+    fieldset {
+      border: none;
+      margin: 0;
+      padding: 0em;
+
+      text-align: left;
+    }
+
+    input ~ input {
+      margin-top: 1em;
+    }
+
+  `
 
 }

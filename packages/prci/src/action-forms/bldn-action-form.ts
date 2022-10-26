@@ -9,7 +9,6 @@ import {
 } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { PrivacyRequestDemand } from '@blindnet/core';
-import { PRCIStyles } from '../styles.js';
 
 import '../bldn-nav-wrapper.js'
 import '../bldn-dropdown.js'
@@ -20,13 +19,10 @@ import '../bldn-dropdown.js'
 export abstract class ActionForm extends LitElement {
 
   /** @prop */
-  @property({ type: Array }) dataCategories: undefined | string[]
+  @property({ type: Number, attribute: 'demand-group-index' }) demandGroupIndex: undefined | number;
 
   /** @prop */
-  @property({ type: Number }) demandGroupIndex: undefined | number;
-
-  /** @prop */
-  @property({ type: Array }) demands: undefined | PrivacyRequestDemand[]
+  @property({ type: Array, attribute: 'demands' }) demands: PrivacyRequestDemand[] = this.getDefaultDemands()
 
   /** Indicates that there is an error in the form input */
   @state() hasError: boolean = false
@@ -118,16 +114,7 @@ export abstract class ActionForm extends LitElement {
 
   abstract getDefaultDemands(): PrivacyRequestDemand[];
 
-  protected willUpdate(
-    _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
-  ): void {
-    if (_changedProperties.has('demands') && this.demands === undefined) {
-      this.demands = this.getDefaultDemands();
-    }
-  }
-
   render(): TemplateResult<1 | 2> {
-    console.log('rendering action form')
     return html`
 
       <bldn-nav-wrapper left-button='Back' right-button='Next'
@@ -161,7 +148,7 @@ export abstract class ActionForm extends LitElement {
       }
 
       bldn-dropdown.main-section[open] {
-        padding: 2.5em 2.5em 0em 2.5em;
+        padding: 2.5em 2.5em 0.5em 2.5em;
       }
 
       bldn-dropdown.main-section:hover {
@@ -179,6 +166,11 @@ export abstract class ActionForm extends LitElement {
       bldn-dropdown.main-section > span {
         font-size: var(--bldn-action-form-section-heading-font-size, var(--font-size-medium));
         color: var(--bldn-action-form-section-heading-font-color, var(--color-dark));
+      }
+
+      /* Padding in each other option dropdown */
+      bldn-dropdown bldn-dropdown[open] {
+        padding-bottom: 1.875em;
       }
 
       /* Font for other options headings */

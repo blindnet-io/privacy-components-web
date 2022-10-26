@@ -2,6 +2,8 @@
 /* eslint-disable camelcase */
 import {
   ApproveDemandPayload,
+  ConfigurationService,
+  DataCategoryResponsePayload,
   DenyDemandPayload,
   PendingDemandDetailsPayload,
   PendingDemandPayload,
@@ -143,6 +145,24 @@ export class ComputationAPI {
     // If no demands get bad request response
     return 'code=400';
   }
+
+  // Configuration endpoints
+
+  async getDataCategories(): Promise<DataCategoryResponsePayload[]> {
+    const endpoint = `/configure/data-categories`;
+
+    const response = await fetch(this.fullURL(endpoint), {
+      method: 'GET',
+      headers: this.headers(true),
+    });
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+    return response.json();
+  }
+
+  // Privacy Request Endpoints
 
   private preProcessRequest(request: PrivacyRequest): PrivacyRequest {
     // If all privacy scopes provided, this is the same as no restriction
