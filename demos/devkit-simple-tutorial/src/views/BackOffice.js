@@ -2,6 +2,13 @@ import { LitElement, html, css } from 'lit';
 import { Router } from '@vaadin/router';
 
 export class AppBackOffice extends LitElement {
+  static get properties() {
+    return {
+      _username: { state: true },
+      _password: { state: true },
+    };
+  }
+
   static get styles() {
     return css``;
   }
@@ -18,13 +25,68 @@ export class AppBackOffice extends LitElement {
     }
   }
 
+  /**
+   * Get a blindnet token given an auth0 ones
+   * @param {string}
+   */
+  async getBlindnetAdminToken(username, password) {
+    return fetch(
+      'https://blindnet-connector-demo-staging.azurewebsites.net/auth/admin/token',
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          username,
+          password,
+        }),
+      }
+    ).then(response => response.json());
+  }
+
+  handleLoginClick() {
+    this.getBlindnetAdminToken(this._username, this._password).then(
+      adminToken => {
+        localStorage.setItem('dci_admin_token', adminToken);
+        // console.log(response)
+        this.showDCI();
+      }
+    );
+  }
+
+  /**
+   *
+   * @param {Event} e
+   */
+  handleUsernameChange(e) {
+    this._username = e.target.value;
+  }
+
+  /**
+   *
+   * @param {Event} e
+   */
+  handlePasswordChange(e) {
+    this._password = e.target.value;
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    localStorage.removeItem('dci_admin_token');
+  }
+
   render() {
     return html`
       <h1>Back Office</h1>
-
-      <input type="text" placeholder="username" />
-      <input type="password" placeholder="password" />
-      <button @click=${this.showDCI}>Login</button>
+      <input
+        @change=${this.handleUsernameChange}
+        type="text"
+        placeholder="username"
+      />
+      <input
+        @change=${this.handlePasswordChange}
+        type="password"
+        placeholder="password"
+      />
+      <button @click=${this.handleLoginClick}>Login</button>
     `;
   }
 }

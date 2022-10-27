@@ -8,6 +8,17 @@ import 'carbon-web-components/es/components/file-uploader/index.js';
 import 'carbon-web-components/es/components/notification/inline-notification.js';
 import { FILE_UPLOADER_ITEM_STATE } from 'carbon-web-components/es/components/file-uploader/file-uploader-item.js';
 import { when } from 'lit/directives/when.js';
+import { Auth0Client } from '@auth0/auth0-spa-js';
+
+// Get an auth0 instance
+const auth0 = new Auth0Client({
+  domain: 'blindnet.eu.auth0.com',
+  client_id: '1C0uhFCpzvJAkFi4uqoq2oAWSgQicqHc',
+  redirect_uri: 'http://localhost:8000/demos/devkit-simple-tutorial/privacy',
+  authorizationParams: {
+    redirect_uri: 'http://localhost:8000/demos/devkit-simple-tutorial/privacy',
+  },
+});
 
 export class AppParticipateForm extends LitElement {
   static get properties() {
@@ -16,6 +27,7 @@ export class AppParticipateForm extends LitElement {
       consentGiven: { type: Boolean, state: true },
       requireConsent: { type: Boolean, state: true },
       _files: { type: Array, state: true },
+      _apiToken: { state: true },
     };
   }
 
@@ -131,13 +143,11 @@ export class AppParticipateForm extends LitElement {
     this._notificationSuccess.open = true;
   }
 
-  /**
-   * @param {String} uid
-   */
-  async giveConsent(uid) {
+  async giveConsent() {
     const headers = {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
+      Authorization: `Bearer ${this._apiToken}`,
     };
     await fetch(
       'https://devkit-pce-staging.azurewebsites.net/v0/user-events/consent',
@@ -145,13 +155,7 @@ export class AppParticipateForm extends LitElement {
         method: 'POST',
         headers,
         body: JSON.stringify({
-          dataSubject: {
-            // id: 'fdfc95a6-8fd8-4581-91f7-b3d236a6a10e',
-            id: uid,
-            schema: 'dsid',
-          },
           consentId: '28b5bee0-9db8-40ec-840e-64eafbfb9ddd',
-          date: new Date().toISOString(),
         }),
       }
     );
@@ -208,10 +212,9 @@ export class AppParticipateForm extends LitElement {
       if (this.consentGiven) {
         this.requireConsent = false;
         await this.saveDataToServer(formData);
-        // TODO: remove this when auth is implemented
         const uid = formData.get('email')?.toString() || 'john.doe@example.com';
         localStorage.setItem('priv_user_id', uid);
-        await this.giveConsent(uid);
+        await this.giveConsent();
         this.setSubmitting(true);
         this.setValidity();
       } else {
@@ -256,7 +259,49 @@ export class AppParticipateForm extends LitElement {
     this._files = newFiles;
   }
 
+  /**
+   * Get a blindnet token given an auth0 ones
+   * @param {string} auth0Token
+   * @returns Promise<Response>
+   */
+  async getBlindnetToken(auth0Token) {
+    const headers = {
+      Authorization: `Bearer ${auth0Token}`,
+    };
+
+    return fetch(
+      'https://blindnet-connector-demo-staging.azurewebsites.net/auth/token',
+      {
+        method: 'GET',
+        headers,
+      }
+    );
+  }
+
   render() {
+    // Try to get an auth0 token
+    // if (this._apiToken === undefined) {
+    auth0
+      .getTokenSilently()
+      .then(auth0Token => {
+        // Exchange auth0 token for a blindnet one
+        this.getBlindnetToken(auth0Token)
+          .then(response => {
+            response.json().then(blindnetToken => {
+              this._apiToken = blindnetToken;
+            });
+          })
+          .catch(error => {
+            // eslint-disable-next-line no-console
+            console.log(error);
+          });
+      })
+      .catch(() => {
+        // If not logged in, redirect to login page
+        window.location.href = `${window.location.origin}/demos/devkit-simple-tutorial/login`;
+      });
+    // }
+
     return html`
       <h1>Take part in our prize draw!</h1>
 

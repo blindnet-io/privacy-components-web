@@ -1,18 +1,28 @@
 import { LitElement, html, css } from 'lit';
+import { when } from 'lit/directives/when.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
+import { Auth0Client } from '@auth0/auth0-spa-js';
+// eslint-disable-next-line camelcase
+import jwt_decode from 'jwt-decode';
 
 import '@blindnet/prci';
 
-import { Magic } from 'magic-sdk';
-import { choose } from 'lit/directives/choose.js';
+// window.Buffer = Buffer
 
-const magicPublicKey = 'pk_live_7BFA1BB7D19A6FD9';
-const magic = new Magic(magicPublicKey);
+// Get an auth0 instance
+const auth0 = new Auth0Client({
+  domain: 'blindnet.eu.auth0.com',
+  client_id: '1C0uhFCpzvJAkFi4uqoq2oAWSgQicqHc',
+  redirect_uri: 'http://localhost:8000/demos/devkit-simple-tutorial/privacy',
+  authorizationParams: {
+    redirect_uri: 'http://localhost:8000/demos/devkit-simple-tutorial/privacy',
+  },
+});
 
 export class AppPrivacy extends LitElement {
   static get properties() {
     return {
-      _isLoggedIn: { type: Boolean, state: true },
-      _userData: { state: true },
+      _apiToken: { state: true },
     };
   }
 
@@ -24,87 +34,82 @@ export class AppPrivacy extends LitElement {
     `;
   }
 
+  /**
+   * Get a blindnet token given an auth0 ones
+   * @param {string} auth0Token
+   * @returns Promise<Response>
+   */
+  async getBlindnetToken(auth0Token) {
+    const headers = {
+      Authorization: `Bearer ${auth0Token}`,
+    };
+
+    return fetch(
+      'https://blindnet-connector-demo-staging.azurewebsites.net/auth/token',
+      {
+        method: 'GET',
+        headers,
+      }
+    );
+  }
+
   handleLoginClick() {
     window.location.href = `${window.location.origin}/demos/devkit-simple-tutorial/login`;
   }
 
   handleLogoutClick() {
-    magic.user.logout().then(() => {
-      this._userData = false;
-    });
+    auth0.logout();
   }
 
   render() {
-    // Complete magic auth flow after redirect from login page
-    if (magic) {
-      const url = new URL(window.location.href);
-      if (url.searchParams.has('magic_credential')) {
-        magic.auth
-          .loginWithCredential()
-          .then(() => {
-            this._isLoggedIn = true;
-            // Get info on the logged in user
-            magic.user.getMetadata().then(userData => {
-              this._userData = userData;
-            });
-          })
-          .catch(e => {
-            // eslint-disable-next-line no-console
-            console.log(e);
-          });
-      } else if (this._userData === undefined) {
-        magic.user
-          .isLoggedIn()
-          .then(isLogged => {
-            if (isLogged) {
-              magic.user.getMetadata().then(userData => {
-                this._userData = userData;
+    // Try to get an auth0 token
+    if (this._apiToken === undefined) {
+      auth0
+        .getTokenSilently()
+        .then(auth0Token => {
+          // Exchange auth0 token for a blindnet one
+          this.getBlindnetToken(auth0Token)
+            .then(response => {
+              response.json().then(blindnetToken => {
+                this._apiToken = blindnetToken;
               });
-            } else {
-              this._userData = false;
-            }
-          })
-          .catch(e => {
-            // eslint-disable-next-line no-console
-            console.log(e);
-          });
-      }
+            })
+            .catch(error => {
+              // eslint-disable-next-line no-console
+              console.log(error);
+            });
+        })
+        .catch(() => {
+          // If not logged in, do nothing as PRCI can be used unauthenticated
+        });
     }
 
-    // FIXME: Must configure computation-api.ts to actually use this api-token once CORS issue is resolved
     return html`
       <bldn-priv-request
         data-categories='["contact", "name", "uid", "other-data"]'
-        api-token=${this._userData
-          ? this._userData.email
-          : 'john.doe@example.com'}
+        api-token=${ifDefined(this._apiToken)}
       ></bldn-priv-request>
-      <span>
-        ${choose(
-          this._userData,
-          [
-            [undefined, () => html` Getting user data... `],
-            [
-              false,
-              () => html`
-                Not logged in.<bldn-button
-                  mode="link"
-                  @bldn-button:click=${this.handleLoginClick}
-                  >Login</bldn-button
-                >
-              `,
-            ],
-          ],
-          () => html`
-            Logged in as ${this._userData.email}.
-            <bldn-button
-              mode="link"
-              @bldn-button:click=${this.handleLogoutClick}
-              >Logout</bldn-button
-            >
-          `
-        )}
-      </span>
+
+      ${when(
+        this._apiToken,
+        () => html`
+          <span
+            >Logged in as
+            ${
+              // @ts-ignore
+              jwt_decode(this._apiToken).uid
+            }.</span
+          >
+          <bldn-button @click=${this.handleLogoutClick} mode="link">
+            Logout
+          </bldn-button>
+        `,
+        () => html`
+          <bldn-button @click=${this.handleLoginClick} mode="link">
+            Login
+          </bldn-button>
+        `
+      )}
     `;
   }
 }

@@ -15,6 +15,8 @@ export interface CoreConfiguration {
    * if empty, a default value 'john.doe@example.com' will be used.
    */
   apiToken?: string;
+
+  adminToken?: string;
 }
 
 /**
@@ -42,6 +44,11 @@ export abstract class BlindnetCore {
     ComputationAPI.getInstance().setToken(apiToken);
   }
 
+  static setAdminToken(adminToken: string) {
+    BlindnetCore._configuration.adminToken = adminToken;
+    ComputationAPI.getInstance().setAdminToken(adminToken);
+  }
+
   /**
    * Use configuration to correctly set up everything internally.
    *
@@ -57,6 +64,7 @@ export abstract class BlindnetCore {
       ComputationAPI.configure(
         configuration.computationBaseUrl,
         configuration.apiToken,
+        configuration.adminToken,
         force
       );
     return isConfigUpdated;

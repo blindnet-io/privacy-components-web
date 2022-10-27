@@ -23,7 +23,11 @@ export class ComputationAPI {
   /**
    * @param baseURL base URL (schema + host + port + base-path) to call
    */
-  private constructor(baseURL?: string, apiToken?: string) {
+  private constructor(
+    baseURL?: string,
+    apiToken?: string,
+    adminToken?: string
+  ) {
     if (!baseURL) {
       this._baseURL = ComputationAPI.DEFAULT_URL;
     } else if (baseURL === 'false') {
@@ -38,6 +42,13 @@ export class ComputationAPI {
       this._apiToken = 'john.doe@example.com';
     } else {
       this._apiToken = apiToken;
+    }
+
+    if (!adminToken) {
+      // eslint-disable-next-line no-console
+      this._adminToken = '';
+    } else {
+      this._adminToken = adminToken;
     }
   }
 
@@ -65,6 +76,12 @@ export class ComputationAPI {
     this._apiToken = apiToken;
   }
 
+  private _adminToken: string;
+
+  public setAdminToken(adminToken: string) {
+    this._adminToken = adminToken;
+  }
+
   /**
    *
    * @param baseURL base URL (schema + host + port + base-path) to call (for default behavior, see mock)
@@ -74,6 +91,7 @@ export class ComputationAPI {
   public static configure(
     baseURL?: string,
     apiToken?: string,
+    adminToken?: string,
     force = false
   ): boolean {
     if (ComputationAPI.instance && !force) {
@@ -95,7 +113,7 @@ export class ComputationAPI {
 
       return false;
     }
-    ComputationAPI.instance = new ComputationAPI(baseURL, apiToken);
+    ComputationAPI.instance = new ComputationAPI(baseURL, apiToken, adminToken);
     return true;
   }
 
@@ -110,17 +128,21 @@ export class ComputationAPI {
   }
 
   private headers(acceptJSON = false, request?: PrivacyRequest): Headers {
-    return new Headers({
+    const headers = new Headers({
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
-      Authorization: this._apiToken || 'john.doe@example.com',
-      // Authorization:
-      //   localStorage.getItem('priv_user_id') || 'john.doe@example.com',
       ...(this.isMocked && request
         ? { Prefer: this.getMockHeader(request) }
         : {}),
       ...(acceptJSON ? { accept: 'application/json' } : {}),
     });
+
+    // Append auth header only if apiToken is defined
+    if (this._apiToken) {
+      headers.append('Authorization', `Bearer ${this._apiToken}`);
+    }
+
+    return headers;
   }
 
   /**
@@ -244,7 +266,10 @@ export class ComputationAPI {
       `https://devkit-pce-staging.azurewebsites.net/v0/consumer-interface/pending-requests`,
       {
         method: 'GET',
-        headers: { accept: 'application/json' },
+        headers: {
+          accept: 'application/json',
+          Authorization: `Bearer ${this._adminToken}`,
+        },
       }
     ).then(response => {
       if (!response.ok) {
@@ -264,7 +289,10 @@ export class ComputationAPI {
       `https://devkit-pce-staging.azurewebsites.net/v0/consumer-interface/pending-requests/${id}`,
       {
         method: 'GET',
-        headers: { accept: 'application/json' },
+        headers: {
+          accept: 'application/json',
+          Authorization: `Bearer ${this._adminToken}`,
+        },
       }
     ).then(response => {
       if (!response.ok) {
@@ -296,7 +324,10 @@ export class ComputationAPI {
       `https://devkit-pce-staging.azurewebsites.net/v0/consumer-interface/pending-requests/approve`,
       {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this._adminToken}`,
+        },
         body: JSON.stringify(payload),
       }
     ).then(response => {
@@ -332,7 +363,10 @@ export class ComputationAPI {
       `https://devkit-pce-staging.azurewebsites.net/v0/consumer-interface/pending-requests/deny`,
       {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this._adminToken}`,
+        },
         body: JSON.stringify(payload),
       }
     ).then(response => {
