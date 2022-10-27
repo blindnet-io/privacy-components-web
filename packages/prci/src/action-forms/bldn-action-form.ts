@@ -68,12 +68,14 @@ export abstract class ActionForm extends LitElement {
    * Validate and add demand to request when add clicked
    */
   handleAddClick() {
-
     // If form input is valid, add demands and emit event.
     // Otherwise, error messages will be set.
     if (this.validate()) {
       this.addToPrivacyRequest(this.demandGroupIndex, this.demands!)
-      this.dispatchEvent(new Event('bldn-action-form:validated-demands'))
+      this.dispatchEvent(new CustomEvent('bldn-action-form:next-click', {
+        bubbles: true,
+        composed: true
+      }))
     }
 
   }

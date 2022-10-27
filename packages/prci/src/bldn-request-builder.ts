@@ -5,6 +5,7 @@ import { choose } from "lit/directives/choose.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 
 import './bldn-tile-menu.js'
+import './bldn-request-review.js'
 import './action-forms/bldn-access-form.js'
 import { ACTION_DESCRIPTIONS, ACTION_TITLES } from "./utils/dictionary.js";
 
@@ -41,7 +42,6 @@ export class BldnRequestBuilder extends LitElement {
    * @returns Template with an action form
    */
   private getActionForm(action: PrivacyRequestDemand.action): TemplateResult<1|2> {
-    console.log(this._demandGroupIndex)
     return html`
       ${choose(action, [
         [PrivacyRequestDemand.action.ACCESS, () => html`
@@ -132,9 +132,6 @@ export class BldnRequestBuilder extends LitElement {
     } else {
       this._demandGroups.push(demands)
     }
-
-    console.log('demands set')
-    console.log(this._demandGroups)
   }
 
   /**
@@ -150,6 +147,11 @@ export class BldnRequestBuilder extends LitElement {
   private goToMenu(e: Event) {
     e.stopPropagation()
     this._uiState = RequestBuilderUIState.menu
+  }
+
+  private goToReview(e: Event) {
+    e.stopPropagation()
+    this._uiState = RequestBuilderUIState.review
   }
 
   private handleDataCategoriesChange() {
@@ -168,7 +170,6 @@ export class BldnRequestBuilder extends LitElement {
         // If data categories to allow was not specified, include all non-subcategories
         this._allowedDataCategories = allDataCategories.filter(dc => !dc.includes('.'))
       }
-      console.log(this._allowedDataCategories)
     })
 
   }
@@ -182,19 +183,21 @@ export class BldnRequestBuilder extends LitElement {
     super.connectedCallback();
 
     // Action menu listeners
-    this.addEventListener('bldn-tile-menu:tile-click', this.selectAction)
+    this.addEventListener('bldn-tile-menu:tile-click', this.selectAction);
 
     // Request builder listeners
     this.addEventListener('bldn-action-form:set-demands', this.setDemands);
-    this.addEventListener('bldn-action-form:detele-demands', this.deleteDemands);
-    this.addEventListener('bldn-action-form:back-click', this.goToMenu)
+    this.addEventListener('bldn-action-form:delete-demands', this.deleteDemands);
+    this.addEventListener('bldn-action-form:back-click', this.goToMenu);
+    this.addEventListener('bldn-action-form:next-click', this.goToReview);
   }
 
   disconnectedCallback(): void {
     this.removeEventListener('bldn-tile-menu:tile-click', this.selectAction)
     this.removeEventListener('bldn-action-form:set-demands', this.setDemands);
-    this.removeEventListener('bldn-action-form:detele-demands', this.deleteDemands);
+    this.removeEventListener('bldn-action-form:delete-demands', this.deleteDemands);
     this.removeEventListener('bldn-action-form:back-click', this.goToMenu);
+    this.removeEventListener('bldn-action-form:next-click', this.goToReview);
   }
 
   protected willUpdate(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {

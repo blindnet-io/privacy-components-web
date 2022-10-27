@@ -76,7 +76,6 @@ export class BldnProvenanceRestriction extends LitElement {
       border: none;
       margin: 0;
       padding: 0em;
-
       text-align: left;
     }
 

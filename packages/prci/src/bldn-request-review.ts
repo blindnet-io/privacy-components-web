@@ -1,11 +1,17 @@
-import { PrivacyRequestDemand } from "@blindnet/core";
+import { CreatePrivacyRequestPayload, PrivacyRequestDemand } from "@blindnet/core";
 import { msg, str } from "@lit/localize";
 import { html, LitElement } from "lit";
-import { property } from "lit/decorators.js";
+import { customElement, property } from "lit/decorators.js";
 import { choose } from "lit/directives/choose.js";
 import { map } from "lit/directives/map.js";
 import { when } from "lit/directives/when.js";
 
+import './bldn-nav-wrapper.js'
+import './bldn-dropdown.js'
+import './bldn-radio-list.js'
+import { TARGET_DESCRIPTIONS } from "./utils/dictionary.js";
+
+@customElement('bldn-request-review')
 export class BldnRequestReview extends LitElement {
 
   /** @prop */
@@ -17,7 +23,7 @@ export class BldnRequestReview extends LitElement {
       return html`
         ${choose(demandGroup[0].action, [
           [PrivacyRequestDemand.action.ACCESS, () => html`
-          
+            ACCESS REVIEW TEMPLATE
           `],
           [PrivacyRequestDemand.action.DELETE, () => html`
           
@@ -51,6 +57,8 @@ export class BldnRequestReview extends LitElement {
         `)}
       `
     }
+    
+    return html`${msg('No demands to review!')}`
 
   }
 
@@ -74,7 +82,13 @@ export class BldnRequestReview extends LitElement {
         </bldn-dropdown>
         <bldn-dropdown class='main-section' mode='major'>
           <span slot='heading'><strong>${msg('Request Target')}</strong></span>
-          ${}
+          <bldn-radio-list
+            .choices=${Object.values(CreatePrivacyRequestPayload.target).map(target => ({
+              display: TARGET_DESCRIPTIONS[target](),
+              value: target,
+              selected: target === CreatePrivacyRequestPayload.target.PARTNERS
+            }))}
+          ></bldn-radio-list>
         </bldn-dropdown>
       </bldn-nav-wrapper>
     `
