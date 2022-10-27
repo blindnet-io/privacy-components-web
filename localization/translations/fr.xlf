@@ -44,6 +44,33 @@
 <trans-unit id="s9ff4e107523f7fab">
   <source>Log in / Sign up</source>
 </trans-unit>
+<trans-unit id="sd3b15d6d4ea696f7">
+  <source>My additional message:</source>
+</trans-unit>
+<trans-unit id="sebbb864b5cee4a82">
+  <source>Please note that adding a personalized message might lead to the demand taking longer to be processed</source>
+</trans-unit>
+<trans-unit id="h87332548e751bc1c">
+  <source><x id="0" equiv-text="&lt;b&gt;"/>OTHER-DATA:<x id="1" equiv-text="&lt;/b&gt;"/> Specify another type of data</source>
+</trans-unit>
+<trans-unit id="s4618111b41da4ae5">
+  <source>Other data type:</source>
+</trans-unit>
+<trans-unit id="s40717e0539504811">
+  <source>Specify a date range for the selected data categories:</source>
+</trans-unit>
+<trans-unit id="sa6ab5184d6315895">
+  <source>From</source>
+</trans-unit>
+<trans-unit id="s08c83907b56ac0a4">
+  <source>to</source>
+</trans-unit>
+<trans-unit id="s3b91d548b3c1db64">
+  <source>Click to expand</source>
+</trans-unit>
+<trans-unit id="s41d0e1ff19aa568b">
+  <source>Arrow to expand or collapse the dropdown</source>
+</trans-unit>
 <trans-unit id="s13c123f97668a70b">
   <source>Access</source>
 </trans-unit>
@@ -285,8 +312,8 @@
 <trans-unit id="sb166559fc20c0757">
   <source>other data</source>
 </trans-unit>
-<trans-unit id="hd999b93815f22f99">
-  <source><x id="0" equiv-text="&lt;b&gt;"/>ALL categories of data the organization has on me<x id="1" equiv-text="&lt;/b&gt;"/></source>
+<trans-unit id="h8d869518495a8edd">
+  <source><x id="0" equiv-text="&lt;b&gt;"/>ALL<x id="1" equiv-text="&lt;/b&gt;"/> categories of data the organization has on me</source>
 </trans-unit>
 <trans-unit id="h3db45950c0fcfcdd">
   <source><x id="0" equiv-text="&lt;b&gt;"/>AFFILIATION data:<x id="1" equiv-text="&lt;/b&gt;"/> Groups and Organisations I am linked to
@@ -414,44 +441,17 @@
 <trans-unit id="s86c0a813feb2e101">
   <source>service end</source>
 </trans-unit>
-<trans-unit id="s3b91d548b3c1db64">
-  <source>Click to expand</source>
-</trans-unit>
-<trans-unit id="s41d0e1ff19aa568b">
-  <source>Arrow to expand or collapse the dropdown</source>
-</trans-unit>
 <trans-unit id="s1204f9b176a19dfd">
   <source>Details of my <x id="0" equiv-text="${this.action}"/> Demand</source>
 </trans-unit>
 <trans-unit id="s29ec563d56cf6c6b">
   <source>Other Options</source>
 </trans-unit>
-<trans-unit id="h87332548e751bc1c">
-  <source><x id="0" equiv-text="&lt;b&gt;"/>OTHER-DATA:<x id="1" equiv-text="&lt;/b&gt;"/> Specify another type of data</source>
-</trans-unit>
-<trans-unit id="s4618111b41da4ae5">
-  <source>Other data type:</source>
-</trans-unit>
-<trans-unit id="s40717e0539504811">
-  <source>Specify a date range for the selected data categories:</source>
-</trans-unit>
-<trans-unit id="sa6ab5184d6315895">
-  <source>From</source>
-</trans-unit>
-<trans-unit id="s08c83907b56ac0a4">
-  <source>to</source>
-</trans-unit>
 <trans-unit id="s6303c9c96b50c164">
   <source>My demand applies to data from the following provenance:</source>
 </trans-unit>
-<trans-unit id="sd3b15d6d4ea696f7">
-  <source>My additional message:</source>
-</trans-unit>
-<trans-unit id="sebbb864b5cee4a82">
-  <source>Please note that adding a personalized message might lead to the demand taking longer to be processed</source>
-</trans-unit>
-<trans-unit id="sdca708c1d0c9116a">
-  <source>ALL categories of data the organization has on me</source>
+<trans-unit id="s3f2acea3f9106217">
+  <source>I want to access:</source>
 </trans-unit>
 <trans-unit id="s7c9992bcec8e44cf">
   <source>Date Restriction</source>

@@ -1,6 +1,6 @@
 import { msg } from '@lit/localize';
 import { css, html, LitElement, PropertyValueMap, TemplateResult } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import { customElement, property, query, queryAll, state } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
 import { when } from 'lit/directives/when.js';
 
@@ -42,7 +42,8 @@ const expandListSvg = new URL(
 interface Choice {
   value: string;
   display: TemplateResult<1|2>;
-  checked?: boolean;
+  checked: boolean;
+  allChoice?: boolean;
 }
 
 /**
@@ -54,18 +55,16 @@ enum SelectionState {
   NONE,
 }
 
+/**
+ * @event {CustomEvent} bldn-all-checklist:choice-select - Fired when a choice is selected
+ * @event {CustomEvent} bldn-all-checklist:choice-deselect - Fired when a choice is deselected
+ */
 @customElement('bldn-all-checklist')
 export class BldnAllChecklist extends LitElement {
 
   // List of choices to be displayed with a unique identifier, description string (displayed),
   // and checked boolean indicating if the option should be checked initially
   @property({ type: Array }) choices: Choice[] = [];
-
-  /** @prop */
-  @property({ type: Object }) allChoice: Choice = {
-    value: '*',
-    display: html`<b>Select All</b>`
-  }
 
   /** @prop */
   @property({ type: Boolean, reflect: true }) open: boolean = false;
@@ -79,6 +78,12 @@ export class BldnAllChecklist extends LitElement {
 
   // Holds the IDs of all selected choices
   @state() selectedChoices = new Set<string>();
+
+  @query('#all-checkbox')
+  allCheckbox!: HTMLInputElement;
+
+  @queryAll('.choice-checkbox')
+  choiceCheckboxes!: HTMLInputElement[];
 
   /**
    * Select a choice and notify parent component
@@ -96,14 +101,13 @@ export class BldnAllChecklist extends LitElement {
       },
     });
     this.dispatchEvent(event);
-    this.updateSelectionState();
   }
 
   /**
    * Deselect a choice and notify parent component
    * @param value value of the choice to delete
    */
-  deleteChoice(value: string) {
+  deselectChoice(value: string) {
     this.selectedChoices.delete(value);
     // Fire delete event
     const event = new CustomEvent(`bldn-all-checklist:choice-deselect`, {
@@ -115,56 +119,42 @@ export class BldnAllChecklist extends LitElement {
       },
     });
     this.dispatchEvent(event);
-    this.updateSelectionState();
   }
 
   handleChoiceClick(e: Event) {
     const { id, checked } = e.target as HTMLInputElement;
+
     if (id === 'all-checkbox') {
-      // Get all choice checkboxes
-      const allCheckboxes =
-        this.shadowRoot?.querySelectorAll('.choice-checkbox');
 
       if (checked) {
-        // Select all deselected choices
-        // this.allChecked = true;
-        allCheckboxes?.forEach(element => {
-          const input = element as HTMLInputElement;
-          if (!input.checked) {
-            input.checked = true;
-            this.selectChoice(input.id);
-          }
-        });
+        // Select all choices
+        this.choiceCheckboxes.forEach(input => {
+          // eslint-disable-next-line no-param-reassign
+          input.checked = true;
+        })
+        this.choices.filter(c => !c.allChoice).forEach(c => {
+          this.selectChoice(c.value)
+        })
       } else {
-        // Deselect all selected choices
-        // this.allChecked = false;
-        allCheckboxes?.forEach(element => {
-          const input = element as HTMLInputElement;
-          if (input.checked) {
-            input.checked = false;
-            this.deleteChoice(input.id);
-          }
-        });
+        // Deselect all choices
+        this.choiceCheckboxes.forEach(input => {
+          // eslint-disable-next-line no-param-reassign
+          input.checked = false;
+        })
+        this.choices.filter(c => !c.allChoice).forEach(c => {
+          this.deselectChoice(c.value)
+        })
       }
     } else if (checked) {
-      // Select a single choice
-      this.selectChoice(id);
-      // Set all to checked
-      const allCheckbox = this.shadowRoot?.getElementById(
-        'all-checkbox'
-      ) as HTMLInputElement;
-      allCheckbox.checked = true;
+      // Select one choice
+      this.selectChoice(id)
     } else {
-      // Deselect a single choice
-      this.deleteChoice(id);
-      // Set all to unchecked if none selected
-      if (this.selectedChoices.size === 0) {
-        const allCheckbox = this.shadowRoot?.getElementById(
-          'all-checkbox'
-        ) as HTMLInputElement;
-        allCheckbox.checked = false;
-      }
+      // Deselect one choice
+      this.deselectChoice(id)
     }
+
+    // Update component state so checkboxes render properly
+    this.updateSelectionState()
   }
 
   // TODO: Combine these two other events into one change event
@@ -196,11 +186,12 @@ export class BldnAllChecklist extends LitElement {
    * Update the selection state based on currently selected choices
    */
   updateSelectionState() {
+
     switch (this.selectedChoices.size) {
       case 0:
         this.selectionState = SelectionState.NONE;
         break;
-      case this.choices.length:
+      case this.choices.length - 1:
         this.selectionState = SelectionState.ALL;
         break;
       default:
@@ -249,17 +240,34 @@ export class BldnAllChecklist extends LitElement {
   ): void {
     if (_changedProperties.has('choices')) {
 
-      // Update selected choices based on input
+      // Add all choices if all choice is checked intially
+      const allChoice = this.choices.find(c => c.allChoice)
+      if (allChoice && allChoice.checked) {
+        this.choices.forEach(c => {
+          if (!c.allChoice) {
+            this.selectedChoices.add(c.value)
+          }
+        })
+      }
+
+      // Update selected choices based on initial input
       this.choices.forEach(c => {
-        if (c.checked) {
+        if (c.checked && !c.allChoice) {
           this.selectedChoices.add(c.value);
         }
       });
-      this.updateSelectionState();
     }
   }
 
   render() {
+
+    const allChoice = this.choices.find(c => c.allChoice) || {
+      value: '*',
+      display: html`<b>${msg('Select All')}</b>`,
+      checked: true,
+      allChoice: true
+    }
+
     return html`
 
       <!-- Render each choice -->
@@ -271,23 +279,23 @@ export class BldnAllChecklist extends LitElement {
             id="all-checkbox"
             type="checkbox"
             @click=${this.handleChoiceClick}
-            ?checked=${true}
+            ?checked=${allChoice.checked}
           />
           <label for="all-checkbox">
             ${this.getCheckboxImg()}
           </label>
-          <span class="all-prefix">${this.allChoice.display}</span>
+          <span class="all-prefix">${allChoice.display}</span>
         </div>
 
         ${when(this.open, () => html`        
-          ${this.choices.map(
+          ${this.choices.filter(c => !c.allChoice).map(
             c => html`
               <div class="choice-ctr">
                 <input
                   id=${c.value}
                   class="choice-checkbox"
                   type="checkbox"
-                  ?checked=${c.checked}
+                  ?checked=${this.selectedChoices.has(c.value)}
                   @change=${this.handleChoiceClick}
                 />
                 <label>${c.display}</label>

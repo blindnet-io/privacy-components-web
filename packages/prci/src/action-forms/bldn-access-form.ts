@@ -26,76 +26,6 @@ export class AccessForm extends ActionForm {
 
   action = PrivacyRequestDemand.action.ACCESS;
 
-  constructor() {
-    super();
-
-    // Access data cauthategory listeners
-    this.addEventListener('bldn-all-checklist:choice-select', e => {
-      const { value } = (e as CustomEvent).detail;
-      this.demands[0].restrictions!.privacy_scope!.push({
-        dc: value,
-        pc: PrivacyScopeRestriction.pc._,
-        pp: PrivacyScopeRestriction.pp._,
-      });
-    });
-    this.addEventListener('bldn-all-checklist:choice-deselect', e => {
-      const { value } = (e as CustomEvent).detail;
-      this.demands[0].restrictions!.privacy_scope!.splice(
-        this.demands[0].restrictions!.privacy_scope!.findIndex(
-          psr => psr.dc === value
-        ),
-        1
-      );
-    });
-
-    // FIXME: Disabled until we resolve how to handle OTHER-DATA
-    // this.addEventListener('access-option-other-click', e => {
-    //   const { checked } = (e as CustomEvent).detail;
-    //   if (checked) {
-    //     this.demand.dataCategory?.add(DATA_CATEGORY['OTHER-DATA']);
-    //   } else {
-    //     this.demand.dataCategory?.delete(DATA_CATEGORY['OTHER-DATA']);
-    //   }
-    // });
-    // this.addEventListener('access-option-other-input', e => {
-    //   const { text } = (e as CustomEvent).detail
-    //   // TODO: What demand field to put the other-data category
-    // })
-  // }
-
-  // handleAdditionalMessageInput(e: Event) {
-  //   const { value } = e.target as HTMLTextAreaElement;
-  //   this.demand.message = value;
-  // }
-
-  // handleProvenanceTermClick(e: Event) {
-  //   const { id } = (e as CustomEvent).target as HTMLInputElement;
-  //   this.demand.restrictions!.provenance!.term = id as PROVENANCE;
-  // }
-
-  // handleProvenanceTargetClick(e: Event) {
-  //   const { id } = (e as CustomEvent).target as HTMLInputElement;
-  //   this.demand.restrictions!.provenance!.target = id as TARGET;
-  // }
-
-  // handleDateRestrictionInput(e: Event) {
-  //   const { id, value } = e.target as HTMLInputElement;
-  //   if (id === 'date-start') {
-  //     if (value) {
-  //       this.demand.restrictions!.date_range!.from = new Date(value);
-  //     } else {
-  //       // Value is false when user hits 'clear' button on date picker
-  //       delete this.demand.restrictions?.date_range?.from;
-  //     }
-  //   } else if (id === 'date-end') {
-  //     if (value) {
-  //       this.demand.restrictions!.date_range!.to = new Date(value);
-  //     } else {
-  //       delete this.demand.restrictions?.date_range?.to;
-  //     }
-  //   }
-  }
-
   validateActionInput(): string[] | undefined {
     return undefined;
   }
@@ -103,8 +33,6 @@ export class AccessForm extends ActionForm {
   validateOptionsInput(): string[] | undefined {
     return undefined;
   }
-
-
 
   getDefaultDemands(): PrivacyRequestDemand[] {
     return [
@@ -205,11 +133,8 @@ export class AccessForm extends ActionForm {
             this.demands![0].restrictions?.privacy_scope?.findIndex(
               psr => psr.dc === dc
             ) !== -1,
+          allChoice: dc === '*'
         }))}
-        .allChoice=${{
-          display: DATA_CATEGORY_DESCRIPTIONS['*'](),
-          value: '*'
-        }}
       ></bldn-all-checklist>
     `
   }
@@ -237,6 +162,7 @@ export class AccessForm extends ActionForm {
 
       :host {
         text-align: left;
+        color: var(--bldn-access-form-font-color, var(--color-dark));
       }
 
       p {

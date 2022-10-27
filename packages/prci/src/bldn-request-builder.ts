@@ -132,6 +132,9 @@ export class BldnRequestBuilder extends LitElement {
     } else {
       this._demandGroups.push(demands)
     }
+
+    console.log('demands set')
+    console.log(this._demandGroups)
   }
 
   /**
@@ -213,6 +216,7 @@ export class BldnRequestBuilder extends LitElement {
         `],
         [RequestBuilderUIState.edit, () => this.getActionForm(this._action ?? PrivacyRequestDemand.action.ACCESS)],
         [RequestBuilderUIState.review, () => html`
+          
           <bldn-request-review></bldn-request-review>
         `]
       ])}

@@ -1,3 +1,87 @@
+import { PrivacyRequestDemand } from "@blindnet/core";
+import { msg, str } from "@lit/localize";
+import { html, LitElement } from "lit";
+import { property } from "lit/decorators.js";
+import { choose } from "lit/directives/choose.js";
+import { map } from "lit/directives/map.js";
+import { when } from "lit/directives/when.js";
+
+export class BldnRequestReview extends LitElement {
+
+  /** @prop */
+  @property({ type: Array }) demandGroups: PrivacyRequestDemand[][] = []
+
+  getReviewTemplate(demandGroup: PrivacyRequestDemand[]) {
+
+    if (demandGroup.length > 0) {
+      return html`
+        ${choose(demandGroup[0].action, [
+          [PrivacyRequestDemand.action.ACCESS, () => html`
+          
+          `],
+          [PrivacyRequestDemand.action.DELETE, () => html`
+          
+          `],
+          [PrivacyRequestDemand.action.MODIFY, () => html`
+          
+          `],
+          [PrivacyRequestDemand.action.OBJECT, () => html`
+          
+          `],
+          [PrivacyRequestDemand.action.RESTRICT, () => html`
+          
+          `],
+          [PrivacyRequestDemand.action.REVOKE_CONSENT, () => html`
+          
+          `],
+          [PrivacyRequestDemand.action.OTHER, () => html`
+          
+          `],
+          [PrivacyRequestDemand.action.ACCESS, () => html`
+          
+          `],
+          [PrivacyRequestDemand.action.ACCESS, () => html`
+          
+          `],
+        ], () => html`
+          <!-- Transparency Template -->
+          ${when(demandGroup[0].action.includes('TRANSPARENCY'), () => html`
+          
+          `)}
+        `)}
+      `
+    }
+
+  }
+
+  handleSubmitClick() {
+
+  }
+
+  render() {
+    return html`
+      <bldn-nav-wrapper mode='single' center-button='Submit Request'
+        @bldn-nav-wrapper:center-click=${this.handleSubmitClick}
+      >
+        <bldn-dropdown class='main-section' mode='major'>
+          <span slot='heading'><strong>${msg('Request Summary')}</strong></span>
+          ${map(this.demandGroups, group => html`
+            <bldn-dropdown>
+              <span slot='heading'><strong>${msg('Demand')}</strong></span>
+              ${this.getReviewTemplate(group)}
+            </bldn-dropdown>
+          `)}
+        </bldn-dropdown>
+        <bldn-dropdown class='main-section' mode='major'>
+          <span slot='heading'><strong>${msg('Request Target')}</strong></span>
+          ${}
+        </bldn-dropdown>
+      </bldn-nav-wrapper>
+    `
+  }
+
+}
+
 // /* eslint-disable lit/binding-positions */
 // import { msg } from '@lit/localize';
 // import { css, html, LitElement, PropertyValueMap } from 'lit';
