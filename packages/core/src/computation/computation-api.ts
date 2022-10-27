@@ -110,17 +110,23 @@ export class ComputationAPI {
   }
 
   private headers(acceptJSON = false, request?: PrivacyRequest): Headers {
-    return new Headers({
+
+    const headers = new Headers({
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
-      Authorization: this._apiToken || 'john.doe@example.com',
-      // Authorization:
-      //   localStorage.getItem('priv_user_id') || 'john.doe@example.com',
       ...(this.isMocked && request
         ? { Prefer: this.getMockHeader(request) }
         : {}),
       ...(acceptJSON ? { accept: 'application/json' } : {}),
     });
+
+    // Append auth header only if apiToken is defined
+    if (this._apiToken) {
+      headers.append('Authorization', this._apiToken)
+    }
+
+    return headers
+
   }
 
   /**

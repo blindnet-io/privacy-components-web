@@ -41,7 +41,7 @@ export function CoreConfigurationMixin<
 
     /**
      * Auth token or user ID to use in the authorization header of API requests.
-     * if empty, a default value 'john.doe@example.com' will be used.
+     * if empty, no authorization header will be passed.
      */
     apiToken = '';
 

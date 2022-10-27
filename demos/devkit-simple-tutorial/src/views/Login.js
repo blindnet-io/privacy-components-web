@@ -25,17 +25,6 @@ export class AppLogin extends LitElement {
   render() {
     auth0.getTokenSilently();
     auth0.loginWithRedirect();
-    return html`
-
-      <!-- <bldn-magic-auth
-        prompt="Please enter your email to submit a request."
-        magic-pub-key="pk_live_7BFA1BB7D19A6FD9"
-        redirect-uri="${window.location
-          .origin}/demos/devkit-simple-tutorial/privacy"
-      >
-      </bldn-magic-auth>
-      <bldn-auth></bldn-auth> -->
-    `;
   }
 }
 
