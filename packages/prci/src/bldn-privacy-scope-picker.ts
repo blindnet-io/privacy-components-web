@@ -1,5 +1,6 @@
+/* eslint-disable no-console */
 import { msg } from '@lit/localize';
-import { css, html, LitElement, TemplateResult } from 'lit';
+import { css, html, LitElement } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
 
@@ -7,16 +8,21 @@ import { PrivacyScopeRestriction } from '@blindnet/core';
 
 import './bldn-dropdown.js';
 import './bldn-all-checklist.js';
+import {
+  DATA_CATEGORY_DESCRIPTIONS,
+  PROCESSING_CATEGORY_DESCRIPTIONS,
+  PURPOSE_DESCRIPTIONS,
+} from './utils/dictionary.js';
 
-interface Choice {
-  value: string;
-  display: TemplateResult<1 | 2>;
-  checked: boolean;
-  allChoice?: boolean;
-}
+// interface Choice {
+//   value: string;
+//   display: TemplateResult<1 | 2>;
+//   checked: boolean;
+//   allChoice?: boolean;
+// }
 
-// eslint-disable-next-line @typescript-eslint/no-shadow, @typescript-eslint/no-unused-vars
 const cartesian = (...a) =>
+  // eslint-disable-next-line @typescript-eslint/no-shadow, @typescript-eslint/no-unused-vars
   a.reduce((a, b) => a.flatMap(d => b.map(e => [d, e].flat())));
 
 @customElement('blnd-privacy-scope-picker')
@@ -33,9 +39,10 @@ export class BldnPrivacyScopePicker extends LitElement {
 
   @property({ type: Array }) dataCategories: string[] = [];
 
-  @property({ type: Array }) processingCategories: Choice[] = [];
+  @property({ type: Array })
+  processingCategories: PrivacyScopeRestriction.pc[] = [];
 
-  @property({ type: Array }) purposes: Choice[] = [];
+  @property({ type: Array }) purposes: PrivacyScopeRestriction.pp[] = [];
 
   @state() _dataCategories: Set<string> = new Set<string>();
 
@@ -53,7 +60,7 @@ export class BldnPrivacyScopePicker extends LitElement {
           () => html`
             ${msg('I select the following')}
             <bldn-button id="scope-tooltip-button" mode="link"
-              >${msg('privacy scope')}</bldn-button
+              >${msg(html`<b>privacy scope</b>`)}</bldn-button
             >
           `,
         ],
@@ -62,7 +69,7 @@ export class BldnPrivacyScopePicker extends LitElement {
           () => html`
             ${msg('I object to the processing of my data within the following')}
             <bldn-button id="scope-tooltip-button" mode="link"
-              >${msg('privacy scope')}</bldn-button
+              >${msg(html`<b>privacy scope</b>`)}</bldn-button
             >
           `,
         ],
@@ -71,7 +78,7 @@ export class BldnPrivacyScopePicker extends LitElement {
           () => html`
             ${msg('I restrict the processing of my data to the following')}
             <bldn-button id="scope-tooltip-button" mode="link"
-              >${msg('privacy scope')}</bldn-button
+              >${msg(html`<b>privacy scope</b>`)}</bldn-button
             >
           `,
         ],
@@ -80,7 +87,12 @@ export class BldnPrivacyScopePicker extends LitElement {
   }
 
   setPrivacyScope() {
-    // const triples = cartesian([1, 2], [10, 20], [100, 200, 300])
+    const triples = cartesian(
+      this._dataCategories,
+      this.processingCategories,
+      this.purposes
+    );
+    console.log(triples);
   }
 
   addDataCategory(e: Event) {
@@ -115,6 +127,12 @@ export class BldnPrivacyScopePicker extends LitElement {
   }
 
   render() {
+    const triples = cartesian(
+      Array.from(this._dataCategories.values()),
+      Array.from(this._processingCategories.values()),
+      Array.from(this._purposes.values())
+    );
+    console.log(triples);
     return html`
       <p><b>${this.getModeTemplate()}</b></p>
       <p>
@@ -124,7 +142,12 @@ export class BldnPrivacyScopePicker extends LitElement {
       <bldn-dropdown>
         <span slot="heading"><strong>${msg('Data Categories')}</strong></span>
         <bldn-all-checklist
-          .choices=${this.dataCategories}
+          .choices=${this.dataCategories.map(dc => ({
+            value: dc,
+            display: DATA_CATEGORY_DESCRIPTIONS[dc](),
+            checked: this._dataCategories.has(dc),
+            allChoice: dc === '*',
+          }))}
           @bldn-all-checklist:choice-select=${this.addDataCategory}
           @bldn-all-checklist:choice-deselect=${this.removeDataCategory}
         ></bldn-all-checklist>
@@ -134,7 +157,12 @@ export class BldnPrivacyScopePicker extends LitElement {
           ><strong>${msg('Processing Categories')}</strong></span
         >
         <bldn-all-checklist
-          .choices=${this.processingCategories}
+          .choices=${this.processingCategories.map(pc => ({
+            value: pc,
+            display: PROCESSING_CATEGORY_DESCRIPTIONS[pc](),
+            checked: this._processingCategories.has(pc),
+            allChoice: pc === PrivacyScopeRestriction.pc._,
+          }))}
           @bldn-all-checklist:choice-select=${this.addProcessingCategory}
           @bldn-all-checklist:choice-deselect=${this.removeProcessingCategory}
         ></bldn-all-checklist>
@@ -144,7 +172,12 @@ export class BldnPrivacyScopePicker extends LitElement {
           ><strong>${msg('Purposes of Processing')}</strong></span
         >
         <bldn-all-checklist
-          .choices=${this.purposes}
+          .choices=${this.purposes.map(pp => ({
+            value: pp,
+            display: PURPOSE_DESCRIPTIONS[pp](),
+            checked: this._purposes.has(pp),
+            allChoice: pp === PrivacyScopeRestriction.pp._,
+          }))}
           @bldn-all-checklist:choice-select=${this.addPurpose}
           @bldn-all-checklist:choice-deselect=${this.removePurpose}
         ></bldn-all-checklist>
@@ -152,5 +185,18 @@ export class BldnPrivacyScopePicker extends LitElement {
     `;
   }
 
-  static styles = css``;
+  static styles = css`
+    :host {
+      color: var(--bldn-privacy-scope-picker-font-color, var(--color-dark));
+      text-align: left;
+    }
+
+    bldn-dropdown:not(:last-child) {
+      border-bottom: 2px solid
+        var(
+          --bldn-privacy-scope-picker-dropdown-divider-color,
+          var(--color-lightest)
+        );
+    }
+  `;
 }

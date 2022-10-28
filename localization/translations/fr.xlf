@@ -444,14 +444,14 @@
 <trans-unit id="s86c0a813feb2e101">
   <source>service end</source>
 </trans-unit>
-<trans-unit id="ha3db149fc2d05762">
-  <source><x id="0" equiv-text="&lt;b&gt;${scope.dc}"/> Data:<x id="1" equiv-text="&lt;/b&gt; ${DATA_CATEGORY_DESCRIPTIONS[scope.dc]()}"/></source>
-</trans-unit>
 <trans-unit id="sfcd0fc6d569fa12a">
   <source>No data categories selected!</source>
 </trans-unit>
 <trans-unit id="s3f2acea3f9106217">
   <source>I want to access:</source>
+</trans-unit>
+<trans-unit id="sf71bab33326da61c">
+  <source>I want to delete:</source>
 </trans-unit>
 <trans-unit id="s11bafd52956fc434">
   <source>No demands to review!</source>
@@ -485,6 +485,33 @@
 </trans-unit>
 <trans-unit id="s7174e3af10fba733">
   <source>Additional Message</source>
+</trans-unit>
+<trans-unit id="s38ad01608e1ddf20">
+  <source>I select the following</source>
+</trans-unit>
+<trans-unit id="sed119cbeb516e34b">
+  <source>privacy scope</source>
+</trans-unit>
+<trans-unit id="s43ceedf5cc8524cc">
+  <source>I object to the processing of my data within the following</source>
+</trans-unit>
+<trans-unit id="sd5cb4c0ac4fa8ca6">
+  <source>I restrict the processing of my data to the following</source>
+</trans-unit>
+<trans-unit id="sefa284f73f175ff9">
+  <source>Data from _ categories, processed in _ ways, for _ purposes</source>
+</trans-unit>
+<trans-unit id="sb5a6f73a21ad7dc5">
+  <source>Expand a dropdown to customise your scope</source>
+</trans-unit>
+<trans-unit id="s3176f9811c35d533">
+  <source>Data Categories</source>
+</trans-unit>
+<trans-unit id="s5ce18a9690b1b5ba">
+  <source>Processing Categories</source>
+</trans-unit>
+<trans-unit id="s6068927c705090ea">
+  <source>Purposes of Processing</source>
 </trans-unit>
 </body>
 </file>

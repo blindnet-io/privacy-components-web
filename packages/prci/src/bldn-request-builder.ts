@@ -1,6 +1,10 @@
 import { css, html, LitElement, PropertyValueMap, TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import { ComputationAPI, PrivacyRequestDemand } from '@blindnet/core';
+import {
+  ComputationAPI,
+  PrivacyRequestDemand,
+  PrivacyScopeRestriction,
+} from '@blindnet/core';
 import { choose } from 'lit/directives/choose.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
@@ -90,6 +94,12 @@ export class BldnRequestBuilder extends LitElement {
           () => html`
             <bldn-object-form
               data-categories=${JSON.stringify(this._allowedDataCategories)}
+              processing-categories=${JSON.stringify(
+                Object.values(PrivacyScopeRestriction.pc)
+              )}
+              purposes=${JSON.stringify(
+                Object.values(PrivacyScopeRestriction.pp)
+              )}
               demand-group-index=${ifDefined(this._demandGroupIndex)}
               demands=${ifDefined(this._demandGroupIndex) ??
               this._demandGroups[this._demandGroupIndex ?? 0]}

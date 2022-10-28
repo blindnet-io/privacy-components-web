@@ -170,11 +170,6 @@ export abstract class ActionForm extends LitElement {
         /* transition: 0.3s ease; */
       }
 
-      bldn-dropdown span {
-        display: inline-flex;
-        align-items: center;
-      }
-
       /* Font for main sections: Demand Details and Other Options */
       bldn-dropdown.main-section > span {
         font-size: var(

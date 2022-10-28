@@ -26,7 +26,7 @@ export const ACTION_TITLES = {
   'TRANSPARENCY.RETENTION': () => msg('TRANSPARENCY.RETENTION'),
   'TRANSPARENCY.WHERE': () => msg('TRANSPARENCY.WHERE'),
   'TRANSPARENCY.WHO': () => msg('TRANSPARENCY.WHO'),
-  'OTHER': () => msg('Other Demand'),
+  OTHER: () => msg('Other Demand'),
 };
 
 /**
@@ -45,7 +45,10 @@ export const ACTION_DESCRIPTIONS = {
     msg(
       'Demand information related to data processing practices and know if the system has data on me'
     ),
-  'OTHER': () => msg('Do or know something else. Please note it may take longer to be answered'),
+  OTHER: () =>
+    msg(
+      'Do or know something else. Please note it may take longer to be answered'
+    ),
   'TRANSPARENCY.DATA-CATEGORIES': () =>
     msg('The categories of the data the organization has on me'),
   'TRANSPARENCY.DPO': () =>
@@ -145,9 +148,7 @@ export const DATA_CATEGORY_TITLES = {
 
 export const DATA_CATEGORY_DESCRIPTIONS = {
   '*': () =>
-    msg(
-      html`<b>ALL</b> categories of data the organization has on me`
-    ),
+    msg(html`<b>ALL</b> categories of data the organization has on me`),
   AFFILIATION: () =>
     msg(
       html`<b>AFFILIATION data:</b> Groups and Organisations I am linked to
@@ -264,4 +265,40 @@ export const AFTER_TITLES = {
   'RELATIONSHIP-END': () => msg('relationship end'),
   'SERVICE-START': () => msg('service start'),
   'SERVICE-END': () => msg('service end'),
+};
+
+export const PROCESSING_CATEGORY_DESCRIPTIONS = {
+  '*': () => msg(''),
+  ANONYMIZATION: () => msg(''),
+  'AUTOMATED-INFERENCE': () => msg(''),
+  'AUTOMATED-DECISION-MAKING': () => msg(''),
+  COLLECTION: () => msg(''),
+  GENERATING: () => msg(''),
+  PUBLISHING: () => msg(''),
+  STORING: () => msg(''),
+  SHARING: () => msg(''),
+  USING: () => msg(''),
+  'OTHER-PROCESSING': () => msg(''),
+};
+
+export const PURPOSE_DESCRIPTIONS = {
+  '*': () => msg(''),
+  ADVERTISING: () => msg(''),
+  COMPLIANCE: () => msg(''),
+  EMPLOYMENT: () => msg(''),
+  JUSTICE: () => msg(''),
+  MARKETING: () => msg(''),
+  MEDICAL: () => msg(''),
+  PERSONALIZATION: () => msg(''),
+  'PUBLIC-INTERESTS': () => msg(''),
+  RESEARCH: () => msg(''),
+  SALE: () => msg(''),
+  SECURITY: () => msg(''),
+  SERVICES: () => msg(''),
+  'SERVICES.ADDITIONAL-SERVICES': () => msg(''),
+  'SERVICES.BASIC-SERVICE': () => msg(''),
+  'SOCIAL-PROTECTION': () => msg(''),
+  TRACKING: () => msg(''),
+  'VITAL-INTERESTS': () => msg(''),
+  'OTHER-PURPOSE': () => msg(''),
 };

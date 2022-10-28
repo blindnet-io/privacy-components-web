@@ -1,6 +1,6 @@
-import { msg } from "@lit/localize";
-import { css, html, LitElement } from "lit"
-import { customElement, property, state } from "lit/decorators.js"
+import { msg } from '@lit/localize';
+import { css, html, LitElement } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
 
 const arrowSvg = new URL(
   './assets/icons/akar-icons_chevron-down.svg',
@@ -9,9 +9,8 @@ const arrowSvg = new URL(
 
 @customElement('bldn-dropdown')
 export class BldnDropdown extends LitElement {
-
   /** @prop */
-  @property({ type: String, reflect: true }) mode: 'major' | 'minor' = 'minor'
+  @property({ type: String, reflect: true }) mode: 'major' | 'minor' = 'minor';
 
   /** @prop open - Indicates if the dropdown is open or closed */
   @property({ type: Boolean, reflect: true }) open: boolean = false;
@@ -20,16 +19,19 @@ export class BldnDropdown extends LitElement {
     return html`
       <div id='heading'>
         <slot name='heading'>${msg('Click to expand')}</slot>
-        <button @click=${() => {this.open = !this.open}}><img id='dropdown-button-image' src=${arrowSvg} alt=${msg('Arrow to expand or collapse the dropdown')}></img></button>
+        <button @click=${() => {
+          this.open = !this.open;
+        }}><img id='dropdown-button-image' src=${arrowSvg} alt=${msg(
+      'Arrow to expand or collapse the dropdown'
+    )}></img></button>
       </div>
       <div id='content'>
         <slot></slot>
       </div>
-    `
+    `;
   }
 
   static styles = css`
-
     :host {
       display: block;
       padding: 0.625em 0em;
@@ -42,16 +44,21 @@ export class BldnDropdown extends LitElement {
     #heading {
       display: flex;
       text-align: left;
+      align-items: center;
     }
 
     :host([open][mode='major']) #heading {
       padding-bottom: 2.5em;
-      border-bottom: 2px solid var(--bldn-dropdown-major-section-heading-border-color, var(--color-lightest));
-      margin: 0em -2.0em;
+      border-bottom: 2px solid
+        var(
+          --bldn-dropdown-major-section-heading-border-color,
+          var(--color-lightest)
+        );
+      margin: 0em -2em;
     }
 
     :host([open][mode='major']) slot[name='heading'] {
-      text-indent: 2.0em;
+      text-indent: 2em;
     }
 
     :host([open][mode='major']) button {
@@ -78,7 +85,5 @@ export class BldnDropdown extends LitElement {
       margin-left: auto;
       padding: 0;
     }
-
-  `
-
+  `;
 }
