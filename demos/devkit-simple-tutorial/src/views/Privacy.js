@@ -32,6 +32,23 @@ export class AppPrivacy extends LitElement {
     `;
   }
 
+  async getBlindnetToken(auth0Token) {
+
+    const headers = {
+      Authorization: `Bearer ${auth0Token}`
+    }
+
+    return fetch(
+      // 'https://blindnet-connector-demo-staging.azurewebsites.net/auth/token',
+      'https://devkit-pce-staging.azurewebsites.net/v0/auth/token',
+      {
+        method: 'GET',
+        headers
+      }
+    )
+
+  }
+
   handleLoginClick() {
     window.location.href = `${window.location.origin}/demos/devkit-simple-tutorial/login`;
   }
@@ -46,6 +63,9 @@ export class AppPrivacy extends LitElement {
     auth0.getTokenSilently()
       .then(token => {
         this._apiToken = token;
+        this.getBlindnetToken().then(result => {
+          console.log(result)
+        })
         auth0.getUser().then(user => {
           this._userData = user
         })
