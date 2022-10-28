@@ -1,18 +1,14 @@
 import { msg } from '@lit/localize';
 import { css, html, LitElement, PropertyValueMap, TemplateResult } from 'lit';
-import { customElement, property, query, queryAll, state } from 'lit/decorators.js';
+import {
+  customElement,
+  property,
+  query,
+  queryAll,
+  state,
+} from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
 import { when } from 'lit/directives/when.js';
-
-/**
- * Refactoring TODO:
- * 
- * - Use @query('') instead reactive properties instead of searching
- *   for the elements each time
- * 
- *   See https://lit.dev/docs/api/decorators/#query
- * 
- */
 
 const allCheckboxCheckedSvg = new URL(
   './assets/icons/all-checkbox-checked.svg',
@@ -41,7 +37,7 @@ const expandListSvg = new URL(
 
 interface Choice {
   value: string;
-  display: TemplateResult<1|2>;
+  display: TemplateResult<1 | 2>;
   checked: boolean;
   allChoice?: boolean;
 }
@@ -61,7 +57,6 @@ enum SelectionState {
  */
 @customElement('bldn-all-checklist')
 export class BldnAllChecklist extends LitElement {
-
   // List of choices to be displayed with a unique identifier, description string (displayed),
   // and checked boolean indicating if the option should be checked initially
   @property({ type: Array }) choices: Choice[] = [];
@@ -125,36 +120,39 @@ export class BldnAllChecklist extends LitElement {
     const { id, checked } = e.target as HTMLInputElement;
 
     if (id === 'all-checkbox') {
-
       if (checked) {
         // Select all choices
         this.choiceCheckboxes.forEach(input => {
           // eslint-disable-next-line no-param-reassign
           input.checked = true;
-        })
-        this.choices.filter(c => !c.allChoice).forEach(c => {
-          this.selectChoice(c.value)
-        })
+        });
+        this.choices
+          .filter(c => !c.allChoice)
+          .forEach(c => {
+            this.selectChoice(c.value);
+          });
       } else {
         // Deselect all choices
         this.choiceCheckboxes.forEach(input => {
           // eslint-disable-next-line no-param-reassign
           input.checked = false;
-        })
-        this.choices.filter(c => !c.allChoice).forEach(c => {
-          this.deselectChoice(c.value)
-        })
+        });
+        this.choices
+          .filter(c => !c.allChoice)
+          .forEach(c => {
+            this.deselectChoice(c.value);
+          });
       }
     } else if (checked) {
       // Select one choice
-      this.selectChoice(id)
+      this.selectChoice(id);
     } else {
       // Deselect one choice
-      this.deselectChoice(id)
+      this.deselectChoice(id);
     }
 
     // Update component state so checkboxes render properly
-    this.updateSelectionState()
+    this.updateSelectionState();
   }
 
   // TODO: Combine these two other events into one change event
@@ -186,7 +184,6 @@ export class BldnAllChecklist extends LitElement {
    * Update the selection state based on currently selected choices
    */
   updateSelectionState() {
-
     switch (this.selectedChoices.size) {
       case 0:
         this.selectionState = SelectionState.NONE;
@@ -206,29 +203,19 @@ export class BldnAllChecklist extends LitElement {
         [
           SelectionState.NONE,
           () =>
-            html`<img
-              src=${allCheckboxUncheckedSvg}
-              alt="empty checkbox"
-            />`,
+            html`<img src=${allCheckboxUncheckedSvg} alt="empty checkbox" />`,
         ],
         [
           SelectionState.SOME,
-          () =>
-            html`<img
-              src=${allCheckboxDashSvg}
-              alt="dash checkbox"
-            />`,
+          () => html`<img src=${allCheckboxDashSvg} alt="dash checkbox" />`,
         ],
         [
           SelectionState.ALL,
           () =>
-            html`<img
-              src=${allCheckboxCheckedSvg}
-              alt="checked checkbox"
-            />`,
+            html`<img src=${allCheckboxCheckedSvg} alt="checked checkbox" />`,
         ],
       ])}
-    `
+    `;
   }
 
   /**
@@ -239,15 +226,14 @@ export class BldnAllChecklist extends LitElement {
     _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
   ): void {
     if (_changedProperties.has('choices')) {
-
       // Add all choices if all choice is checked intially
-      const allChoice = this.choices.find(c => c.allChoice)
+      const allChoice = this.choices.find(c => c.allChoice);
       if (allChoice && allChoice.checked) {
         this.choices.forEach(c => {
           if (!c.allChoice) {
-            this.selectedChoices.add(c.value)
+            this.selectedChoices.add(c.value);
           }
-        })
+        });
       }
 
       // Update selected choices based on initial input
@@ -260,19 +246,16 @@ export class BldnAllChecklist extends LitElement {
   }
 
   render() {
-
     const allChoice = this.choices.find(c => c.allChoice) || {
       value: '*',
       display: html`<b>${msg('Select All')}</b>`,
       checked: true,
-      allChoice: true
-    }
+      allChoice: true,
+    };
 
     return html`
-
       <!-- Render each choice -->
       <div class="choices-list">
-
         <!-- All choice -->
         <div class="all-ctr">
           <input
@@ -281,32 +264,34 @@ export class BldnAllChecklist extends LitElement {
             @click=${this.handleChoiceClick}
             ?checked=${allChoice.checked}
           />
-          <label for="all-checkbox">
-            ${this.getCheckboxImg()}
-          </label>
+          <label for="all-checkbox"> ${this.getCheckboxImg()} </label>
           <span class="all-prefix">${allChoice.display}</span>
         </div>
 
-        ${when(this.open, () => html`        
-          ${this.choices.filter(c => !c.allChoice).map(
-            c => html`
-              <div class="choice-ctr">
-                <input
-                  id=${c.value}
-                  class="choice-checkbox"
-                  type="checkbox"
-                  ?checked=${this.selectedChoices.has(c.value)}
-                  @change=${this.handleChoiceClick}
-                />
-                <label>${c.display}</label>
-              </div>
-            `
-          )}
-          
-          <!-- Optional other choice -->
-          ${when(
-            this.includeOther,
-            () => html`
+        ${when(
+          this.open,
+          () => html`
+            ${this.choices
+              .filter(c => !c.allChoice)
+              .map(
+                c => html`
+                  <div class="choice-ctr">
+                    <input
+                      id=${c.value}
+                      class="choice-checkbox"
+                      type="checkbox"
+                      ?checked=${this.selectedChoices.has(c.value)}
+                      @change=${this.handleChoiceClick}
+                    />
+                    <label>${c.display}</label>
+                  </div>
+                `
+              )}
+
+            <!-- Optional other choice -->
+            ${when(
+              this.includeOther,
+              () => html`
             <div id="other-data-ctr">
               <div class="choice-ctr">
                 <input
@@ -324,17 +309,20 @@ export class BldnAllChecklist extends LitElement {
               </div>
             </div>
           `
-          )}
-
-        `)}
-
+            )}
+          `
+        )}
       </div>
-      
+
       <!-- Expand/collapse button -->
-      <button @click=${() => { this.open = !this.open }}>
-        ${when(this.open,
-          () =>
-            html`<img src=${closeContainerArrowSvg} alt="close arrow" />`,
+      <button
+        @click=${() => {
+          this.open = !this.open;
+        }}
+      >
+        ${when(
+          this.open,
+          () => html`<img src=${closeContainerArrowSvg} alt="close arrow" />`,
           () => html`<img src=${expandListSvg} alt="expand list" />`
         )}
       </button>

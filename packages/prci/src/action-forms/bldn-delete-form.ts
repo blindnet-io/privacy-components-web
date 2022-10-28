@@ -1,30 +1,24 @@
-import { msg } from '@lit/localize';
-import { css, html, TemplateResult } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
 import {
   PrivacyRequestDemand,
   PrivacyScopeRestriction,
   ProvenanceRestriction,
 } from '@blindnet/core';
+import { msg } from '@lit/localize';
+import { css, html, TemplateResult } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
 import { DATA_CATEGORY_DESCRIPTIONS } from '../utils/dictionary.js';
 import { ActionForm } from './bldn-action-form.js';
 
-import '../bldn-all-checklist.js';
-import '../bldn-dropdown.js';
-import '../bldn-date-restriction.js';
-import '../bldn-provenance-restriction.js';
-import '../bldn-additional-message.js';
-
 /**
- * ActionForm for the Access PRIV action. Includes a dropdown and text element.
+ * Action form for the DELETE PRIV Action
  */
-@customElement('bldn-access-form')
-export class BldnAccessForm extends ActionForm {
+@customElement('bldn-delete-form')
+export class BldnDeleteForm extends ActionForm {
   /** @prop */
   @property({ type: Array, attribute: 'data-categories' })
   dataCategories: string[] = [];
 
-  action = PrivacyRequestDemand.action.ACCESS;
+  action: PrivacyRequestDemand.action = PrivacyRequestDemand.action.DELETE;
 
   validateActionInput(): string[] | undefined {
     return undefined;
@@ -34,11 +28,49 @@ export class BldnAccessForm extends ActionForm {
     return undefined;
   }
 
+  getFormTemplate(): TemplateResult<1 | 2> {
+    return html`
+      <p>${msg('I want to delete:')}</p>
+      <bldn-all-checklist
+        .choices=${this.dataCategories.map(dc => ({
+          value: dc,
+          display: DATA_CATEGORY_DESCRIPTIONS[dc](),
+          checked:
+            this.demands![0].restrictions?.privacy_scope?.findIndex(
+              psr => psr.dc === dc
+            ) !== -1,
+          allChoice: dc === '*',
+        }))}
+      ></bldn-all-checklist>
+    `;
+  }
+
+  getOptionsTemplate(): TemplateResult<1 | 2> {
+    return html`
+      <bldn-dropdown>
+        <span slot="heading"><strong>${msg('Date Restriction')}</strong></span>
+        <bldn-date-restriction></bldn-date-restriction>
+      </bldn-dropdown>
+      <bldn-dropdown>
+        <span slot="heading"
+          ><strong>${msg('Provenance Restriction')}</strong></span
+        >
+        <bldn-provenance-restriction></bldn-provenance-restriction>
+      </bldn-dropdown>
+      <bldn-dropdown>
+        <span slot="heading"
+          ><strong>${msg('Additional Message')}</strong></span
+        >
+        <bldn-additional-message></bldn-additional-message>
+      </bldn-dropdown>
+    `;
+  }
+
   getDefaultDemands(): PrivacyRequestDemand[] {
     return [
       {
         id: '',
-        action: PrivacyRequestDemand.action.ACCESS,
+        action: PrivacyRequestDemand.action.DELETE,
         restrictions: {
           privacy_scope: [
             {
@@ -121,6 +153,9 @@ export class BldnAccessForm extends ActionForm {
     this.demands[0].message = message;
   }
 
+  /**
+   * Add listeners for elements of this ActionForm
+   */
   connectedCallback(): void {
     // eslint-disable-next-line wc/guard-super-call
     super.connectedCallback();
@@ -158,6 +193,9 @@ export class BldnAccessForm extends ActionForm {
     );
   }
 
+  /**
+   * Remove all listeners
+   */
   disconnectedCallback(): void {
     this.removeEventListener(
       'bldn-all-checklist:choice-select',
@@ -185,50 +223,12 @@ export class BldnAccessForm extends ActionForm {
     );
   }
 
-  getFormTemplate(): TemplateResult<1 | 2> {
-    return html`
-      <p>${msg('I want to access:')}</p>
-      <bldn-all-checklist
-        .choices=${this.dataCategories.map(dc => ({
-          value: dc,
-          display: DATA_CATEGORY_DESCRIPTIONS[dc](),
-          checked:
-            this.demands![0].restrictions?.privacy_scope?.findIndex(
-              psr => psr.dc === dc
-            ) !== -1,
-          allChoice: dc === '*',
-        }))}
-      ></bldn-all-checklist>
-    `;
-  }
-
-  getOptionsTemplate(): TemplateResult<1 | 2> {
-    return html`
-      <bldn-dropdown>
-        <span slot="heading"><strong>${msg('Date Restriction')}</strong></span>
-        <bldn-date-restriction></bldn-date-restriction>
-      </bldn-dropdown>
-      <bldn-dropdown>
-        <span slot="heading"
-          ><strong>${msg('Provenance Restriction')}</strong></span
-        >
-        <bldn-provenance-restriction></bldn-provenance-restriction>
-      </bldn-dropdown>
-      <bldn-dropdown>
-        <span slot="heading"
-          ><strong>${msg('Additional Message')}</strong></span
-        >
-        <bldn-additional-message></bldn-additional-message>
-      </bldn-dropdown>
-    `;
-  }
-
   static styles = [
     ActionForm.styles,
     css`
       :host {
         text-align: left;
-        color: var(--bldn-access-form-font-color, var(--color-dark));
+        color: var(--bldn-delete-form-font-color, var(--color-dark));
       }
 
       p {

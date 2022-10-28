@@ -50,6 +50,9 @@
 <trans-unit id="sebbb864b5cee4a82">
   <source>Please note that adding a personalized message might lead to the demand taking longer to be processed</source>
 </trans-unit>
+<trans-unit id="sbaace8219b5f4612">
+  <source>Select All</source>
+</trans-unit>
 <trans-unit id="h87332548e751bc1c">
   <source><x id="0" equiv-text="&lt;b&gt;"/>OTHER-DATA:<x id="1" equiv-text="&lt;/b&gt;"/> Specify another type of data</source>
 </trans-unit>
@@ -441,6 +444,30 @@
 <trans-unit id="s86c0a813feb2e101">
   <source>service end</source>
 </trans-unit>
+<trans-unit id="ha3db149fc2d05762">
+  <source><x id="0" equiv-text="&lt;b&gt;${scope.dc}"/> Data:<x id="1" equiv-text="&lt;/b&gt; ${DATA_CATEGORY_DESCRIPTIONS[scope.dc]()}"/></source>
+</trans-unit>
+<trans-unit id="sfcd0fc6d569fa12a">
+  <source>No data categories selected!</source>
+</trans-unit>
+<trans-unit id="s3f2acea3f9106217">
+  <source>I want to access:</source>
+</trans-unit>
+<trans-unit id="s11bafd52956fc434">
+  <source>No demands to review!</source>
+</trans-unit>
+<trans-unit id="seb19908ed8209df2">
+  <source>Request Summary</source>
+</trans-unit>
+<trans-unit id="s1caf5d7ab36059be">
+  <source>Demand</source>
+</trans-unit>
+<trans-unit id="saedc3af85cfe6dc7">
+  <source>Request Target</source>
+</trans-unit>
+<trans-unit id="s7629854d26f1c5e6">
+  <source>I address my Privacy Request to:</source>
+</trans-unit>
 <trans-unit id="s1204f9b176a19dfd">
   <source>Details of my <x id="0" equiv-text="${this.action}"/> Demand</source>
 </trans-unit>
@@ -449,9 +476,6 @@
 </trans-unit>
 <trans-unit id="s6303c9c96b50c164">
   <source>My demand applies to data from the following provenance:</source>
-</trans-unit>
-<trans-unit id="s3f2acea3f9106217">
-  <source>I want to access:</source>
 </trans-unit>
 <trans-unit id="s7c9992bcec8e44cf">
   <source>Date Restriction</source>

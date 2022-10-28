@@ -1,115 +1,175 @@
-import { CreatePrivacyRequestPayload, PrivacyRequestDemand } from "@blindnet/core";
-import { msg, str } from "@lit/localize";
-import { css, html, LitElement } from "lit";
-import { customElement, property } from "lit/decorators.js";
-import { choose } from "lit/directives/choose.js";
-import { map } from "lit/directives/map.js";
-import { when } from "lit/directives/when.js";
+import {
+  CreatePrivacyRequestPayload,
+  PrivacyRequestDemand,
+  PrivacyScopeRestriction,
+} from '@blindnet/core';
+import { msg } from '@lit/localize';
+import { css, html, LitElement } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+import { choose } from 'lit/directives/choose.js';
+import { map } from 'lit/directives/map.js';
+import { when } from 'lit/directives/when.js';
 
-import './bldn-nav-wrapper.js'
-import './bldn-dropdown.js'
-import './bldn-radio-list.js'
-import { TARGET_DESCRIPTIONS } from "./utils/dictionary.js";
+import './bldn-nav-wrapper.js';
+import './bldn-dropdown.js';
+import './bldn-radio-list.js';
+import {
+  DATA_CATEGORY_DESCRIPTIONS,
+  TARGET_DESCRIPTIONS,
+} from './utils/dictionary.js';
 
 @customElement('bldn-request-review')
 export class BldnRequestReview extends LitElement {
-
   /** @prop */
-  @property({ type: Array }) demandGroups: PrivacyRequestDemand[][] = []
+  @property({ type: Array }) demandGroups: PrivacyRequestDemand[][] = [];
 
-  getReviewTemplate(demandGroup: PrivacyRequestDemand[]) { 
+  getDataCategoryListTemplate(
+    privacyScopes: undefined | PrivacyScopeRestriction[]
+  ) {
+    return html`
+      ${when(
+        privacyScopes,
+        () => html`
+          <ul>
+            ${map(
+              privacyScopes,
+              scope => html`
+                <li>
+                  ${scope.dc === '*'
+                    ? DATA_CATEGORY_DESCRIPTIONS[scope.dc]()
+                    : html`<b>${scope.dc} Data:</b>
+                        ${DATA_CATEGORY_DESCRIPTIONS[scope.dc]()}`}
+                </li>
+              `
+            )}
+          </ul>
+        `,
+        () => html` <p>${msg('No data categories selected!')}</p> `
+      )}
+    `;
+  }
 
+  getReviewTemplate(demandGroup: PrivacyRequestDemand[]) {
     if (demandGroup.length > 0) {
       return html`
-        ${choose(demandGroup[0].action, [
-          [PrivacyRequestDemand.action.ACCESS, () => html`
-            ACCESS REVIEW TEMPLATE
-          `],
-          [PrivacyRequestDemand.action.DELETE, () => html`
-          
-          `],
-          [PrivacyRequestDemand.action.MODIFY, () => html`
-          
-          `],
-          [PrivacyRequestDemand.action.OBJECT, () => html`
-          
-          `],
-          [PrivacyRequestDemand.action.RESTRICT, () => html`
-          
-          `],
-          [PrivacyRequestDemand.action.REVOKE_CONSENT, () => html`
-          
-          `],
-          [PrivacyRequestDemand.action.OTHER, () => html`
-          
-          `],
-          [PrivacyRequestDemand.action.ACCESS, () => html`
-          
-          `],
-          [PrivacyRequestDemand.action.ACCESS, () => html`
-          
-          `],
-        ], () => html`
-          <!-- Transparency Template -->
-          ${when(demandGroup[0].action.includes('TRANSPARENCY'), () => html`
-          
-          `)}
-        `)}
-      `
+        ${choose(
+          demandGroup[0].action,
+          [
+            [
+              PrivacyRequestDemand.action.ACCESS,
+              () => html`
+                <p>${msg('I want to access:')}</p>
+                ${this.getDataCategoryListTemplate(
+                  demandGroup[0].restrictions?.privacy_scope
+                )}
+              `,
+            ],
+            [
+              PrivacyRequestDemand.action.DELETE,
+              () => html`
+                <p>${msg('I want to delete:')}</p>
+                ${this.getDataCategoryListTemplate(
+                  demandGroup[0].restrictions?.privacy_scope
+                )}
+              `,
+            ],
+            [PrivacyRequestDemand.action.MODIFY, () => html``],
+            [PrivacyRequestDemand.action.OBJECT, () => html``],
+            [PrivacyRequestDemand.action.RESTRICT, () => html``],
+            [PrivacyRequestDemand.action.REVOKE_CONSENT, () => html``],
+            [PrivacyRequestDemand.action.OTHER, () => html``],
+          ],
+          () => html`
+            <!-- Transparency Template -->
+            ${when(
+              demandGroup[0].action.includes('TRANSPARENCY'),
+              () => html``
+            )}
+          `
+        )}
+      `;
     }
-    
-    return html`${msg('No demands to review!')}`
 
+    return html`${msg('No demands to review!')}`;
   }
 
-  handleSubmitClick() {
-
-  }
+  handleSubmitClick() {}
 
   render() {
     return html`
-      <bldn-nav-wrapper mode='single' center-button='Submit Request'
+      <bldn-nav-wrapper
+        mode="single"
+        center-button="Submit Request"
         @bldn-nav-wrapper:center-click=${this.handleSubmitClick}
       >
-        <bldn-dropdown class='main-section' mode='major'>
-          <span slot='heading'><strong>${msg('Request Summary')}</strong></span>
-          ${map(this.demandGroups, (group) => html`
-            <bldn-dropdown>
-              <span slot='heading'><strong>${msg('Demand')}</strong></span>
-              ${this.getReviewTemplate(group)}
-            </bldn-dropdown>
-          `)}
+        <bldn-dropdown class="main-section" mode="major">
+          <span slot="heading"><strong>${msg('Request Summary')}</strong></span>
+          ${map(
+            this.demandGroups,
+            group => html`
+              ${when(
+                group.length > 0,
+                () => html`
+                  <bldn-dropdown>
+                    <span slot="heading"
+                      ><strong
+                        >${group[0].action} ${msg('Demand')}</strong
+                      ></span
+                    >
+                    ${this.getReviewTemplate(group)}
+                  </bldn-dropdown>
+                `
+              )}
+            `
+          )}
         </bldn-dropdown>
-        <bldn-dropdown class='main-section' mode='major'>
-          <span slot='heading'><strong>${msg('Request Target')}</strong></span>
+        <bldn-dropdown id="request-target" class="main-section" mode="major">
+          <span slot="heading"><strong>${msg('Request Target')}</strong></span>
+          <p>${msg('I address my Privacy Request to:')}</p>
           <bldn-radio-list
-            .choices=${Object.values(CreatePrivacyRequestPayload.target).map(target => ({
-              display: TARGET_DESCRIPTIONS[target](),
-              value: target,
-              selected: target === CreatePrivacyRequestPayload.target.PARTNERS
-            }))}
+            .choices=${Object.values(CreatePrivacyRequestPayload.target).map(
+              target => ({
+                display: TARGET_DESCRIPTIONS[target](),
+                value: target,
+                selected:
+                  target === CreatePrivacyRequestPayload.target.PARTNERS,
+              })
+            )}
           ></bldn-radio-list>
         </bldn-dropdown>
       </bldn-nav-wrapper>
-    `
+    `;
   }
 
   static styles = css`
-
     /* TODO: Update styles below so variables, etc. are unique to this component */
-  
+
+    :host {
+      color: var(--bldn-request-review-font-color, var(--color-dark));
+      text-align: left;
+    }
+
+    #request-target bldn-radio-list {
+      padding-left: 1em;
+    }
+
     bldn-dropdown.main-section {
-      border: 2px solid var(--bldn-request-review-section-border-color, var(--color-light));
+      border: 2px solid
+        var(--bldn-request-review-section-border-color, var(--color-light));
       border-radius: 20px;
       padding: 2.5em;
     }
 
     bldn-dropdown.main-section[open] {
-        padding: 2.5em 2.5em 1.0em 2.5em;
-      }
+      padding: 2.5em 2.5em 0.5em 2.5em;
+    }
 
     bldn-dropdown.main-section:hover {
-      border: 2px solid var(--bldn-action-form-section-border-color-hovered, var(--color-dark));
+      border: 2px solid
+        var(
+          --bldn-request-review-section-border-color-hovered,
+          var(--color-dark)
+        );
       /* FIXME: This makes the border expansion jump weird */
       /* transition: 0.3s ease; */
     }
@@ -121,28 +181,37 @@ export class BldnRequestReview extends LitElement {
 
     /* Font for main sections: Demand Details and Other Options */
     bldn-dropdown.main-section > span {
-      font-size: var(--bldn-action-form-section-heading-font-size, var(--font-size-medium));
-      color: var(--bldn-action-form-section-heading-font-color, var(--color-dark));
+      font-size: var(
+        --bldn-request-review-section-heading-font-size,
+        var(--font-size-medium)
+      );
+      color: var(
+        --bldn-request-review-section-heading-font-color,
+        var(--color-dark)
+      );
     }
 
     /* Padding in each other option dropdown */
     bldn-dropdown bldn-dropdown[open] {
-      padding-bottom: 1.875em;
+      padding-bottom: 1em;
     }
 
     /* Font for other options headings */
     bldn-dropdown bldn-dropdown span {
       font-size: var(--font-size-small);
-      color: var(--bldn-action-form-subsection-heading-font-color, var(--color-dark));
-    }
-
-    bldn-dropdown bldn-dropdown span~* {
-      padding-left: 1.25em;
+      color: var(
+        --bldn-request-review-subsection-heading-font-color,
+        var(--color-dark)
+      );
     }
 
     /* Divider between other options dropdowns */
     bldn-dropdown {
-      border-bottom: 2px solid var(--bldn-action-form-subsection-divider-color, var(--color-lightest));
+      border-bottom: 2px solid
+        var(
+          --bldn-request-review-subsection-divider-color,
+          var(--color-lightest)
+        );
     }
 
     /* Last dropdown in other options should have no border */
@@ -153,9 +222,7 @@ export class BldnRequestReview extends LitElement {
     bldn-nav-wrapper {
       padding: 2.813em 2.813em 0em 2.813em;
     }
-
-  `
-
+  `;
 }
 
 // /* eslint-disable lit/binding-positions */
