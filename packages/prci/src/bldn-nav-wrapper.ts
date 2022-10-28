@@ -64,8 +64,8 @@ export class BldnNavWrapper extends LitElement {
       display: flex;
       justify-content: center;
       /* FIXME: Forces the wrapper to be a certain size */
-      column-gap: 12.5rem;
-      margin: 0px 275px;
+      /* column-gap: 12.5rem; */
+      /* margin: 0px 275px; */
       transform: translateY(22px);
     }
   `

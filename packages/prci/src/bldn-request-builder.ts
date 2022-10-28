@@ -220,7 +220,7 @@ export class BldnRequestBuilder extends LitElement {
         [RequestBuilderUIState.edit, () => this.getActionForm(this._action ?? PrivacyRequestDemand.action.ACCESS)],
         [RequestBuilderUIState.review, () => html`
           
-          <bldn-request-review></bldn-request-review>
+          <bldn-request-review .demandGroups=${this._demandGroups}></bldn-request-review>
         `]
       ])}
     `

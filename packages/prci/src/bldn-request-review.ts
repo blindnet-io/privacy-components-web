@@ -1,6 +1,6 @@
 import { CreatePrivacyRequestPayload, PrivacyRequestDemand } from "@blindnet/core";
 import { msg, str } from "@lit/localize";
-import { html, LitElement } from "lit";
+import { css, html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { choose } from "lit/directives/choose.js";
 import { map } from "lit/directives/map.js";
@@ -17,7 +17,7 @@ export class BldnRequestReview extends LitElement {
   /** @prop */
   @property({ type: Array }) demandGroups: PrivacyRequestDemand[][] = []
 
-  getReviewTemplate(demandGroup: PrivacyRequestDemand[]) {
+  getReviewTemplate(demandGroup: PrivacyRequestDemand[]) { 
 
     if (demandGroup.length > 0) {
       return html`
@@ -73,7 +73,7 @@ export class BldnRequestReview extends LitElement {
       >
         <bldn-dropdown class='main-section' mode='major'>
           <span slot='heading'><strong>${msg('Request Summary')}</strong></span>
-          ${map(this.demandGroups, group => html`
+          ${map(this.demandGroups, (group) => html`
             <bldn-dropdown>
               <span slot='heading'><strong>${msg('Demand')}</strong></span>
               ${this.getReviewTemplate(group)}
@@ -93,6 +93,68 @@ export class BldnRequestReview extends LitElement {
       </bldn-nav-wrapper>
     `
   }
+
+  static styles = css`
+
+    /* TODO: Update styles below so variables, etc. are unique to this component */
+  
+    bldn-dropdown.main-section {
+      border: 2px solid var(--bldn-request-review-section-border-color, var(--color-light));
+      border-radius: 20px;
+      padding: 2.5em;
+    }
+
+    bldn-dropdown.main-section[open] {
+        padding: 2.5em 2.5em 1.0em 2.5em;
+      }
+
+    bldn-dropdown.main-section:hover {
+      border: 2px solid var(--bldn-action-form-section-border-color-hovered, var(--color-dark));
+      /* FIXME: This makes the border expansion jump weird */
+      /* transition: 0.3s ease; */
+    }
+
+    bldn-dropdown span {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    /* Font for main sections: Demand Details and Other Options */
+    bldn-dropdown.main-section > span {
+      font-size: var(--bldn-action-form-section-heading-font-size, var(--font-size-medium));
+      color: var(--bldn-action-form-section-heading-font-color, var(--color-dark));
+    }
+
+    /* Padding in each other option dropdown */
+    bldn-dropdown bldn-dropdown[open] {
+      padding-bottom: 1.875em;
+    }
+
+    /* Font for other options headings */
+    bldn-dropdown bldn-dropdown span {
+      font-size: var(--font-size-small);
+      color: var(--bldn-action-form-subsection-heading-font-color, var(--color-dark));
+    }
+
+    bldn-dropdown bldn-dropdown span~* {
+      padding-left: 1.25em;
+    }
+
+    /* Divider between other options dropdowns */
+    bldn-dropdown {
+      border-bottom: 2px solid var(--bldn-action-form-subsection-divider-color, var(--color-lightest));
+    }
+
+    /* Last dropdown in other options should have no border */
+    bldn-dropdown bldn-dropdown:last-child {
+      border-bottom: none;
+    }
+
+    bldn-nav-wrapper {
+      padding: 2.813em 2.813em 0em 2.813em;
+    }
+
+  `
 
 }
 

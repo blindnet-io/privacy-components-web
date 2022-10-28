@@ -20,6 +20,7 @@ export class AppPrivacy extends LitElement {
     return css`
       :host {
         display: block;
+        width: 1000px;
         background: white;
         margin-top: 50px;
         padding: 1em 6em 6em 6em;

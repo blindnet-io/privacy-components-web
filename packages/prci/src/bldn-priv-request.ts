@@ -65,6 +65,7 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
 
       :host {
         display: block;
+        width: 100%;
         background: var(--bldn-privacy-request-background, var(--background));
       }
     
