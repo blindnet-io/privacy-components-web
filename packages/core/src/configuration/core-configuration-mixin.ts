@@ -6,6 +6,7 @@ declare type Constructor<T = {}> = new (...args: any[]) => T;
 export interface CoreConfigurationMixinInterface {
   computationBaseURL: string;
   apiToken: string;
+  adminToken: string;
 }
 
 /**
@@ -27,6 +28,7 @@ export function CoreConfigurationMixin<
         ...superProps,
         computationBaseURL: { type: String, attribute: 'computation-base-url' },
         apiToken: { type: String, attribute: 'api-token', reflect: true },
+        adminToken: { type: String, attribute: 'admin-token', reflect: true },
       };
     }
 
@@ -45,6 +47,8 @@ export function CoreConfigurationMixin<
      */
     apiToken = '';
 
+    adminToken = '';
+
     connectedCallback() {
       super.connectedCallback();
 
@@ -52,6 +56,7 @@ export function CoreConfigurationMixin<
         {
           computationBaseUrl: this.computationBaseURL,
           apiToken: this.apiToken,
+          adminToken: this.adminToken,
         },
         false
       );
@@ -62,6 +67,9 @@ export function CoreConfigurationMixin<
     ): void {
       if (_changedProperties.has('apiToken')) {
         BlindnetCore.setToken(this.apiToken);
+      }
+      if (_changedProperties.has('adminToken')) {
+        BlindnetCore.setAdminToken(this.adminToken);
       }
     }
   };

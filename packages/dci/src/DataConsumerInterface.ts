@@ -30,6 +30,9 @@ export class DataConsumerInterface extends CoreConfigurationMixin(LitElement) {
   connectedCallback() {
     // eslint-disable-next-line wc/guard-super-call
     super.connectedCallback();
+  }
+
+  protected willUpdate(): void {
     ComputationAPI.getInstance()
       .getPendingDemands()
       .then(demands => {

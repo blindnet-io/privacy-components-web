@@ -2,7 +2,8 @@ import { LitElement, html, css } from 'lit';
 import { when } from 'lit/directives/when.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { Auth0Client } from '@auth0/auth0-spa-js';
-// import { Buffer } from 'buffer';
+// eslint-disable-next-line camelcase
+import jwt_decode from 'jwt-decode';
 
 import '@blindnet/prci';
 
@@ -21,7 +22,6 @@ const auth0 = new Auth0Client({
 export class AppPrivacy extends LitElement {
   static get properties() {
     return {
-      _userData: { state: true },
       _apiToken: { state: true },
     };
   }
@@ -50,19 +50,7 @@ export class AppPrivacy extends LitElement {
         method: 'GET',
         headers,
       }
-    )
-      .then(response => {
-        console.log(
-          response.json().then(token => {
-            console.log(token);
-            console.log(atob(token));
-            // console.log(Buffer.from('base64', token))
-          })
-        );
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    );
   }
 
   handleLoginClick() {
@@ -79,19 +67,20 @@ export class AppPrivacy extends LitElement {
       auth0
         .getTokenSilently()
         .then(auth0Token => {
-          // Get a blindnet token with our auth0 one
-          this.getBlindnetToken(auth0Token).then(blindnetToken => {
-            // Use this token for the PRCI
-            this._apiToken = blindnetToken;
-          });
-          // Get user info
-          auth0.getUser().then(user => {
-            this._userData = user;
-          });
+          // Exchange auth0 token for a blindnet one
+          this.getBlindnetToken(auth0Token)
+            .then(response => {
+              response.json().then(blindnetToken => {
+                this._apiToken = blindnetToken;
+              });
+            })
+            .catch(error => {
+              // eslint-disable-next-line no-console
+              console.log(error);
+            });
         })
         .catch(() => {
           // If not logged in, do nothing as PRCI can be used unauthenticated
-          this._apiToken = undefined;
         });
     }
 
@@ -102,9 +91,15 @@ export class AppPrivacy extends LitElement {
       ></bldn-priv-request>
 
       ${when(
-        this._userData,
+        this._apiToken,
         () => html`
-          <span>Logged in as ${this._userData?.email}.</span>
+          <span
+            >Logged in as
+            ${
+              // @ts-ignore
+              jwt_decode(this._apiToken).uid
+            }.</span
+          >
           <bldn-button @click=${this.handleLogoutClick} mode="link">
             Logout
           </bldn-button>
