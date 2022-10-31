@@ -110,7 +110,6 @@ export class ComputationAPI {
   }
 
   private headers(acceptJSON = false, request?: PrivacyRequest): Headers {
-
     const headers = new Headers({
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
@@ -122,11 +121,10 @@ export class ComputationAPI {
 
     // Append auth header only if apiToken is defined
     if (this._apiToken) {
-      headers.append('Authorization', this._apiToken)
+      headers.append('Authorization', `Bearer ${this._apiToken}`);
     }
 
-    return headers
-
+    return headers;
   }
 
   /**

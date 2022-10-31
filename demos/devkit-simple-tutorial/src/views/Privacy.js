@@ -2,8 +2,11 @@ import { LitElement, html, css } from 'lit';
 import { when } from 'lit/directives/when.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { Auth0Client } from '@auth0/auth0-spa-js';
+// import { Buffer } from 'buffer';
 
 import '@blindnet/prci';
+
+// window.Buffer = Buffer
 
 // Get an auth0 instance
 const auth0 = new Auth0Client({
@@ -47,7 +50,19 @@ export class AppPrivacy extends LitElement {
         method: 'GET',
         headers,
       }
-    );
+    )
+      .then(response => {
+        console.log(
+          response.json().then(token => {
+            console.log(token);
+            console.log(atob(token));
+            // console.log(Buffer.from('base64', token))
+          })
+        );
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   handleLoginClick() {
@@ -60,23 +75,25 @@ export class AppPrivacy extends LitElement {
 
   render() {
     // Try to get an auth0 token
-    auth0
-      .getTokenSilently()
-      .then(auth0Token => {
-        // Get a blindnet token with our auth0 one
-        this.getBlindnetToken(auth0Token).then(blindnetToken => {
-          // Use this token for the PRCI
-          this._apiToken = blindnetToken;
+    if (this._apiToken === undefined) {
+      auth0
+        .getTokenSilently()
+        .then(auth0Token => {
+          // Get a blindnet token with our auth0 one
+          this.getBlindnetToken(auth0Token).then(blindnetToken => {
+            // Use this token for the PRCI
+            this._apiToken = blindnetToken;
+          });
+          // Get user info
+          auth0.getUser().then(user => {
+            this._userData = user;
+          });
+        })
+        .catch(() => {
+          // If not logged in, do nothing as PRCI can be used unauthenticated
+          this._apiToken = undefined;
         });
-        // Get user info
-        auth0.getUser().then(user => {
-          this._userData = user;
-        });
-      })
-      .catch(() => {
-        // If not logged in, do nothing as PRCI can be used unauthenticated
-        this._apiToken = undefined;
-      });
+    }
 
     return html`
       <bldn-priv-request
