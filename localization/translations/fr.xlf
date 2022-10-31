@@ -41,9 +41,6 @@
 <trans-unit id="sb852d100f91db23f">
   <source>No requests to display.</source>
 </trans-unit>
-<trans-unit id="s9ff4e107523f7fab">
-  <source>Log in / Sign up</source>
-</trans-unit>
 <trans-unit id="sd3b15d6d4ea696f7">
   <source>My additional message:</source>
 </trans-unit>
@@ -318,62 +315,56 @@
 <trans-unit id="h8d869518495a8edd">
   <source><x id="0" equiv-text="&lt;b&gt;"/>ALL<x id="1" equiv-text="&lt;/b&gt;"/> categories of data the organization has on me</source>
 </trans-unit>
-<trans-unit id="h3db45950c0fcfcdd">
-  <source><x id="0" equiv-text="&lt;b&gt;"/>AFFILIATION data:<x id="1" equiv-text="&lt;/b&gt;"/> Groups and Organisations I am linked to
+<trans-unit id="ha708b8d265fcbdbc">
+  <source>Groups and Organisations I am linked to
         through work, studies, or membership</source>
 </trans-unit>
 <trans-unit id="hcbf29ce484222325">
   <source/>
 </trans-unit>
-<trans-unit id="hd8ece2538b9bde13">
-  <source><x id="0" equiv-text="&lt;b&gt;"/>BEHAVIOR data:<x id="1" equiv-text="&lt;/b&gt;"/> Data about my behavior</source>
+<trans-unit id="h5974ce8e8b048cf4">
+  <source>Data about my behavior</source>
 </trans-unit>
-<trans-unit id="hce5e21a7ce8a7788">
-  <source><x id="0" equiv-text="&lt;b&gt;"/>BIOMETRIC data<x id="1" equiv-text="&lt;/b&gt;"/></source>
+<trans-unit id="hf71b12bf88e7bb93">
+  <source>Data allowing to contact me </source>
 </trans-unit>
-<trans-unit id="h816d86628ced7a90">
-  <source><x id="0" equiv-text="&lt;b&gt;"/>CONTACT data:<x id="1" equiv-text="&lt;/b&gt;"/> Data allowing to contact me </source>
-</trans-unit>
-<trans-unit id="h2b9b28a860cd60d5">
-  <source><x id="0" equiv-text="&lt;b&gt;"/>DEMOGRAPHIC data:<x id="1" equiv-text="&lt;/b&gt;"/> All information allowing to class me in a
+<trans-unit id="he1c48ebffbeb7995">
+  <source>All information allowing to class me in a
         demographic category</source>
 </trans-unit>
-<trans-unit id="h0e8aa61f75654a56">
-  <source><x id="0" equiv-text="&lt;b&gt;"/>DEVICE data:<x id="1" equiv-text="&lt;/b&gt;"/> Data about the device I used</source>
+<trans-unit id="hff91edfe0b603c35">
+  <source>Data about the device I used</source>
 </trans-unit>
-<trans-unit id="h2d546edbdf280295">
-  <source><x id="0" equiv-text="&lt;b&gt;"/>FINANCIAL data:<x id="1" equiv-text="&lt;/b&gt;"/> Payment data, financial history and data about
+<trans-unit id="hdd80c044a8043e27">
+  <source>Payment data, financial history and data about
         my financial situation</source>
 </trans-unit>
-<trans-unit id="h31d2a8f1cf9ab3b3">
-  <source><x id="0" equiv-text="&lt;b&gt;"/>GENETIC data<x id="1" equiv-text="&lt;/b&gt;"/></source>
+<trans-unit id="ha6a83bab31190c68">
+  <source>Data about my health</source>
 </trans-unit>
-<trans-unit id="hf434e89392d3501b">
-  <source><x id="0" equiv-text="&lt;b&gt;"/>HEALTH data:<x id="1" equiv-text="&lt;/b&gt;"/> Data about my health</source>
-</trans-unit>
-<trans-unit id="h2b2d25788fa8a3cc">
-  <source><x id="0" equiv-text="&lt;b&gt;"/>IMAGE data:<x id="1" equiv-text="&lt;/b&gt;"/> Any graphic representation (e.g., image, video) of
+<trans-unit id="h1d92ded905f844d8">
+  <source>Any graphic representation (e.g., image, video) of
         me</source>
 </trans-unit>
-<trans-unit id="hf0dfecf234b58c31">
-  <source><x id="0" equiv-text="&lt;b&gt;"/>LOCATION data:<x id="1" equiv-text="&lt;/b&gt;"/> Geographic location</source>
+<trans-unit id="h581c73258e16b269">
+  <source>Geographic location</source>
 </trans-unit>
-<trans-unit id="h72d2b3d94d843a89">
-  <source><x id="0" equiv-text="&lt;b&gt;"/>NAME data:<x id="1" equiv-text="&lt;/b&gt;"/> First names, last names, nicknames, and other names</source>
+<trans-unit id="h44e758245f098aed">
+  <source>First names, last names, nicknames, and other names</source>
 </trans-unit>
-<trans-unit id="hb635eb955223b3fa">
-  <source><x id="0" equiv-text="&lt;b&gt;"/>PROFILING data:<x id="1" equiv-text="&lt;/b&gt;"/> Any data establishing a degree of similarity
+<trans-unit id="h092f8bd2e061bbfd">
+  <source>Any data establishing a degree of similarity
         of with others (e.g., clusters, user-profiles)</source>
 </trans-unit>
-<trans-unit id="h0bbeaf491183d39a">
-  <source><x id="0" equiv-text="&lt;b&gt;"/>RELATIONSHIPS data:<x id="1" equiv-text="&lt;/b&gt;"/> Data about relationships I have with
+<trans-unit id="h93b0d17d1cec5f8c">
+  <source>Data about relationships I have with
         others, social activity and interaction</source>
 </trans-unit>
-<trans-unit id="hc3becbe49599063b">
-  <source><x id="0" equiv-text="&lt;b&gt;"/>UID data:<x id="1" equiv-text="&lt;/b&gt;"/> Any data that uniquely identifies me</source>
+<trans-unit id="h7a93d23c2fe2e792">
+  <source>Any data that uniquely identifies me</source>
 </trans-unit>
-<trans-unit id="hce00a8ccfeb74875">
-  <source><x id="0" equiv-text="&lt;b&gt;"/>OTHER DATA:<x id="1" equiv-text="&lt;/b&gt;"/> Any other categories or forms of data</source>
+<trans-unit id="hd24d40d3ad44c862">
+  <source>Any other categories or forms of data</source>
 </trans-unit>
 <trans-unit id="ha8ea706cb7b3c5f2">
   <source>All targets</source>
@@ -477,6 +468,9 @@
 <trans-unit id="s6303c9c96b50c164">
   <source>My demand applies to data from the following provenance:</source>
 </trans-unit>
+<trans-unit id="sac8256732f2ee1e5">
+  <source>Data</source>
+</trans-unit>
 <trans-unit id="s7c9992bcec8e44cf">
   <source>Date Restriction</source>
 </trans-unit>
@@ -489,8 +483,8 @@
 <trans-unit id="s38ad01608e1ddf20">
   <source>I select the following</source>
 </trans-unit>
-<trans-unit id="sed119cbeb516e34b">
-  <source>privacy scope</source>
+<trans-unit id="hfde9788418b19230">
+  <source><x id="0" equiv-text="&lt;b&gt;"/>privacy scope<x id="1" equiv-text="&lt;/b&gt;"/></source>
 </trans-unit>
 <trans-unit id="s43ceedf5cc8524cc">
   <source>I object to the processing of my data within the following</source>

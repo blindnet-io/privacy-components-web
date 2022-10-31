@@ -2,6 +2,7 @@ import { css, html, LitElement, PropertyValueMap, TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import {
   ComputationAPI,
+  CreatePrivacyRequestPayload,
   PrivacyRequestDemand,
   PrivacyScopeRestriction,
 } from '@blindnet/core';
@@ -36,11 +37,13 @@ export class BldnRequestBuilder extends LitElement {
 
   @state() _uiState: RequestBuilderUIState = RequestBuilderUIState.menu;
 
-  @state() _demandGroups: PrivacyRequestDemand[][] = [];
-
   @state() _action: undefined | PrivacyRequestDemand.action;
 
   @state() _demandGroupIndex: undefined | number;
+
+  @state() _demandGroups: PrivacyRequestDemand[][] = [];
+
+  @state() _target: undefined | CreatePrivacyRequestPayload.target;
 
   @state() _allowedActions: PrivacyRequestDemand.action[] = [];
 
@@ -61,8 +64,9 @@ export class BldnRequestBuilder extends LitElement {
           () => html`
             <bldn-access-form
               data-categories=${JSON.stringify(this._allowedDataCategories)}
-              demands=${ifDefined(this._demandGroupIndex) ??
-              this._demandGroups[this._demandGroupIndex ?? 0]}
+              .demands=${this._demandGroupIndex !== undefined
+                ? this._demandGroups[this._demandGroupIndex]
+                : ifDefined(undefined)}
               demand-group-index=${ifDefined(this._demandGroupIndex)}
             ></bldn-access-form>
           `,
@@ -194,6 +198,35 @@ export class BldnRequestBuilder extends LitElement {
     this._demandGroups.splice(demandGroupIndex, 1);
   }
 
+  private editDemands(e: Event) {
+    e.stopPropagation();
+    const { demandGroupIndex } = (e as CustomEvent).detail;
+    this._demandGroupIndex = demandGroupIndex;
+    this._uiState = RequestBuilderUIState.edit;
+  }
+
+  private cancelRequest(e: Event) {
+    e.stopPropagation();
+
+    // Reset states
+    this._action = undefined;
+    this._demandGroupIndex = undefined;
+    this._demandGroups = [];
+    this._uiState = RequestBuilderUIState.menu;
+  }
+
+  private submitRequest(e: Event) {
+    e.stopPropagation();
+
+    // Build privacy request object
+    const request: CreatePrivacyRequestPayload = {
+      demands: this._demandGroups.flat(),
+      target: this._target,
+    };
+
+    ComputationAPI.getInstance().sendPrivacyRequest(request);
+  }
+
   private goToMenu(e: Event) {
     e.stopPropagation();
     this._uiState = RequestBuilderUIState.menu;
@@ -239,20 +272,43 @@ export class BldnRequestBuilder extends LitElement {
 
     // Request builder listeners
     this.addEventListener('bldn-action-form:set-demands', this.setDemands);
-    this.addEventListener(
-      'bldn-action-form:delete-demands',
-      this.deleteDemands
-    );
     this.addEventListener('bldn-action-form:back-click', this.goToMenu);
     this.addEventListener('bldn-action-form:next-click', this.goToReview);
+
+    // Request review listeners
+    this.addEventListener(
+      'bldn-request-review:delete-demands',
+      this.deleteDemands
+    );
+    this.addEventListener('bldn-request-review:edit-demands', this.editDemands);
+    this.addEventListener(
+      'bldn-request-review:cancel-request',
+      this.cancelRequest
+    );
+    this.addEventListener(
+      'bldn-request-review:submit-request',
+      this.submitRequest
+    );
   }
 
   disconnectedCallback(): void {
     this.removeEventListener('bldn-tile-menu:tile-click', this.selectAction);
     this.removeEventListener('bldn-action-form:set-demands', this.setDemands);
     this.removeEventListener(
-      'bldn-action-form:delete-demands',
+      'bldn-request-review:delete-demands',
       this.deleteDemands
+    );
+    this.removeEventListener(
+      'bldn-request-review:edit-demands',
+      this.editDemands
+    );
+    this.removeEventListener(
+      'bldn-request-review:cancel-request',
+      this.cancelRequest
+    );
+    this.removeEventListener(
+      'bldn-request-review:submit-request',
+      this.submitRequest
     );
     this.removeEventListener('bldn-action-form:back-click', this.goToMenu);
     this.removeEventListener('bldn-action-form:next-click', this.goToReview);

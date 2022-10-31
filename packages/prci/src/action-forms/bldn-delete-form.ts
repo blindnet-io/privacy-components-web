@@ -34,7 +34,11 @@ export class BldnDeleteForm extends ActionForm {
       <bldn-all-checklist
         .choices=${this.dataCategories.map(dc => ({
           value: dc,
-          display: DATA_CATEGORY_DESCRIPTIONS[dc](),
+          display: html`${dc === '*'
+            ? ''
+            : html`<b>${dc} ${msg('Data')}: </b>`}${DATA_CATEGORY_DESCRIPTIONS[
+            dc
+          ]()}`,
           checked:
             this.demands![0].restrictions?.privacy_scope?.findIndex(
               psr => psr.dc === dc

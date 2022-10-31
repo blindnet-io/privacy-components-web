@@ -1,6 +1,7 @@
 import { msg } from '@lit/localize';
 import { css, html, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import {
   PrivacyRequestDemand,
   PrivacyScopeRestriction,
@@ -90,6 +91,7 @@ export class BldnAccessForm extends ActionForm {
    * @param e {CustomEvent} Event containing the new start date
    */
   changeDateRestrictionStart(e: Event) {
+    e.stopPropagation();
     const { date } = (e as CustomEvent).detail;
     this.demands[0].restrictions!.date_range!.from = date;
   }
@@ -99,6 +101,7 @@ export class BldnAccessForm extends ActionForm {
    * @param e {CustomEvent} Event containing the new end date
    */
   changeDateRestrictionEnd(e: Event) {
+    e.stopPropagation();
     const { date } = (e as CustomEvent).detail;
     this.demands[0].restrictions!.date_range!.to = date;
   }
@@ -108,6 +111,7 @@ export class BldnAccessForm extends ActionForm {
    * @param e {CustomEvent} Event containing the new provenance restriction term
    */
   changeProvenanceRestrictionTerm(e: Event) {
+    e.stopPropagation();
     const { term } = (e as CustomEvent).detail;
     this.demands[0].restrictions!.provenance!.term = term;
   }
@@ -117,6 +121,7 @@ export class BldnAccessForm extends ActionForm {
    * @param e {CustomEvent} Event containing the data category string to add
    */
   changeMessage(e: Event) {
+    e.stopPropagation();
     const { message } = (e as CustomEvent).detail;
     this.demands[0].message = message;
   }
@@ -191,7 +196,11 @@ export class BldnAccessForm extends ActionForm {
       <bldn-all-checklist
         .choices=${this.dataCategories.map(dc => ({
           value: dc,
-          display: DATA_CATEGORY_DESCRIPTIONS[dc](),
+          display: html`${dc === '*'
+            ? ''
+            : html`<b>${dc} ${msg('Data')}: </b>`}${DATA_CATEGORY_DESCRIPTIONS[
+            dc
+          ]()}`,
           checked:
             this.demands![0].restrictions?.privacy_scope?.findIndex(
               psr => psr.dc === dc
@@ -206,19 +215,26 @@ export class BldnAccessForm extends ActionForm {
     return html`
       <bldn-dropdown>
         <span slot="heading"><strong>${msg('Date Restriction')}</strong></span>
-        <bldn-date-restriction></bldn-date-restriction>
+        <bldn-date-restriction
+          start=${ifDefined(this.demands[0].restrictions?.date_range?.from)}
+          end=${ifDefined(this.demands[0].restrictions?.date_range?.to)}
+        ></bldn-date-restriction>
       </bldn-dropdown>
       <bldn-dropdown>
         <span slot="heading"
           ><strong>${msg('Provenance Restriction')}</strong></span
         >
-        <bldn-provenance-restriction></bldn-provenance-restriction>
+        <bldn-provenance-restriction
+          term=${ifDefined(this.demands[0].restrictions?.provenance?.term)}
+        ></bldn-provenance-restriction>
       </bldn-dropdown>
       <bldn-dropdown>
         <span slot="heading"
           ><strong>${msg('Additional Message')}</strong></span
         >
-        <bldn-additional-message></bldn-additional-message>
+        <bldn-additional-message
+          message=${ifDefined(this.demands[0].message)}
+        ></bldn-additional-message>
       </bldn-dropdown>
     `;
   }

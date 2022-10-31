@@ -151,70 +151,58 @@ export const DATA_CATEGORY_DESCRIPTIONS = {
     msg(html`<b>ALL</b> categories of data the organization has on me`),
   AFFILIATION: () =>
     msg(
-      html`<b>AFFILIATION data:</b> Groups and Organisations I am linked to
-        through work, studies, or membership`
+      html`Groups and Organisations I am linked to through work, studies, or
+      membership`
     ),
   'AFFILIATION.MEMBERSHIP': () => msg(html``),
   'AFFILIATION.MEMBERSHIP.UNION': () => msg(html``),
   'AFFILIATION.SCHOOL': () => msg(html``),
   'AFFILIATION.WORKPLACE': () => msg(html``),
-  BEHAVIOR: () => msg(html`<b>BEHAVIOR data:</b> Data about my behavior`),
+  BEHAVIOR: () => msg(html`Data about my behavior`),
   'BEHAVIOR.ACTIVITY': () => msg(html``),
   'BEHAVIOR.CONNECTION': () => msg(html``),
   'BEHAVIOR.PREFERENCE': () => msg(html``),
   'BEHAVIOR.TELEMETRY': () => msg(html``),
-  BIOMETRIC: () => msg(html`<b>BIOMETRIC data</b>`),
-  CONTACT: () => msg(html`<b>CONTACT data:</b> Data allowing to contact me `),
+  BIOMETRIC: () => msg(html``),
+  CONTACT: () => msg(html`Data allowing to contact me `),
   'CONTACT.EMAIL': () => msg(html``),
   'CONTACT.ADDRESS': () => msg(html``),
   'CONTACT.PHONE': () => msg(html``),
   DEMOGRAPHIC: () =>
-    msg(
-      html`<b>DEMOGRAPHIC data:</b> All information allowing to class me in a
-        demographic category`
-    ),
+    msg(html`All information allowing to class me in a demographic category`),
   'DEMOGRAPHIC.AGE': () => msg(html``),
   'DEMOGRAPHIC.BELIEFS': () => msg(html``),
   'DEMOGRAPHIC.GENDER': () => msg(html``),
   'DEMOGRAPHIC.ORIGIN': () => msg(html``),
   'DEMOGRAPHIC.RACE': () => msg(html``),
   'DEMOGRAPHIC.SEXUAL-ORIENTATION': () => msg(html``),
-  DEVICE: () => msg(html`<b>DEVICE data:</b> Data about the device I used`),
+  DEVICE: () => msg(html`Data about the device I used`),
   FINANCIAL: () =>
     msg(
-      html`<b>FINANCIAL data:</b> Payment data, financial history and data about
-        my financial situation`
+      html`Payment data, financial history and data about my financial situation`
     ),
   'FINANCIAL.BANK-ACCOUNT': () => msg(html``),
-  GENETIC: () => msg(html`<b>GENETIC data</b>`),
-  HEALTH: () => msg(html`<b>HEALTH data:</b> Data about my health`),
-  IMAGE: () =>
-    msg(
-      html`<b>IMAGE data:</b> Any graphic representation (e.g., image, video) of
-        me`
-    ),
-  LOCATION: () => msg(html`<b>LOCATION data:</b> Geographic location`),
-  NAME: () =>
-    msg(
-      html`<b>NAME data:</b> First names, last names, nicknames, and other names`
-    ),
+  GENETIC: () => msg(html``),
+  HEALTH: () => msg(html`Data about my health`),
+  IMAGE: () => msg(html`Any graphic representation (e.g., image, video) of me`),
+  LOCATION: () => msg(html`Geographic location`),
+  NAME: () => msg(html`First names, last names, nicknames, and other names`),
   PROFILING: () =>
     msg(
-      html`<b>PROFILING data:</b> Any data establishing a degree of similarity
-        of with others (e.g., clusters, user-profiles)`
+      html`Any data establishing a degree of similarity of with others (e.g.,
+      clusters, user-profiles)`
     ),
   RELATIONSHIPS: () =>
     msg(
-      html`<b>RELATIONSHIPS data:</b> Data about relationships I have with
-        others, social activity and interaction`
+      html`Data about relationships I have with others, social activity and
+      interaction`
     ),
-  UID: () => msg(html`<b>UID data:</b> Any data that uniquely identifies me`),
+  UID: () => msg(html`Any data that uniquely identifies me`),
   'UID.ID': () => msg(html``),
   'UID.IP': () => msg(html``),
   'UID.USER-ACCOUNT': () => msg(html``),
   'UID.SOCIAL-MEDIA': () => msg(html``),
-  'OTHER-DATA': () =>
-    msg(html`<b>OTHER DATA:</b> Any other categories or forms of data`),
+  'OTHER-DATA': () => msg(html`Any other categories or forms of data`),
 };
 
 export const TARGET_DESCRIPTIONS = {

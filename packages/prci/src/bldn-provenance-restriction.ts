@@ -1,8 +1,8 @@
-import { ProvenanceRestriction } from "@blindnet/core";
-import { msg } from "@lit/localize"
-import { css, html, LitElement } from "lit"
-import { customElement, property } from "lit/decorators.js"
-import { PROVENANCE_DESCRIPTIONS, TARGET_DESCRIPTIONS } from "./utils/dictionary.js";
+import { ProvenanceRestriction } from '@blindnet/core';
+import { msg } from '@lit/localize';
+import { css, html, LitElement } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+import { PROVENANCE_DESCRIPTIONS } from './utils/dictionary.js';
 
 /**
  * @event {CustomEvent} bldn-provenance-restriction:term-change - Fired when term selection changes
@@ -10,7 +10,6 @@ import { PROVENANCE_DESCRIPTIONS, TARGET_DESCRIPTIONS } from "./utils/dictionary
  */
 @customElement('bldn-provenance-restriction')
 export class BldnProvenanceRestriction extends LitElement {
-
   /** @prop Optional initial provenance category */
   @property({ type: String }) term: undefined | string;
 
@@ -18,15 +17,30 @@ export class BldnProvenanceRestriction extends LitElement {
   @property({ type: String }) target: undefined | string;
 
   private handleTermChange(term: ProvenanceRestriction.term) {
-    this.dispatchEvent(new CustomEvent('bldn-provenance-restriction:term-change', {detail: {term}}))
+    this.dispatchEvent(
+      new CustomEvent('bldn-provenance-restriction:term-change', {
+        bubbles: true,
+        composed: true,
+        detail: {
+          term,
+        },
+      })
+    );
   }
 
   private handleTargetChange(target: ProvenanceRestriction.target) {
-    this.dispatchEvent(new CustomEvent('bldn-provenance-restriction:target-change', {detail: {target}}))
+    this.dispatchEvent(
+      new CustomEvent('bldn-provenance-restriction:target-change', {
+        bubbles: true,
+        composed: true,
+        detail: {
+          target,
+        },
+      })
+    );
   }
 
   render() {
-
     return html`
       <p>${msg('My demand applies to data from the following provenance:')}</p>
       <fieldset class="provenance-restriction">
@@ -43,7 +57,7 @@ export class BldnProvenanceRestriction extends LitElement {
           `
         )}
       </fieldset>
-    `
+    `;
 
     // NOTE: Until (if) we support multiple demand groups per request, we only need to allow setting target on the whole request
     //
@@ -66,12 +80,11 @@ export class BldnProvenanceRestriction extends LitElement {
   }
 
   static styles = css`
-
     :host {
       display: block;
       text-align: left;
     }
-  
+
     fieldset {
       border: none;
       margin: 0;
@@ -82,7 +95,5 @@ export class BldnProvenanceRestriction extends LitElement {
     input ~ input {
       margin-top: 1em;
     }
-
-  `
-
+  `;
 }

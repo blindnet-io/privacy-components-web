@@ -18,6 +18,20 @@ import {
   TARGET_DESCRIPTIONS,
 } from './utils/dictionary.js';
 
+const editSvg = new URL('./assets/icons/akar-icons_edit.svg', import.meta.url)
+  .href;
+
+const deleteSvg = new URL(
+  './assets/icons/akar-icons_trash-can.svg',
+  import.meta.url
+).href;
+
+/**
+ * @event {CustomEvent} bldn-request-review:edit-demands
+ * @event {CustomEvent} bldn-request-review:delete-demands
+ * @event {Event} bldn-request-review:cancel-request'
+ * @event {Event} bldn-request-review:submit-request'
+ */
 @customElement('bldn-request-review')
 export class BldnRequestReview extends LitElement {
   /** @prop */
@@ -93,20 +107,61 @@ export class BldnRequestReview extends LitElement {
     return html`${msg('No demands to review!')}`;
   }
 
-  handleSubmitClick() {}
+  handleEditDemandGroupClick(demandGroupIndex: number) {
+    this.dispatchEvent(
+      new CustomEvent('bldn-request-review:edit-demands', {
+        bubbles: true,
+        composed: true,
+        detail: {
+          demandGroupIndex,
+        },
+      })
+    );
+  }
+
+  handleDeleteDemandGroupClick(demandGroupIndex: number) {
+    this.dispatchEvent(
+      new CustomEvent('bldn-request-review:delete-demands', {
+        bubbles: true,
+        composed: true,
+        detail: {
+          demandGroupIndex,
+        },
+      })
+    );
+  }
+
+  handleCancelClick() {
+    this.dispatchEvent(
+      new Event('bldn-request-review:cancel-request', {
+        bubbles: true,
+        composed: true,
+      })
+    );
+  }
+
+  handleSubmitClick() {
+    this.dispatchEvent(
+      new Event('bldn-request-review:submit-request', {
+        bubbles: true,
+        composed: true,
+      })
+    );
+  }
 
   render() {
     return html`
       <bldn-nav-wrapper
-        mode="single"
-        center-button="Submit Request"
-        @bldn-nav-wrapper:center-click=${this.handleSubmitClick}
+        left-button="Cancel Request"
+        right-button="Submit Request"
+        @bldn-nav-wrapper:left-click=${this.handleCancelClick}
+        @bldn-nav-wrapper:right-click=${this.handleSubmitClick}
       >
         <bldn-dropdown class="main-section" mode="major">
           <span slot="heading"><strong>${msg('Request Summary')}</strong></span>
           ${map(
             this.demandGroups,
-            group => html`
+            (group, i) => html`
               ${when(
                 group.length > 0,
                 () => html`
@@ -114,8 +169,16 @@ export class BldnRequestReview extends LitElement {
                     <span slot="heading"
                       ><strong
                         >${group[0].action} ${msg('Demand')}</strong
-                      ></span
-                    >
+                      >
+                      <button class='img-button' @click=${() =>
+                        this.handleEditDemandGroupClick(i)}>
+                        <img src=${editSvg} alt='edit demand group'></img>
+                      </button>
+                      <button class='img-button' @click=${() =>
+                        this.handleDeleteDemandGroupClick(i)}>
+                        <img src=${deleteSvg} alt='delete demand group'></img>
+                      </button>
+                    </span>
                     ${this.getReviewTemplate(group)}
                   </bldn-dropdown>
                 `
@@ -151,6 +214,15 @@ export class BldnRequestReview extends LitElement {
 
     #request-target bldn-radio-list {
       padding-left: 1em;
+    }
+
+    li {
+      margin: 1em 0;
+    }
+
+    .img-button {
+      border: none;
+      background: none;
     }
 
     bldn-dropdown.main-section {
