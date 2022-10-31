@@ -1,5 +1,5 @@
 import { localized } from '@lit/localize';
-import { css, html, LitElement } from 'lit';
+import { css, html, LitElement, PropertyValueMap } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
 
@@ -32,12 +32,19 @@ export class DataConsumerInterface extends CoreConfigurationMixin(LitElement) {
     super.connectedCallback();
   }
 
-  protected willUpdate(): void {
-    ComputationAPI.getInstance()
-      .getPendingDemands()
-      .then(demands => {
-        this._demands = demands;
-      });
+  protected willUpdate(
+    _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
+  ): void {
+    if (
+      _changedProperties.has('admin-token') ||
+      _changedProperties.has('adminToken')
+    ) {
+      ComputationAPI.getInstance()
+        .getPendingDemands()
+        .then(demands => {
+          this._demands = demands;
+        });
+    }
   }
 
   render() {

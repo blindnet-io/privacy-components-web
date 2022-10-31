@@ -46,7 +46,6 @@ export class ComputationAPI {
 
     if (!adminToken) {
       // eslint-disable-next-line no-console
-      console.log('No admin token!');
       this._adminToken = '';
     } else {
       this._adminToken = adminToken;
