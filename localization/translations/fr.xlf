@@ -100,7 +100,7 @@
 </trans-unit>
 <trans-unit id="s1a9f765301e6d99b">
   <source>TRANSPARENCY.LEGAL-BASES</source>
-  <target>TRANSPARENCE.BASES_LEGALES</target>
+  <target>TRANSPARENCE.BASES-LEGALES</target>
 </trans-unit>
 <trans-unit id="sbfce6b0291310f7c">
   <source>TRANSPARENCY.ORGANIZATION</source>
@@ -481,7 +481,7 @@
   <target>pas plus longtemps que</target>
 </trans-unit>
 <trans-unit id="s49940a6f4a947f4a">
-  <source>no less than</source>
+  <source>pas plus longtemps que</source>
   <target>pas moins de</target>
 </trans-unit>
 <trans-unit id="s9f2760d67ffa4687">
@@ -518,7 +518,7 @@
 </trans-unit>
 <trans-unit id="h87332548e751bc1c">
   <source><x id="0" equiv-text="&lt;b&gt;"/>OTHER-DATA:<x id="1" equiv-text="&lt;/b&gt;"/> Specify another type of data</source>
-  <target>Spécifiez un autre type de données</target>
+  <target><x id="0" equiv-text="&lt;b&gt;"/>Autres données :<x id="1" equiv-text="&lt;/b&gt;"/> Spécifiez un autre type de données</target>
 </trans-unit>
 <trans-unit id="s4618111b41da4ae5">
   <source>Other data type:</source>
@@ -619,7 +619,7 @@
 <trans-unit id="h07a854b6f92dc95c">
   <source>Click <x id="0" equiv-text="&lt;a href=&quot;${demand.data}.json&quot;&gt;"/>here<x id="1" equiv-text="&lt;/a&gt;"/> to download
                     your data.</source>
-  <target>Cliquez ici pour télécharger vos données</target>
+  <target>Cliquez <x id="0" equiv-text="&lt;a href=&quot;${demand.data}.json&quot;&gt;"/>ici<x id="1" equiv-text="&lt;/a&gt;"/> pour télécharger vos données</target>
 </trans-unit>
 <trans-unit id="s3137e812940ae6b7">
   <source>Obtaining data, please wait and refresh the page later.</source>
@@ -628,22 +628,22 @@
 <trans-unit id="h0b299251150ee94b">
   <source>Provided by a user of the
                           <x id="0" equiv-text="&lt;i&gt;${prov.system}&lt;/i&gt;"/> system</source>
-  <target>Fournies par l'utilisateur du système</target>
+  <target>Fournies par l'utilisateur du <x id="0" equiv-text="&lt;i&gt;${prov.system}&lt;/i&gt;"/> système</target>
 </trans-unit>
 <trans-unit id="he1fd7c01f92eb310">
   <source>Provided by you as a user of the
                           <x id="0" equiv-text="&lt;i&gt;${prov.system}&lt;/i&gt;"/> system</source>
-  <target>Fournies par vous en tant qu'utilisateur du système</target>
+  <target>Fournies par vous en tant qu'utilisateur du <x id="0" equiv-text="&lt;i&gt;${prov.system}&lt;/i&gt;"/> système</target>
 </trans-unit>
 <trans-unit id="hb5be28950f6ca957">
   <source>Derived by user actions, extracted from other data,
                           or inferred by the <x id="0" equiv-text="&lt;i&gt;${prov.system}&lt;/i&gt;"/> system</source>
-  <target>Dérivées des actions de l'utilisateur, extraites d'autres données ou déduites par le système</target>
+  <target>Dérivées des actions de l'utilisateur, extraites d'autres données ou déduites par le <x id="0" equiv-text="&lt;i&gt;${prov.system}&lt;/i&gt;"/> système</target>
 </trans-unit>
 <trans-unit id="hfed8a087807cfa44">
   <source>Obtained by transfer from the
                           <x id="0" equiv-text="&lt;i&gt;${prov.system}&lt;/i&gt;"/> system</source>
-  <target>Obtenues par un transfert depuis le système</target>
+  <target>Obtenues par un transfert depuis le <x id="0" equiv-text="&lt;i&gt;${prov.system}&lt;/i&gt;"/> système</target>
 </trans-unit>
 <trans-unit id="s1caf5d7ab36059be">
   <source>Demand</source>
@@ -660,7 +660,7 @@
 <trans-unit id="h0fd6feceae15cd33">
   <source>Do you confirm
                         <x id="0" equiv-text="&lt;strong&gt;"/>canceling your demand?<x id="1" equiv-text="&lt;/strong&gt;"/></source>
-  <target>Confirmez-vous annuler votre demande ?</target>
+  <target>Confirmez-vous <x id="0" equiv-text="&lt;strong&gt;"/>annuler votre demande ?<x id="1" equiv-text="&lt;/strong&gt;"/></target>
 </trans-unit>
 <trans-unit id="s00fc2da0e187830b">
   <source>Keep Demand</source>
