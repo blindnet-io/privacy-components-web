@@ -1039,11 +1039,6 @@
     "@babel/helper-validator-identifier" "^7.18.6"
     to-fast-properties "^2.0.0"
 
-"@blindnet/core@^0.9.0":
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/@blindnet/core/-/core-0.9.0.tgz#bef67d8865b9c6dcbfa92dec9ee139a63968a64b"
-  integrity sha512-/YzceD31t3jydYXUnOn+8XJOdNoGAvWTt6AITJMVEZ4sDMFmOmQtIBRXXnne0GoYajmlpbCYHfSWfVuZOAKtkg==
-
 "@carbon/telemetry@0.0.0-alpha.6":
   version "0.0.0-alpha.6"
   resolved "https://registry.npmjs.org/@carbon/telemetry/-/telemetry-0.0.0-alpha.6.tgz"
