@@ -261,7 +261,14 @@ export class ComputationAPI {
    * Gets a list of all demands which are pending a response
    * @returns {PendingDemandPayload[]}
    */
-  async getPendingDemands() {
+  async getPendingDemands(newAdminToken?: string) {
+    // Update the admin token if one was passed
+    if (typeof newAdminToken !== 'undefined') {
+      this.setAdminToken(newAdminToken);
+    } else if (!this._adminToken) {
+      throw new Error('You must set an admin token before making API calls!');
+    }
+
     return fetch(
       `https://devkit-pce-staging.azurewebsites.net/v0/consumer-interface/pending-requests`,
       {
@@ -284,7 +291,14 @@ export class ComputationAPI {
    * @param {string} id uuid of the demand
    * @returns {PendingDemandDetailsPayload}
    */
-  async getPendingDemandDetails(id: string) {
+  async getPendingDemandDetails(id: string, newAdminToken?: string) {
+    // Update the admin token if one was passed
+    if (typeof newAdminToken !== 'undefined') {
+      this.setAdminToken(newAdminToken);
+    } else if (!this._adminToken) {
+      throw new Error('You must set an admin token before making API calls!');
+    }
+
     return fetch(
       `https://devkit-pce-staging.azurewebsites.net/v0/consumer-interface/pending-requests/${id}`,
       {
@@ -309,7 +323,19 @@ export class ComputationAPI {
    * @param lang language of the message
    * @returns
    */
-  async grantDemand(id: string, msg?: string, lang?: string) {
+  async grantDemand(
+    id: string,
+    msg?: string,
+    lang?: string,
+    newAdminToken?: string
+  ) {
+    // Update the admin token if one was passed
+    if (typeof newAdminToken !== 'undefined') {
+      this.setAdminToken(newAdminToken);
+    } else if (!this._adminToken) {
+      throw new Error('You must set an admin token before making API calls!');
+    }
+
     if (id === undefined) {
       throw TypeError('You must pass an ID of the demand to deny.');
     }
@@ -351,8 +377,16 @@ export class ComputationAPI {
     id: string,
     motive: DenyDemandPayload.motive = DenyDemandPayload.motive.OTHER_MOTIVE,
     msg?: string,
-    lang?: string
+    lang?: string,
+    newAdminToken?: string
   ) {
+    // Update the admin token if one was passed
+    if (typeof newAdminToken !== 'undefined') {
+      this.setAdminToken(newAdminToken);
+    } else if (!this._adminToken) {
+      throw new Error('You must set an admin token before making API calls!');
+    }
+
     if (id === undefined) {
       throw TypeError('You must pass an ID of the demand to deny.');
     }

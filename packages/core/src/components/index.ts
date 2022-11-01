@@ -8,4 +8,3 @@ export * from './bldn-toggle-button.js';
 export * from './bldn-button.js';
 export * from './bldn-input.js';
 export * from './bldn-magic-auth.js';
-export * from './bldn-auth.js';

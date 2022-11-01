@@ -26,8 +26,7 @@ export class AppBackOffice extends LitElement {
   }
 
   /**
-   * Get a blindnet token given an auth0 ones
-   * @param {string}
+   * Get an blindnet admin token given a username and password
    */
   async getBlindnetAdminToken(username, password) {
     return fetch(
@@ -57,6 +56,7 @@ export class AppBackOffice extends LitElement {
    * @param {Event} e
    */
   handleUsernameChange(e) {
+    // @ts-ignore
     this._username = e.target.value;
   }
 
@@ -65,6 +65,7 @@ export class AppBackOffice extends LitElement {
    * @param {Event} e
    */
   handlePasswordChange(e) {
+    // @ts-ignore
     this._password = e.target.value;
   }
 
