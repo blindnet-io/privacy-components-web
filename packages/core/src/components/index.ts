@@ -7,4 +7,3 @@ export * from './bldn-horizontal-list.js';
 export * from './bldn-toggle-button.js';
 export * from './bldn-button.js';
 export * from './bldn-input.js';
-export * from './bldn-magic-auth.js';

@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0](https://github.com/blindnet-io/privacy-components-web/compare/v0.8.1...v0.9.0) (2022-09-29)
+
+
+### Bug Fixes
+
+* **@blindnet-demos/devkit-simple-tutorial:** content width ([c5d5cba](https://github.com/blindnet-io/privacy-components-web/commit/c5d5cba5e477533efe492b87aae05ea5d1575a09))
+
+
+### Features
+
+* **@blindnet/dci:** new DCI UI ([#159](https://github.com/blindnet-io/privacy-components-web/issues/159)) ([bf57532](https://github.com/blindnet-io/privacy-components-web/commit/bf57532686c1e5a430dc9f3a53af4c1b217e188e)), closes [#145](https://github.com/blindnet-io/privacy-components-web/issues/145)
+
+
+
+
+
 ## [0.8.1](https://github.com/blindnet-io/privacy-components-web/compare/v0.8.0...v0.8.1) (2022-09-19)
 
 **Note:** Version bump only for package @blindnet-demos/devkit-simple-tutorial

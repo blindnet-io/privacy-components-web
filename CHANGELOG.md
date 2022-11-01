@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0](https://github.com/blindnet-io/privacy-components-web/compare/v0.8.1...v0.9.0) (2022-09-29)
+
+
+### Bug Fixes
+
+* **@blindnet-demos/devkit-simple-tutorial:** content width ([c5d5cba](https://github.com/blindnet-io/privacy-components-web/commit/c5d5cba5e477533efe492b87aae05ea5d1575a09))
+* **@blindnet/prci:** remove strict content width ([c8c636e](https://github.com/blindnet-io/privacy-components-web/commit/c8c636e8ab5ed131d06b8e9a92076a79079f92b4))
+
+
+### Features
+
+* **@blindnet/core:** global configuration ([d69d853](https://github.com/blindnet-io/privacy-components-web/commit/d69d8539d6a19614ac3bbf1d4b7d2bea63ba6bf3))
+* **@blindnet/dci:** new DCI UI ([#159](https://github.com/blindnet-io/privacy-components-web/issues/159)) ([bf57532](https://github.com/blindnet-io/privacy-components-web/commit/bf57532686c1e5a430dc9f3a53af4c1b217e188e)), closes [#145](https://github.com/blindnet-io/privacy-components-web/issues/145)
+* **@blindnet/prci:** allow to set up computation API URL ([019d64d](https://github.com/blindnet-io/privacy-components-web/commit/019d64d0e1f33e8144149db48e1220efb5e6eaf5))
+* **@blindnet/prci:** cancel privacy requests ([b9e39df](https://github.com/blindnet-io/privacy-components-web/commit/b9e39df8f9e8ad0c50bf352f22ed10bde3f170bf))
+* **@blindnet/prci:** link to return to request status page ([31b5582](https://github.com/blindnet-io/privacy-components-web/commit/31b55824ea1c1509326df5c39626e8ddf1bebd06))
+
+
+
+
+
 ## [0.8.1](https://github.com/blindnet-io/privacy-components-web/compare/v0.8.0...v0.8.1) (2022-09-19)
 
 **Note:** Version bump only for package @blindnet/pc4w-root
