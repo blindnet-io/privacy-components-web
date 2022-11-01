@@ -35,12 +35,9 @@ export class DataConsumerInterface extends CoreConfigurationMixin(LitElement) {
   protected willUpdate(
     _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
   ): void {
-    if (
-      _changedProperties.has('admin-token') ||
-      _changedProperties.has('adminToken')
-    ) {
+    if (_changedProperties.has('adminToken') && this.adminToken) {
       ComputationAPI.getInstance()
-        .getPendingDemands()
+        .getPendingDemands(this.adminToken)
         .then(demands => {
           this._demands = demands;
         });
