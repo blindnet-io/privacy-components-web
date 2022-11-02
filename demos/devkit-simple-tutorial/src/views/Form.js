@@ -145,7 +145,7 @@ export class AppParticipateForm extends LitElement {
 
   /**
    * Give consent using the unauthorized endpoint
-   * @param {string} email 
+   * @param {string} email
    */
   async giveConsent(email) {
     const headers = {
@@ -163,8 +163,8 @@ export class AppParticipateForm extends LitElement {
           app_id: '6f083c15-4ada-4671-a6d1-c671bc9105dc',
           data_subject: {
             id: email,
-            schema: 'email'
-          }
+            schema: 'email',
+          },
         }),
       }
     );
@@ -221,7 +221,8 @@ export class AppParticipateForm extends LitElement {
       if (this.consentGiven) {
         this.requireConsent = false;
         await this.saveDataToServer(formData);
-        const email = formData.get('email')?.toString() || 'john.doe@example.com';
+        const email =
+          formData.get('email')?.toString() || 'john.doe@example.com';
         await this.giveConsent(email);
         this.setSubmitting(true);
         this.setValidity();
