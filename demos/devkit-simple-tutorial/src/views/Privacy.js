@@ -7,15 +7,13 @@ import jwt_decode from 'jwt-decode';
 
 import '@blindnet/prci';
 
-// window.Buffer = Buffer
-
 // Get an auth0 instance
 const auth0 = new Auth0Client({
   domain: 'blindnet.eu.auth0.com',
   client_id: '1C0uhFCpzvJAkFi4uqoq2oAWSgQicqHc',
-  redirect_uri: `${window.location.origin}/demos/devkit-simple-tutorial/privacy`,
+  redirect_uri: `${window.location.origin}/demos/devkit-simple-tutorial/?path=privacy`,
   authorizationParams: {
-    redirect_uri: `${window.location.origin}/demos/devkit-simple-tutorial/privacy`,
+    redirect_uri: `${window.location.origin}/demos/devkit-simple-tutorial/?path=privacy`,
   },
 });
 
@@ -54,7 +52,7 @@ export class AppPrivacy extends LitElement {
   }
 
   handleLoginClick() {
-    window.location.href = `${window.location.origin}/demos/devkit-simple-tutorial/login`;
+    auth0.loginWithRedirect();
   }
 
   handleLogoutClick() {
