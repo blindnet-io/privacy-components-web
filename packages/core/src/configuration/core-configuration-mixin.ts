@@ -65,10 +65,10 @@ export function CoreConfigurationMixin<
     protected willUpdate(
       _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
     ): void {
-      if (_changedProperties.has('apiToken')) {
+      if (_changedProperties.has('apiToken') && this.apiToken) {
         BlindnetCore.setToken(this.apiToken);
       }
-      if (_changedProperties.has('adminToken')) {
+      if (_changedProperties.has('adminToken') && this.adminToken) {
         BlindnetCore.setAdminToken(this.adminToken);
       }
     }

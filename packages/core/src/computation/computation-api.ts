@@ -39,7 +39,7 @@ export class ComputationAPI {
     this._baseURL = this._baseURL.replace(/\/+$/, '');
 
     if (!apiToken) {
-      this._apiToken = 'john.doe@example.com';
+      this._apiToken = '';
     } else {
       this._apiToken = apiToken;
     }
@@ -76,10 +76,18 @@ export class ComputationAPI {
     this._apiToken = apiToken;
   }
 
+  public hasApiToken() {
+    return this._apiToken !== '';
+  }
+
   private _adminToken: string;
 
   public setAdminToken(adminToken: string) {
     this._adminToken = adminToken;
+  }
+
+  public hasAdminToken() {
+    return this._adminToken !== '';
   }
 
   /**
@@ -127,7 +135,11 @@ export class ComputationAPI {
     return ComputationAPI.instance;
   }
 
-  private headers(acceptJSON = false, request?: PrivacyRequest): Headers {
+  private headers(
+    acceptJSON = false,
+    requireAuth = true,
+    request?: PrivacyRequest
+  ): Headers {
     const headers = new Headers({
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
@@ -137,8 +149,10 @@ export class ComputationAPI {
       ...(acceptJSON ? { accept: 'application/json' } : {}),
     });
 
-    // Append auth header only if apiToken is defined
-    if (this._apiToken) {
+    // Append auth header if required and api token is defined
+    if (requireAuth && !this._apiToken) {
+      throw new Error('You must include a valid Authorization header!');
+    } else if (this._apiToken) {
       headers.append('Authorization', `Bearer ${this._apiToken}`);
     }
 
@@ -196,13 +210,16 @@ export class ComputationAPI {
 
     const preparedRequest = this.preProcessRequest(request);
 
+    // Only allow no auth header for certain requests
+    const authRequired = !request.demands.every(demand =>
+      demand.action.includes('TRANSPARENCY')
+    );
+
     const response = await fetch(this.fullURL(endpoint), {
       method: 'POST',
-      headers: this.headers(true, request),
+      headers: this.headers(true, authRequired, request),
       body: JSON.stringify(preparedRequest),
     });
-
-    // console.log(await response.json())
 
     if (!response.ok) {
       throw new Error(response.statusText);
@@ -239,7 +256,7 @@ export class ComputationAPI {
   }
 
   async cancelDemand(demand_id: string): Promise<void> {
-    const endpoint = `/privacy-request/${demand_id}`;
+    const endpoint = '/privacy-request/cancel';
 
     const headers = this.headers(true);
     const body = JSON.stringify({ demand_id });
