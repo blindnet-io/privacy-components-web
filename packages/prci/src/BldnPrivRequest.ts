@@ -65,15 +65,6 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
   // Privacy request object, empty until some demands are added
   @state() _privacyRequest: PrivacyRequest = {
     demands: [],
-    data_subject: [
-      {
-        // FIXME: For now we hardcode this, but will come from token once auth added
-        // id: 'fdfc95a6-8fd8-4581-91f7-b3d236a6a10e',
-        // TODO: remove this when auth is implemented
-        id: localStorage.getItem('priv_user_id') || 'john.doe@example.com',
-        schema: 'dsid',
-      },
-    ],
     email: '',
     target: TARGET.PARTNERS,
   };
@@ -214,18 +205,20 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
   handleRestartClick() {
     this._privacyRequest = {
       demands: [],
-      data_subject: [
-        {
-          // FIXME: For now we hardcode this, but will come from token once auth added
-          // id: 'fdfc95a6-8fd8-4581-91f7-b3d236a6a10e',
-          // TODO: remove this when auth is implemented
-          id: localStorage.getItem('priv_user_id') || 'john.doe@example.com',
-          schema: 'dsid',
-        },
-      ],
       email: '',
       target: TARGET.PARTNERS,
     };
+
+    if (this.apiToken) {
+      const decodedToken = JSON.parse(atob(this.apiToken.split('.')[1]));
+      this._privacyRequest.data_subject = [
+        {
+          id: decodedToken.uid,
+          schema: 'dsid',
+        },
+      ];
+    }
+
     this._demands = new Map<string, Demand[]>();
   }
 
@@ -354,6 +347,16 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
       } catch {
         this._includedDataCategories = getDefaultDataCategories();
       }
+    }
+
+    if (_changedProperties.has('apiToken') && this.apiToken) {
+      const decodedToken = JSON.parse(atob(this.apiToken.split('.')[1]));
+      this._privacyRequest.data_subject = [
+        {
+          id: decodedToken.uid,
+          schema: 'dsid',
+        },
+      ];
     }
   }
 
