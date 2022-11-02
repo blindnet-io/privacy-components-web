@@ -97,6 +97,7 @@ export class StatusView extends LitElement {
     ComputationAPI.getInstance()
       .getRequest(this.requestId)
       .then(response => {
+        console.log('got request');
         if (response.length > 0) {
           this._requestDate = new Date(response[0].date);
           this._completedDemands = response.filter(d =>
@@ -123,12 +124,14 @@ export class StatusView extends LitElement {
             d => d.requested_action === ACTION.ACCESS && !d.data
           )
         ) {
+          console.log('clearing interval');
           clearInterval(this._intervalId);
           this._intervalId = undefined;
         } else if (!this._intervalId && this._processingDemands.length !== 0) {
           // FIXME: reload should happen after a user interaction, not automatically
           // Setup an interval to get the status of processing demands every 3 seconds
           this._intervalId = setInterval(() => this.reloadRequest(), 3000);
+          console.log('set interval');
         }
       });
   }
@@ -173,6 +176,15 @@ export class StatusView extends LitElement {
         },
       })
     );
+  }
+
+  /**
+   * Stop fetching this request when leaving status view
+   */
+  disconnectedCallback(): void {
+    if (this._intervalId) {
+      clearInterval(this._intervalId);
+    }
   }
 
   render() {
