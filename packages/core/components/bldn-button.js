@@ -6,11 +6,14 @@ import { bldnStyles } from './blindnet-wc-styles.js';
 let BldnButton = class BldnButton extends LitElement {
     constructor() {
         super(...arguments);
-        this.type = 'primary';
+        this.mode = 'primary';
+    }
+    handleClick() {
+        this.dispatchEvent(new Event('bldn-button:click'));
     }
     render() {
         return html `
-      <button>
+      <button class=${this.mode} @click=${this.handleClick}>
         <slot></slot>
       </button>
     `;
@@ -21,7 +24,7 @@ BldnButton.styles = [
     css `
       button {
         border: none;
-        border-radius: 5px;
+        border-radius: var(--bldn-button-border-radius, 5px);
         padding: 1vh 2vw;
         color: white;
         font-size: 16px;
@@ -37,6 +40,12 @@ BldnButton.styles = [
         box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.1),
           0px 2px 4px rgba(0, 0, 0, 0.2), 0px 4px 8px rgba(0, 0, 0, 0.2),
           0px 8px 16px rgba(0, 0, 0, 0.2);
+      }
+
+      button.link:active {
+        transform: none;
+        transition: none;
+        box-shadow: none;
       }
 
       .secondary {
@@ -67,11 +76,20 @@ BldnButton.styles = [
       .negative {
         background: var(--bldn-button-color-negative, var(--color-negative));
       }
+
+      .link {
+        border: none;
+        background: none;
+        box-shadow: none;
+        text-decoration: underline;
+        color: var(--color-dark);
+        padding: inherit;
+      }
     `,
 ];
 __decorate([
-    property({ type: String })
-], BldnButton.prototype, "type", void 0);
+    property({ type: String, reflect: true })
+], BldnButton.prototype, "mode", void 0);
 BldnButton = __decorate([
     customElement('bldn-button')
 ], BldnButton);

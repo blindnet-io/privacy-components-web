@@ -1,4 +1,4 @@
-import { LitElement } from 'lit';
+import { LitElement, PropertyValueMap } from 'lit';
 import { PendingDemandPayload } from '@blindnet/core';
 declare enum DCIUIState {
     requests = 0,
@@ -10,6 +10,7 @@ export declare class DataConsumerInterface extends DataConsumerInterface_base {
     _demands: PendingDemandPayload[];
     handleViewToggleChange(e: CustomEvent): void;
     connectedCallback(): void;
+    protected willUpdate(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void;
     render(): import("lit-html").TemplateResult<1>;
     static styles: import("lit").CSSResult;
 }

@@ -36,4 +36,5 @@ export { DataConsumerRequests } from './components/bldn-data-consum-requests.js'
 export { HorizontalList } from './components/bldn-horizontal-list.js';
 export { ToggleButton } from './components/bldn-toggle-button.js';
 export { BldnButton } from './components/bldn-button.js';
+export { BldnInput } from './components/bldn-input.js';
 //# sourceMappingURL=index.js.map

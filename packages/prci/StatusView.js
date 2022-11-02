@@ -27,33 +27,40 @@ let StatusView = class StatusView extends LitElement {
         this._intervalId = undefined;
     }
     reloadRequest() {
-        ComputationAPI.getInstance()
-            .getRequest(this.requestId)
-            .then(response => {
-            if (response.length > 0) {
-                this._requestDate = new Date(response[0].date);
-                this._completedDemands = response.filter(d => [
-                    DEMAND_STATUS.GRANTED,
-                    DEMAND_STATUS['PARTIALLY-GRANTED'],
-                    DEMAND_STATUS.DENIED,
-                ].includes(d.status));
-                this._processingDemands = response.filter(d => d.status === DEMAND_STATUS['UNDER-REVIEW']);
-                this._cancelledDemands = response.filter(d => d.status === DEMAND_STATUS.CANCELED);
-            }
-            // If no more demands are processing, the reload interval exists, and the data for
-            // all ACCESS responses has arrived, stop reloading the request.
-            if (this._processingDemands.length === 0 &&
-                this._intervalId &&
-                !this._completedDemands.some(d => d.requested_action === ACTION.ACCESS && !d.data)) {
-                clearInterval(this._intervalId);
-                this._intervalId = undefined;
-            }
-            else if (!this._intervalId && this._processingDemands.length !== 0) {
-                // FIXME: reload should happen after a user interaction, not automatically
-                // Setup an interval to get the status of processing demands every 3 seconds
-                this._intervalId = setInterval(() => this.reloadRequest(), 3000);
-            }
-        });
+        // Get the status of the current request once there is an API token set
+        if (ComputationAPI.getInstance().hasApiToken()) {
+            ComputationAPI.getInstance()
+                .getRequest(this.requestId)
+                .then(response => {
+                if (response.length > 0) {
+                    this._requestDate = new Date(response[0].date);
+                    this._completedDemands = response.filter(d => [
+                        DEMAND_STATUS.GRANTED,
+                        DEMAND_STATUS['PARTIALLY-GRANTED'],
+                        DEMAND_STATUS.DENIED,
+                    ].includes(d.status));
+                    this._processingDemands = response.filter(d => d.status === DEMAND_STATUS['UNDER-REVIEW']);
+                    this._cancelledDemands = response.filter(d => d.status === DEMAND_STATUS.CANCELED);
+                }
+                // If no more demands are processing, the reload interval exists, and the data for
+                // all ACCESS responses has arrived, stop reloading the request.
+                if (this._processingDemands.length === 0 &&
+                    this._intervalId &&
+                    !this._completedDemands.some(d => d.requested_action === ACTION.ACCESS && !d.data)) {
+                    clearInterval(this._intervalId);
+                    this._intervalId = undefined;
+                }
+                else if (!this._intervalId &&
+                    this._processingDemands.length !== 0) {
+                    // FIXME: reload should happen after a user interaction, not automatically
+                    // Setup an interval to get the status of processing demands every 3 seconds
+                    this._intervalId = setInterval(() => this.reloadRequest(), 3000);
+                }
+            });
+        }
+        else {
+            this._intervalId = setInterval(() => this.reloadRequest(), 3000);
+        }
     }
     willUpdate(_changedProperties) {
         if (_changedProperties.has('requestId') && this.requestId !== '') {
@@ -85,6 +92,14 @@ let StatusView = class StatusView extends LitElement {
                 newState: ComponentState.MENU,
             },
         }));
+    }
+    /**
+     * Stop fetching this request when leaving status view
+     */
+    disconnectedCallback() {
+        if (this._intervalId) {
+            clearInterval(this._intervalId);
+        }
     }
     render() {
         return html `

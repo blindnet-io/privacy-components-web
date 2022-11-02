@@ -17,6 +17,14 @@ class BlindnetCore {
         }
         return isConfigUpdated;
     }
+    static setToken(apiToken) {
+        BlindnetCore._configuration.apiToken = apiToken;
+        ComputationAPI.getInstance().setToken(apiToken);
+    }
+    static setAdminToken(adminToken) {
+        BlindnetCore._configuration.adminToken = adminToken;
+        ComputationAPI.getInstance().setAdminToken(adminToken);
+    }
     /**
      * Use configuration to correctly set up everything internally.
      *
@@ -26,7 +34,7 @@ class BlindnetCore {
         let isConfigUpdated = true;
         isConfigUpdated =
             isConfigUpdated &&
-                ComputationAPI.configure(configuration.computationBaseUrl, force);
+                ComputationAPI.configure(configuration.computationBaseUrl, configuration.apiToken, configuration.adminToken, force);
         return isConfigUpdated;
     }
     /**

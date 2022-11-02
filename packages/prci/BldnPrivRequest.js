@@ -20,6 +20,27 @@ import './demand-forms/DeleteForm.js';
 import './demand-forms/RevokeConsentForm.js';
 
 /**
+ * Decode a base64url string
+ * @param input String to decode
+ * @returns Decoded string
+ */
+function decode(input) {
+    let output = input.replace(/-/g, '+').replace(/_/g, '/');
+    switch (output.length % 4) {
+        case 0:
+            break;
+        case 2:
+            output += '==';
+            break;
+        case 3:
+            output += '=';
+            break;
+        default:
+            throw Error('Illegal base64url string!');
+    }
+    return atob(output);
+}
+/**
  * Top level component encapsulating a single PrivacyRequest. Contains one or
  * more DemandBuilder elements, each for a single demand action type.
  *
@@ -43,15 +64,6 @@ let BldnPrivRequest = class BldnPrivRequest extends CoreConfigurationMixin(LitEl
         // Privacy request object, empty until some demands are added
         this._privacyRequest = {
             demands: [],
-            data_subject: [
-                {
-                    // FIXME: For now we hardcode this, but will come from token once auth added
-                    // id: 'fdfc95a6-8fd8-4581-91f7-b3d236a6a10e',
-                    // TODO: remove this when auth is implemented
-                    id: localStorage.getItem('priv_user_id') || 'john.doe@example.com',
-                    schema: 'dsid',
-                },
-            ],
             email: '',
             target: TARGET.PARTNERS,
         };
@@ -160,18 +172,18 @@ let BldnPrivRequest = class BldnPrivRequest extends CoreConfigurationMixin(LitEl
     handleRestartClick() {
         this._privacyRequest = {
             demands: [],
-            data_subject: [
-                {
-                    // FIXME: For now we hardcode this, but will come from token once auth added
-                    // id: 'fdfc95a6-8fd8-4581-91f7-b3d236a6a10e',
-                    // TODO: remove this when auth is implemented
-                    id: localStorage.getItem('priv_user_id') || 'john.doe@example.com',
-                    schema: 'dsid',
-                },
-            ],
             email: '',
             target: TARGET.PARTNERS,
         };
+        if (this.apiToken) {
+            const decodedToken = JSON.parse(atob(this.apiToken.split('.')[1]));
+            this._privacyRequest.data_subject = [
+                {
+                    id: decodedToken.uid,
+                    schema: 'dsid',
+                },
+            ];
+        }
         this._demands = new Map();
     }
     /**
@@ -252,6 +264,7 @@ let BldnPrivRequest = class BldnPrivRequest extends CoreConfigurationMixin(LitEl
     }
     // Hook into willUpdate lifecycle method to set the included actions state if a valid list of actions is passed as an attribute
     willUpdate(_changedProperties) {
+        super.willUpdate(_changedProperties);
         if (_changedProperties.has('actions') && this.actions) {
             try {
                 // Select the valid actions from those passed in
@@ -279,6 +292,15 @@ let BldnPrivRequest = class BldnPrivRequest extends CoreConfigurationMixin(LitEl
             catch (_b) {
                 this._includedDataCategories = getDefaultDataCategories();
             }
+        }
+        if (_changedProperties.has('apiToken') && this.apiToken) {
+            const decodedToken = JSON.parse(decode(this.apiToken.split('.')[1]));
+            this._privacyRequest.data_subject = [
+                {
+                    id: decodedToken.uid,
+                    schema: 'dsid',
+                },
+            ];
         }
     }
     render() {

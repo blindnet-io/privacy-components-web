@@ -24,11 +24,15 @@ let DataConsumerInterface = class DataConsumerInterface extends CoreConfiguratio
     connectedCallback() {
         // eslint-disable-next-line wc/guard-super-call
         super.connectedCallback();
-        ComputationAPI.getInstance()
-            .getPendingDemands()
-            .then(demands => {
-            this._demands = demands;
-        });
+    }
+    willUpdate(_changedProperties) {
+        if (_changedProperties.has('adminToken') && this.adminToken) {
+            ComputationAPI.getInstance()
+                .getPendingDemands(this.adminToken)
+                .then(demands => {
+                this._demands = demands;
+            });
+        }
     }
     render() {
         return html `

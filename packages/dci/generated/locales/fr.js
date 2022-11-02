@@ -64,6 +64,7 @@ const templates = {
     'sd25a75c08073005d': `Data Subject`,
     'sa442044b586ec8bf': `Action`,
     'sb852d100f91db23f': `No requests to display.`,
+    's9ff4e107523f7fab': `Log in / Sign up`,
     's943ff37beeb8970c': `The purpose of the processing of the data the organization has on me`,
     's3fc1f890d4f5a074': `All provenances`,
     's45aea633edb60ede': `The data provided by a user of the system (potentially the Data Subject)`,

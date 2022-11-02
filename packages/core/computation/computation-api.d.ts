@@ -17,13 +17,19 @@ export declare class ComputationAPI {
      */
     private _baseURL;
     get baseURL(): string;
+    private _apiToken;
+    setToken(apiToken: string): void;
+    hasApiToken(): boolean;
+    private _adminToken;
+    setAdminToken(adminToken: string): void;
+    hasAdminToken(): boolean;
     /**
      *
      * @param baseURL base URL (schema + host + port + base-path) to call (for default behavior, see mock)
      * @param force override any preexisting configuration if it exists
      *
      */
-    static configure(baseURL?: string, force?: boolean): boolean;
+    static configure(baseURL?: string, apiToken?: string, adminToken?: string, force?: boolean): boolean;
     static getInstance(): ComputationAPI;
     private headers;
     /**
@@ -48,13 +54,13 @@ export declare class ComputationAPI {
      * Gets a list of all demands which are pending a response
      * @returns {PendingDemandPayload[]}
      */
-    getPendingDemands(): Promise<PendingDemandPayload[]>;
+    getPendingDemands(newAdminToken?: string): Promise<PendingDemandPayload[]>;
     /**
      * Get the info and recomendation for a specific demand
      * @param {string} id uuid of the demand
      * @returns {PendingDemandDetailsPayload}
      */
-    getPendingDemandDetails(id: string): Promise<PendingDemandDetailsPayload>;
+    getPendingDemandDetails(id: string, newAdminToken?: string): Promise<PendingDemandDetailsPayload>;
     /**
      * Approve a demand
      * @param id uuid of the demand to approve
@@ -62,7 +68,7 @@ export declare class ComputationAPI {
      * @param lang language of the message
      * @returns
      */
-    grantDemand(id: string, msg?: string, lang?: string): Promise<void>;
+    grantDemand(id: string, msg?: string, lang?: string, newAdminToken?: string): Promise<void>;
     /**
      * Deny a demand
      * @param id uuid of the demand to deny
@@ -73,6 +79,6 @@ export declare class ComputationAPI {
      * @param lang language of the message
      * @returns
      */
-    denyDemand(id: string, motive?: DenyDemandPayload.motive, msg?: string, lang?: string): Promise<void>;
+    denyDemand(id: string, motive?: DenyDemandPayload.motive, msg?: string, lang?: string, newAdminToken?: string): Promise<void>;
     static clean(): void;
 }

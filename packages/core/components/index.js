@@ -6,4 +6,5 @@ export { DataConsumerRequests } from './bldn-data-consum-requests.js';
 export { HorizontalList } from './bldn-horizontal-list.js';
 export { ToggleButton } from './bldn-toggle-button.js';
 export { BldnButton } from './bldn-button.js';
+export { BldnInput } from './bldn-input.js';
 //# sourceMappingURL=index.js.map

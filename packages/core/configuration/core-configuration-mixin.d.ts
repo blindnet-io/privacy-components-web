@@ -2,6 +2,8 @@ import type { LitElement } from 'lit';
 declare type Constructor<T = {}> = new (...args: any[]) => T;
 export interface CoreConfigurationMixinInterface {
     computationBaseURL: string;
+    apiToken: string;
+    adminToken: string;
 }
 /**
  * Add BlindnetCore configuration parameters to a component as properties

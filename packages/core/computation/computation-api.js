@@ -22,7 +22,7 @@ class ComputationAPI {
     /**
      * @param baseURL base URL (schema + host + port + base-path) to call
      */
-    constructor(baseURL) {
+    constructor(baseURL, apiToken, adminToken) {
         if (!baseURL) {
             this._baseURL = ComputationAPI.DEFAULT_URL;
         }
@@ -34,6 +34,19 @@ class ComputationAPI {
         }
         // make sure the base URL never has a trailing slash
         this._baseURL = this._baseURL.replace(/\/+$/, '');
+        if (!apiToken) {
+            this._apiToken = '';
+        }
+        else {
+            this._apiToken = apiToken;
+        }
+        if (!adminToken) {
+            // eslint-disable-next-line no-console
+            this._adminToken = '';
+        }
+        else {
+            this._adminToken = adminToken;
+        }
     }
     get isMocked() {
         return this._baseURL === ComputationAPI.MOCK_URL;
@@ -45,13 +58,25 @@ class ComputationAPI {
     get baseURL() {
         return this._baseURL;
     }
+    setToken(apiToken) {
+        this._apiToken = apiToken;
+    }
+    hasApiToken() {
+        return this._apiToken !== '';
+    }
+    setAdminToken(adminToken) {
+        this._adminToken = adminToken;
+    }
+    hasAdminToken() {
+        return this._adminToken !== '';
+    }
     /**
      *
      * @param baseURL base URL (schema + host + port + base-path) to call (for default behavior, see mock)
      * @param force override any preexisting configuration if it exists
      *
      */
-    static configure(baseURL, force = false) {
+    static configure(baseURL, apiToken, adminToken, force = false) {
         if (ComputationAPI.instance && !force) {
             if (baseURL !== ComputationAPI.getInstance().baseURL &&
                 baseURL &&
@@ -64,7 +89,7 @@ class ComputationAPI {
             }
             return false;
         }
-        ComputationAPI.instance = new ComputationAPI(baseURL);
+        ComputationAPI.instance = new ComputationAPI(baseURL, apiToken, adminToken);
         return true;
     }
     static getInstance() {
@@ -73,17 +98,23 @@ class ComputationAPI {
         }
         return ComputationAPI.instance;
     }
-    headers(acceptJSON = false, request) {
-        return new Headers({
+    headers(acceptJSON = false, requireAuth = true, request) {
+        const headers = new Headers({
             'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': '*',
-            // TODO: remove this when auth is implemented
-            Authorization: localStorage.getItem('priv_user_id') || 'john.doe@example.com',
             ...(this.isMocked && request
                 ? { Prefer: this.getMockHeader(request) }
                 : {}),
             ...(acceptJSON ? { accept: 'application/json' } : {}),
         });
+        // Append auth header if required and api token is defined
+        if (requireAuth && !this._apiToken) {
+            throw new Error('You must include a valid Authorization header!');
+        }
+        else if (this._apiToken) {
+            headers.append('Authorization', `Bearer ${this._apiToken}`);
+        }
+        return headers;
     }
     /**
      * Determine the correct mock header for a PrivacyRequest
@@ -125,9 +156,11 @@ class ComputationAPI {
     async sendPrivacyRequest(request) {
         const endpoint = `/privacy-request`;
         const preparedRequest = this.preProcessRequest(request);
+        // Only allow no auth header for certain requests
+        const authRequired = !request.demands.every(demand => demand.action.includes('TRANSPARENCY'));
         const response = await fetch(this.fullURL(endpoint), {
             method: 'POST',
-            headers: this.headers(false, request),
+            headers: this.headers(true, authRequired, request),
             body: JSON.stringify(preparedRequest),
         });
         if (!response.ok) {
@@ -158,7 +191,7 @@ class ComputationAPI {
         return response.json();
     }
     async cancelDemand(demand_id) {
-        const endpoint = `/privacy-request/${demand_id}`;
+        const endpoint = '/privacy-request/cancel';
         const headers = this.headers(true);
         const body = JSON.stringify({ demand_id });
         const response = await fetch(this.fullURL(endpoint), {
@@ -175,10 +208,20 @@ class ComputationAPI {
      * Gets a list of all demands which are pending a response
      * @returns {PendingDemandPayload[]}
      */
-    async getPendingDemands() {
+    async getPendingDemands(newAdminToken) {
+        // Update the admin token if one was passed
+        if (typeof newAdminToken !== 'undefined') {
+            this.setAdminToken(newAdminToken);
+        }
+        else if (!this._adminToken) {
+            throw new Error('You must set an admin token before making API calls!');
+        }
         return fetch(`https://devkit-pce-staging.azurewebsites.net/v0/consumer-interface/pending-requests`, {
             method: 'GET',
-            headers: { accept: 'application/json' },
+            headers: {
+                accept: 'application/json',
+                Authorization: `Bearer ${this._adminToken}`,
+            },
         }).then(response => {
             if (!response.ok) {
                 throw new Error(response.statusText);
@@ -191,10 +234,20 @@ class ComputationAPI {
      * @param {string} id uuid of the demand
      * @returns {PendingDemandDetailsPayload}
      */
-    async getPendingDemandDetails(id) {
+    async getPendingDemandDetails(id, newAdminToken) {
+        // Update the admin token if one was passed
+        if (typeof newAdminToken !== 'undefined') {
+            this.setAdminToken(newAdminToken);
+        }
+        else if (!this._adminToken) {
+            throw new Error('You must set an admin token before making API calls!');
+        }
         return fetch(`https://devkit-pce-staging.azurewebsites.net/v0/consumer-interface/pending-requests/${id}`, {
             method: 'GET',
-            headers: { accept: 'application/json' },
+            headers: {
+                accept: 'application/json',
+                Authorization: `Bearer ${this._adminToken}`,
+            },
         }).then(response => {
             if (!response.ok) {
                 throw new Error(response.statusText);
@@ -209,7 +262,14 @@ class ComputationAPI {
      * @param lang language of the message
      * @returns
      */
-    async grantDemand(id, msg, lang) {
+    async grantDemand(id, msg, lang, newAdminToken) {
+        // Update the admin token if one was passed
+        if (typeof newAdminToken !== 'undefined') {
+            this.setAdminToken(newAdminToken);
+        }
+        else if (!this._adminToken) {
+            throw new Error('You must set an admin token before making API calls!');
+        }
         if (id === undefined) {
             throw TypeError('You must pass an ID of the demand to deny.');
         }
@@ -219,7 +279,10 @@ class ComputationAPI {
         const payload = { id, msg, lang };
         return fetch(`https://devkit-pce-staging.azurewebsites.net/v0/consumer-interface/pending-requests/approve`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${this._adminToken}`,
+            },
             body: JSON.stringify(payload),
         }).then(response => {
             if (!response.ok) {
@@ -237,14 +300,24 @@ class ComputationAPI {
      * @param lang language of the message
      * @returns
      */
-    async denyDemand(id, motive = DenyDemandPayload.motive.OTHER_MOTIVE, msg, lang) {
+    async denyDemand(id, motive = DenyDemandPayload.motive.OTHER_MOTIVE, msg, lang, newAdminToken) {
+        // Update the admin token if one was passed
+        if (typeof newAdminToken !== 'undefined') {
+            this.setAdminToken(newAdminToken);
+        }
+        else if (!this._adminToken) {
+            throw new Error('You must set an admin token before making API calls!');
+        }
         if (id === undefined) {
             throw TypeError('You must pass an ID of the demand to deny.');
         }
         const payload = { id, motive, msg, lang };
         return fetch(`https://devkit-pce-staging.azurewebsites.net/v0/consumer-interface/pending-requests/deny`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${this._adminToken}`,
+            },
             body: JSON.stringify(payload),
         }).then(response => {
             if (!response.ok) {

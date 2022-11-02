@@ -17,7 +17,6 @@ declare const BldnPrivRequest_base: typeof LitElement & (new (...args: any[]) =>
  *
  */
 export declare class BldnPrivRequest extends BldnPrivRequest_base {
-    static styles: import("lit").CSSResult[];
     /** JSON list of allowed actions */
     actions: string;
     /** JSON list of allowed data categories */
@@ -58,5 +57,6 @@ export declare class BldnPrivRequest extends BldnPrivRequest_base {
     getHeadingString(componentState: ComponentState): TemplateResult<1 | 2>;
     protected willUpdate(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void;
     render(): TemplateResult<1>;
+    static styles: import("lit").CSSResult[];
 }
 export {};

@@ -7,6 +7,12 @@ export interface CoreConfiguration {
      * @example 'https://localhost:9000/v0
      */
     computationBaseUrl?: string;
+    /**
+     * Auth token or user ID to use in the authorization header of API requests.
+     * if empty, a default value 'john.doe@example.com' will be used.
+     */
+    apiToken?: string;
+    adminToken?: string;
 }
 /**
  * Central utilitary class for the @blindnet/core library.
@@ -20,6 +26,8 @@ export declare abstract class BlindnetCore {
      * @returns true if the new configuration has been taken into account
      */
     static configure(configuration: CoreConfiguration, force?: boolean): boolean;
+    static setToken(apiToken: string): void;
+    static setAdminToken(adminToken: string): void;
     /**
      * Use configuration to correctly set up everything internally.
      *

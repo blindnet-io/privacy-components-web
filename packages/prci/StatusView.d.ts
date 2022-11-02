@@ -19,5 +19,9 @@ export declare class StatusView extends LitElement {
     handleCopyLinkClick(): void;
     handleBackClick(): void;
     handleNewRequestClick(): void;
+    /**
+     * Stop fetching this request when leaving status view
+     */
+    disconnectedCallback(): void;
     render(): import("lit-html").TemplateResult<1>;
 }
