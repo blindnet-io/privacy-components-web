@@ -143,7 +143,11 @@ export class AppParticipateForm extends LitElement {
     this._notificationSuccess.open = true;
   }
 
-  async giveConsent() {
+  /**
+   * Give consent using the unauthorized endpoint
+   * @param {string} email 
+   */
+  async giveConsent(email) {
     const headers = {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
@@ -158,7 +162,7 @@ export class AppParticipateForm extends LitElement {
           consentId: '28b5bee0-9db8-40ec-840e-64eafbfb9ddd',
           app_id: '6f083c15-4ada-4671-a6d1-c671bc9105dc',
           data_subject: {
-            id: localStorage.getItem('priv_user_id'),
+            id: email,
             schema: 'email'
           }
         }),
@@ -217,9 +221,8 @@ export class AppParticipateForm extends LitElement {
       if (this.consentGiven) {
         this.requireConsent = false;
         await this.saveDataToServer(formData);
-        const uid = formData.get('email')?.toString() || 'john.doe@example.com';
-        localStorage.setItem('priv_user_id', uid);
-        await this.giveConsent();
+        const email = formData.get('email')?.toString() || 'john.doe@example.com';
+        await this.giveConsent(email);
         this.setSubmitting(true);
         this.setValidity();
       } else {
