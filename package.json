@@ -132,8 +132,12 @@
       "demos/*"
     ],
     "nohoist": [
-      "@lit/**",
-      "lit"
+      "**/lit",
+      "**/lit/**",
+      "**/@lit/**",
+      "**/magic-sdk",
+      "**/magic-sdk/**",
+      "**/@magic-sdk/**"
     ]
   },
   "engines": {

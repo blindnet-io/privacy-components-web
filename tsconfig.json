@@ -18,11 +18,15 @@
     "allowJs": true,
     "checkJs": true,
     "skipLibCheck": true,
-    "preserveSymlinks": true
+    "preserveSymlinks": true,
+    "noImplicitAny": false
   },
   "include": ["**/*.ts", "**/*.js"],
   "exclude": [
-    "**/dist/**/*",
+    "packages/prci/dist/**/*",
+    "packages/dci/dist/**/*",
+    "packages/core/dist/**/*",
+    "demos/devkit-simple-tutorial/dist/**/*",
     "build/**/*",
     "storybook-static/**/*",
     "**/node_modules/**/*",

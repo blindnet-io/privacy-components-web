@@ -54,6 +54,13 @@ export class DevkitSimpleTutorial extends LitElement {
     router.setRoutes([
       { path: '/', component: 'app-home' },
       {
+        path: '/login',
+        action: async () => {
+          await import('./views/Login.js');
+        },
+        component: 'app-login',
+      },
+      {
         path: '/privacy',
         action: async () => {
           await import('./views/Privacy.js');

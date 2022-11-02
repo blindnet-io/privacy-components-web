@@ -32,6 +32,29 @@ import './demand-forms/DeleteForm.js';
 import './demand-forms/RevokeConsentForm.js';
 
 /**
+ * Decode a base64url string
+ * @param input String to decode
+ * @returns Decoded string
+ */
+function decode(input: string) {
+  let output = input.replace(/-/g, '+').replace(/_/g, '/');
+
+  switch (output.length % 4) {
+    case 0:
+      break;
+    case 2:
+      output += '==';
+      break;
+    case 3:
+      output += '=';
+      break;
+    default:
+      throw Error('Illegal base64url string!');
+  }
+  return atob(output);
+}
+
+/**
  * Top level component encapsulating a single PrivacyRequest. Contains one or
  * more DemandBuilder elements, each for a single demand action type.
  *
@@ -39,56 +62,6 @@ import './demand-forms/RevokeConsentForm.js';
 @customElement('bldn-priv-request')
 @localized()
 export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
-  static styles = [
-    PRCIStyles,
-    css`
-      :host {
-        display: flex;
-        justify-content: center;
-        justify-items: center;
-
-        font-family: var(
-          --prci-font-family,
-          -apple-system,
-          BlinkMacSystemFont,
-          'Segoe UI',
-          Roboto,
-          Oxygen,
-          Ubuntu,
-          Cantarell,
-          'Open Sans',
-          'Helvetica Neue',
-          sans-serif
-        );
-        color: var(--prci-font-color, #000000);
-        font-size: 16;
-        text-align: left;
-      }
-
-      #prci-ctr {
-        padding: 20px;
-        max-width: 1350px;
-      }
-
-      #heading-ctr {
-        padding: 0px 0px 40px 0px;
-        max-width: 1170px;
-      }
-
-      .req-hdr {
-        display: block;
-        font-weight: bold;
-        font-size: 24px;
-        grid-column: 2/3;
-        text-align: center;
-      }
-
-      button:disabled {
-        background-color: #a9d1ff;
-      }
-    `,
-  ];
-
   /** JSON list of allowed actions */
   @property({ type: String }) actions = '';
 
@@ -115,15 +88,6 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
   // Privacy request object, empty until some demands are added
   @state() _privacyRequest: PrivacyRequest = {
     demands: [],
-    data_subject: [
-      {
-        // FIXME: For now we hardcode this, but will come from token once auth added
-        // id: 'fdfc95a6-8fd8-4581-91f7-b3d236a6a10e',
-        // TODO: remove this when auth is implemented
-        id: localStorage.getItem('priv_user_id') || 'john.doe@example.com',
-        schema: 'dsid',
-      },
-    ],
     email: '',
     target: TARGET.PARTNERS,
   };
@@ -264,18 +228,20 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
   handleRestartClick() {
     this._privacyRequest = {
       demands: [],
-      data_subject: [
-        {
-          // FIXME: For now we hardcode this, but will come from token once auth added
-          // id: 'fdfc95a6-8fd8-4581-91f7-b3d236a6a10e',
-          // TODO: remove this when auth is implemented
-          id: localStorage.getItem('priv_user_id') || 'john.doe@example.com',
-          schema: 'dsid',
-        },
-      ],
       email: '',
       target: TARGET.PARTNERS,
     };
+
+    if (this.apiToken) {
+      const decodedToken = JSON.parse(atob(this.apiToken.split('.')[1]));
+      this._privacyRequest.data_subject = [
+        {
+          id: decodedToken.uid,
+          schema: 'dsid',
+        },
+      ];
+    }
+
     this._demands = new Map<string, Demand[]>();
   }
 
@@ -369,6 +335,7 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
   protected willUpdate(
     _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
   ): void {
+    super.willUpdate(_changedProperties);
     if (_changedProperties.has('actions') && this.actions) {
       try {
         // Select the valid actions from those passed in
@@ -403,6 +370,16 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
       } catch {
         this._includedDataCategories = getDefaultDataCategories();
       }
+    }
+
+    if (_changedProperties.has('apiToken') && this.apiToken) {
+      const decodedToken = JSON.parse(decode(this.apiToken.split('.')[1]));
+      this._privacyRequest.data_subject = [
+        {
+          id: decodedToken.uid,
+          schema: 'dsid',
+        },
+      ];
     }
   }
 
@@ -471,4 +448,54 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
       </div>
     `;
   }
+
+  static styles = [
+    PRCIStyles,
+    css`
+      :host {
+        display: flex;
+        justify-content: center;
+        justify-items: center;
+
+        font-family: var(
+          --prci-font-family,
+          -apple-system,
+          BlinkMacSystemFont,
+          'Segoe UI',
+          Roboto,
+          Oxygen,
+          Ubuntu,
+          Cantarell,
+          'Open Sans',
+          'Helvetica Neue',
+          sans-serif
+        );
+        color: var(--prci-font-color, #000000);
+        font-size: 16;
+        text-align: left;
+      }
+
+      #prci-ctr {
+        padding: 20px;
+        max-width: 1350px;
+      }
+
+      #heading-ctr {
+        padding: 0px 0px 40px 0px;
+        max-width: 1170px;
+      }
+
+      .req-hdr {
+        display: block;
+        font-weight: bold;
+        font-size: 24px;
+        grid-column: 2/3;
+        text-align: center;
+      }
+
+      button:disabled {
+        background-color: #a9d1ff;
+      }
+    `,
+  ];
 }
