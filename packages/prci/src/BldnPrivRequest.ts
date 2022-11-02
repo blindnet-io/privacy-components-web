@@ -32,6 +32,29 @@ import './demand-forms/DeleteForm.js';
 import './demand-forms/RevokeConsentForm.js';
 
 /**
+ * Decode a base64url string
+ * @param input String to decode
+ * @returns Decoded string
+ */
+function decode(input: string) {
+  let output = input.replace(/-/g, '+').replace(/_/g, '/');
+
+  switch (output.length % 4) {
+    case 0:
+      break;
+    case 2:
+      output += '==';
+      break;
+    case 3:
+      output += '=';
+      break;
+    default:
+      throw Error('Illegal base64url string!');
+  }
+  return atob(output);
+}
+
+/**
  * Top level component encapsulating a single PrivacyRequest. Contains one or
  * more DemandBuilder elements, each for a single demand action type.
  *
@@ -350,7 +373,7 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
     }
 
     if (_changedProperties.has('apiToken') && this.apiToken) {
-      const decodedToken = JSON.parse(atob(this.apiToken.split('.')[1]));
+      const decodedToken = JSON.parse(decode(this.apiToken.split('.')[1]));
       this._privacyRequest.data_subject = [
         {
           id: decodedToken.uid,
