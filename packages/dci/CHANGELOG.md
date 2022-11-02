@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.10.0](https://github.com/blindnet-io/privacy-components-web/compare/v0.9.0...v0.10.0) (2022-11-02)
+
+
+### Bug Fixes
+
+* **@blindnet/dci:** make DCI requests always have a token ([f6f0add](https://github.com/blindnet-io/privacy-components-web/commit/f6f0add8f2b1dc56c7d323255b484f24f91d62e2))
+
+
+### Features
+
+* **@blindnet/core:** global configuration ([c4ae1dc](https://github.com/blindnet-io/privacy-components-web/commit/c4ae1dce0cd5936df6b4170d24b7788ddb62c675))
+* **@blindnet/dci:** new DCI UI ([#159](https://github.com/blindnet-io/privacy-components-web/issues/159)) ([c7b7c8e](https://github.com/blindnet-io/privacy-components-web/commit/c7b7c8ea57802e57a4080452cf4eb565d0899628)), closes [#145](https://github.com/blindnet-io/privacy-components-web/issues/145)
+* **@blindnet/devkit-simple-tutorial:** demo authentication with auth0 ([d61e175](https://github.com/blindnet-io/privacy-components-web/commit/d61e1753961ef5d8bc962855d248be7df20f0bb9))
+
+
+
+
+
 # [0.9.0](https://github.com/blindnet-io/privacy-components-web/compare/v0.8.1...v0.9.0) (2022-09-29)
 
 

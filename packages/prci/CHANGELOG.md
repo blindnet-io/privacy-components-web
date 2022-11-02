@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.10.0](https://github.com/blindnet-io/privacy-components-web/compare/v0.9.0...v0.10.0) (2022-11-02)
+
+
+### Bug Fixes
+
+* **@blindnet/dci:** make DCI requests always have a token ([f6f0add](https://github.com/blindnet-io/privacy-components-web/commit/f6f0add8f2b1dc56c7d323255b484f24f91d62e2))
+* **@blindnet/prci:** enforce an auth header for all requests except transparency ([16f1fc3](https://github.com/blindnet-io/privacy-components-web/commit/16f1fc3314d0d090aa49cfc01a7667150f1c11ed))
+* **@blindnet/prci:** remove strict content width ([b545b62](https://github.com/blindnet-io/privacy-components-web/commit/b545b6209d6d8dcb2329844101de700fc1b4d633))
+* **@blindnet/prci:** stop fetching request status when component closed ([b1c3507](https://github.com/blindnet-io/privacy-components-web/commit/b1c3507542b2cda6f940c99fc3aef66ceea4728c))
+
+
+### Features
+
+* **@blindnet-demos/devkit-simple-tutorial:** authentication in demo ([0456da2](https://github.com/blindnet-io/privacy-components-web/commit/0456da2d16148083a9b9c00b09a52f051f0d8fc9))
+* **@blindnet/core:** global configuration ([c4ae1dc](https://github.com/blindnet-io/privacy-components-web/commit/c4ae1dce0cd5936df6b4170d24b7788ddb62c675))
+* **@blindnet/core:** magic link authentication component ([08433a6](https://github.com/blindnet-io/privacy-components-web/commit/08433a6f453112f45ab8d98cea861f98bf1314a5))
+* **@blindnet/dci:** new DCI UI ([#159](https://github.com/blindnet-io/privacy-components-web/issues/159)) ([c7b7c8e](https://github.com/blindnet-io/privacy-components-web/commit/c7b7c8ea57802e57a4080452cf4eb565d0899628)), closes [#145](https://github.com/blindnet-io/privacy-components-web/issues/145)
+* **@blindnet/prci:** allow to set up computation API URL ([8affb59](https://github.com/blindnet-io/privacy-components-web/commit/8affb59b4784933f6b8dd3590ce9cbb257c267b5))
+* **@blindnet/prci:** cancel privacy requests ([65439b3](https://github.com/blindnet-io/privacy-components-web/commit/65439b3db217ca3388445a04fba952a8e722ef33))
+* **@blindnet/prci:** link to return to request status page ([8dac59c](https://github.com/blindnet-io/privacy-components-web/commit/8dac59ceb8d29e47a8dab48310e15df6a49c9b0e))
+
+
+
+
+
 # [0.9.0](https://github.com/blindnet-io/privacy-components-web/compare/v0.8.1...v0.9.0) (2022-09-29)
 
 
