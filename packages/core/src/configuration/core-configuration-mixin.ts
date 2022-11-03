@@ -6,6 +6,7 @@ declare type Constructor<T = {}> = new (...args: any[]) => T;
 export interface CoreConfigurationMixinInterface {
   computationBaseURL: string;
   apiToken: string;
+  adminToken: string;
 }
 
 /**
@@ -27,6 +28,7 @@ export function CoreConfigurationMixin<
         ...superProps,
         computationBaseURL: { type: String, attribute: 'computation-base-url' },
         apiToken: { type: String, attribute: 'api-token', reflect: true },
+        adminToken: { type: String, attribute: 'admin-token', reflect: true },
       };
     }
 
@@ -41,9 +43,11 @@ export function CoreConfigurationMixin<
 
     /**
      * Auth token or user ID to use in the authorization header of API requests.
-     * if empty, a default value 'john.doe@example.com' will be used.
+     * if empty, no authorization header will be passed.
      */
     apiToken = '';
+
+    adminToken = '';
 
     connectedCallback() {
       super.connectedCallback();
@@ -52,6 +56,7 @@ export function CoreConfigurationMixin<
         {
           computationBaseUrl: this.computationBaseURL,
           apiToken: this.apiToken,
+          adminToken: this.adminToken,
         },
         false
       );
@@ -60,8 +65,11 @@ export function CoreConfigurationMixin<
     protected willUpdate(
       _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
     ): void {
-      if (_changedProperties.has('apiToken')) {
+      if (_changedProperties.has('apiToken') && this.apiToken) {
         BlindnetCore.setToken(this.apiToken);
+      }
+      if (_changedProperties.has('adminToken') && this.adminToken) {
+        BlindnetCore.setAdminToken(this.adminToken);
       }
     }
   };

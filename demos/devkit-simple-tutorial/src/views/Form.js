@@ -8,6 +8,17 @@ import 'carbon-web-components/es/components/file-uploader/index.js';
 import 'carbon-web-components/es/components/notification/inline-notification.js';
 import { FILE_UPLOADER_ITEM_STATE } from 'carbon-web-components/es/components/file-uploader/file-uploader-item.js';
 import { when } from 'lit/directives/when.js';
+// import { Auth0Client } from '@auth0/auth0-spa-js';
+
+// Get an auth0 instance - Uncomment for authenticated consent
+// const auth0 = new Auth0Client({
+//   domain: 'blindnet.eu.auth0.com',
+//   client_id: '1C0uhFCpzvJAkFi4uqoq2oAWSgQicqHc',
+//   redirect_uri: `${window.location.origin}/demos/devkit-simple-tutorial/participate`,
+//   authorizationParams: {
+//     redirect_uri: `${window.location.origin}/demos/devkit-simple-tutorial/participate`,
+//   },
+// });
 
 export class AppParticipateForm extends LitElement {
   static get properties() {
@@ -16,6 +27,7 @@ export class AppParticipateForm extends LitElement {
       consentGiven: { type: Boolean, state: true },
       requireConsent: { type: Boolean, state: true },
       _files: { type: Array, state: true },
+      // _apiToken: { state: true },
     };
   }
 
@@ -132,26 +144,27 @@ export class AppParticipateForm extends LitElement {
   }
 
   /**
-   * @param {String} uid
+   * Give consent using the unauthorized endpoint
+   * @param {string} email
    */
-  async giveConsent(uid) {
+  async giveConsent(email) {
     const headers = {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
+      // Authorization: `Bearer ${this._apiToken}`,
     };
     await fetch(
-      'https://devkit-pce-staging.azurewebsites.net/v0/user-events/consent',
+      'https://stage.computing.blindnet.io/v0/user-events/consent/unsafe',
       {
         method: 'POST',
         headers,
         body: JSON.stringify({
-          dataSubject: {
-            // id: 'fdfc95a6-8fd8-4581-91f7-b3d236a6a10e',
-            id: uid,
-            schema: 'dsid',
-          },
           consentId: '28b5bee0-9db8-40ec-840e-64eafbfb9ddd',
-          date: new Date().toISOString(),
+          app_id: '6f083c15-4ada-4671-a6d1-c671bc9105dc',
+          data_subject: {
+            id: email,
+            schema: 'email',
+          },
         }),
       }
     );
@@ -208,10 +221,9 @@ export class AppParticipateForm extends LitElement {
       if (this.consentGiven) {
         this.requireConsent = false;
         await this.saveDataToServer(formData);
-        // TODO: remove this when auth is implemented
-        const uid = formData.get('email')?.toString() || 'john.doe@example.com';
-        localStorage.setItem('priv_user_id', uid);
-        await this.giveConsent(uid);
+        const email =
+          formData.get('email')?.toString() || 'john.doe@example.com';
+        await this.giveConsent(email);
         this.setSubmitting(true);
         this.setValidity();
       } else {
@@ -256,7 +268,50 @@ export class AppParticipateForm extends LitElement {
     this._files = newFiles;
   }
 
+  /**
+   * Get a blindnet token given an auth0 ones
+   * @param {string} auth0Token
+   * @returns Promise<Response>
+   */
+  async getBlindnetToken(auth0Token) {
+    const headers = {
+      Authorization: `Bearer ${auth0Token}`,
+    };
+
+    return fetch(
+      'https://blindnet-connector-demo-staging.azurewebsites.net/auth/token',
+      {
+        method: 'GET',
+        headers,
+      }
+    );
+  }
+
   render() {
+    // UNCOMMENT BELOW FOR AUTHENTICATED CONSENT
+    // // Try to get an auth0 token
+    // // if (this._apiToken === undefined) {
+    // auth0
+    //   .getTokenSilently()
+    //   .then(auth0Token => {
+    //     // Exchange auth0 token for a blindnet one
+    //     this.getBlindnetToken(auth0Token)
+    //       .then(response => {
+    //         response.json().then(blindnetToken => {
+    //           this._apiToken = blindnetToken;
+    //         });
+    //       })
+    //       .catch(error => {
+    //         // eslint-disable-next-line no-console
+    //         console.log(error);
+    //       });
+    //   })
+    //   .catch(() => {
+    //     // If not logged in, redirect to login page
+    //     window.location.href = `${window.location.origin}/demos/devkit-simple-tutorial/login`;
+    //   });
+    // // }
+
     return html`
       <h1>Take part in our prize draw!</h1>
 

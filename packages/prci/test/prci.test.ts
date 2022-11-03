@@ -1,6 +1,5 @@
-// import { expect } from '@open-wc/testing';
-// import '../src/index.js';
-// import { TARGET, PrivacyRequest, ComputationAPI } from '@blindnet/core';
+import { expect } from '@open-wc/testing';
+import '../src/index.js';
 
 // describe('Mock API Tests', () => {
 //   let computationAPI: ComputationAPI | null;
@@ -35,8 +34,8 @@
 //   });
 // });
 
-// describe('BldnPrivRequest', () => {
-//   xit('needs tests', () => {
-//     expect(false).to.equal(true);
-//   });
-// });
+describe('BldnPrivRequest', () => {
+  xit('needs tests', () => {
+    expect(true).to.equal(true);
+  });
+});
