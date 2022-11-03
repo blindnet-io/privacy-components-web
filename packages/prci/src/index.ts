@@ -1,1 +1,1 @@
-export { BldnPrivRequest } from './BldnPrivRequest.js';
+export { BldnPrivRequest } from './bldn-priv-request.js';

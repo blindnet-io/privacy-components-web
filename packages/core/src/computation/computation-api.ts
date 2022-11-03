@@ -2,13 +2,14 @@
 /* eslint-disable camelcase */
 import {
   ApproveDemandPayload,
+  CreatePrivacyRequestPayload,
+  DataCategoryResponsePayload,
   DenyDemandPayload,
   PendingDemandDetailsPayload,
   PendingDemandPayload,
 } from './generated-models/index.js';
 import { HistoryResponse } from './models/history-response.js';
 import { DATA_CATEGORY } from './models/priv-terms.js';
-import { PrivacyRequest } from './models/privacy-request.js';
 import { PrivacyResponse } from './models/privacy-response.js';
 
 export class ComputationAPI {
@@ -138,7 +139,7 @@ export class ComputationAPI {
   private headers(
     acceptJSON = false,
     requireAuth = true,
-    request?: PrivacyRequest
+    request?: CreatePrivacyRequestPayload
   ): Headers {
     const headers = new Headers({
       'Content-Type': 'application/json',
@@ -150,6 +151,7 @@ export class ComputationAPI {
     });
 
     // Append auth header if required and api token is defined
+    console.log(this._apiToken);
     if (requireAuth && !this._apiToken) {
       throw new Error('You must include a valid Authorization header!');
     } else if (this._apiToken) {
@@ -164,14 +166,14 @@ export class ComputationAPI {
    * @param request PrivacyRequest to get mock header for
    * @returns String to be used in the "prefer" header
    */
-  private getMockHeader(request: PrivacyRequest): string {
+  private getMockHeader(request: CreatePrivacyRequestPayload): string {
     // If more than 1 demand, send the default multi demand response
-    if (request.demands.length > 1) {
+    if (request.demands && request.demands.length > 1) {
       return 'code=200, example=TRANSPARENCY Multi-Response';
     }
 
     // Select the mock response corresponding to this action
-    if (request.demands.length === 1) {
+    if (request.demands && request.demands.length === 1) {
       const { action } = request.demands[0];
       return `code=200, example=${action} Response`;
     }
@@ -180,12 +182,32 @@ export class ComputationAPI {
     return 'code=400';
   }
 
-  private preProcessRequest(request: PrivacyRequest): PrivacyRequest {
+  // Configuration endpoints
+
+  async getDataCategories(): Promise<DataCategoryResponsePayload[]> {
+    const endpoint = `/configure/data-categories`;
+
+    const response = await fetch(this.fullURL(endpoint), {
+      method: 'GET',
+      headers: this.headers(true),
+    });
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+    return response.json();
+  }
+
+  // Privacy Request Endpoints
+
+  private preProcessRequest(
+    request: CreatePrivacyRequestPayload
+  ): CreatePrivacyRequestPayload {
     // If all privacy scopes provided, this is the same as no restriction
     const allDataCategories = Object.values(DATA_CATEGORY).filter(
       dc => dc !== DATA_CATEGORY.ALL && !dc.includes('.')
     );
-    request.demands.forEach(d => {
+    request.demands!.forEach(d => {
       if (d.restrictions && d.restrictions.privacy_scope) {
         const demandDcs = d.restrictions.privacy_scope!.map(psr => psr.dc);
         if (allDataCategories.every(dc => demandDcs.includes(dc))) {
@@ -200,18 +222,18 @@ export class ComputationAPI {
 
   /**
    * Send a PrivacyRequest to the privacy-request API
-   * @param {PrivacyRequest} request Request body to send
+   * @param {CreatePrivacyRequestPayload} request Request body to send
    * @returns
    */
   async sendPrivacyRequest(
-    request: PrivacyRequest
+    request: CreatePrivacyRequestPayload
   ): Promise<{ request_id: string }> {
     const endpoint = `/privacy-request`;
 
     const preparedRequest = this.preProcessRequest(request);
 
     // Only allow no auth header for certain requests
-    const authRequired = !request.demands.every(demand =>
+    const authRequired = request.demands!.every(demand =>
       demand.action.includes('TRANSPARENCY')
     );
 

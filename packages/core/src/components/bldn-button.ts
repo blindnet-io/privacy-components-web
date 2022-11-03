@@ -1,6 +1,6 @@
 import { css, html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { bldnStyles } from './blindnet-wc-styles.js';
+import { bldnStyles } from './bldn-styles.js';
 
 @customElement('bldn-button')
 export class BldnButton extends LitElement {
@@ -12,13 +12,20 @@ export class BldnButton extends LitElement {
     | 'negative'
     | 'link' = 'primary';
 
+  @property({ type: String, attribute: 'underline-mode' }) underlineMode:
+    | 'solid'
+    | 'dotted' = 'solid';
+
   handleClick() {
     this.dispatchEvent(new Event('bldn-button:click'));
   }
 
   render() {
     return html`
-      <button class=${this.mode} @click=${this.handleClick}>
+      <button
+        class="${this.mode} ${this.mode === 'link' ? this.underlineMode : ''}"
+        @click=${this.handleClick}
+      >
         <slot></slot>
       </button>
     `;
@@ -30,21 +37,17 @@ export class BldnButton extends LitElement {
       button {
         border: none;
         border-radius: var(--bldn-button-border-radius, 5px);
-        padding: 1vh 2vw;
+        padding: 0.625rem 2.5rem;
         color: white;
         font-size: 16px;
         background: var(--bldn-button-color-primary, var(--color-primary));
-        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1),
-          0px 2px 4px rgba(0, 0, 0, 0.2), 0px 4px 8px rgba(0, 0, 0, 0.2),
-          0px 8px 16px rgba(0, 0, 0, 0.2);
+        /* box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1), 0px 2px 4px rgba(0, 0, 0, 0.2), 0px 4px 8px rgba(0, 0, 0, 0.2), 0px 8px 16px rgba(0, 0, 0, 0.2); */
       }
 
       button:not([disabled]):active {
         transform: translateY(2px);
         transition: 0.2s;
-        box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.1),
-          0px 2px 4px rgba(0, 0, 0, 0.2), 0px 4px 8px rgba(0, 0, 0, 0.2),
-          0px 8px 16px rgba(0, 0, 0, 0.2);
+        /* box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.1), 0px 2px 4px rgba(0, 0, 0, 0.2), 0px 4px 8px rgba(0, 0, 0, 0.2), 0px 8px 16px rgba(0, 0, 0, 0.2); */
       }
 
       button.link:active {
@@ -61,7 +64,7 @@ export class BldnButton extends LitElement {
             var(--bldn-color-primary, 5, 80, 222)
           )
         );
-        border: 1px solid
+        border: 2px solid
           rgb(
             var(
               --bldn-button-color-primary,
@@ -89,6 +92,14 @@ export class BldnButton extends LitElement {
         text-decoration: underline;
         color: var(--color-dark);
         padding: inherit;
+      }
+
+      .solid {
+        text-decoration: underline;
+      }
+
+      .dotted {
+        text-decoration: underline var(--color-dark) dotted;
       }
     `,
   ];

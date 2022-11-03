@@ -11,9 +11,9 @@ import '@blindnet/prci';
 const auth0 = new Auth0Client({
   domain: 'blindnet.eu.auth0.com',
   client_id: '1C0uhFCpzvJAkFi4uqoq2oAWSgQicqHc',
-  redirect_uri: `${window.location.origin}/demos/devkit-simple-tutorial/?path=privacy`,
+  redirect_uri: `${window.location.origin}/demos/devkit-simple-tutorial/privacy`,
   authorizationParams: {
-    redirect_uri: `${window.location.origin}/demos/devkit-simple-tutorial/?path=privacy`,
+    redirect_uri: `${window.location.origin}/demos/devkit-simple-tutorial/privacy`,
   },
 });
 
@@ -26,6 +26,11 @@ export class AppPrivacy extends LitElement {
 
   static get styles() {
     return css`
+      :host {
+        display: block;
+        width: 1000px;
+      }
+
       bldn-priv-request {
         margin-bottom: 30px;
       }

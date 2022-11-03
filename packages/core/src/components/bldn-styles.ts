@@ -19,6 +19,9 @@ export const bldnStyles = css`
     --color-warning: rgb(var(--bldn-color-warning, 244, 144, 30));
     --color-warning-rgb: var(--bldn-color-warning, 244, 144, 30);
 
+    --color-lightest: rgb(var(--bldn-color-lightest, 224, 224, 224));
+    --color-lightest-rgb: var(--bldn-color-lightest, 224, 224, 224);
+
     --color-light: rgb(var(--bldn-color-light, 200, 200, 200));
     --color-light-rgb: var(--bldn-color-light, 200, 200, 200);
 
@@ -27,6 +30,31 @@ export const bldnStyles = css`
 
     --color-dark: rgb(var(--bldn-color-dark, 91, 91, 91));
     --color-dark-rgb: var(--bldn-color-dark, 91, 91, 91);
+
+    --color-darkest: rgb(var(--bldn-color-darkest, 31, 31, 31));
+    --color-darkest-rgb: var(--bldn-color-darkest, 31, 31, 31);
+
+    --background: rgb(var(--bldn-background, 255, 255, 255));
+
+    --font-size-small: var(--bldn-font-size-small, 1rem);
+
+    --font-size-medium: var(--bldn-font-size-medium, 1.25rem);
+
+    --font-size-large: var(--bldn-font-size-large, 1.5rem);
+
+    --font-family: var(
+      --bldn-font-family,
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      Roboto,
+      Oxygen,
+      Ubuntu,
+      Cantarell,
+      'Open Sans',
+      'Helvetica Neue',
+      sans-serif
+    );
   }
 
   * {

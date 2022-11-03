@@ -5,14 +5,14 @@ import { html } from 'lit';
  * Mapping of PRIV Actions to corresponding titles.
  */
 export const ACTION_TITLES = {
-  ACCESS: () => msg('ACCESS'),
-  DELETE: () => msg('DELETE'),
-  MODIFY: () => msg('MODIFY'),
-  OBJECT: () => msg('OBJECT'),
-  PORTABILITY: () => msg('PORTABILITY'),
-  RESTRICT: () => msg('RESTRICT'),
-  'REVOKE-CONSENT': () => msg('REVOKE-CONSENT'),
-  TRANSPARENCY: () => msg('TRANSPARENCY'),
+  ACCESS: () => msg('Access'),
+  DELETE: () => msg('Delete'),
+  MODIFY: () => msg('Modify'),
+  OBJECT: () => msg('Object'),
+  PORTABILITY: () => msg('Portability'),
+  RESTRICT: () => msg('Restrict'),
+  'REVOKE-CONSENT': () => msg('Revoke'),
+  TRANSPARENCY: () => msg('Transparency'),
   'TRANSPARENCY.DATA-CATEGORIES': () => msg('TRANSPARENCY.DATA-CATEGORIES'),
   'TRANSPARENCY.DPO': () => msg('TRANSPARENCY.DPO'),
   'TRANSPARENCY.KNOWN': () => msg('TRANSPARENCY.KNOWN'),
@@ -26,7 +26,7 @@ export const ACTION_TITLES = {
   'TRANSPARENCY.RETENTION': () => msg('TRANSPARENCY.RETENTION'),
   'TRANSPARENCY.WHERE': () => msg('TRANSPARENCY.WHERE'),
   'TRANSPARENCY.WHO': () => msg('TRANSPARENCY.WHO'),
-  'OTHER-DEMAND': () => msg('OTHER-DEMAND'),
+  OTHER: () => msg('Other Demand'),
 };
 
 /**
@@ -45,7 +45,10 @@ export const ACTION_DESCRIPTIONS = {
     msg(
       'Demand information related to data processing practices and know if the system has data on me'
     ),
-  'OTHER-DEMAND': () => msg('Do or know something else'),
+  OTHER: () =>
+    msg(
+      'Do or know something else. Please note it may take longer to be answered'
+    ),
   'TRANSPARENCY.DATA-CATEGORIES': () =>
     msg('The categories of the data the organization has on me'),
   'TRANSPARENCY.DPO': () =>
@@ -103,120 +106,103 @@ export const PROVENANCE_DESCRIPTIONS_STATUS_VIEW = {
 
 export const DATA_CATEGORY_TITLES = {
   '*': () => msg(''),
-  AFFILIATION: () => msg('affiliation'),
-  'AFFILIATION.MEMBERSHIP': () => msg('affiliation membership'),
+  AFFILIATION: () => msg('Affiliation'),
+  'AFFILIATION.MEMBERSHIP': () => msg('Affiliation membership'),
   'AFFILIATION.MEMBERSHIP.UNION': () => msg(''),
   'AFFILIATION.SCHOOL': () => msg(''),
   'AFFILIATION.WORKPLACE': () => msg(''),
-  BEHAVIOR: () => msg('behavior'),
+  BEHAVIOR: () => msg('Behavior'),
   'BEHAVIOR.ACTIVITY': () => msg(''),
   'BEHAVIOR.CONNECTION': () => msg(''),
   'BEHAVIOR.PREFERENCE': () => msg(''),
   'BEHAVIOR.TELEMETRY': () => msg(''),
-  BIOMETRIC: () => msg('biometric'),
-  CONTACT: () => msg('contact'),
+  BIOMETRIC: () => msg('Biometric'),
+  CONTACT: () => msg('Contact'),
   'CONTACT.EMAIL': () => msg(''),
   'CONTACT.ADDRESS': () => msg(''),
   'CONTACT.PHONE': () => msg(''),
-  DEMOGRAPHIC: () => msg('demographic'),
+  DEMOGRAPHIC: () => msg('Demographic'),
   'DEMOGRAPHIC.AGE': () => msg(''),
   'DEMOGRAPHIC.BELIEFS': () => msg(''),
   'DEMOGRAPHIC.GENDER': () => msg(''),
   'DEMOGRAPHIC.ORIGIN': () => msg(''),
   'DEMOGRAPHIC.RACE': () => msg(''),
   'DEMOGRAPHIC.SEXUAL-ORIENTATION': () => msg(''),
-  DEVICE: () => msg('device'),
-  FINANCIAL: () => msg('financial'),
-  'FINANCIAL.BANK-ACCOUNT': () => msg('finacial bank account'),
-  GENETIC: () => msg('genetic'),
-  HEALTH: () => msg('health'),
-  IMAGE: () => msg('image'),
-  LOCATION: () => msg('location'),
-  NAME: () => msg('name'),
-  PROFILING: () => msg('profiling'),
-  RELATIONSHIPS: () => msg('relationships'),
-  UID: () => msg('uid'),
+  DEVICE: () => msg('Device'),
+  FINANCIAL: () => msg('Financial'),
+  'FINANCIAL.BANK-ACCOUNT': () => msg('Finacial bank account'),
+  GENETIC: () => msg('Genetic'),
+  HEALTH: () => msg('Health'),
+  IMAGE: () => msg('Image'),
+  LOCATION: () => msg('Location'),
+  NAME: () => msg('Name'),
+  PROFILING: () => msg('Profiling'),
+  RELATIONSHIPS: () => msg('Relationships'),
+  UID: () => msg('UID'),
   'UID.ID': () => msg(''),
   'UID.IP': () => msg(''),
   'UID.USER-ACCOUNT': () => msg(''),
   'UID.SOCIAL-MEDIA': () => msg(''),
-  'OTHER-DATA': () => msg('other data'),
+  'OTHER-DATA': () => msg('Other Data'),
 };
 
 export const DATA_CATEGORY_DESCRIPTIONS = {
   '*': () =>
-    msg(
-      html`<b
-        >ALL information related to data processing practices and know if the
-        organization has data on me</b
-      >`
-    ),
+    msg(html`<b>All</b> categories of data the organization has on me`),
   AFFILIATION: () =>
     msg(
-      html`<b>AFFILIATION data:</b> Groups and Organisations I am linked to
-        through work, studies, or membership`
+      html`Groups and Organisations I am linked to through work, studies, or
+      membership`
     ),
   'AFFILIATION.MEMBERSHIP': () => msg(html``),
   'AFFILIATION.MEMBERSHIP.UNION': () => msg(html``),
   'AFFILIATION.SCHOOL': () => msg(html``),
   'AFFILIATION.WORKPLACE': () => msg(html``),
-  BEHAVIOR: () => msg(html`<b>BEHAVIOR data:</b> Data about my behavior`),
+  BEHAVIOR: () => msg(html`Data about my behavior`),
   'BEHAVIOR.ACTIVITY': () => msg(html``),
   'BEHAVIOR.CONNECTION': () => msg(html``),
   'BEHAVIOR.PREFERENCE': () => msg(html``),
   'BEHAVIOR.TELEMETRY': () => msg(html``),
-  BIOMETRIC: () => msg(html`<b>BIOMETRIC data</b>`),
-  CONTACT: () => msg(html`<b>CONTACT data:</b> Data allowing to contact me `),
+  BIOMETRIC: () => msg(html``),
+  CONTACT: () => msg(html`Data allowing to contact me `),
   'CONTACT.EMAIL': () => msg(html``),
   'CONTACT.ADDRESS': () => msg(html``),
   'CONTACT.PHONE': () => msg(html``),
   DEMOGRAPHIC: () =>
-    msg(
-      html`<b>DEMOGRAPHIC data:</b> All information allowing to class me in a
-        demographic category`
-    ),
+    msg(html`All information allowing to class me in a demographic category`),
   'DEMOGRAPHIC.AGE': () => msg(html``),
   'DEMOGRAPHIC.BELIEFS': () => msg(html``),
   'DEMOGRAPHIC.GENDER': () => msg(html``),
   'DEMOGRAPHIC.ORIGIN': () => msg(html``),
   'DEMOGRAPHIC.RACE': () => msg(html``),
   'DEMOGRAPHIC.SEXUAL-ORIENTATION': () => msg(html``),
-  DEVICE: () => msg(html`<b>DEVICE data:</b> Data about the device I used`),
+  DEVICE: () => msg(html`Data about the device I used`),
   FINANCIAL: () =>
     msg(
-      html`<b>FINANCIAL data:</b> Payment data, financial history and data about
-        my financial situation`
+      html`Payment data, financial history and data about my financial situation`
     ),
   'FINANCIAL.BANK-ACCOUNT': () => msg(html``),
-  GENETIC: () => msg(html`<b>GENETIC data</b>`),
-  HEALTH: () => msg(html`<b>HEALTH data:</b> Data about my health`),
-  IMAGE: () =>
-    msg(
-      html`<b>IMAGE data:</b> Any graphic representation (e.g., image, video) of
-        me`
-    ),
-  LOCATION: () => msg(html`<b>LOCATION data:</b> Geographic location`),
-  NAME: () =>
-    msg(
-      html`<b>NAME data:</b> First names, last names, nicknames, and other names`
-    ),
+  GENETIC: () => msg(html``),
+  HEALTH: () => msg(html`Data about my health`),
+  IMAGE: () => msg(html`Any graphic representation (e.g., image, video) of me`),
+  LOCATION: () => msg(html`Geographic location`),
+  NAME: () => msg(html`First names, last names, nicknames, and other names`),
   PROFILING: () =>
     msg(
-      html`<b>PROFILING data:</b> Any data establishing a degree of similarity
-        of with others (e.g., clusters, user-profiles)`
+      html`Any data establishing a degree of similarity of with others (e.g.,
+      clusters, user-profiles)`
     ),
   RELATIONSHIPS: () =>
     msg(
-      html`<b>RELATIONSHIPS data:</b> Data about relationships I have with
-        others, social activity and interaction`
+      html`Data about relationships I have with others, social activity and
+      interaction`
     ),
-  UID: () => msg(html`<b>UID data:</b> Any data that uniquely identifies me`),
+  UID: () => msg(html`Any data that uniquely identifies me`),
   'UID.ID': () => msg(html``),
   'UID.IP': () => msg(html``),
   'UID.USER-ACCOUNT': () => msg(html``),
   'UID.SOCIAL-MEDIA': () => msg(html``),
-  'OTHER-DATA': () =>
-    msg(html`<b>OTHER DATA:</b> Any other categories or forms of data`),
+  'OTHER-DATA': () => msg(html`Any other categories or forms of data`),
 };
 
 export const TARGET_DESCRIPTIONS = {
@@ -267,4 +253,127 @@ export const AFTER_TITLES = {
   'RELATIONSHIP-END': () => msg('relationship end'),
   'SERVICE-START': () => msg('service start'),
   'SERVICE-END': () => msg('service end'),
+};
+
+export const PROCESSING_CATEGORIES = {
+  '*': () => msg('All'),
+  ANONYMIZATION: () => msg('Anonymization'),
+  'AUTOMATED-INFERENCE': () => msg('Automated Inference'),
+  'AUTOMATED-DECISION-MAKING': () => msg('Automated Decision Making'),
+  COLLECTION: () => msg('Collection'),
+  GENERATING: () => msg('Generating'),
+  PUBLISHING: () => msg('Publishing'),
+  STORING: () => msg('Storing'),
+  SHARING: () => msg('Sharing'),
+  USING: () => msg('Using'),
+  'OTHER-PROCESSING': () => msg('Other Processing'),
+};
+
+export const PROCESSING_CATEGORY_DESCRIPTIONS = {
+  '*': () => msg(html`<b>All</b> processing categories`),
+  ANONYMIZATION: () =>
+    msg(
+      'Processing of personal data in such a manner that the personal data can no longer be attributed to a specific data subject without the use of additional information'
+    ),
+  'AUTOMATED-INFERENCE': () =>
+    msg(
+      'Automatically infering data about the person, including for profiling and clustering'
+    ),
+  'AUTOMATED-DECISION-MAKING': () => msg('Automated decision-making'),
+  COLLECTION: () =>
+    msg(
+      'Collecting data about the person from the person or from another source, including another person or a System'
+    ),
+  GENERATING: () =>
+    msg(
+      'Producing novel data related to the person, such as making photo, voice or video recordings, or reconding user actions such as making a log.'
+    ),
+  MATCHING: () =>
+    msg('Matching the data about the same person across multiple data sources'),
+  PUBLISHING: () => msg('Making data publicly available'),
+  STORING: () =>
+    msg(
+      'Storing data for further use, including adaptations and formating of the data'
+    ),
+  SHARING: () =>
+    msg('Sharing data in controled manner with clearly identified parties'),
+  USING: () => msg('Consulting and using data'),
+  'OTHER-PROCESSING': () => msg('Other processing categories)'),
+};
+
+export const PURPOSES = {
+  '*': () => msg('All'),
+  ADVERTISING: () => msg('Advertising'),
+  COMPLIANCE: () => msg('Compliance'),
+  EMPLOYMENT: () => msg('Employment'),
+  JUSTICE: () => msg('Justice'),
+  MARKETING: () => msg('Marketing'),
+  MEDICAL: () => msg('Medical'),
+  PERSONALIZATION: () => msg('Personalization'),
+  'PUBLIC-INTERESTS': () => msg('Public Interests'),
+  RESEARCH: () => msg('Research'),
+  SALE: () => msg('Sale'),
+  SECURITY: () => msg('Security'),
+  SERVICES: () => msg('Services'),
+  'SERVICES.ADDITIONAL-SERVICES': () => msg('Services - Additional Services'),
+  'SERVICES.BASIC-SERVICE': () => msg('Services - Basic Services'),
+  'SOCIAL-PROTECTION': () => msg('Social Protection'),
+  TRACKING: () => msg('Tracking'),
+  'VITAL-INTERESTS': () => msg('Vitial Interests'),
+  'OTHER-PURPOSE': () => msg('Other Purpose'),
+};
+
+export const PURPOSE_DESCRIPTIONS = {
+  '*': () => msg(html`<b>All</b> purposes`),
+  ADVERTISING: () =>
+    msg(
+      'To show ads that are either targeted to the specific user or not targeted'
+    ),
+  COMPLIANCE: () =>
+    msg('Processing is performed to comply with a legal obligation'),
+  EMPLOYMENT: () =>
+    msg(' For personnel training, recruitment, payroll, management, etc'),
+  JUSTICE: () =>
+    msg(
+      'Processing is necessary for the establishment, exercise or defence of legal claims or whenever courts are acting in their judicial capacity'
+    ),
+  MARKETING: () =>
+    msg('To contact the user to offer products, services, or other promotions'),
+  MEDICAL: () =>
+    msg(
+      'Processing is necessary for the purposes of preventive or occupational medicine, for the assessment of the working capacity of the employee, medical diagnosis, the provision of health or social care or treatment or the management of health or social care systems and services'
+    ),
+  PERSONALIZATION: () =>
+    msg('For providing user with a personalized experience'),
+  'PUBLIC-INTERESTS': () =>
+    msg(
+      'Processing is necessary for the performance of a task carried out in the public interest or in the exercise of official authority'
+    ),
+  RESEARCH: () => msg('Scientific and Market Research'),
+  SALE: () => msg('Selling data to third parties'),
+  SECURITY: () =>
+    msg(
+      'For product operation and security, enforcement of terms of service, fraud prevention, protecting users and property, etc. '
+    ),
+  SERVICES: () =>
+    msg(
+      'Processing is necessary performed in the context of services provided to the Data Subject or contracts and transactions being concluded with them'
+    ),
+  'SERVICES.ADDITIONAL-SERVICES': () =>
+    msg(
+      'Providing the services that the person requires that are not part of the basic service'
+    ),
+  'SERVICES.BASIC-SERVICE': () =>
+    msg('Providing the basic service to the person'),
+  'SOCIAL-PROTECTION': () =>
+    msg(
+      'Processing is necessary for the purposes of employment and social security and social protection'
+    ),
+  TRACKING: () =>
+    msg('Tracking information about user behavior and activity online'),
+  'VITAL-INTERESTS': () =>
+    msg(
+      'Processing is necessary in order to protect the vital interests of the data subject or of another natural person'
+    ),
+  'OTHER-PURPOSE': () => msg('Other specific purpose'),
 };
