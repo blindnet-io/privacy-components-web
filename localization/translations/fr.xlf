@@ -315,9 +315,9 @@
 <trans-unit id="h8d869518495a8edd">
   <source><x id="0" equiv-text="&lt;b&gt;"/>ALL<x id="1" equiv-text="&lt;/b&gt;"/> categories of data the organization has on me</source>
 </trans-unit>
-<trans-unit id="ha708b8d265fcbdbc">
-  <source>Groups and Organisations I am linked to
-        through work, studies, or membership</source>
+<trans-unit id="ha029657b4c716b1c">
+  <source>Groups and Organisations I am linked to through work, studies, or
+      membership</source>
 </trans-unit>
 <trans-unit id="hcbf29ce484222325">
   <source/>
@@ -328,23 +328,20 @@
 <trans-unit id="hf71b12bf88e7bb93">
   <source>Data allowing to contact me </source>
 </trans-unit>
-<trans-unit id="he1c48ebffbeb7995">
-  <source>All information allowing to class me in a
-        demographic category</source>
+<trans-unit id="h1c2eb9adfca54c27">
+  <source>All information allowing to class me in a demographic category</source>
 </trans-unit>
 <trans-unit id="hff91edfe0b603c35">
   <source>Data about the device I used</source>
 </trans-unit>
-<trans-unit id="hdd80c044a8043e27">
-  <source>Payment data, financial history and data about
-        my financial situation</source>
+<trans-unit id="ha12117b3405289d5">
+  <source>Payment data, financial history and data about my financial situation</source>
 </trans-unit>
 <trans-unit id="ha6a83bab31190c68">
   <source>Data about my health</source>
 </trans-unit>
-<trans-unit id="h1d92ded905f844d8">
-  <source>Any graphic representation (e.g., image, video) of
-        me</source>
+<trans-unit id="h19239c6c3bcb708a">
+  <source>Any graphic representation (e.g., image, video) of me</source>
 </trans-unit>
 <trans-unit id="h581c73258e16b269">
   <source>Geographic location</source>
@@ -352,13 +349,13 @@
 <trans-unit id="h44e758245f098aed">
   <source>First names, last names, nicknames, and other names</source>
 </trans-unit>
-<trans-unit id="h092f8bd2e061bbfd">
-  <source>Any data establishing a degree of similarity
-        of with others (e.g., clusters, user-profiles)</source>
+<trans-unit id="hd50ab52715fef8a9">
+  <source>Any data establishing a degree of similarity of with others (e.g.,
+      clusters, user-profiles)</source>
 </trans-unit>
-<trans-unit id="h93b0d17d1cec5f8c">
-  <source>Data about relationships I have with
-        others, social activity and interaction</source>
+<trans-unit id="h708a9ebbef41c270">
+  <source>Data about relationships I have with others, social activity and
+      interaction</source>
 </trans-unit>
 <trans-unit id="h7a93d23c2fe2e792">
   <source>Any data that uniquely identifies me</source>

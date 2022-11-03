@@ -232,7 +232,7 @@ export class ComputationAPI {
     const preparedRequest = this.preProcessRequest(request);
 
     // Only allow no auth header for certain requests
-    const authRequired = !request.demands.every(demand =>
+    const authRequired = request.demands!.every(demand =>
       demand.action.includes('TRANSPARENCY')
     );
 
