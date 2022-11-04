@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.1](https://github.com/blindnet-io/privacy-components-web/compare/v0.11.0...v0.11.1) (2022-11-04)
+
+
+### Bug Fixes
+
+* **@blindnet-demos/devkit-simple-tutorial:** routing script in for demo ([eeabce2](https://github.com/blindnet-io/privacy-components-web/commit/eeabce2266a3b34bd781f431802433fae6922814))
+
+
+
+
+
 # [0.11.0](https://github.com/blindnet-io/privacy-components-web/compare/v0.10.0...v0.11.0) (2022-11-04)
 
 
