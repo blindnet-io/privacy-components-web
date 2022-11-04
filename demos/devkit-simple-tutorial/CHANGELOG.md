@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.1](https://github.com/blindnet-io/privacy-components-web/compare/v0.11.0...v0.11.1) (2022-11-04)
+
+
+### Bug Fixes
+
+* **@blindnet-demos/devkit-simple-tutorial:** routing script in for demo ([eeabce2](https://github.com/blindnet-io/privacy-components-web/commit/eeabce2266a3b34bd781f431802433fae6922814))
+
+
+
+
+
+# [0.11.0](https://github.com/blindnet-io/privacy-components-web/compare/v0.10.0...v0.11.0) (2022-11-04)
+
+
+### Bug Fixes
+
+* **@blindnet-demos/devkit-simple-tutorial:** fix gh pages routing ([7b7d0bd](https://github.com/blindnet-io/privacy-components-web/commit/7b7d0bd79087f589e9f7604f332b168b086bad83))
+
+
+### Features
+
+* **@blindnet-demos/blindnet-simple-tutorial:** updated wordings ([477bac6](https://github.com/blindnet-io/privacy-components-web/commit/477bac6f87fde30b13e052d103260ce5573cbecd))
+
+
+### Reverts
+
+* fix(@blindnet-demos/devkit-simple-tutorial): fix gh pages routing ([5f82bd7](https://github.com/blindnet-io/privacy-components-web/commit/5f82bd70023348a2e07fcf942e0dc620428a4b71))
+
+
+
+
+
 # [0.10.0](https://github.com/blindnet-io/privacy-components-web/compare/v0.9.0...v0.10.0) (2022-11-02)
 
 

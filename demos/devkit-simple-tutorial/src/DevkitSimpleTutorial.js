@@ -96,23 +96,6 @@ export class DevkitSimpleTutorial extends LitElement {
   }
 
   render() {
-    // Hack to get around the lack of support for routes in github pages
-    const params = new URLSearchParams(window.location.search);
-    const path = params.get('path');
-    if (path) {
-      // Go only works with a (very small) timeout
-      setTimeout(() => {
-        Router.go(
-          `${window.location.origin}/demos/devkit-simple-tutorial/${path}`
-        );
-        // Would do below here to keep params but vaadin doesn't like the path when passed that way
-        // Router.go({
-        //   pathname: `${window.location.origin}/demos/devkit-simple-tutorial/${path}`,
-        //   search: params.toString()
-        // })
-      }, 1);
-    }
-
     return html`
       <bx-header aria-label="blindnet devkit simple tutorial">
         <bx-header-menu-button

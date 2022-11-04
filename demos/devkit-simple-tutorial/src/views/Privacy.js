@@ -11,10 +11,24 @@ import '@blindnet/prci';
 const auth0 = new Auth0Client({
   domain: 'blindnet.eu.auth0.com',
   client_id: '1C0uhFCpzvJAkFi4uqoq2oAWSgQicqHc',
+  audience: 'https://blindnet-connector-demo-staging.azurewebsites.net',
   redirect_uri: `${window.location.origin}/demos/devkit-simple-tutorial/privacy`,
   authorizationParams: {
     redirect_uri: `${window.location.origin}/demos/devkit-simple-tutorial/privacy`,
   },
+  languageDictionary: {
+    title: 'Let us verify your e-mail',
+    passwordlessEmailInstructions:
+      'Enter the email associated<br/>with your data',
+    signUpTerms:
+      'By clicking SUMBIT, you give consent for processing your data (email) for the purposes of identifying you and processing your privacy request.',
+    success: {
+      logIn: 'Email verified.',
+      magicLink: 'We sent you a link to verify<br />your e-mail at %s.',
+    },
+  },
+  allowSignUp: false,
+  passwordlessMethod: `link`,
 });
 
 export class AppPrivacy extends LitElement {
@@ -57,7 +71,7 @@ export class AppPrivacy extends LitElement {
   }
 
   handleLoginClick() {
-    auth0.loginWithRedirect();
+    window.location.href = `${window.location.origin}/demos/devkit-simple-tutorial/login`;
   }
 
   handleLogoutClick() {
@@ -97,19 +111,19 @@ export class AppPrivacy extends LitElement {
         this._apiToken,
         () => html`
           <span
-            >Logged in as
+            >Making a Privacy Request as
             ${
               // @ts-ignore
               jwt_decode(this._apiToken).uid
             }.</span
           >
           <bldn-button @click=${this.handleLogoutClick} mode="link">
-            Logout
+            Change
           </bldn-button>
         `,
         () => html`
           <bldn-button @click=${this.handleLoginClick} mode="link">
-            Login
+            Verify your e-mail
           </bldn-button>
         `
       )}
