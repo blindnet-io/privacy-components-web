@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0](https://github.com/blindnet-io/privacy-components-web/compare/v0.10.0...v0.11.0) (2022-11-04)
+
+**Note:** Version bump only for package @blindnet/dci
+
+
+
+
+
 # [0.10.0](https://github.com/blindnet-io/privacy-components-web/compare/v0.9.0...v0.10.0) (2022-11-02)
 
 
