@@ -6,24 +6,33 @@ import {
 import { msg } from '@lit/localize';
 import { css, html, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { ActionForm } from './bldn-action-form.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 
+import { ActionForm } from './bldn-action-form.js';
 import '../bldn-privacy-scope-picker.js';
+import {
+  DATA_CATEGORY_DESCRIPTIONS,
+  DATA_CATEGORY_TITLES,
+  PROCESSING_CATEGORIES,
+  PROCESSING_CATEGORY_DESCRIPTIONS,
+  PURPOSES,
+  PURPOSE_DESCRIPTIONS,
+} from '../utils/dictionary.js';
 
 /**
  * Action form for the OBJECT PRIV Action
  */
 @customElement('bldn-object-form')
 export class BldnObjectForm extends ActionForm {
-  /** @prop */
+  /** @prop List of allowed data categories */
   @property({ type: Array, attribute: 'data-categories' })
   dataCategories: string[] = [];
 
-  /** @prop */
+  /** @prop List of allowed processing categories */
   @property({ type: Array, attribute: 'processing-categories' })
   processingCategories: PrivacyScopeRestriction.pc[] = [];
 
-  /** @prop */
+  /** @prop List of allowed purposes of processing */
   @property({ type: Array, attribute: 'purposes' })
   purposes: PrivacyScopeRestriction.pp[] = [];
 
@@ -40,9 +49,34 @@ export class BldnObjectForm extends ActionForm {
   getFormTemplate(): TemplateResult<1 | 2> {
     return html`
       <blnd-privacy-scope-picker
-        .dataCategories=${this.dataCategories}
-        .processingCategories=${this.processingCategories}
-        .purposes=${this.purposes}
+        mode="object"
+        .privacyScope=${this.demands[0].restrictions!.privacy_scope}
+        .dataCategories=${this.dataCategories.map(dc => ({
+          value: dc,
+          display:
+            dc === '*'
+              ? html`${DATA_CATEGORY_DESCRIPTIONS[dc]()}`
+              : html`<b>${DATA_CATEGORY_TITLES[dc]()} Data:</b>
+                  ${DATA_CATEGORY_DESCRIPTIONS[dc]()}`,
+          allChoice: dc === '*',
+        }))}
+        .processingCategories=${this.processingCategories.map(pc => ({
+          value: pc,
+          display:
+            pc === '*'
+              ? html`${PROCESSING_CATEGORY_DESCRIPTIONS[pc]()}`
+              : html`<b>${PROCESSING_CATEGORIES[pc]()}:</b>
+                  ${PROCESSING_CATEGORY_DESCRIPTIONS[pc]()}`,
+          allChoice: pc === '*',
+        }))}
+        .purposes=${this.purposes.map(pp => ({
+          value: pp,
+          display:
+            pp === '*'
+              ? html`${PURPOSE_DESCRIPTIONS[pp]()}`
+              : html`<b>${PURPOSES[pp]()}:</b> ${PURPOSE_DESCRIPTIONS[pp]()}`,
+          allChoice: pp === '*',
+        }))}
       ></blnd-privacy-scope-picker>
     `;
   }
@@ -51,19 +85,26 @@ export class BldnObjectForm extends ActionForm {
     return html`
       <bldn-dropdown>
         <span slot="heading"><strong>${msg('Date Restriction')}</strong></span>
-        <bldn-date-restriction></bldn-date-restriction>
+        <bldn-date-restriction
+          start=${ifDefined(this.demands[0].restrictions?.date_range?.from)}
+          end=${ifDefined(this.demands[0].restrictions?.date_range?.to)}
+        ></bldn-date-restriction>
       </bldn-dropdown>
       <bldn-dropdown>
         <span slot="heading"
           ><strong>${msg('Provenance Restriction')}</strong></span
         >
-        <bldn-provenance-restriction></bldn-provenance-restriction>
+        <bldn-provenance-restriction
+          term=${ifDefined(this.demands[0].restrictions?.provenance?.term)}
+        ></bldn-provenance-restriction>
       </bldn-dropdown>
       <bldn-dropdown>
         <span slot="heading"
           ><strong>${msg('Additional Message')}</strong></span
         >
-        <bldn-additional-message></bldn-additional-message>
+        <bldn-additional-message
+          message=${ifDefined(this.demands[0].message)}
+        ></bldn-additional-message>
       </bldn-dropdown>
     `;
   }
@@ -91,6 +132,15 @@ export class BldnObjectForm extends ActionForm {
   }
 
   // Listener Functions
+
+  /**
+   * Update the privacy scope restriction for this demand
+   * @param e {CustomEvent} Event containing the new privacy scope restriction
+   */
+  changePrivacyScopeRestriction(e: Event) {
+    const { privacyScope } = (e as CustomEvent).detail;
+    this.demands[0].restrictions!.privacy_scope = privacyScope;
+  }
 
   /**
    * Update the date restriction start for this demand
@@ -135,6 +185,12 @@ export class BldnObjectForm extends ActionForm {
     // eslint-disable-next-line wc/guard-super-call
     super.connectedCallback();
 
+    // Privacy scope restriction listener
+    this.addEventListener(
+      'bldn-privacy-scope-picker:scope-change',
+      this.changePrivacyScopeRestriction
+    );
+
     // Date restriction listeners
     this.addEventListener(
       'bldn-date-restriction:start-date-change',
@@ -162,6 +218,10 @@ export class BldnObjectForm extends ActionForm {
    * Remove all listeners
    */
   disconnectedCallback(): void {
+    this.removeEventListener(
+      'bldn-privacy-scope-picker:scope-change',
+      this.changePrivacyScopeRestriction
+    );
     this.removeEventListener(
       'bldn-date-restriction:start-date-change',
       this.changeDateRestrictionStart
