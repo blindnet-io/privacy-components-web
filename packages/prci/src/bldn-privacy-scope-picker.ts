@@ -15,6 +15,11 @@ const tooltipIcon = new URL(
   import.meta.url
 ).href;
 
+const tooltipIconSmall = new URL(
+  './assets/icons/akar-icons_info_small.svg',
+  import.meta.url
+).href;
+
 interface Choice<T> {
   value: T;
   display: TemplateResult<1 | 2>;
@@ -87,13 +92,15 @@ export class BldnPrivacyScopePicker extends LitElement {
             ${msg('I object to the processing of my data within the following')}
             <bldn-button
               id="scope-tooltip-button"
-              mode="link"
+              mode="link-icon"
               underline-mode="dotted"
               @click=${() => {
                 this._showTooltip = !this._showTooltip;
               }}
-              >${msg(html`<b>privacy scope</b>`)}</bldn-button
             >
+              ${msg(html`<b>privacy scope</b>`)}
+              <img src=${tooltipIconSmall} alt="privacy scope tooltip" />
+            </bldn-button>
           `,
         ],
         [

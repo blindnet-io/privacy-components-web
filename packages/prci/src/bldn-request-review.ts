@@ -1,11 +1,14 @@
 import {
+  ComputationAPI,
   CreatePrivacyRequestPayload,
+  GivenConsentsPayload,
   PrivacyRequestDemand,
   PrivacyScopeRestriction,
+  ProvenanceRestriction,
 } from '@blindnet/core';
-import { msg } from '@lit/localize';
-import { css, html, LitElement } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { msg, str } from '@lit/localize';
+import { css, html, LitElement, PropertyValueMap, TemplateResult } from 'lit';
+import { customElement, property, state } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
 import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
@@ -17,6 +20,7 @@ import {
   DATA_CATEGORY_DESCRIPTIONS,
   PROCESSING_CATEGORIES,
   PROCESSING_CATEGORY_DESCRIPTIONS,
+  PROVENANCE_DESCRIPTIONS,
   PURPOSES,
   PURPOSE_DESCRIPTIONS,
   TARGET_DESCRIPTIONS,
@@ -41,6 +45,8 @@ const deleteSvg = new URL(
 export class BldnRequestReview extends LitElement {
   /** @prop */
   @property({ type: Array }) demandGroups: PrivacyRequestDemand[][] = [];
+
+  @state() _consents: GivenConsentsPayload[] = [];
 
   handleEditDemandGroupClick(demandGroupIndex: number) {
     this.dispatchEvent(
@@ -84,41 +90,10 @@ export class BldnRequestReview extends LitElement {
     );
   }
 
-  getDataCategoryListTemplate(
-    privacyScopes: undefined | PrivacyScopeRestriction[]
-  ) {
-    return html`
-      ${when(
-        privacyScopes,
-        () => html`
-          <ul>
-            ${map(
-              privacyScopes,
-              scope => html`
-                <li>
-                  ${scope.dc === '*'
-                    ? DATA_CATEGORY_DESCRIPTIONS[scope.dc]()
-                    : html`<b>${scope.dc} Data:</b>
-                        ${DATA_CATEGORY_DESCRIPTIONS[scope.dc]()}`}
-                </li>
-              `
-            )}
-          </ul>
-        `,
-        () => html` <p>${msg('No data categories selected!')}</p> `
-      )}
-    `;
-  }
-
-  getTransparencyActionListTemplate(demands: PrivacyRequestDemand[]) {
+  getListTemplate(items: TemplateResult<1 | 2>[]) {
     return html`
       <ul>
-        ${map(
-          demands,
-          demand => html`
-            <li>${TRANSPARENCY_ACTION_DESCRIPTIONS[demand.action]()}</li>
-          `
-        )}
+        ${map(items, item => html`<li>${item}</li>`)}
       </ul>
     `;
   }
@@ -128,50 +103,54 @@ export class BldnRequestReview extends LitElement {
   ) {
     return html`
       <p>${msg('Data Categories')}</p>
-      <ul>
-        ${map(
-          privacyScopes,
+      ${this.getListTemplate(
+        privacyScopes!.map(
           scope => html`
-            <li>
-              ${scope.dc === '*'
-                ? DATA_CATEGORY_DESCRIPTIONS[scope.dc]()
-                : html`<b>${scope.dc} Data:</b> ${DATA_CATEGORY_DESCRIPTIONS[
-                      scope.dc
-                    ]()}`}
-            </li>
+            ${scope.dc === '*'
+              ? DATA_CATEGORY_DESCRIPTIONS[scope.dc]()
+              : html`<b>${scope.dc} Data:</b> ${DATA_CATEGORY_DESCRIPTIONS[
+                    scope.dc
+                  ]()}`}
           `
-        )}
-      </ul>
+        )
+      )}
       <p>${msg('Processing Categories')}</p>
-      <ul>
-        ${map(
-          privacyScopes,
+      ${this.getListTemplate(
+        privacyScopes!.map(
           scope => html`
-            <li>
-              ${scope.pc === PrivacyScopeRestriction.pc._
-                ? PROCESSING_CATEGORY_DESCRIPTIONS[scope.pc]()
-                : html`<b>${PROCESSING_CATEGORIES[scope.pc]()}:</b>
-                    ${PROCESSING_CATEGORY_DESCRIPTIONS[scope.pc]()}`}
-            </li>
+            ${scope.pc === PrivacyScopeRestriction.pc._
+              ? PROCESSING_CATEGORY_DESCRIPTIONS[scope.pc]()
+              : html`<b>${PROCESSING_CATEGORIES[scope.pc]()}:</b>
+                  ${PROCESSING_CATEGORY_DESCRIPTIONS[scope.pc]()}`}
           `
-        )}
-      </ul>
+        )
+      )}
       <p>${msg('Purposes')}</p>
-      <ul>
-        ${map(
-          privacyScopes,
+      ${this.getListTemplate(
+        privacyScopes!.map(
           scope => html`
-            <li>
-              ${scope.pp === '*'
-                ? PURPOSE_DESCRIPTIONS[scope.pp]()
-                : html`<b>${PURPOSES[scope.pp]()}:</b> ${PURPOSE_DESCRIPTIONS[
-                      scope.pp
-                    ]()}`}
-            </li>
+            ${scope.pp === '*'
+              ? PURPOSE_DESCRIPTIONS[scope.pp]()
+              : html`<b>${PURPOSES[scope.pp]()}:</b> ${PURPOSE_DESCRIPTIONS[
+                    scope.pp
+                  ]()}`}
           `
-        )}
-      </ul>
+        )
+      )}
     `;
+  }
+
+  getDateRestrictionTemplate(demandGroup: PrivacyRequestDemand[]) {
+    const start = demandGroup[0].restrictions?.date_range?.from;
+    const end = demandGroup[0].restrictions?.date_range?.to;
+
+    if (start && end) {
+      return html`<p>${msg(str`From ${start} to ${end}`)}</p>`;
+    }
+    if (start) {
+      return html`<p>${msg(str`Since ${start}`)}</p>`;
+    }
+    return html`<p>${msg(str`Up to ${end}`)}</p>`;
   }
 
   getReviewTemplate(demandGroup: PrivacyRequestDemand[]) {
@@ -184,8 +163,15 @@ export class BldnRequestReview extends LitElement {
               PrivacyRequestDemand.action.ACCESS,
               () => html`
                 <p>${msg('I want to access:')}</p>
-                ${this.getDataCategoryListTemplate(
-                  demandGroup[0].restrictions?.privacy_scope
+                ${this.getListTemplate(
+                  demandGroup[0].restrictions!.privacy_scope!.map(
+                    scope => html`
+                      ${scope.dc === '*'
+                        ? DATA_CATEGORY_DESCRIPTIONS[scope.dc]()
+                        : html`<b>${scope.dc} Data:</b>
+                            ${DATA_CATEGORY_DESCRIPTIONS[scope.dc]()}`}
+                    `
+                  )
                 )}
               `,
             ],
@@ -193,8 +179,15 @@ export class BldnRequestReview extends LitElement {
               PrivacyRequestDemand.action.DELETE,
               () => html`
                 <p>${msg('I want to delete:')}</p>
-                ${this.getDataCategoryListTemplate(
-                  demandGroup[0].restrictions?.privacy_scope
+                ${this.getListTemplate(
+                  demandGroup[0].restrictions!.privacy_scope!.map(
+                    scope => html`
+                      ${scope.dc === '*'
+                        ? DATA_CATEGORY_DESCRIPTIONS[scope.dc]()
+                        : html`<b>${scope.dc} Data:</b>
+                            ${DATA_CATEGORY_DESCRIPTIONS[scope.dc]()}`}
+                    `
+                  )
                 )}
               `,
             ],
@@ -225,22 +218,115 @@ export class BldnRequestReview extends LitElement {
                 )}
               `,
             ],
-            [PrivacyRequestDemand.action.REVOKE_CONSENT, () => html``],
-            [PrivacyRequestDemand.action.OTHER, () => html``],
+            [
+              PrivacyRequestDemand.action.REVOKE_CONSENT,
+              () => html`
+                <p>${msg('I revoke the following consents:')}</p>
+                ${this.getListTemplate(
+                  this._consents
+                    .filter(
+                      c =>
+                        demandGroup.findIndex(
+                          demand => demand.restrictions!.consent!.id === c.id
+                        ) > -1
+                    )
+                    .map(
+                      c =>
+                        html`${c.name} -
+                          <i
+                            >${msg(
+                              html`Given on ${new Date(c.date).toLocaleString()}`
+                            )}</i
+                          >`
+                    )
+                )}
+              `,
+            ],
+            [
+              PrivacyRequestDemand.action.OTHER,
+              () => html`
+                <p>${msg('Details of my demand:')}</p>
+                <i>${demandGroup[0].message}</i>
+              `,
+            ],
           ],
           () => html`
             ${when(
               demandGroup[0].action.includes('TRANSPARENCY'),
               () => html`
                 <p>${msg('I want to know:')}</p>
-                ${this.getTransparencyActionListTemplate(demandGroup)}
+                ${this.getListTemplate(
+                  demandGroup.map(
+                    demand => html`
+                      ${TRANSPARENCY_ACTION_DESCRIPTIONS[demand.action]()}
+                    `
+                  )
+                )}
               `
             )}
           `
         )}
+        <!-- Show other options selections if different than the default -->
+        <p>${msg('Other options:')}</p>
+        <ul>
+          ${when(
+            demandGroup[0].restrictions?.date_range?.to ||
+              demandGroup[0].restrictions?.date_range?.from,
+            () => html`
+              <li><p>${msg('Date Restriction')}</p></li>
+              ${this.getDateRestrictionTemplate(demandGroup)}
+            `
+          )}
+          ${when(
+            demandGroup[0].restrictions?.provenance?.term &&
+              demandGroup[0].restrictions.provenance.term !==
+                ProvenanceRestriction.term._,
+            () => html`
+              <li><p>${msg('Provenance Restriction')}</p></li>
+              ${PROVENANCE_DESCRIPTIONS[
+                demandGroup[0].restrictions!.provenance!.term
+              ]()}
+            `
+          )}
+          ${when(
+            demandGroup[0].message &&
+              demandGroup[0].action !== PrivacyRequestDemand.action.OTHER,
+            () => html`
+              <li><p>${msg('Other Message')}</p></li>
+              ${demandGroup[0].message}
+            `
+          )}
+        </ul>
       `;
     }
     return html`${msg('No demands to review!')}`;
+  }
+
+  protected willUpdate(
+    _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
+  ): void {
+    if (
+      _changedProperties.has('demandGroups') &&
+      this.demandGroups.findIndex(
+        group =>
+          group.findIndex(
+            d => d.action === PrivacyRequestDemand.action.REVOKE_CONSENT
+          ) > 0
+      ) > 0
+    ) {
+      // Get consents
+      if (ComputationAPI.getInstance().hasApiToken()) {
+        ComputationAPI.getInstance()
+          .getUserConsents()
+          .then(consents => {
+            this._consents = consents;
+          });
+      } else {
+        // TODO: Set some error message here that is the same for all forms
+        // eslint-disable-next-line no-console
+        console.log('User must be authenticated!');
+      }
+    }
   }
 
   render() {
@@ -251,7 +337,7 @@ export class BldnRequestReview extends LitElement {
         @bldn-nav-wrapper:left-click=${this.handleCancelClick}
         @bldn-nav-wrapper:right-click=${this.handleSubmitClick}
       >
-        <bldn-dropdown class="main-section" mode="major">
+        <bldn-dropdown class="main-section" mode="major" open>
           <span slot="heading"><strong>${msg('Request Summary')}</strong></span>
           ${map(
             this.demandGroups,

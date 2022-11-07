@@ -70,6 +70,10 @@ export class BldnDropdown extends LitElement {
       padding-right: 2.5em;
     }
 
+    :host([mode='minor']) button {
+      padding-right: 0.42em;
+    }
+
     :host([open]) #dropdown-button-image {
       /* Flip the dropdown arrow when open */
       -webkit-transform: scaleY(-1);

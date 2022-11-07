@@ -5,7 +5,7 @@ import {
   PrivacyRequestDemand,
 } from '@blindnet/core';
 import { msg } from '@lit/localize';
-import { css, html, PropertyValueMap, TemplateResult } from 'lit';
+import { css, html, TemplateResult } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { when } from 'lit/directives/when.js';
@@ -214,14 +214,6 @@ export class BldnRevokeConsentForm extends ActionForm {
     this.demands.forEach(demand => {
       demand.message = this._message;
     });
-  }
-
-  protected willUpdate(
-    _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
-  ): void {
-    if (_changedProperties.has('demands')) {
-      // console.log(this.demands)
-    }
   }
 
   /**

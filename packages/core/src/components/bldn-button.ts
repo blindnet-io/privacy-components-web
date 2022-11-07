@@ -10,7 +10,9 @@ export class BldnButton extends LitElement {
     | 'positive'
     | 'warning'
     | 'negative'
-    | 'link' = 'primary';
+    | 'link'
+    | 'icon'
+    | 'link-icon' = 'primary';
 
   @property({ type: String, attribute: 'underline-mode' }) underlineMode:
     | 'solid'
@@ -23,7 +25,9 @@ export class BldnButton extends LitElement {
   render() {
     return html`
       <button
-        class="${this.mode} ${this.mode === 'link' ? this.underlineMode : ''}"
+        class="${this.mode} ${this.mode.includes('link')
+          ? this.underlineMode
+          : ''}"
         @click=${this.handleClick}
       >
         <slot></slot>
@@ -100,6 +104,20 @@ export class BldnButton extends LitElement {
 
       .dotted {
         text-decoration: underline var(--color-dark) dotted;
+      }
+
+      .icon {
+        background: none;
+        padding: 0;
+      }
+
+      .link-icon {
+        border: none;
+        background: none;
+        box-shadow: none;
+        color: var(--color-dark);
+        padding: inherit;
+        padding: 0;
       }
     `,
   ];

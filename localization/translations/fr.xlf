@@ -616,9 +616,6 @@
 <trans-unit id="s491b94499fd520a5">
   <source>Other specific purpose</source>
 </trans-unit>
-<trans-unit id="sfcd0fc6d569fa12a">
-  <source>No data categories selected!</source>
-</trans-unit>
 <trans-unit id="s3176f9811c35d533">
   <source>Data Categories</source>
 </trans-unit>
@@ -639,6 +636,15 @@
 </trans-unit>
 <trans-unit id="s1ebe491408762bb4">
   <source>I restrict the processing of my data to the following scope:</source>
+</trans-unit>
+<trans-unit id="sce2c42fd7076a0ad">
+  <source>I revoke the following consents:</source>
+</trans-unit>
+<trans-unit id="heafc12d5a32356ad">
+  <source>Given on <x id="0" equiv-text="${new Date(c.date).toLocaleString()}"/></source>
+</trans-unit>
+<trans-unit id="sc0903d723b382f53">
+  <source>Details of my demand:</source>
 </trans-unit>
 <trans-unit id="sd22025af1f467374">
   <source>I want to know:</source>
@@ -730,9 +736,6 @@
 <trans-unit id="ha9713792ec60139d">
   <source>Revoke <x id="0" equiv-text="&lt;b&gt;"/>specific<x id="1" equiv-text="&lt;/b&gt;"/> consents (select those you wish to
                 <x id="2" equiv-text="&lt;b&gt;"/>revoke<x id="3" equiv-text="&lt;/b&gt;"/>)</source>
-</trans-unit>
-<trans-unit id="heafc12d5a32356ad">
-  <source>Given on <x id="0" equiv-text="${new Date(c.date).toLocaleString()}"/></source>
 </trans-unit>
 </body>
 </file>

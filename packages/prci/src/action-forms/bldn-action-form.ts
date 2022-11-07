@@ -128,7 +128,7 @@ export abstract class ActionForm extends LitElement {
         @bldn-nav-wrapper:left-click=${this.handleBackClick}
         @bldn-nav-wrapper:right-click=${this.handleAddClick}
       >
-        <bldn-dropdown class="main-section" mode="major">
+        <bldn-dropdown class="main-section" mode="major" open>
           <span slot="heading"
             ><strong
               >${msg(str`Details of my ${this.action} Demand`)}</strong
