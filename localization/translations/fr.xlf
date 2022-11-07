@@ -228,6 +228,10 @@
   <source>Who can access the data that the organization has on me</source>
   <target>Qui peut accéder aux données que l'organisation a sur moi</target>
 </trans-unit>
+<trans-unit id="h47caddfa59939013">
+  <source><x id="0" equiv-text="&lt;b&gt;"/>All<x id="1" equiv-text="&lt;/b&gt;"/> information related to data processing practices and my
+        data</source>
+</trans-unit>
 <trans-unit id="s3fc1f890d4f5a074">
   <source>All provenances</source>
 </trans-unit>
@@ -636,6 +640,9 @@
 <trans-unit id="s1ebe491408762bb4">
   <source>I restrict the processing of my data to the following scope:</source>
 </trans-unit>
+<trans-unit id="sd22025af1f467374">
+  <source>I want to know:</source>
+</trans-unit>
 <trans-unit id="s11bafd52956fc434">
   <source>No demands to review!</source>
 </trans-unit>
@@ -713,6 +720,19 @@
 </trans-unit>
 <trans-unit id="s7b81fc085a19b55a">
   <source>The reasons for processing data in my privacy scope:</source>
+</trans-unit>
+<trans-unit id="scf3d7fe3d333384b">
+  <source>I want to:</source>
+</trans-unit>
+<trans-unit id="h3c711aa2f112dd02">
+  <source>Revoke <x id="0" equiv-text="&lt;b&gt;"/>all<x id="1" equiv-text="&lt;/b&gt;"/> consents</source>
+</trans-unit>
+<trans-unit id="ha9713792ec60139d">
+  <source>Revoke <x id="0" equiv-text="&lt;b&gt;"/>specific<x id="1" equiv-text="&lt;/b&gt;"/> consents (select those you wish to
+                <x id="2" equiv-text="&lt;b&gt;"/>revoke<x id="3" equiv-text="&lt;/b&gt;"/>)</source>
+</trans-unit>
+<trans-unit id="heafc12d5a32356ad">
+  <source>Given on <x id="0" equiv-text="${new Date(c.date).toLocaleString()}"/></source>
 </trans-unit>
 </body>
 </file>

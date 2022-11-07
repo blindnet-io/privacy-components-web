@@ -107,13 +107,13 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
         [
           PrivacyRequestDemand.action.MODIFY,
           () => html`
-            <bldn-modify-form
+            <bldn-other-form
               data-categories=${JSON.stringify(this._allowedDataCategories)}
               .demands=${this._demandGroupIndex !== undefined
                 ? this._demandGroups[this._demandGroupIndex]
                 : ifDefined(undefined)}
               demand-group-index=${ifDefined(this._demandGroupIndex)}
-            ></bldn-modify-form>
+            ></bldn-other-form>
           `,
         ],
         [
@@ -132,6 +132,18 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
                 : ifDefined(undefined)}
               demand-group-index=${ifDefined(this._demandGroupIndex)}
             ></bldn-object-form>
+          `,
+        ],
+        [
+          PrivacyRequestDemand.action.PORTABILITY,
+          () => html`
+            <bldn-other-form
+              data-categories=${JSON.stringify(this._allowedDataCategories)}
+              .demands=${this._demandGroupIndex !== undefined
+                ? this._demandGroups[this._demandGroupIndex]
+                : ifDefined(undefined)}
+              demand-group-index=${ifDefined(this._demandGroupIndex)}
+            ></bldn-other-form>
           `,
         ],
         [

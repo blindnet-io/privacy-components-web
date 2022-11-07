@@ -5,6 +5,7 @@ import { PrivacyRequestDemand } from '@blindnet/core';
 
 import '../bldn-nav-wrapper.js';
 import '../bldn-dropdown.js';
+import { when } from 'lit/directives/when.js';
 
 /**
  * Abstract class for a form that allows the user to create or edit a demand.
@@ -29,6 +30,8 @@ export abstract class ActionForm extends LitElement {
 
   /** PRIV Action of this form */
   abstract readonly action: PrivacyRequestDemand.action;
+
+  readonly includeOptions: boolean = true;
 
   /**
    * Send a demand group up to the request builder
@@ -133,10 +136,17 @@ export abstract class ActionForm extends LitElement {
           >
           ${this.getFormTemplate()}
         </bldn-dropdown>
-        <bldn-dropdown class="main-section" mode="major">
-          <span slot="heading"><strong>${msg('Other Options')}</strong></span>
-          ${this.getOptionsTemplate()}
-        </bldn-dropdown>
+        ${when(
+          this.includeOptions,
+          () => html`
+            <bldn-dropdown class="main-section" mode="major">
+              <span slot="heading"
+                ><strong>${msg('Other Options')}</strong></span
+              >
+              ${this.getOptionsTemplate()}
+            </bldn-dropdown>
+          `
+        )}
       </bldn-nav-wrapper>
     `;
   }
