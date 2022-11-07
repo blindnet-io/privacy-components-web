@@ -51,7 +51,7 @@ enum RequestBuilderUIState {
 export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
   /** @prop */
   @property({ type: Array }) actions: PrivacyRequestDemand.action[] =
-    Object.values(PrivacyRequestDemand.action).filter(a => !a.includes('.'));
+    Object.values(PrivacyRequestDemand.action);
 
   /** @prop */
   @property({ type: Array }) dataCategories: string[] = [];
@@ -150,7 +150,9 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
           PrivacyRequestDemand.action.TRANSPARENCY,
           () => html`
             <bldn-transparency-form
-              data-categories=${JSON.stringify(this._allowedDataCategories)}
+              .transparencyActions=${this.actions.filter(a =>
+                a.includes('TRANSPARENCY')
+              )}
               .demands=${this._demandGroupIndex !== undefined
                 ? this._demandGroups[this._demandGroupIndex]
                 : ifDefined(undefined)}
@@ -161,13 +163,13 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
         [
           PrivacyRequestDemand.action.REVOKE_CONSENT,
           () => html`
-            <bldn-revoke-form
+            <bldn-revoke-consent-form
               data-categories=${JSON.stringify(this._allowedDataCategories)}
               .demands=${this._demandGroupIndex !== undefined
                 ? this._demandGroups[this._demandGroupIndex]
                 : ifDefined(undefined)}
               demand-group-index=${ifDefined(this._demandGroupIndex)}
-            ></bldn-revoke-form>
+            ></bldn-revoke-consent-form>
           `,
         ],
         [
@@ -367,11 +369,13 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
           RequestBuilderUIState.menu,
           () => html`
             <bldn-tile-menu
-              .tiles=${this.actions.map(a => ({
-                title: ACTION_TITLES[a](),
-                description: ACTION_DESCRIPTIONS[a](),
-                value: a,
-              }))}
+              .tiles=${this.actions
+                .filter(a => !a.includes('.'))
+                .map(a => ({
+                  title: ACTION_TITLES[a](),
+                  description: ACTION_DESCRIPTIONS[a](),
+                  value: a,
+                }))}
             ></bldn-tile-menu>
           `,
         ],

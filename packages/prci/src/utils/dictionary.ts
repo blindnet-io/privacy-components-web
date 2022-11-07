@@ -79,6 +79,46 @@ export const ACTION_DESCRIPTIONS = {
     msg('Who can access the data that the organization has on me'),
 };
 
+export const TRANSPARENCY_ACTION_DESCRIPTIONS = {
+  TRANSPARENCY: () =>
+    msg(
+      html`<b>All</b> information related to data processing practices and my
+        data`
+    ),
+  OTHER: () =>
+    msg(
+      'Do or know something else. Please note it may take longer to be answered'
+    ),
+  'TRANSPARENCY.DATA-CATEGORIES': () =>
+    msg('The categories of the data the organization has on me'),
+  'TRANSPARENCY.DPO': () =>
+    msg('The contact details of the data protection officer'),
+  'TRANSPARENCY.KNOWN': () => msg('If the organization has data on me'),
+  'TRANSPARENCY.LEGAL-BASES': () =>
+    msg(
+      'The legal bases for processing my data (including legitimate interests)'
+    ),
+  'TRANSPARENCY.ORGANIZATION': () =>
+    msg(
+      'The identity and contact details of the organization processing my data'
+    ),
+  'TRANSPARENCY.POLICY': () =>
+    msg('The policies applied to processing of data concerning me'),
+  'TRANSPARENCY.PROCESSING-CATEGORIES': () =>
+    msg(
+      'The cateogories of processing being done on the data the organization has on me'
+    ),
+  'TRANSPARENCY.PROVENANCE': () =>
+    msg('The sources that the data concerning me come from'),
+  'TRANSPARENCY.PURPOSE': () =>
+    msg('The purpose of the processing of the data the organization has on me'),
+  'TRANSPARENCY.RETENTION': () =>
+    msg('For how long the data concerning me kept'),
+  'TRANSPARENCY.WHERE': () => msg('Where the data about me is stored'),
+  'TRANSPARENCY.WHO': () =>
+    msg('Who can access the data that the organization has on me'),
+};
+
 export const PROVENANCE_DESCRIPTIONS = {
   '*': () => msg('All provenances'),
   USER: () =>

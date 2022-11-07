@@ -64,6 +64,7 @@ export class BldnAccessForm extends ActionForm {
    * @param e {CustomEvent} Event containing the data category string to add
    */
   addDataCategory(e: Event) {
+    e.stopPropagation();
     const { value } = (e as CustomEvent).detail;
     this.demands[0].restrictions!.privacy_scope!.push({
       dc: value,
@@ -77,6 +78,7 @@ export class BldnAccessForm extends ActionForm {
    * @param e {CustomEvent} Event containing the data category string to remove
    */
   removeDataCategory(e: Event) {
+    e.stopPropagation();
     const { value } = (e as CustomEvent).detail;
     this.demands[0].restrictions!.privacy_scope!.splice(
       this.demands[0].restrictions!.privacy_scope!.findIndex(

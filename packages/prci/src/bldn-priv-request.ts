@@ -21,7 +21,8 @@ enum PRCIUIState {
 @customElement('bldn-priv-request')
 export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
   /** @prop */
-  @property({ type: Array }) actions: PrivacyRequestDemand.action[] = [];
+  @property({ type: Array }) actions: PrivacyRequestDemand.action[] =
+    Object.values(PrivacyRequestDemand.action);
 
   /** @prop */
   @property({ type: Array }) dataCategories: string[] = [];

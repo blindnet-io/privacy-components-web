@@ -107,6 +107,7 @@ export class BldnDeleteForm extends ActionForm {
    * @param e {CustomEvent} Event containing the data category string to add
    */
   addDataCategory(e: Event) {
+    e.stopPropagation();
     const { value } = (e as CustomEvent).detail;
     this.demands[0].restrictions!.privacy_scope!.push({
       dc: value,
@@ -120,6 +121,7 @@ export class BldnDeleteForm extends ActionForm {
    * @param e {CustomEvent} Event containing the data category string to remove
    */
   removeDataCategory(e: Event) {
+    e.stopPropagation();
     const { value } = (e as CustomEvent).detail;
     this.demands[0].restrictions!.privacy_scope!.splice(
       this.demands[0].restrictions!.privacy_scope!.findIndex(
@@ -134,6 +136,7 @@ export class BldnDeleteForm extends ActionForm {
    * @param e {CustomEvent} Event containing the new start date
    */
   changeDateRestrictionStart(e: Event) {
+    e.stopPropagation();
     const { date } = (e as CustomEvent).detail;
     this.demands[0].restrictions!.date_range!.from = date;
   }
@@ -143,6 +146,7 @@ export class BldnDeleteForm extends ActionForm {
    * @param e {CustomEvent} Event containing the new end date
    */
   changeDateRestrictionEnd(e: Event) {
+    e.stopPropagation();
     const { date } = (e as CustomEvent).detail;
     this.demands[0].restrictions!.date_range!.to = date;
   }
@@ -152,6 +156,7 @@ export class BldnDeleteForm extends ActionForm {
    * @param e {CustomEvent} Event containing the new provenance restriction term
    */
   changeProvenanceRestrictionTerm(e: Event) {
+    e.stopPropagation();
     const { term } = (e as CustomEvent).detail;
     this.demands[0].restrictions!.provenance!.term = term;
   }
@@ -161,6 +166,7 @@ export class BldnDeleteForm extends ActionForm {
    * @param e {CustomEvent} Event containing the data category string to add
    */
   changeMessage(e: Event) {
+    e.stopPropagation();
     const { message } = (e as CustomEvent).detail;
     this.demands[0].message = message;
   }

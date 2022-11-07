@@ -4,7 +4,7 @@ import { customElement, property } from 'lit/decorators.js';
 interface Choice {
   display: string | TemplateResult<1 | 2>;
   value: string;
-  selected?: boolean;
+  checked?: boolean;
 }
 
 /**
@@ -18,9 +18,11 @@ export class BldnRadioList extends LitElement {
   @property({ type: Array }) choices: Choice[] = [];
 
   handleChoiceChange(e: Event) {
-    const { id } = (e as CustomEvent).detail;
+    const { id } = e.target as HTMLInputElement;
     this.dispatchEvent(
       new CustomEvent('bldn-radio-list:choice-change', {
+        bubbles: true,
+        composed: true,
         detail: {
           value: id,
         },
@@ -38,7 +40,7 @@ export class BldnRadioList extends LitElement {
               id=${choice.value}
               name='radio-list-choice'
               type='radio'
-              ?checked=${choice.selected}
+              ?checked=${choice.checked}
               @click=${this.handleChoiceChange}>
             </input>
             <label for=${choice.value}>${choice.display}</label><br/>

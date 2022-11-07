@@ -214,9 +214,18 @@ export class BldnAllChecklist extends LitElement {
    * Update the selection state based on currently selected choices
    */
   updateSelectionState() {
+    const allChoice = this.choices.find(c => c.allChoice) || {
+      value: '*',
+      display: html`<b>${msg('Select All')}</b>`,
+      checked: true,
+      allChoice: true,
+    };
     if (this.selectedChoices.size === 0) {
       this.selectionState = SelectionState.NONE;
-    } else if (this.allCheckbox.checked) {
+    } else if (
+      this.selectedChoices.size === 1 &&
+      this.selectedChoices.has(allChoice.value)
+    ) {
       this.selectionState = SelectionState.ALL;
     } else {
       this.selectionState = SelectionState.SOME;
@@ -264,6 +273,9 @@ export class BldnAllChecklist extends LitElement {
         });
       }
     }
+
+    // Ensure all checkboxes have the proper appearance intially
+    this.updateSelectionState();
   }
 
   render() {

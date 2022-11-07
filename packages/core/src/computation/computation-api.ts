@@ -5,6 +5,7 @@ import {
   CreatePrivacyRequestPayload,
   DataCategoryResponsePayload,
   DenyDemandPayload,
+  GivenConsentsPayload,
   PendingDemandDetailsPayload,
   PendingDemandPayload,
 } from './generated-models/index.js';
@@ -151,7 +152,6 @@ export class ComputationAPI {
     });
 
     // Append auth header if required and api token is defined
-    console.log(this._apiToken);
     if (requireAuth && !this._apiToken) {
       throw new Error('You must include a valid Authorization header!');
     } else if (this._apiToken) {
@@ -446,6 +446,29 @@ export class ComputationAPI {
       if (!response.ok) {
         throw new Error(response.statusText);
       }
+    });
+  }
+
+  // User info endpoints
+
+  /**
+   * Get consents given by the user authenticated by the current token
+   */
+  async getUserConsents(): Promise<GivenConsentsPayload[]> {
+    return fetch(
+      `https://devkit-pce-staging.azurewebsites.net/v0/user/consents`,
+      {
+        method: 'GET',
+        headers: {
+          accept: 'application/json',
+          Authorization: `Bearer ${this._apiToken}`,
+        },
+      }
+    ).then(response => {
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+      return response.json() as Promise<GivenConsentsPayload[]>;
     });
   }
 

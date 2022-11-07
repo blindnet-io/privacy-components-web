@@ -20,6 +20,7 @@ import {
   PURPOSES,
   PURPOSE_DESCRIPTIONS,
   TARGET_DESCRIPTIONS,
+  TRANSPARENCY_ACTION_DESCRIPTIONS,
 } from './utils/dictionary.js';
 
 const editSvg = new URL('./assets/icons/akar-icons_edit.svg', import.meta.url)
@@ -40,6 +41,48 @@ const deleteSvg = new URL(
 export class BldnRequestReview extends LitElement {
   /** @prop */
   @property({ type: Array }) demandGroups: PrivacyRequestDemand[][] = [];
+
+  handleEditDemandGroupClick(demandGroupIndex: number) {
+    this.dispatchEvent(
+      new CustomEvent('bldn-request-review:edit-demands', {
+        bubbles: true,
+        composed: true,
+        detail: {
+          demandGroupIndex,
+        },
+      })
+    );
+  }
+
+  handleDeleteDemandGroupClick(demandGroupIndex: number) {
+    this.dispatchEvent(
+      new CustomEvent('bldn-request-review:delete-demands', {
+        bubbles: true,
+        composed: true,
+        detail: {
+          demandGroupIndex,
+        },
+      })
+    );
+  }
+
+  handleCancelClick() {
+    this.dispatchEvent(
+      new Event('bldn-request-review:cancel-request', {
+        bubbles: true,
+        composed: true,
+      })
+    );
+  }
+
+  handleSubmitClick() {
+    this.dispatchEvent(
+      new Event('bldn-request-review:submit-request', {
+        bubbles: true,
+        composed: true,
+      })
+    );
+  }
 
   getDataCategoryListTemplate(
     privacyScopes: undefined | PrivacyScopeRestriction[]
@@ -64,6 +107,19 @@ export class BldnRequestReview extends LitElement {
         `,
         () => html` <p>${msg('No data categories selected!')}</p> `
       )}
+    `;
+  }
+
+  getTransparencyActionListTemplate(demands: PrivacyRequestDemand[]) {
+    return html`
+      <ul>
+        ${map(
+          demands,
+          demand => html`
+            <li>${TRANSPARENCY_ACTION_DESCRIPTIONS[demand.action]()}</li>
+          `
+        )}
+      </ul>
     `;
   }
 
@@ -173,59 +229,18 @@ export class BldnRequestReview extends LitElement {
             [PrivacyRequestDemand.action.OTHER, () => html``],
           ],
           () => html`
-            <!-- Transparency Template -->
             ${when(
               demandGroup[0].action.includes('TRANSPARENCY'),
-              () => html``
+              () => html`
+                <p>${msg('I want to know:')}</p>
+                ${this.getTransparencyActionListTemplate(demandGroup)}
+              `
             )}
           `
         )}
       `;
     }
-
     return html`${msg('No demands to review!')}`;
-  }
-
-  handleEditDemandGroupClick(demandGroupIndex: number) {
-    this.dispatchEvent(
-      new CustomEvent('bldn-request-review:edit-demands', {
-        bubbles: true,
-        composed: true,
-        detail: {
-          demandGroupIndex,
-        },
-      })
-    );
-  }
-
-  handleDeleteDemandGroupClick(demandGroupIndex: number) {
-    this.dispatchEvent(
-      new CustomEvent('bldn-request-review:delete-demands', {
-        bubbles: true,
-        composed: true,
-        detail: {
-          demandGroupIndex,
-        },
-      })
-    );
-  }
-
-  handleCancelClick() {
-    this.dispatchEvent(
-      new Event('bldn-request-review:cancel-request', {
-        bubbles: true,
-        composed: true,
-      })
-    );
-  }
-
-  handleSubmitClick() {
-    this.dispatchEvent(
-      new Event('bldn-request-review:submit-request', {
-        bubbles: true,
-        composed: true,
-      })
-    );
   }
 
   render() {
@@ -247,7 +262,9 @@ export class BldnRequestReview extends LitElement {
                   <bldn-dropdown>
                     <span slot="heading"
                       ><strong
-                        >${group[0].action} ${msg('Demand')}</strong
+                        >${group[0].action.split('.')[0]} ${msg(
+                  'Demand'
+                )}</strong
                       >
                       <button class='img-button' @click=${() =>
                         this.handleEditDemandGroupClick(i)}>
@@ -273,8 +290,7 @@ export class BldnRequestReview extends LitElement {
               target => ({
                 display: TARGET_DESCRIPTIONS[target](),
                 value: target,
-                selected:
-                  target === CreatePrivacyRequestPayload.target.PARTNERS,
+                checked: target === CreatePrivacyRequestPayload.target.PARTNERS,
               })
             )}
           ></bldn-radio-list>

@@ -138,6 +138,7 @@ export class BldnRestrictForm extends ActionForm {
    * @param e {CustomEvent} Event containing the new privacy scope restriction
    */
   changePrivacyScopeRestriction(e: Event) {
+    e.stopPropagation();
     const { privacyScope } = (e as CustomEvent).detail;
     this.demands[0].restrictions!.privacy_scope = privacyScope;
   }
@@ -147,6 +148,7 @@ export class BldnRestrictForm extends ActionForm {
    * @param e {CustomEvent} Event containing the new start date
    */
   changeDateRestrictionStart(e: Event) {
+    e.stopPropagation();
     const { date } = (e as CustomEvent).detail;
     this.demands[0].restrictions!.date_range!.from = date;
   }
@@ -156,6 +158,7 @@ export class BldnRestrictForm extends ActionForm {
    * @param e {CustomEvent} Event containing the new end date
    */
   changeDateRestrictionEnd(e: Event) {
+    e.stopPropagation();
     const { date } = (e as CustomEvent).detail;
     this.demands[0].restrictions!.date_range!.to = date;
   }
@@ -165,6 +168,7 @@ export class BldnRestrictForm extends ActionForm {
    * @param e {CustomEvent} Event containing the new provenance restriction term
    */
   changeProvenanceRestrictionTerm(e: Event) {
+    e.stopPropagation();
     const { term } = (e as CustomEvent).detail;
     this.demands[0].restrictions!.provenance!.term = term;
   }
@@ -174,6 +178,7 @@ export class BldnRestrictForm extends ActionForm {
    * @param e {CustomEvent} Event containing the data category string to add
    */
   changeMessage(e: Event) {
+    e.stopPropagation();
     const { message } = (e as CustomEvent).detail;
     this.demands[0].message = message;
   }
