@@ -40,7 +40,6 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
 
   goToStatus(e: Event) {
     const { requestId } = (e as CustomEvent).detail;
-    console.log(requestId);
     this._uiState = PRCIUIState.submittedRequests;
     this.requestId = requestId;
   }
@@ -67,8 +66,16 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
   render() {
     return html`
       <bldn-nav-toggle
-        .left=${{ label: 'Submit a Request', value: 'create' }}
-        .right=${{ label: 'Submitted Requests', value: 'submitted' }}
+        .left=${{
+          label: 'Submit a Request',
+          value: 'create',
+          checked: this._uiState === PRCIUIState.createRequest,
+        }}
+        .right=${{
+          label: 'Submitted Requests',
+          value: 'submitted',
+          checked: this._uiState === PRCIUIState.submittedRequests,
+        }}
         @bldn-nav-toggle:click=${this.handleNavClick}
       ></bldn-nav-toggle>
       ${choose(this._uiState, [

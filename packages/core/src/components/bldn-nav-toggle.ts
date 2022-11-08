@@ -1,9 +1,10 @@
-import { css, html, LitElement } from 'lit';
+import { css, html, LitElement, PropertyValueMap } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 
 interface Option {
   label: string;
   value: string;
+  checked?: boolean;
 }
 
 @customElement('bldn-nav-toggle')
@@ -28,6 +29,18 @@ export class BldnNavToggle extends LitElement {
         detail: { value: clickedOption.value },
       })
     );
+  }
+
+  protected willUpdate(
+    _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
+  ): void {
+    if (_changedProperties.has('left')) {
+      if (this.left.checked) {
+        this._selected = 'left';
+      } else {
+        this._selected = 'right';
+      }
+    }
   }
 
   render() {
