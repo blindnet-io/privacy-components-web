@@ -625,6 +625,15 @@
 <trans-unit id="sacc3aa0c8f59f856">
   <source>Purposes</source>
 </trans-unit>
+<trans-unit id="sa2a57f4ca828f912">
+  <source>From <x id="0" equiv-text="${start}"/> to <x id="1" equiv-text="${end}"/></source>
+</trans-unit>
+<trans-unit id="s055718e64eaa99fb">
+  <source>Since <x id="0" equiv-text="${start}"/></source>
+</trans-unit>
+<trans-unit id="s7154a359944ac56f">
+  <source>Up to <x id="0" equiv-text="${end}"/></source>
+</trans-unit>
 <trans-unit id="s3f2acea3f9106217">
   <source>I want to access:</source>
 </trans-unit>
@@ -648,6 +657,18 @@
 </trans-unit>
 <trans-unit id="sd22025af1f467374">
   <source>I want to know:</source>
+</trans-unit>
+<trans-unit id="sf33a710108e9f843">
+  <source>Other options:</source>
+</trans-unit>
+<trans-unit id="s7c9992bcec8e44cf">
+  <source>Date Restriction</source>
+</trans-unit>
+<trans-unit id="s0aa4aeddbaeb0008">
+  <source>Provenance Restriction</source>
+</trans-unit>
+<trans-unit id="se2b203c77031740e">
+  <source>Other Message</source>
 </trans-unit>
 <trans-unit id="s11bafd52956fc434">
   <source>No demands to review!</source>
@@ -675,12 +696,6 @@
 </trans-unit>
 <trans-unit id="sac8256732f2ee1e5">
   <source>Data</source>
-</trans-unit>
-<trans-unit id="s7c9992bcec8e44cf">
-  <source>Date Restriction</source>
-</trans-unit>
-<trans-unit id="s0aa4aeddbaeb0008">
-  <source>Provenance Restriction</source>
 </trans-unit>
 <trans-unit id="s7174e3af10fba733">
   <source>Additional Message</source>
@@ -736,6 +751,21 @@
 <trans-unit id="ha9713792ec60139d">
   <source>Revoke <x id="0" equiv-text="&lt;b&gt;"/>specific<x id="1" equiv-text="&lt;/b&gt;"/> consents (select those you wish to
                 <x id="2" equiv-text="&lt;b&gt;"/>revoke<x id="3" equiv-text="&lt;/b&gt;"/>)</source>
+</trans-unit>
+<trans-unit id="sad3e3c8146fc920f">
+  <source>Status</source>
+</trans-unit>
+<trans-unit id="s1e55a47eccb89757">
+  <source>Demands</source>
+</trans-unit>
+<trans-unit id="s78636b92c1a3909c">
+  <source>Pending</source>
+</trans-unit>
+<trans-unit id="s684a712107b118fe">
+  <source>Answered</source>
+</trans-unit>
+<trans-unit id="sa30c4d3b566b6b1a">
+  <source>Canceled</source>
 </trans-unit>
 </body>
 </file>

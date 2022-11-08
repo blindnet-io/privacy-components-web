@@ -13,19 +13,19 @@ export const ACTION_TITLES = {
   RESTRICT: () => msg('Restrict'),
   'REVOKE-CONSENT': () => msg('Revoke'),
   TRANSPARENCY: () => msg('Transparency'),
-  'TRANSPARENCY.DATA-CATEGORIES': () => msg('TRANSPARENCY.DATA-CATEGORIES'),
-  'TRANSPARENCY.DPO': () => msg('TRANSPARENCY.DPO'),
-  'TRANSPARENCY.KNOWN': () => msg('TRANSPARENCY.KNOWN'),
-  'TRANSPARENCY.LEGAL-BASES': () => msg('TRANSPARENCY.LEGAL-BASES'),
-  'TRANSPARENCY.ORGANIZATION': () => msg('TRANSPARENCY.ORGANIZATION'),
-  'TRANSPARENCY.POLICY': () => msg('TRANSPARENCY.POLICY'),
+  'TRANSPARENCY.DATA-CATEGORIES': () => msg('Transparency - Data Categories'),
+  'TRANSPARENCY.DPO': () => msg('Transparency - DPO'),
+  'TRANSPARENCY.KNOWN': () => msg('Transparency - Known'),
+  'TRANSPARENCY.LEGAL-BASES': () => msg('Transparency - Legal Bases'),
+  'TRANSPARENCY.ORGANIZATION': () => msg('Transparency - Organization'),
+  'TRANSPARENCY.POLICY': () => msg('Transparency - Policy'),
   'TRANSPARENCY.PROCESSING-CATEGORIES': () =>
-    msg('TRANSPARENCY.PROCESSING-CATEGORIES'),
-  'TRANSPARENCY.PROVENANCE': () => msg('TRANSPARENCY.PROVENANCE'),
-  'TRANSPARENCY.PURPOSE': () => msg('TRANSPARENCY.PURPOSE'),
-  'TRANSPARENCY.RETENTION': () => msg('TRANSPARENCY.RETENTION'),
-  'TRANSPARENCY.WHERE': () => msg('TRANSPARENCY.WHERE'),
-  'TRANSPARENCY.WHO': () => msg('TRANSPARENCY.WHO'),
+    msg('Transparency - Processing Categories'),
+  'TRANSPARENCY.PROVENANCE': () => msg('Transparency - Provenance'),
+  'TRANSPARENCY.PURPOSE': () => msg('Transparency - Purpose'),
+  'TRANSPARENCY.RETENTION': () => msg('Transparency - Retention'),
+  'TRANSPARENCY.WHERE': () => msg('Transparency - Where'),
+  'TRANSPARENCY.WHO': () => msg('Transparency - Who'),
   OTHER: () => msg('Other Demand'),
 };
 
@@ -184,6 +184,7 @@ export const DATA_CATEGORY_TITLES = {
   'UID.USER-ACCOUNT': () => msg(''),
   'UID.SOCIAL-MEDIA': () => msg(''),
   'OTHER-DATA': () => msg('Other Data'),
+  'OTHER-DATA.PROOF': () => msg('Other - Proof'),
 };
 
 export const DATA_CATEGORY_DESCRIPTIONS = {
@@ -275,11 +276,11 @@ export const STATUS_DESCRIPTIONS = {
 };
 
 export const DEMAND_STATUS_DESCRIPTIONS = {
-  GRANTED: () => msg('granted'),
-  DENIED: () => msg('denied'),
-  'PARTIALLY-GRANTED': () => msg('partially granted'),
-  'UNDER-REVIEW': () => msg('under review'),
-  CANCELED: () => msg('canceled'),
+  GRANTED: () => msg('Granted'),
+  DENIED: () => msg('Denied'),
+  'PARTIALLY-GRANTED': () => msg('Partially Granted'),
+  'UNDER-REVIEW': () => msg('Under Review'),
+  CANCELED: () => msg('Canceled'),
 };
 
 export const POLICY_TYPE_TITLES = {

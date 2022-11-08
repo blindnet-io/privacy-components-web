@@ -3,54 +3,60 @@ import { customElement, property, state } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
 import { bldnStyles } from './bldn-styles.js';
 
-interface ListChoice {
-  id: string;
+interface Choice {
+  value: string;
   display: string;
   selected?: boolean;
 }
 
 @customElement('bldn-horizontal-list')
 export class HorizontalList extends LitElement {
-  @property({ type: Array }) choices: ListChoice[] = [];
+  @property({ type: Array }) choices: Choice[] = [];
 
   @state() _selected: number = 0;
 
+  handleChoiceClick(e: Event) {
+    const { id } = e.target as HTMLButtonElement;
+    this._selected = this.choices.findIndex(c => c.value === id);
+    this.dispatchEvent(
+      new CustomEvent('bldn-horizontal-list:choice-change', {
+        detail: {
+          value: id,
+        },
+      })
+    );
+  }
+
   render() {
     return html`
-      ${map(
-        this.choices,
-        (choice, i) => html`
-          <button
-            id=${choice.id}
-            class="choice ${i === this._selected ? 'choice--selected' : ''}"
-            @click=${() => {
-              this._selected = i;
-            }}
-          >
-            ${choice.display}
-          </button>
-        `
-      )}
+      <div>
+        ${map(
+          this.choices,
+          (choice, i) => html`
+            <button
+              id=${choice.value}
+              class="choice ${i === this._selected ? 'choice--selected' : ''}"
+              @click=${this.handleChoiceClick}
+            >
+              ${choice.display}
+            </button>
+          `
+        )}
+      </div>
     `;
   }
 
   protected willUpdate(
     _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
   ): void {
-    if (_changedProperties.has('choices')) {
+    if (
+      _changedProperties.has('choices') &&
+      _changedProperties.get('choices') === undefined
+    ) {
       this._selected = this.choices.findIndex(c => c.selected);
       if (this._selected < 0) {
         this._selected = 0;
       }
-    }
-    if (_changedProperties.has('_selected')) {
-      this.dispatchEvent(
-        new CustomEvent('horizontal-list-choice-change', {
-          detail: {
-            selected: this.choices[this._selected],
-          },
-        })
-      );
     }
   }
 
@@ -58,6 +64,10 @@ export class HorizontalList extends LitElement {
     bldnStyles,
     css`
       :host {
+        display: block;
+      }
+
+      div {
         display: grid;
         grid-auto-flow: column;
         grid-auto-columns: 1fr;
@@ -76,7 +86,14 @@ export class HorizontalList extends LitElement {
 
       button {
         color: var(--color-dark);
-        font-size: 16px;
+        font-size: var(
+          --bldn-horizontal-list-font-size,
+          var(--font-size-medium)
+        );
+        background: var(
+          --bldn-horizontal-list-background-color,
+          var(--background)
+        );
       }
     `,
   ];

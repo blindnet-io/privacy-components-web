@@ -8,10 +8,10 @@ import {
   GivenConsentsPayload,
   PendingDemandDetailsPayload,
   PendingDemandPayload,
+  PrivacyResponsePayload,
+  RequestHistoryPayload,
 } from './generated-models/index.js';
-import { HistoryResponse } from './models/history-response.js';
 import { DATA_CATEGORY } from './models/priv-terms.js';
-import { PrivacyResponse } from './models/privacy-response.js';
 
 export class ComputationAPI {
   private static instance: ComputationAPI | null = null;
@@ -78,7 +78,7 @@ export class ComputationAPI {
     this._apiToken = apiToken;
   }
 
-  public hasApiToken() {
+  public apiTokenSet() {
     return this._apiToken !== '';
   }
 
@@ -88,7 +88,7 @@ export class ComputationAPI {
     this._adminToken = adminToken;
   }
 
-  public hasAdminToken() {
+  public adminTokenSet() {
     return this._adminToken !== '';
   }
 
@@ -249,7 +249,7 @@ export class ComputationAPI {
     return response.json();
   }
 
-  async getRequestHistory(): Promise<HistoryResponse> {
+  async getRequestHistory(): Promise<RequestHistoryPayload> {
     const endpoint = '/privacy-request/history';
 
     const response = await fetch(this.fullURL(endpoint), {
@@ -263,7 +263,7 @@ export class ComputationAPI {
     return response.json();
   }
 
-  async getRequest(requestId: string): Promise<PrivacyResponse> {
+  async getRequest(requestId: string): Promise<PrivacyResponsePayload[]> {
     const endpoint = `/privacy-request/${requestId}`;
 
     const response = await fetch(this.fullURL(endpoint), {

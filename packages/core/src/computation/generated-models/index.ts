@@ -10,6 +10,8 @@ export type { AddRegulationsPayload } from './models/AddRegulationsPayload.js';
 export type { ApproveDemandPayload } from './models/ApproveDemandPayload.js';
 export type { CancelDemandPayload } from './models/CancelDemandPayload.js';
 export type { ConsentRestriction } from './models/ConsentRestriction.js';
+export type { CompletedDemandPayload } from './models/CompletedDemandPayload.js';
+export type { CompletedDemandInfoPayload } from './models/CompletedDemandInfoPayload.js';
 export { CreateLegalBasePayload } from './models/CreateLegalBasePayload.js';
 export { CreatePrivacyRequestPayload } from './models/CreatePrivacyRequestPayload.js';
 export { CreateProvenancePayload } from './models/CreateProvenancePayload.js';

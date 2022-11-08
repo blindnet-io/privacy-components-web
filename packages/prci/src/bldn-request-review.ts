@@ -315,7 +315,7 @@ export class BldnRequestReview extends LitElement {
       ) > 0
     ) {
       // Get consents
-      if (ComputationAPI.getInstance().hasApiToken()) {
+      if (ComputationAPI.getInstance().apiTokenSet()) {
         ComputationAPI.getInstance()
           .getUserConsents()
           .then(consents => {

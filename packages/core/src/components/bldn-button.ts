@@ -16,7 +16,8 @@ export class BldnButton extends LitElement {
 
   @property({ type: String, attribute: 'underline-mode' }) underlineMode:
     | 'solid'
-    | 'dotted' = 'solid';
+    | 'dotted'
+    | 'none' = 'solid';
 
   handleClick() {
     this.dispatchEvent(new Event('bldn-button:click'));
@@ -106,12 +107,19 @@ export class BldnButton extends LitElement {
         text-decoration: underline var(--color-dark) dotted;
       }
 
+      .none {
+        text-decoration: none;
+      }
+
       .icon {
         background: none;
         padding: 0;
       }
 
       .link-icon {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25em;
         border: none;
         background: none;
         box-shadow: none;

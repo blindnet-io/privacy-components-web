@@ -9,7 +9,7 @@ import { customElement, property, state } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
 
 import './bldn-request-builder.js';
-import './bldn-nav-wrapper.js';
+import './bldn-submitted-requests.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 enum PRCIUIState {
@@ -38,6 +38,15 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
 
   handleRequestIdChange() {}
 
+  handleNavClick(e: Event) {
+    const { value } = (e as CustomEvent).detail;
+    if (value === 'create') {
+      this._uiState = PRCIUIState.createRequest;
+    } else {
+      this._uiState = PRCIUIState.submittedRequests;
+    }
+  }
+
   protected willUpdate(
     _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
   ): void {
@@ -51,8 +60,9 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
   render() {
     return html`
       <bldn-nav-toggle
-        .left=${{ label: 'Submit a Request', value: 'submit' }}
-        .right=${{ label: 'Submitted Requests', value: 'requests' }}
+        .left=${{ label: 'Submit a Request', value: 'create' }}
+        .right=${{ label: 'Submitted Requests', value: 'submitted' }}
+        @bldn-nav-toggle:click=${this.handleNavClick}
       ></bldn-nav-toggle>
       ${choose(this._uiState, [
         [
@@ -84,6 +94,10 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
       bldn-request-builder,
       bldn-submitted-requests {
         margin-top: 2.5em;
+      }
+
+      bldn-submitted-requests {
+        padding: 0 20%;
       }
     `,
   ];

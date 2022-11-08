@@ -31,7 +31,7 @@ export class BldnRevokeConsentForm extends ActionForm {
   constructor() {
     super();
 
-    if (ComputationAPI.getInstance().hasApiToken()) {
+    if (ComputationAPI.getInstance().apiTokenSet()) {
       ComputationAPI.getInstance()
         .getUserConsents()
         .then(consents => {
