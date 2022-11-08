@@ -21,6 +21,29 @@ import './action-forms/bldn-transparency-form.js';
 import './action-forms/bldn-other-form.js';
 import { ACTION_DESCRIPTIONS, ACTION_TITLES } from './utils/dictionary.js';
 
+/**
+ * Decode a base64url string
+ * @param input String to decode
+ * @returns Decoded string
+ */
+function decode(input: string) {
+  let output = input.replace(/-/g, '+').replace(/_/g, '/');
+
+  switch (output.length % 4) {
+    case 0:
+      break;
+    case 2:
+      output += '==';
+      break;
+    case 3:
+      output += '=';
+      break;
+    default:
+      throw Error('Illegal base64url string!');
+  }
+  return atob(output);
+}
+
 enum DefaultDataCategories {
   'ALL' = '*',
   'AFFILIATION' = 'AFFILIATION',
@@ -63,8 +86,6 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
   @state() _demandGroupIndex: undefined | number;
 
   @state() _demandGroups: PrivacyRequestDemand[][] = [];
-
-  @state() _target: undefined | CreatePrivacyRequestPayload.target;
 
   @state() _allowedActions: PrivacyRequestDemand.action[] = [];
 
@@ -260,13 +281,50 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
   private submitRequest(e: Event) {
     e.stopPropagation();
 
+    const { target } = (e as CustomEvent).detail;
+
     // Build privacy request object
     const request: CreatePrivacyRequestPayload = {
       demands: this._demandGroups.flat(),
-      target: this._target,
+      ...(target !== undefined && { target }),
     };
 
-    ComputationAPI.getInstance().sendPrivacyRequest(request);
+    // Add data subject if we have a token
+    if (ComputationAPI.getInstance().apiTokenSet()) {
+      const decodedToken = JSON.parse(decode(this.apiToken.split('.')[1]));
+      request.data_subject = [
+        {
+          id: decodedToken.uid,
+          schema: 'dsid',
+        },
+      ];
+    }
+
+    // Emit privacy request
+    this.dispatchEvent(
+      new CustomEvent('bldn-request-builder:request-created', {
+        bubbles: true,
+        composed: true,
+        detail: {
+          request,
+        },
+      })
+    );
+
+    // Send request and emit event with ID
+    ComputationAPI.getInstance()
+      .sendPrivacyRequest(request)
+      .then(response => {
+        this.dispatchEvent(
+          new CustomEvent('bldn-request-builder:request-sent', {
+            bubbles: true,
+            composed: true,
+            detail: {
+              requestId: response.request_id,
+            },
+          })
+        );
+      });
   }
 
   private goToMenu(e: Event) {

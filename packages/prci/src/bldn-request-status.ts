@@ -35,6 +35,9 @@ const downloadSvg = new URL(
   import.meta.url
 ).href;
 
+const cancelSvg = new URL('./assets/icons/ic_round-cancel.svg', import.meta.url)
+  .href;
+
 /**
  * Get a user friendly string for a retention policy
  * @param dataCategory Data category the policy pertains to
@@ -189,10 +192,12 @@ export class BldnRequestStatus extends CoreConfigurationMixin(LitElement) {
             <p>
               ${msg('This demand is still under review.')}
               <bldn-button
-                mode="link"
+                mode="link-icon"
+                underline-mode='none'
                 @bldn-button:click=${() => this.handleCancelClick(demand)}
               >
                 <span class="cancel-demand">${msg('Cancel Demand')}</span>
+                <img src=${cancelSvg} alt='cancel demand'></img>
               </bldn-button>
             </p>
           `,
@@ -459,7 +464,7 @@ export class BldnRequestStatus extends CoreConfigurationMixin(LitElement) {
       );
     }
 
-    bldn-dropdown bldn-dropdown span ~ * {
+    bldn-dropdown bldn-dropdown span ~ p {
       padding-left: 1.25em;
     }
 

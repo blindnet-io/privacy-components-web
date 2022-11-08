@@ -48,6 +48,8 @@ export class BldnRequestReview extends LitElement {
 
   @state() _consents: GivenConsentsPayload[] = [];
 
+  @state() _target: undefined | CreatePrivacyRequestPayload.target;
+
   handleEditDemandGroupClick(demandGroupIndex: number) {
     this.dispatchEvent(
       new CustomEvent('bldn-request-review:edit-demands', {
@@ -83,11 +85,20 @@ export class BldnRequestReview extends LitElement {
 
   handleSubmitClick() {
     this.dispatchEvent(
-      new Event('bldn-request-review:submit-request', {
+      new CustomEvent('bldn-request-review:submit-request', {
         bubbles: true,
         composed: true,
+        detail: {
+          target: this._target,
+        },
       })
     );
+  }
+
+  handleTargetChange(e: Event) {
+    e.stopPropagation();
+    const { value } = (e as CustomEvent).detail;
+    this._target = value;
   }
 
   getListTemplate(items: TemplateResult<1 | 2>[]) {
@@ -379,6 +390,7 @@ export class BldnRequestReview extends LitElement {
                 checked: target === CreatePrivacyRequestPayload.target.PARTNERS,
               })
             )}
+            @bldn-radio-list:choice-change=${this.handleTargetChange}
           ></bldn-radio-list>
         </bldn-dropdown>
       </bldn-nav-wrapper>

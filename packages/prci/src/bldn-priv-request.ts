@@ -38,6 +38,13 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
 
   handleRequestIdChange() {}
 
+  goToStatus(e: Event) {
+    const { requestId } = (e as CustomEvent).detail;
+    console.log(requestId);
+    this._uiState = PRCIUIState.submittedRequests;
+    this.requestId = requestId;
+  }
+
   handleNavClick(e: Event) {
     const { value } = (e as CustomEvent).detail;
     if (value === 'create') {
@@ -71,12 +78,17 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
             html`
               <bldn-request-builder
                 api-token=${ifDefined(this.apiToken)}
+                @bldn-request-builder:request-sent=${this.goToStatus}
               ></bldn-request-builder>
             `,
         ],
         [
           PRCIUIState.submittedRequests,
-          () => html` <bldn-submitted-requests></bldn-submitted-requests> `,
+          () => html`
+            <bldn-submitted-requests
+              request-id=${ifDefined(this.requestId)}
+            ></bldn-submitted-requests>
+          `,
         ],
       ])}
     `;

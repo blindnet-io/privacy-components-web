@@ -1,7 +1,7 @@
 import { ComputationAPI, CoreConfigurationMixin, PrItem } from '@blindnet/core';
 import { msg } from '@lit/localize';
 import { css, html, LitElement, PropertyValueMap } from 'lit';
-import { customElement, state } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 
 import './bldn-submitted-requests-list.js';
@@ -38,6 +38,10 @@ const filterOptions = [
 
 @customElement('bldn-submitted-requests')
 export class BldnSubmittedRequests extends CoreConfigurationMixin(LitElement) {
+  @property({ type: String, attribute: 'request-id' }) requestId:
+    | string
+    | undefined;
+
   @state() _requests: PrItem[] = [];
 
   @state() _requestFilter: 'all' | 'pending' | 'answered' | 'canceled' = 'all';
@@ -91,10 +95,17 @@ export class BldnSubmittedRequests extends CoreConfigurationMixin(LitElement) {
     }
   }
 
+  goToStatus() {
+    this._selectedRequest = this.requestId;
+    this._uiState = RequestsUIState.requestStatus;
+  }
+
   protected willUpdate(
     _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
   ): void {
     if (_changedProperties.has('apiToken') && this.apiToken) this.getRequests();
+    if (_changedProperties.has('requestId') && this.requestId)
+      this.goToStatus();
   }
 
   connectedCallback(): void {
