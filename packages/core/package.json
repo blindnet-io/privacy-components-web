@@ -26,6 +26,9 @@
       "default": "./dist/index.js"
     }
   },
+  "scripts": {
+    "localize": "lit-localize extract && lit-localize build"
+  },
   "directories": {
     "lib": "dist",
     "test": "test"

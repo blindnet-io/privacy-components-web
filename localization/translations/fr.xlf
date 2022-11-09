@@ -1,132 +1,158 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-<file target-language="fr" source-language="en" original="lit-localize-inputs" datatype="plaintext">
+<file target-language="fr" source-language="en-US" original="lit-localize-inputs" datatype="plaintext">
 <body>
 <trans-unit id="sef16778fe7074a8d">
   <source>Grant</source>
+  <target>Approuver</target>
 </trans-unit>
 <trans-unit id="sd0680e7343dedb27">
   <source>Deny</source>
+  <target>Refuser</target>
 </trans-unit>
 <trans-unit id="sa58a43eaa517ec9e">
   <source>Response</source>
+  <target>Réponse</target>
 </trans-unit>
 <trans-unit id="s12f6b3b9aa6fe76c">
   <source>Recommended</source>
+  <target>Recommandée</target>
 </trans-unit>
 <trans-unit id="sb0e683c9fb3cc3b5">
   <source>Not Recommended</source>
+  <target>Non Recommandée</target>
 </trans-unit>
 <trans-unit id="s28360fa3d4d84322">
   <source>Optional Message</source>
+  <target>Message optionnel</target>
 </trans-unit>
 <trans-unit id="sb3d4f79d9d8b71e5">
   <source>Submit</source>
+  <target>Envoyer</target>
 </trans-unit>
 <trans-unit id="s2b7bb3f9a459d7dd">
   <source>History view coming soon!</source>
+  <target>Historique bientôt disponible !</target>
 </trans-unit>
 <trans-unit id="s61d28f3db3da4264">
   <source>Response Submmitted</source>
+  <target>Réponse envoyée</target>
 </trans-unit>
 <trans-unit id="sb41b2cfbbc52565b">
   <source>Created</source>
+  <target>Création</target>
 </trans-unit>
 <trans-unit id="sd25a75c08073005d">
   <source>Data Subject</source>
+  <target>Personne concernée</target>
 </trans-unit>
 <trans-unit id="sa442044b586ec8bf">
   <source>Action</source>
+  <target>Action</target>
 </trans-unit>
 <trans-unit id="sb852d100f91db23f">
   <source>No requests to display.</source>
+  <target>Aucune demande à afficher</target>
 </trans-unit>
-<trans-unit id="s9ff4e107523f7fab">
-  <source>Log in / Sign up</source>
+<trans-unit id="sd3b15d6d4ea696f7">
+  <source>My additional message:</source>
+  <target>Mon message additionnel :</target>
 </trans-unit>
-<trans-unit id="sbe8f4a548469f66b">
-  <source>ACCESS</source>
-  <target>ACCÉDER</target>
+<trans-unit id="sebbb864b5cee4a82">
+  <source>Please note that adding a personalized message might lead to the demand taking longer to be processed</source>
+  <target> Veuillez noter que l'ajout d'un message personnalisé peut entraîner un délai de traitement plus long de la demande</target>
 </trans-unit>
-<trans-unit id="s5cd15819e278608a">
-  <source>DELETE</source>
-  <target>SUPPRIMER</target>
+<trans-unit id="sbaace8219b5f4612">
+  <source>Select All</source>
 </trans-unit>
-<trans-unit id="s98d171b8d8066dc3">
-  <source>MODIFY</source>
-  <target>MODIFIER</target>
+<trans-unit id="h87332548e751bc1c">
+  <source><x id="0" equiv-text="&lt;b&gt;"/>OTHER-DATA:<x id="1" equiv-text="&lt;/b&gt;"/> Specify another type of data</source>
+  <target><x id="0" equiv-text="&lt;b&gt;"/>Autres données :<x id="1" equiv-text="&lt;/b&gt;"/> Spécifiez un autre type de données</target>
 </trans-unit>
-<trans-unit id="sa1b69a3b54f266ba">
-  <source>OBJECT</source>
-  <target>S'OPPOSER</target>
+<trans-unit id="s4618111b41da4ae5">
+  <source>Other data type:</source>
+  <target>Autre type de données :</target>
 </trans-unit>
-<trans-unit id="s16b5c38a17d66e04">
-  <source>PORTABILITY</source>
-  <target>PORTABILITÉ</target>
+<trans-unit id="s40717e0539504811">
+  <source>Specify a date range for the selected data categories:</source>
 </trans-unit>
-<trans-unit id="s91ec539b62e13385">
-  <source>RESTRICT</source>
-  <target>RESTREINDRE</target>
+<trans-unit id="sa6ab5184d6315895">
+  <source>From</source>
+  <target>Depuis</target>
 </trans-unit>
-<trans-unit id="sdebba7b8d1950c9c">
-  <source>REVOKE-CONSENT</source>
-  <target>REVOQUER-CONSENTEMENT</target>
+<trans-unit id="s08c83907b56ac0a4">
+  <source>to</source>
+  <target>à</target>
 </trans-unit>
-<trans-unit id="s1832cff59d8362b7">
-  <source>TRANSPARENCY</source>
-  <target>TRANSPARENCE</target>
+<trans-unit id="s3b91d548b3c1db64">
+  <source>Click to expand</source>
 </trans-unit>
-<trans-unit id="s645ed7852e6d19f2">
-  <source>TRANSPARENCY.DATA-CATEGORIES</source>
-  <target>TRANSPARENCE.CATEGORIES-DONNEES</target>
+<trans-unit id="s41d0e1ff19aa568b">
+  <source>Arrow to expand or collapse the dropdown</source>
 </trans-unit>
-<trans-unit id="s125f16e45e07efd8">
-  <source>TRANSPARENCY.DPO</source>
-  <target>TRANSPARENCE.DPO</target>
+<trans-unit id="s13c123f97668a70b">
+  <source>Access</source>
 </trans-unit>
-<trans-unit id="s367f4075d68006b2">
-  <source>TRANSPARENCY.KNOWN</source>
-  <target>TRANSPARENCE.SAVOIR</target>
+<trans-unit id="sdc673e73b5c13aea">
+  <source>Delete</source>
+  <target>Supprimer</target>
 </trans-unit>
-<trans-unit id="s1a9f765301e6d99b">
-  <source>TRANSPARENCY.LEGAL-BASES</source>
-  <target>TRANSPARENCE.BASES_LEGALES</target>
+<trans-unit id="sc420894701de5ea3">
+  <source>Modify</source>
 </trans-unit>
-<trans-unit id="sbfce6b0291310f7c">
-  <source>TRANSPARENCY.ORGANIZATION</source>
-  <target>TRANSPARENCE.ORGANISATION</target>
+<trans-unit id="s730182ad28374cda">
+  <source>Object</source>
 </trans-unit>
-<trans-unit id="sb364791d22c059dd">
-  <source>TRANSPARENCY.POLICY</source>
-  <target>TRANSPARENCE.POLITIQUE</target>
+<trans-unit id="s6b89c52fe7ea6744">
+  <source>Portability</source>
 </trans-unit>
-<trans-unit id="sbb141a0dbcec49a3">
-  <source>TRANSPARENCY.PROCESSING-CATEGORIES</source>
-  <target>TRANSPARENCE.CATEGORIES-TRAITEMENT</target>
+<trans-unit id="s298104654055b365">
+  <source>Restrict</source>
 </trans-unit>
-<trans-unit id="se51c61b6c140b7e8">
-  <source>TRANSPARENCY.PROVENANCE</source>
-  <target>TRANSPARENCE.PROVENANCE</target>
+<trans-unit id="s0e871352ba4b17d3">
+  <source>Revoke</source>
 </trans-unit>
-<trans-unit id="s81c9b82e6cd8a2af">
-  <source>TRANSPARENCY.PURPOSE</source>
-  <target>TRANSPARENCE.OBJECTIF</target>
+<trans-unit id="s08e22a2dc90d9557">
+  <source>Transparency</source>
 </trans-unit>
-<trans-unit id="sb5a8dace22e84d13">
-  <source>TRANSPARENCY.RETENTION</source>
-  <target>TRANSPARENCE.CONSERVATION</target>
+<trans-unit id="sd618af95c6055b8c">
+  <source>Transparency - Data Categories</source>
 </trans-unit>
-<trans-unit id="s047a606c5815f8c2">
-  <source>TRANSPARENCY.WHERE</source>
-  <target>TRANSPARENCE.OÙ</target>
+<trans-unit id="s47279c5508899779">
+  <source>Transparency - DPO</source>
 </trans-unit>
-<trans-unit id="s6bfc4be3ff468c11">
-  <source>TRANSPARENCY.WHO</source>
-  <target>TRANSPARENCE.QUI</target>
+<trans-unit id="s09d23403a2394adf">
+  <source>Transparency - Known</source>
 </trans-unit>
-<trans-unit id="s8eb800543defec1b">
-  <source>OTHER-DEMAND</source>
-  <target>AUTRE-DEMANDE</target>
+<trans-unit id="sfc317a214ea59dcf">
+  <source>Transparency - Legal Bases</source>
+</trans-unit>
+<trans-unit id="sd7c908a61557d927">
+  <source>Transparency - Organization</source>
+</trans-unit>
+<trans-unit id="sc35bea743e6a3aa2">
+  <source>Transparency - Policy</source>
+</trans-unit>
+<trans-unit id="s76752fb00b3ab121">
+  <source>Transparency - Processing Categories</source>
+</trans-unit>
+<trans-unit id="s7faa0f0ebcb806db">
+  <source>Transparency - Provenance</source>
+</trans-unit>
+<trans-unit id="s1c62dea8a9fcc2ae">
+  <source>Transparency - Purpose</source>
+</trans-unit>
+<trans-unit id="s208ea5ca39142a3a">
+  <source>Transparency - Retention</source>
+</trans-unit>
+<trans-unit id="se7db4c6959b7d393">
+  <source>Transparency - Where</source>
+</trans-unit>
+<trans-unit id="sd7146754c9355360">
+  <source>Transparency - Who</source>
+</trans-unit>
+<trans-unit id="sefcd28524d5a7a14">
+  <source>Other Demand</source>
 </trans-unit>
 <trans-unit id="sa8fb9f24637f10f5">
   <source>Access my data</source>
@@ -158,11 +184,10 @@
 </trans-unit>
 <trans-unit id="s0a2434ac9ab6d86f">
   <source>Demand information related to data processing practices and know if the system has data on me</source>
-  <target>Demander des information sur les pratiques de traitement de données et savoir si le système a des données sur moi</target>
+  <target>Demander des informations sur les pratiques de traitement de données et savoir si le système a des données sur moi</target>
 </trans-unit>
-<trans-unit id="s9e9e29c172f0dd45">
-  <source>Do or know something else</source>
-  <target>Demander autre chose</target>
+<trans-unit id="s792decfb4eff6aa6">
+  <source>Do or know something else. Please note it may take longer to be answered</source>
 </trans-unit>
 <trans-unit id="s1ac72a304e9962fd">
   <source>The categories of the data the organization has on me</source>
@@ -198,6 +223,7 @@
 </trans-unit>
 <trans-unit id="s943ff37beeb8970c">
   <source>The purpose of the processing of the data the organization has on me</source>
+  <target>Le but du traitement des données que l'organisation a sur moi</target>
 </trans-unit>
 <trans-unit id="sd1c189abaf754629">
   <source>For how long the data concerning me kept</source>
@@ -211,465 +237,681 @@
   <source>Who can access the data that the organization has on me</source>
   <target>Qui peut accéder aux données que l'organisation a sur moi</target>
 </trans-unit>
+<trans-unit id="h47caddfa59939013">
+  <source><x id="0" equiv-text="&lt;b&gt;"/>All<x id="1" equiv-text="&lt;/b&gt;"/> information related to data processing practices and my
+        data</source>
+</trans-unit>
 <trans-unit id="s3fc1f890d4f5a074">
   <source>All provenances</source>
+  <target>Toutes provenances</target>
 </trans-unit>
 <trans-unit id="s45aea633edb60ede">
   <source>The data provided by a user of the system (potentially the Data Subject)</source>
+  <target>Les données fournies par un utilisateur du système (potentiellement la personne concernée)</target>
 </trans-unit>
-<trans-unit id="s4b55ea3273df7775">
-  <source>The data is provided by the Data Subject</source>
+<trans-unit id="s43184a4b085df935">
+  <source>The data provided by the Data Subject</source>
+  <target>Les données fournies par la personne concernée</target>
 </trans-unit>
 <trans-unit id="sbb56c7b43dca3565">
   <source>The data derived from user actions, extracted from other data or inferred</source>
+  <target>Les données dérivées des actions de l'utilisateur, extraites d'autres données ou déduites</target>
 </trans-unit>
 <trans-unit id="scd73a2ff5bb51768">
   <source>The data obtained by transfer from another System</source>
+  <target>Les données obtenues par un transfert depuis un autre système</target>
 </trans-unit>
 <trans-unit id="s9f0a5e615ad80bfc">
   <source>Provided by a user of the system</source>
+  <target>Fournies par un utilisateur du système</target>
 </trans-unit>
 <trans-unit id="s6976edd03bbc39db">
   <source>Provided by you while using the system</source>
+  <target>Fournies par vous lors de l'utilisation du système</target>
 </trans-unit>
 <trans-unit id="safdf52d3db58ccbb">
   <source>Derived from user actions, extracted from other data or inferred by the system</source>
+  <target>Dérivées des actions de l'utilisateur, extraites d'autres données ou déduites</target>
 </trans-unit>
 <trans-unit id="s31a4a5e072be4a9d">
   <source>Obtained by transfer from another system</source>
+  <target>Obtenues par un transfert depuis un autre système</target>
 </trans-unit>
 <trans-unit id="scbf29ce484222325">
   <source></source>
+  <target/>
 </trans-unit>
-<trans-unit id="s7330c16cfd44f739">
-  <source>affiliation</source>
+<trans-unit id="s63ce35e313760199">
+  <source>Affiliation</source>
 </trans-unit>
-<trans-unit id="s8b0e3c94f063dd33">
-  <source>affiliation membership</source>
+<trans-unit id="s2142728a8840d713">
+  <source>Affiliation membership</source>
 </trans-unit>
-<trans-unit id="sf2797ede5d5d50a7">
-  <source>behavior</source>
+<trans-unit id="sf4c59c00ddcda487">
+  <source>Behavior</source>
 </trans-unit>
-<trans-unit id="sb9878568f08b4825">
-  <source>biometric</source>
+<trans-unit id="s0bc8fc90c7fe8285">
+  <source>Biometric</source>
 </trans-unit>
-<trans-unit id="s623617b538360a63">
-  <source>contact</source>
+<trans-unit id="s87bae2710b2492c3">
+  <source>Contact</source>
 </trans-unit>
-<trans-unit id="s900fbf13bb44cea2">
-  <source>demographic</source>
+<trans-unit id="sfa4fa48e6eecb702">
+  <source>Demographic</source>
 </trans-unit>
-<trans-unit id="s22a12f906cd27b73">
-  <source>device</source>
+<trans-unit id="s0b0a02a4470de153">
+  <source>Device</source>
 </trans-unit>
-<trans-unit id="sa780f3e65613131c">
-  <source>financial</source>
+<trans-unit id="s6766adc97fecdb7c">
+  <source>Financial</source>
 </trans-unit>
-<trans-unit id="s77d4f221bdd3ea9d">
-  <source>finacial bank account</source>
+<trans-unit id="s8f4b90725c742dfd">
+  <source>Finacial bank account</source>
 </trans-unit>
-<trans-unit id="sb038d696ab4bb834">
-  <source>genetic</source>
+<trans-unit id="sd256a1527b556494">
+  <source>Genetic</source>
 </trans-unit>
-<trans-unit id="s7f69d4b5288ba9cf">
-  <source>health</source>
+<trans-unit id="sbaf0a7c417e388af">
+  <source>Health</source>
 </trans-unit>
-<trans-unit id="s2ab612888528489a">
-  <source>image</source>
+<trans-unit id="s3d93f9ea0c5a13fa">
+  <source>Image</source>
 </trans-unit>
-<trans-unit id="s8f90406e9a94abe6">
-  <source>location</source>
+<trans-unit id="see2fcaedf9743ec6">
+  <source>Location</source>
 </trans-unit>
-<trans-unit id="sc4bcadba8e631b86">
-  <source>name</source>
+<trans-unit id="sef49aec68fd1dc66">
+  <source>Name</source>
 </trans-unit>
-<trans-unit id="s2eb763f39d687cf9">
-  <source>profiling</source>
+<trans-unit id="s2a880deefa02ab59">
+  <source>Profiling</source>
 </trans-unit>
-<trans-unit id="sd31ca0da62cb46d8">
-  <source>relationships</source>
+<trans-unit id="sd7076a5eb4212b38">
+  <source>Relationships</source>
 </trans-unit>
-<trans-unit id="s4c9cb5193e0b272d">
-  <source>uid</source>
+<trans-unit id="s6238f519db67980d">
+  <source>UID</source>
 </trans-unit>
-<trans-unit id="sb166559fc20c0757">
-  <source>other data</source>
+<trans-unit id="sc9e494c8346b7cb5">
+  <source>Other</source>
 </trans-unit>
-<trans-unit id="h0cadb914e3c26ee0">
-  <source><x id="0" equiv-text="&lt;b&gt;"/>ALL information related to data processing practices and know if the
-        organization has data on me<x id="1" equiv-text="&lt;/b&gt;"/></source>
+<trans-unit id="s7c398dddd3171afc">
+  <source>Other - Proof</source>
 </trans-unit>
-<trans-unit id="h3db45950c0fcfcdd">
-  <source><x id="0" equiv-text="&lt;b&gt;"/>AFFILIATION data:<x id="1" equiv-text="&lt;/b&gt;"/> Groups and Organisations I am linked to
-        through work, studies, or membership</source>
+<trans-unit id="h2aec9ed333a3965d">
+  <source><x id="0" equiv-text="&lt;b&gt;"/>All<x id="1" equiv-text="&lt;/b&gt;"/> categories of data the organization has on me</source>
+</trans-unit>
+<trans-unit id="ha029657b4c716b1c">
+  <source>Groups and Organisations I am linked to through work, studies, or
+      membership</source>
 </trans-unit>
 <trans-unit id="hcbf29ce484222325">
   <source/>
+  <target/>
 </trans-unit>
-<trans-unit id="hd8ece2538b9bde13">
-  <source><x id="0" equiv-text="&lt;b&gt;"/>BEHAVIOR data:<x id="1" equiv-text="&lt;/b&gt;"/> Data about my behavior</source>
+<trans-unit id="h5974ce8e8b048cf4">
+  <source>Data about my behavior</source>
 </trans-unit>
-<trans-unit id="hce5e21a7ce8a7788">
-  <source><x id="0" equiv-text="&lt;b&gt;"/>BIOMETRIC data<x id="1" equiv-text="&lt;/b&gt;"/></source>
+<trans-unit id="hd5c761f88f15ee20">
+  <source>Data about my unique physical characteristics</source>
 </trans-unit>
-<trans-unit id="h816d86628ced7a90">
-  <source><x id="0" equiv-text="&lt;b&gt;"/>CONTACT data:<x id="1" equiv-text="&lt;/b&gt;"/> Data allowing to contact me </source>
+<trans-unit id="h9210239263c5ae81">
+  <source>Data allowing to contact me</source>
 </trans-unit>
-<trans-unit id="h2b9b28a860cd60d5">
-  <source><x id="0" equiv-text="&lt;b&gt;"/>DEMOGRAPHIC data:<x id="1" equiv-text="&lt;/b&gt;"/> All information allowing to class me in a
-        demographic category</source>
+<trans-unit id="h1c2eb9adfca54c27">
+  <source>All information allowing to class me in a demographic category</source>
 </trans-unit>
-<trans-unit id="h0e8aa61f75654a56">
-  <source><x id="0" equiv-text="&lt;b&gt;"/>DEVICE data:<x id="1" equiv-text="&lt;/b&gt;"/> Data about the device I used</source>
+<trans-unit id="hff91edfe0b603c35">
+  <source>Data about the device I used</source>
 </trans-unit>
-<trans-unit id="h2d546edbdf280295">
-  <source><x id="0" equiv-text="&lt;b&gt;"/>FINANCIAL data:<x id="1" equiv-text="&lt;/b&gt;"/> Payment data, financial history and data about
-        my financial situation</source>
+<trans-unit id="ha12117b3405289d5">
+  <source>Payment data, financial history and data about my financial situation</source>
 </trans-unit>
-<trans-unit id="h31d2a8f1cf9ab3b3">
-  <source><x id="0" equiv-text="&lt;b&gt;"/>GENETIC data<x id="1" equiv-text="&lt;/b&gt;"/></source>
+<trans-unit id="h2e0471ec4dcdc556">
+  <source>Data related to my genetic characteristics</source>
 </trans-unit>
-<trans-unit id="hf434e89392d3501b">
-  <source><x id="0" equiv-text="&lt;b&gt;"/>HEALTH data:<x id="1" equiv-text="&lt;/b&gt;"/> Data about my health</source>
+<trans-unit id="ha6a83bab31190c68">
+  <source>Data about my health</source>
 </trans-unit>
-<trans-unit id="h2b2d25788fa8a3cc">
-  <source><x id="0" equiv-text="&lt;b&gt;"/>IMAGE data:<x id="1" equiv-text="&lt;/b&gt;"/> Any graphic representation (e.g., image, video) of
-        me</source>
+<trans-unit id="h19239c6c3bcb708a">
+  <source>Any graphic representation (e.g., image, video) of me</source>
 </trans-unit>
-<trans-unit id="hf0dfecf234b58c31">
-  <source><x id="0" equiv-text="&lt;b&gt;"/>LOCATION data:<x id="1" equiv-text="&lt;/b&gt;"/> Geographic location</source>
+<trans-unit id="h581c73258e16b269">
+  <source>Geographic location</source>
 </trans-unit>
-<trans-unit id="h72d2b3d94d843a89">
-  <source><x id="0" equiv-text="&lt;b&gt;"/>NAME data:<x id="1" equiv-text="&lt;/b&gt;"/> First names, last names, nicknames, and other names</source>
+<trans-unit id="h44e758245f098aed">
+  <source>First names, last names, nicknames, and other names</source>
 </trans-unit>
-<trans-unit id="hb635eb955223b3fa">
-  <source><x id="0" equiv-text="&lt;b&gt;"/>PROFILING data:<x id="1" equiv-text="&lt;/b&gt;"/> Any data establishing a degree of similarity
-        of with others (e.g., clusters, user-profiles)</source>
+<trans-unit id="hd50ab52715fef8a9">
+  <source>Any data establishing a degree of similarity of with others (e.g.,
+      clusters, user-profiles)</source>
 </trans-unit>
-<trans-unit id="h0bbeaf491183d39a">
-  <source><x id="0" equiv-text="&lt;b&gt;"/>RELATIONSHIPS data:<x id="1" equiv-text="&lt;/b&gt;"/> Data about relationships I have with
-        others, social activity and interaction</source>
+<trans-unit id="h708a9ebbef41c270">
+  <source>Data about relationships I have with others, social activity and
+      interaction</source>
 </trans-unit>
-<trans-unit id="hc3becbe49599063b">
-  <source><x id="0" equiv-text="&lt;b&gt;"/>UID data:<x id="1" equiv-text="&lt;/b&gt;"/> Any data that uniquely identifies me</source>
+<trans-unit id="h7a93d23c2fe2e792">
+  <source>Any data that uniquely identifies me</source>
 </trans-unit>
-<trans-unit id="hce00a8ccfeb74875">
-  <source><x id="0" equiv-text="&lt;b&gt;"/>OTHER DATA:<x id="1" equiv-text="&lt;/b&gt;"/> Any other categories or forms of data</source>
+<trans-unit id="hd24d40d3ad44c862">
+  <source>Any other categories or forms of data</source>
 </trans-unit>
 <trans-unit id="ha8ea706cb7b3c5f2">
   <source>All targets</source>
+  <target>Toutes les cibles</target>
 </trans-unit>
 <trans-unit id="hb2029b140d2b8e3a">
   <source>This system</source>
+  <target>Ce système</target>
 </trans-unit>
 <trans-unit id="h13d5761d00e9feca">
   <source>This system and all systems within this organization</source>
+  <target>Ce système et tous les systèmes au sein de cette organisation</target>
 </trans-unit>
 <trans-unit id="h9552e7ccf7b9afc6">
   <source>This system, all systems within this organization, and all partners
         systems where data has been <x id="0" equiv-text="&lt;b&gt;"/>shared or obtained<x id="1" equiv-text="&lt;/b&gt;"/></source>
+  <target>Ce système, tous les systèmes au sein de cette organisation et tous les partenaires avec lesquels des données ont été <x id="0" equiv-text="&lt;b&gt;"/>partagées ou obtenues<x id="1" equiv-text="&lt;/b&gt;"/></target>
 </trans-unit>
 <trans-unit id="hcd600f5012ef03c7">
   <source>This system, all systems within this organization, and all partners
         systems with which data has been <x id="0" equiv-text="&lt;b&gt;"/>shared<x id="1" equiv-text="&lt;/b&gt;"/></source>
+  <target>Ce système, tous les systèmes au sein de cette organisation et tous les systèmes partenaires avec lesquels des données ont été <x id="0" equiv-text="&lt;b&gt;"/>partagées<x id="1" equiv-text="&lt;/b&gt;"/></target>
 </trans-unit>
 <trans-unit id="he7ee03a3b8cd0b3a">
   <source>This system, all systems within this organization, and all partners
         systems from which data has been <x id="0" equiv-text="&lt;b&gt;"/>obtained<x id="1" equiv-text="&lt;/b&gt;"/></source>
+  <target>Ce système, tous les systèmes au sein de cette organisation et tous les systèmes partenaires avec lesquels des données ont été <x id="0" equiv-text="&lt;b&gt;"/>obtenues<x id="1" equiv-text="&lt;/b&gt;"/></target>
 </trans-unit>
 <trans-unit id="hd63ace037da055b1">
   <source>In processing</source>
+  <target>En cours de traitement</target>
 </trans-unit>
 <trans-unit id="hff3b775b64d0793c">
   <source>Partially completed</source>
+  <target>Partiellement traitée</target>
 </trans-unit>
 <trans-unit id="h5033dab8c17f05f2">
   <source>Completed</source>
+  <target>Traitée</target>
 </trans-unit>
 <trans-unit id="ha30c4d3b566b6b1a">
   <source>Canceled</source>
+  <target>Annulée</target>
 </trans-unit>
-<trans-unit id="sc3755f907034fcf4">
-  <source>granted</source>
+<trans-unit id="see4e21f60d66f454">
+  <source>Granted</source>
 </trans-unit>
-<trans-unit id="sae36324e0a5783d6">
-  <source>denied</source>
+<trans-unit id="s93390561e1afc0b6">
+  <source>Denied</source>
 </trans-unit>
-<trans-unit id="sfb005196e7ebf2da">
-  <source>partially granted</source>
+<trans-unit id="s538bd2706b2090da">
+  <source>Partially Granted</source>
 </trans-unit>
-<trans-unit id="se350209cc62601ef">
-  <source>under review</source>
+<trans-unit id="s36d273fcd01916af">
+  <source>Under Review</source>
 </trans-unit>
-<trans-unit id="see8b386a20d5d43a">
-  <source>canceled</source>
+<trans-unit id="sa30c4d3b566b6b1a">
+  <source>Canceled</source>
 </trans-unit>
 <trans-unit id="s80ad94771c626ec2">
   <source>no longer than</source>
+  <target>pas plus longtemps que</target>
 </trans-unit>
 <trans-unit id="s49940a6f4a947f4a">
   <source>no less than</source>
+  <target>pas moins de</target>
 </trans-unit>
 <trans-unit id="s9f2760d67ffa4687">
   <source>capture date</source>
+  <target>date de capture</target>
 </trans-unit>
 <trans-unit id="s9807f589aabcdf73">
   <source>relationship start</source>
+  <target>début de la relation</target>
 </trans-unit>
 <trans-unit id="se4c36df50ac776c6">
   <source>relationship end</source>
+  <target>fin de la relation</target>
 </trans-unit>
 <trans-unit id="s98d8f26ab7b65ae0">
   <source>service start</source>
+  <target>début du service</target>
 </trans-unit>
 <trans-unit id="s86c0a813feb2e101">
   <source>service end</source>
+  <target>fin du service</target>
 </trans-unit>
-<trans-unit id="s8d435088e897e78c">
-  <source>Click here if you want to make some other demand (please note that it might take longer to be answered)</source>
+<trans-unit id="sf993bb199fefbe04">
+  <source>All</source>
 </trans-unit>
-<trans-unit id="s96ef130b2ddc41fc">
-  <source>Access my submitted Privacy Requests</source>
+<trans-unit id="s12ee89ea2db800f3">
+  <source>Anonymization</source>
 </trans-unit>
-<trans-unit id="sd0b6082239185272">
-  <source>Select all</source>
+<trans-unit id="s4b221d259e80e7b6">
+  <source>Automated Inference</source>
 </trans-unit>
-<trans-unit id="h87332548e751bc1c">
-  <source><x id="0" equiv-text="&lt;b&gt;"/>OTHER-DATA:<x id="1" equiv-text="&lt;/b&gt;"/> Specify another type of data</source>
+<trans-unit id="sf91b17a548f3d04e">
+  <source>Automated Decision Making</source>
 </trans-unit>
-<trans-unit id="s4618111b41da4ae5">
-  <source>Other data type:</source>
+<trans-unit id="sa7eea45fe1e4d231">
+  <source>Collection</source>
+</trans-unit>
+<trans-unit id="s64bc2fa2e7402075">
+  <source>Generating</source>
+</trans-unit>
+<trans-unit id="sf0da5c24d6d9dd80">
+  <source>Publishing</source>
+</trans-unit>
+<trans-unit id="saf60db23f48e15d9">
+  <source>Storing</source>
+</trans-unit>
+<trans-unit id="s827bbc2fb2917a33">
+  <source>Sharing</source>
+</trans-unit>
+<trans-unit id="sf001a3d2b15b8787">
+  <source>Using</source>
+</trans-unit>
+<trans-unit id="sfb7446376756e8bc">
+  <source>Other Processing</source>
+</trans-unit>
+<trans-unit id="hba521eb4ef623c9e">
+  <source><x id="0" equiv-text="&lt;b&gt;"/>All<x id="1" equiv-text="&lt;/b&gt;"/> processing categories</source>
+</trans-unit>
+<trans-unit id="s393166d4f3231e3c">
+  <source>Processing of personal data in such a manner that the personal data can no longer be attributed to a specific data subject without the use of additional information</source>
+</trans-unit>
+<trans-unit id="s48270e8126b2d43e">
+  <source>Automatically infering data about the person, including for profiling and clustering</source>
+</trans-unit>
+<trans-unit id="s8086d8767e40329d">
+  <source>Automated decision-making</source>
+</trans-unit>
+<trans-unit id="s8e533185069b8d9b">
+  <source>Collecting data about the person from the person or from another source, including another person or a System</source>
+</trans-unit>
+<trans-unit id="sb58ce3ee7c93d3b5">
+  <source>Producing novel data related to the person, such as making photo, voice or video recordings, or reconding user actions such as making a log.</source>
+</trans-unit>
+<trans-unit id="s83de2f2eabcad899">
+  <source>Matching the data about the same person across multiple data sources</source>
+</trans-unit>
+<trans-unit id="s65da2532e028b935">
+  <source>Making data publicly available</source>
+</trans-unit>
+<trans-unit id="s5ce3b26debb20854">
+  <source>Storing data for further use, including adaptations and formating of the data</source>
+</trans-unit>
+<trans-unit id="sf73152adfeeec472">
+  <source>Sharing data in controled manner with clearly identified parties</source>
+</trans-unit>
+<trans-unit id="s50a9a49620765e30">
+  <source>Consulting and using data</source>
+</trans-unit>
+<trans-unit id="sa093d3a69b0f7943">
+  <source>Other processing categories)</source>
+</trans-unit>
+<trans-unit id="s34474de8cf6c9fc9">
+  <source>Advertising</source>
+</trans-unit>
+<trans-unit id="se1c45b4c74b2840a">
+  <source>Compliance</source>
+</trans-unit>
+<trans-unit id="s0c69f72a518db453">
+  <source>Employment</source>
+</trans-unit>
+<trans-unit id="s05df7d9cfd917da2">
+  <source>Justice</source>
+</trans-unit>
+<trans-unit id="sd34681e25ec9a24f">
+  <source>Marketing</source>
+</trans-unit>
+<trans-unit id="sc63ac9a7839ff67c">
+  <source>Medical</source>
+</trans-unit>
+<trans-unit id="s56a561b67193c5f3">
+  <source>Personalization</source>
+</trans-unit>
+<trans-unit id="see4fad7db93f594b">
+  <source>Public Interests</source>
+</trans-unit>
+<trans-unit id="s38f7dd7efa14c98c">
+  <source>Research</source>
+</trans-unit>
+<trans-unit id="s340c4324c106697e">
+  <source>Sale</source>
+</trans-unit>
+<trans-unit id="s01a8d45397ec133b">
+  <source>Security</source>
+</trans-unit>
+<trans-unit id="sf55d634dcc743595">
+  <source>Services</source>
+</trans-unit>
+<trans-unit id="sd48ca659208e0c35">
+  <source>Services - Additional Services</source>
+</trans-unit>
+<trans-unit id="s44c3458a53fa9c48">
+  <source>Services - Basic Services</source>
+</trans-unit>
+<trans-unit id="s659e808a77702d35">
+  <source>Social Protection</source>
+</trans-unit>
+<trans-unit id="s55ec8ec1b154d89c">
+  <source>Tracking</source>
+</trans-unit>
+<trans-unit id="s6e7271676eaebf45">
+  <source>Vitial Interests</source>
+</trans-unit>
+<trans-unit id="sfa8da7259c07d643">
+  <source>Other Purpose</source>
+</trans-unit>
+<trans-unit id="h84d8977d66f8ae52">
+  <source><x id="0" equiv-text="&lt;b&gt;"/>All<x id="1" equiv-text="&lt;/b&gt;"/> purposes</source>
+</trans-unit>
+<trans-unit id="sd4f3b1edddb791ce">
+  <source>To show ads that are either targeted to the specific user or not targeted</source>
+</trans-unit>
+<trans-unit id="s5b1ab0dc1d835fa7">
+  <source>Processing is performed to comply with a legal obligation</source>
+</trans-unit>
+<trans-unit id="s87cacfb74533591e">
+  <source> For personnel training, recruitment, payroll, management, etc</source>
+</trans-unit>
+<trans-unit id="sd4520937a52ffc4d">
+  <source>Processing is necessary for the establishment, exercise or defence of legal claims or whenever courts are acting in their judicial capacity</source>
+</trans-unit>
+<trans-unit id="s4e9963fcaff6c652">
+  <source>To contact the user to offer products, services, or other promotions</source>
+</trans-unit>
+<trans-unit id="s4143d6263470dc7e">
+  <source>Processing is necessary for the purposes of preventive or occupational medicine, for the assessment of the working capacity of the employee, medical diagnosis, the provision of health or social care or treatment or the management of health or social care systems and services</source>
+</trans-unit>
+<trans-unit id="s77e1c36b35a92152">
+  <source>For providing user with a personalized experience</source>
+</trans-unit>
+<trans-unit id="s3572e59cf0dcad41">
+  <source>Processing is necessary for the performance of a task carried out in the public interest or in the exercise of official authority</source>
+</trans-unit>
+<trans-unit id="sbe01eafd8958380c">
+  <source>Scientific and Market Research</source>
+</trans-unit>
+<trans-unit id="s112704ba77c815e3">
+  <source>Selling data to third parties</source>
+</trans-unit>
+<trans-unit id="sccb6b30ae5a61c02">
+  <source>For product operation and security, enforcement of terms of service, fraud prevention, protecting users and property, etc. </source>
+</trans-unit>
+<trans-unit id="s3ba90bfb0c4793ba">
+  <source>Processing is necessary performed in the context of services provided to the Data Subject or contracts and transactions being concluded with them</source>
+</trans-unit>
+<trans-unit id="sa230593c8931148b">
+  <source>Providing the services that the person requires that are not part of the basic service</source>
+</trans-unit>
+<trans-unit id="s593285644730e804">
+  <source>Providing the basic service to the person</source>
+</trans-unit>
+<trans-unit id="s3bb21faafa4adfe4">
+  <source>Processing is necessary for the purposes of employment and social security and social protection</source>
+</trans-unit>
+<trans-unit id="s19d7082d69fb9605">
+  <source>Tracking information about user behavior and activity online</source>
+</trans-unit>
+<trans-unit id="s3acfd7f19f5d1d3b">
+  <source>Processing is necessary in order to protect the vital interests of the data subject or of another natural person</source>
+</trans-unit>
+<trans-unit id="s491b94499fd520a5">
+  <source>Other specific purpose</source>
+</trans-unit>
+<trans-unit id="s3176f9811c35d533">
+  <source>Data Categories</source>
+</trans-unit>
+<trans-unit id="s5ce18a9690b1b5ba">
+  <source>Processing Categories</source>
+</trans-unit>
+<trans-unit id="sacc3aa0c8f59f856">
+  <source>Purposes</source>
+</trans-unit>
+<trans-unit id="sa2a57f4ca828f912">
+  <source>From <x id="0" equiv-text="${new Date(start).toLocaleDateString()}"/> to <x id="1" equiv-text="${new Date(end).toLocaleDateString()}"/></source>
+</trans-unit>
+<trans-unit id="s055718e64eaa99fb">
+  <source>Since <x id="0" equiv-text="${new Date(start).toLocaleDateString()}"/></source>
+</trans-unit>
+<trans-unit id="s7154a359944ac56f">
+  <source>Up to <x id="0" equiv-text="${new Date(end).toLocaleDateString()}"/></source>
+</trans-unit>
+<trans-unit id="s4ffccdcb24fe516c">
+  <source>No valid dates!</source>
 </trans-unit>
 <trans-unit id="s3f2acea3f9106217">
   <source>I want to access:</source>
-</trans-unit>
-<trans-unit id="s07aa3d850d9e293e">
-  <source>For:</source>
-</trans-unit>
-<trans-unit id="s667433b7f5d9b15d">
-  <source>From:</source>
-</trans-unit>
-<trans-unit id="s68912750a58666b8">
-  <source>Plus additional info:</source>
-  <target>Information additionnelle :</target>
+  <target>Je souhaite accéder à :</target>
 </trans-unit>
 <trans-unit id="sf71bab33326da61c">
   <source>I want to delete:</source>
+  <target>Je souhaite sypprimer :</target>
 </trans-unit>
-<trans-unit id="sd0036433d2d930a7">
-  <source>I no longer consent to:</source>
+<trans-unit id="s49928d6fe2a8fd6e">
+  <source>I object to the processing of my data within the following scope:</source>
+</trans-unit>
+<trans-unit id="s1ebe491408762bb4">
+  <source>I restrict the processing of my data to the following scope:</source>
+</trans-unit>
+<trans-unit id="sce2c42fd7076a0ad">
+  <source>I revoke the following consents:</source>
+</trans-unit>
+<trans-unit id="heafc12d5a32356ad">
+  <source>Given on <x id="0" equiv-text="${new Date(c.date).toLocaleString()}"/></source>
+</trans-unit>
+<trans-unit id="sc0903d723b382f53">
+  <source>Details of my demand:</source>
 </trans-unit>
 <trans-unit id="sd22025af1f467374">
   <source>I want to know:</source>
   <target>Je voudrais savoir :</target>
 </trans-unit>
-<trans-unit id="sa6ab5184d6315895">
-  <source>From</source>
+<trans-unit id="sf33a710108e9f843">
+  <source>Other options:</source>
 </trans-unit>
-<trans-unit id="seb4164b5d01e79fd">
-  <source>Since</source>
+<trans-unit id="s7c9992bcec8e44cf">
+  <source>Date Restriction</source>
 </trans-unit>
-<trans-unit id="s87a04abb1439f829">
-  <source>Up to</source>
+<trans-unit id="s0aa4aeddbaeb0008">
+  <source>Provenance Restriction</source>
 </trans-unit>
-<trans-unit id="s60f3e570c05c5918">
-  <source>My demand(s):</source>
+<trans-unit id="se2b203c77031740e">
+  <source>Other Message</source>
 </trans-unit>
-<trans-unit id="sa237a4d6046a1fd2">
-  <source>You are about to remove a demand</source>
+<trans-unit id="s11bafd52956fc434">
+  <source>No demands to review!</source>
 </trans-unit>
-<trans-unit id="hf37ad7bfc3213516">
-  <source>Do you confirm <x id="0" equiv-text="&lt;b&gt;"/>deleting this demand<x id="1" equiv-text="&lt;/b&gt;"/>?</source>
-</trans-unit>
-<trans-unit id="sdc673e73b5c13aea">
-  <source>Delete</source>
-</trans-unit>
-<trans-unit id="s2ceb11be2290bb1b">
-  <source>Cancel</source>
-</trans-unit>
-<trans-unit id="sa3ccecbf5789d25a">
-  <source>I want to add another demand</source>
-</trans-unit>
-<trans-unit id="se50be8ad91c57511">
-  <source>Privacy Request Advanced settings</source>
-</trans-unit>
-<trans-unit id="s7629854d26f1c5e6">
-  <source>I address my Privacy Request to:</source>
-</trans-unit>
-<trans-unit id="sca67c093da6d1c94">
-  <source>Submit Privacy Request</source>
-  <target>Envoyer ma Demande sur les données</target>
-</trans-unit>
-<trans-unit id="sad3e3c8146fc920f">
-  <source>Status</source>
-</trans-unit>
-<trans-unit id="s1e55a47eccb89757">
-  <source>Demands</source>
-</trans-unit>
-<trans-unit id="sfe876187f89fc9f6">
-  <source>See Details</source>
-</trans-unit>
-<trans-unit id="s9acd83781aa57f69">
-  <source>Submit a new Privacy Request</source>
-</trans-unit>
-<trans-unit id="h07a854b6f92dc95c">
-  <source>Click <x id="0" equiv-text="&lt;a href=&quot;${demand.data}.json&quot;&gt;"/>here<x id="1" equiv-text="&lt;/a&gt;"/> to download
-                    your data.</source>
-</trans-unit>
-<trans-unit id="s3137e812940ae6b7">
-  <source>Obtaining data, please wait and refresh the page later.</source>
-</trans-unit>
-<trans-unit id="h0b299251150ee94b">
-  <source>Provided by a user of the
-                          <x id="0" equiv-text="&lt;i&gt;${prov.system}&lt;/i&gt;"/> system</source>
-</trans-unit>
-<trans-unit id="he1fd7c01f92eb310">
-  <source>Provided by you as a user of the
-                          <x id="0" equiv-text="&lt;i&gt;${prov.system}&lt;/i&gt;"/> system</source>
-</trans-unit>
-<trans-unit id="hb5be28950f6ca957">
-  <source>Derived by user actions, extracted from other data,
-                          or inferred by the <x id="0" equiv-text="&lt;i&gt;${prov.system}&lt;/i&gt;"/> system</source>
-</trans-unit>
-<trans-unit id="hfed8a087807cfa44">
-  <source>Obtained by transfer from the
-                          <x id="0" equiv-text="&lt;i&gt;${prov.system}&lt;/i&gt;"/> system</source>
+<trans-unit id="seb19908ed8209df2">
+  <source>Request Summary</source>
 </trans-unit>
 <trans-unit id="s1caf5d7ab36059be">
   <source>Demand</source>
+  <target>Demande</target>
 </trans-unit>
-<trans-unit id="s355b21b89ce5d9c5">
-  <source>Details</source>
+<trans-unit id="saedc3af85cfe6dc7">
+  <source>Request Target</source>
 </trans-unit>
-<trans-unit id="se40a735383dec962">
-  <source>Cancel Demand</source>
+<trans-unit id="s7629854d26f1c5e6">
+  <source>I address my Privacy Request to:</source>
+  <target>J'adresse ma demande à</target>
 </trans-unit>
-<trans-unit id="h0fd6feceae15cd33">
-  <source>Do you confirm
-                        <x id="0" equiv-text="&lt;strong&gt;"/>canceling your demand?<x id="1" equiv-text="&lt;/strong&gt;"/></source>
+<trans-unit id="s1204f9b176a19dfd">
+  <source>Details of my <x id="0" equiv-text="${this.action}"/> Demand</source>
 </trans-unit>
-<trans-unit id="s00fc2da0e187830b">
-  <source>Keep Demand</source>
-</trans-unit>
-<trans-unit id="sb85774dc5d18ff0f">
-  <source>Confirm</source>
-</trans-unit>
-<trans-unit id="s51c031323a487267">
-  <source>Your demand has been </source>
-</trans-unit>
-<trans-unit id="s55d988154af40459">
-  <source>Your Privacy Request, sent on
-              <x id="0" equiv-text="${this._requestDate.toLocaleDateString('en-gb')}"/>, is currently
-              being processed.</source>
-</trans-unit>
-<trans-unit id="s284bf4b83b609401">
-  <source>At the moment:</source>
-</trans-unit>
-<trans-unit id="hb0e3dab72f8fe79f">
-  <source><x id="0" equiv-text="${this._completedDemands.length}"/> demand(s) have been
-                      completed<x id="1" equiv-text="${when(this._cancelledDemands.length &gt; 0, () =&gt; html ` and ${this._cancelledDemands.length} demand(s)&#10;                          have been cancelled`)}"/></source>
-</trans-unit>
-<trans-unit id="h5d02ff2f86760153">
-  <source><x id="0" equiv-text="${this._processingDemands.length}"/> demand(s) are being
-                    processed</source>
-</trans-unit>
-<trans-unit id="h4cc3ff60e08a40dc">
-  <source>Your Privacy Request, sent on
-              <x id="0" equiv-text="${this._requestDate.toLocaleDateString('en-gb')}"/>, has been
-              processed.</source>
-</trans-unit>
-<trans-unit id="s4ea9cef5335e0276">
-  <source>Copy link to this page</source>
-</trans-unit>
-<trans-unit id="sc1f8e79af6851ad7">
-  <source>Completed Demand(s)</source>
-</trans-unit>
-<trans-unit id="s9cea0dd1643459a3">
-  <source>Processing Demand(s)</source>
-</trans-unit>
-<trans-unit id="sdba3c1a749077731">
-  <source>Cancelled Demand(s)</source>
-</trans-unit>
-<trans-unit id="s67e9ae7b0ec235d3">
-  <source>Back to my Requests</source>
-</trans-unit>
-<trans-unit id="sc16e00a7a8b2fde2">
-  <source>Back</source>
-</trans-unit>
-<trans-unit id="s0fbf6dc6a1966408">
-  <source>Next</source>
-</trans-unit>
-<trans-unit id="sac5b43e0e39b86c1">
-  <source>Details of my TRANSPARENCY Demand</source>
-  <target>Détails de ma requête TRANSPARENCE</target>
-</trans-unit>
-<trans-unit id="sf21f87f3901c35ff">
-  <source>ALL information related to data processing practices and know if the organization has data on me</source>
-</trans-unit>
-<trans-unit id="scb6620fcd5bff04c">
-  <source>Advanced settings</source>
+<trans-unit id="s29ec563d56cf6c6b">
+  <source>Other Options</source>
 </trans-unit>
 <trans-unit id="s6303c9c96b50c164">
   <source>My demand applies to data from the following provenance:</source>
+  <target>Ma demande s'applique aux données provenant de :</target>
 </trans-unit>
-<trans-unit id="sf0a1faa35675593e">
-  <source>Additional message (optional)</source>
+<trans-unit id="sac8256732f2ee1e5">
+  <source>Data</source>
 </trans-unit>
-<trans-unit id="sd3b15d6d4ea696f7">
-  <source>My additional message:</source>
+<trans-unit id="s7174e3af10fba733">
+  <source>Additional Message</source>
 </trans-unit>
-<trans-unit id="sebbb864b5cee4a82">
-  <source>Please note that adding a personalized message might lead to the demand taking longer to be processed</source>
+<trans-unit id="s38ad01608e1ddf20">
+  <source>I select the following</source>
 </trans-unit>
-<trans-unit id="scdb8222eac40cfc5">
-  <source>Details of my ACCESS Demand</source>
+<trans-unit id="hfde9788418b19230">
+  <source><x id="0" equiv-text="&lt;b&gt;"/>privacy scope<x id="1" equiv-text="&lt;/b&gt;"/></source>
 </trans-unit>
-<trans-unit id="s2c612c54beb52db0">
-  <source>ALL categories of data the organization has data on me</source>
+<trans-unit id="s43ceedf5cc8524cc">
+  <source>I object to the processing of my data within the following</source>
 </trans-unit>
-<trans-unit id="sa0f4ebf6f318c732">
-  <source>Specify a date range for the selected category(ies) of data:</source>
+<trans-unit id="sd5cb4c0ac4fa8ca6">
+  <source>I restrict the processing of my data to the following</source>
 </trans-unit>
-<trans-unit id="s08c83907b56ac0a4">
-  <source>to</source>
+<trans-unit id="hf460bedf6edf9f04">
+  <source>
+          Data from
+          <x id="0" equiv-text="&lt;span class=&quot;scope-counter&quot;&gt;&lt;b&gt;${this._dataCategories.size === 1 &amp;&amp;&#10;    this._dataCategories.has('*')&#10;    ? 'all'&#10;    : this._dataCategories.size}&lt;/b&gt;&lt;/span&gt;"/>
+          categories, processed in
+          <x id="1" equiv-text="&lt;span class=&quot;scope-counter&quot;&gt;&lt;b&gt;${this._processingCategories.size === 1 &amp;&amp;&#10;    this._processingCategories.has(PrivacyScopeRestriction.pc._)&#10;    ? 'all'&#10;    : this._processingCategories.size}&lt;/b&gt;&lt;/span&gt;"/>
+          ways, for
+          <x id="2" equiv-text="&lt;span class=&quot;scope-counter&quot;&gt;&lt;b&gt;${this._purposes.size === 1 &amp;&amp;&#10;    this._purposes.has(PrivacyScopeRestriction.pp._)&#10;    ? 'all'&#10;    : this._purposes.size}&lt;/b&gt;&lt;/span&gt;"/>
+          purposes
+        </source>
 </trans-unit>
-<trans-unit id="s405438f2bd5cabdc">
-  <source>I address my demand to:</source>
+<trans-unit id="h67e8c8ac8d7bb0d9">
+  <source>A <x id="0" equiv-text="&lt;b&gt;&lt;i&gt;"/>Privacy Scope<x id="1" equiv-text="&lt;/i&gt;&lt;/b&gt;"/> describes one or more types of
+              data (<x id="2" equiv-text="&lt;i&gt;"/>data categories<x id="3" equiv-text="&lt;/i&gt;"/>), how it is processed (<x id="4" equiv-text="&lt;i&gt;"/>processing categories<x id="5" equiv-text="&lt;/i&gt;"/>), and why it is processed that way (<x id="6" equiv-text="&lt;i&gt;"/>purposes of processing<x id="7" equiv-text="&lt;/i&gt;"/>).</source>
 </trans-unit>
-<trans-unit id="s17c05ae880ceee4a">
-  <source>Details of my DELETE Demand</source>
+<trans-unit id="sb5a6f73a21ad7dc5">
+  <source>Expand a dropdown to customise your scope</source>
 </trans-unit>
-<trans-unit id="sb7559606d229cf6f">
-  <source>Details of my REVOKE CONSENT Demand</source>
+<trans-unit id="s6f90b5eab3bb96bb">
+  <source>The types of data in my privacy scope are:</source>
 </trans-unit>
-<trans-unit id="h0d851e43bf732d5e">
-  <source>Revoke <x id="0" equiv-text="&lt;strong&gt;"/>all<x id="1" equiv-text="&lt;/strong&gt;"/> consents</source>
+<trans-unit id="s8f3d616b2891dd0d">
+  <source>The ways data in my privacy scope is processed:</source>
 </trans-unit>
-<trans-unit id="h5094f034ca6df6e9">
-  <source>Revoke <x id="0" equiv-text="&lt;strong&gt;"/>some<x id="1" equiv-text="&lt;/strong&gt;"/> consents</source>
+<trans-unit id="s6068927c705090ea">
+  <source>Purposes of Processing</source>
 </trans-unit>
-<trans-unit id="h613ac289a7057015">
-  <source>Check the consents you wish to
-                        <x id="0" equiv-text="&lt;strong&gt;"/>revoke<x id="1" equiv-text="&lt;/strong&gt;"/>:</source>
+<trans-unit id="s7b81fc085a19b55a">
+  <source>The reasons for processing data in my privacy scope:</source>
 </trans-unit>
-<trans-unit id="sad8d983b7ff1bd3c">
-  <source>Error: Invalid Action</source>
+<trans-unit id="scf3d7fe3d333384b">
+  <source>I want to:</source>
 </trans-unit>
-<trans-unit id="s5600a2beff052fc5">
-  <source>My Submitted Privacy Request(s)</source>
+<trans-unit id="h3c711aa2f112dd02">
+  <source>Revoke <x id="0" equiv-text="&lt;b&gt;"/>all<x id="1" equiv-text="&lt;/b&gt;"/> consents</source>
 </trans-unit>
-<trans-unit id="s4ba25fd9630b5aec">
-  <source>My Privacy Request Status</source>
+<trans-unit id="ha9713792ec60139d">
+  <source>Revoke <x id="0" equiv-text="&lt;b&gt;"/>specific<x id="1" equiv-text="&lt;/b&gt;"/> consents (select those you wish to
+                <x id="2" equiv-text="&lt;b&gt;"/>revoke<x id="3" equiv-text="&lt;/b&gt;"/>)</source>
 </trans-unit>
-<trans-unit id="s990061f6621b0156">
-  <source>My Privacy Request</source>
-  <target>Ma Demande sur les données</target>
+<trans-unit id="sad3e3c8146fc920f">
+  <source>Status</source>
+  <target>Status</target>
 </trans-unit>
-<trans-unit id="s237c73da8350499a">
-  <source>Your Privacy Request has been sent!</source>
+<trans-unit id="s1e55a47eccb89757">
+  <source>Demands</source>
+  <target>Demandes</target>
 </trans-unit>
-<trans-unit id="sc1ef8ab7d582eee5">
-  <source>You may track the status of your request below.</source>
+<trans-unit id="s035f0451c192f516">
+  <source>Loading your requests...</source>
+</trans-unit>
+<trans-unit id="s585fef41538d4f6b">
+  <source>No requests to display</source>
+</trans-unit>
+<trans-unit id="heb19908ed8209df2">
+  <source>Request Summary</source>
+</trans-unit>
+<trans-unit id="s9a2a2fda9cfa1ddc">
+  <source>Copy Link</source>
+</trans-unit>
+<trans-unit id="s7b7163270e57e8b4">
+  <source>Refresh</source>
+</trans-unit>
+<trans-unit id="hf75700d04ad87450">
+  <source><x id="0" equiv-text="${ACTION_TITLES[demand.requested_action]()}"/> Demand</source>
+</trans-unit>
+<trans-unit id="h4606c8f9df5fda02">
+  <source><x id="0" equiv-text="${ACTION_TITLES[subDemand.requested_action]()}"/>
+                            Demand</source>
+</trans-unit>
+<trans-unit id="sfef5aebda25a65db">
+  <source>Error getting request details. Please refresh later.</source>
+</trans-unit>
+<trans-unit id="s34596f334f77ca12">
+  <source>Loading request details...</source>
+</trans-unit>
+<trans-unit id="s9758d00d61bc6bfb">
+  <source>Requested:</source>
+</trans-unit>
+<trans-unit id="s4b044729b490b909">
+  <source>This demand has been denied. Reason: </source>
+</trans-unit>
+<trans-unit id="sae19feef2bd60f9f">
+  <source>This demand has been partially granted.</source>
+</trans-unit>
+<trans-unit id="s6e70bde5ac66f7de">
+  <source>This demand is still under review.</source>
+</trans-unit>
+<trans-unit id="se40a735383dec962">
+  <source>Cancel Demand</source>
+  <target>Annuler la demande</target>
+</trans-unit>
+<trans-unit id="se9e76660770debd1">
+  <source>This demand has been cancelled.</source>
+</trans-unit>
+<trans-unit id="s232c5da90a3947da">
+  <source>Download your data.</source>
+</trans-unit>
+<trans-unit id="s3137e812940ae6b7">
+  <source>Obtaining data, please wait and refresh the page later.</source>
+  <target>Vos données sont en cours d'obtention, veuillez patienter et en pas rafraîchir la page</target>
+</trans-unit>
+<trans-unit id="s55b7584ba4fd4ba5">
+  <source>Your delete demand has been granted.</source>
+</trans-unit>
+<trans-unit id="sdf7c88ae65f54276">
+  <source>Your modify demand has been granted.</source>
+</trans-unit>
+<trans-unit id="sfdad6bb711adaff5">
+  <source>Your object demand has been granted</source>
+</trans-unit>
+<trans-unit id="s47665adef9b4c820">
+  <source>Your demand has been granted.</source>
+</trans-unit>
+<trans-unit id="s381b5599a35bcd11">
+  <source>Your portability demand has been granted.</source>
+</trans-unit>
+<trans-unit id="se05f0d609b64589c">
+  <source>Your restrict demand has been granted.</source>
+</trans-unit>
+<trans-unit id="sc12f511c98f7f0dc">
+  <source>Your revoke consent demand has been granted.</source>
+</trans-unit>
+<trans-unit id="sb7a10b9644ec1870">
+  <source>Your transparency demand has been granted and split into multiple demands below.</source>
+</trans-unit>
+<trans-unit id="h0432c8d86c610266">
+  <source>
+                  Type: <x id="0" equiv-text="${lb.lb_type}&lt;br&gt;"/>
+                  Name: <x id="1" equiv-text="${lb.name}&lt;br&gt;"/>
+                  Description: <x id="2" equiv-text="${lb.description}&lt;br&gt;&lt;br&gt;&#10;                "/></source>
+</trans-unit>
+<trans-unit id="hfdcde931c66b34c9">
+  <source><x id="0" equiv-text="&lt;b&gt;${dc[0]}"/> Data:<x id="1" equiv-text="&lt;/b&gt;"/> Source
+                            <x id="2" equiv-text="&lt;i&gt;${prov.provenance}&lt;/i&gt;"/> of the
+                            <x id="3" equiv-text="&lt;i&gt;${prov.system}&lt;/i&gt;"/> system.<x id="4" equiv-text="&lt;br&gt;"/></source>
+</trans-unit>
+<trans-unit id="s78636b92c1a3909c">
+  <source>Pending</source>
+</trans-unit>
+<trans-unit id="s684a712107b118fe">
+  <source>Answered</source>
+</trans-unit>
+<trans-unit id="s794f12abe8666b7f">
+  <source>Back to Requests</source>
 </trans-unit>
 </body>
 </file>

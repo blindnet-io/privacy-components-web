@@ -11,7 +11,7 @@ import {
   Recommendation,
 } from '../computation/generated-models/index.js';
 
-import { bldnStyles } from './blindnet-wc-styles.js';
+import { bldnStyles } from './bldn-styles.js';
 
 enum DropdownUIState {
   Respond,

@@ -40,8 +40,25 @@ export class AppPrivacy extends LitElement {
 
   static get styles() {
     return css`
+      :host {
+        display: block;
+        width: 40vw;
+        max-width: 950px;
+        padding: 50px 100px;
+        background: white;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.34),
+          0px 0.500862px 1.50259px rgba(0, 0, 0, 0.17);
+        border-radius: 20px;
+
+        /* --bldn-background: 128, 128, 128; */
+        /* --bldn-font-size-small: 2em; */
+        /* --bldn-font-size-medium: 2.5em; */
+        /* --bldn-font-size-large: 3em; */
+        /* --bldn-font-family: cursive; */
+      }
+
       bldn-priv-request {
-        margin-bottom: 30px;
+        margin-bottom: 65px;
       }
     `;
   }

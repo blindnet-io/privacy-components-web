@@ -12,8 +12,7 @@ export class DevkitSimpleTutorial extends LitElement {
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        color: #1a2b42;
-        max-width: 1250px;
+        color: #1f1f1f;
         margin: 0 auto;
         text-align: center;
         background-color: var(--devkit-simple-tutorial-background-color);
@@ -117,7 +116,7 @@ export class DevkitSimpleTutorial extends LitElement {
           >
         </bx-header-nav>
       </bx-header>
-      <bx-side-nav aria-label="Side navigation">
+      <bx-side-nav aria-label="Side navigation" collapseMode="fixed">
         <bx-side-nav-items>
           <bx-side-nav-link href="./">Home</bx-side-nav-link>
           <bx-side-nav-link href="./participate"
