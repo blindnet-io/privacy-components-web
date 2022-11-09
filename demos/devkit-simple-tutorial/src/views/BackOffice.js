@@ -10,7 +10,21 @@ export class AppBackOffice extends LitElement {
   }
 
   static get styles() {
-    return css``;
+    return css`
+      :host {
+        display: block;
+        width: 40vw;
+        padding: 50px 100px;
+        background: white;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.34),
+          0px 0.500862px 1.50259px rgba(0, 0, 0, 0.17);
+        border-radius: 20px;
+      }
+
+      h1 {
+        margin-top: 0;
+      }
+    `;
   }
 
   showDCI() {

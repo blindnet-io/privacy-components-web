@@ -103,8 +103,25 @@ export class AppParticipateForm extends LitElement {
 
   static get styles() {
     return css`
+      :host {
+        display: block;
+        width: 40vw;
+        padding: 50px 100px;
+        background: white;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.34),
+          0px 0.500862px 1.50259px rgba(0, 0, 0, 0.17);
+        border-radius: 20px;
+        text-align: center;
+      }
+
+      h1 {
+        margin-top: 0;
+      }
+
       form {
-        width: 640px;
+        display: inline-block;
+        margin-left: auto;
+        margin-right: auto;
         padding: 2rem;
       }
 

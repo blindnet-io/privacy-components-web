@@ -8,6 +8,7 @@ import {
   CoreConfigurationMixin,
   PendingDemandPayload,
 } from '@blindnet/core';
+import { setLocale } from './utils/localization.js';
 
 enum DCIUIState {
   requests,
@@ -20,6 +21,18 @@ export class DataConsumerInterface extends CoreConfigurationMixin(LitElement) {
   @state() _uiState: DCIUIState = DCIUIState.requests;
 
   @state() _demands: PendingDemandPayload[] = [];
+
+  constructor() {
+    super();
+
+    // Set locale if current one is supported
+    try {
+      setLocale(navigator.language);
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.log(`Could not set locale to ${navigator.language}.`);
+    }
+  }
 
   handleViewToggleChange(e: CustomEvent) {
     const { newValue } = e.detail;
