@@ -17,8 +17,6 @@ custom-elements.json
 .tmp/
 *.cache/
 build/
-xliff/
-generated/
 import-map.json
 stories-build/
 packages/*/lit-localize.json

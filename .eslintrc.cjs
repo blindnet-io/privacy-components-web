@@ -22,6 +22,7 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   extends: ['@open-wc', 'prettier'],
   plugins: ['@typescript-eslint'],
+  ignorePatterns: ['**/locales/*.ts'],
   rules: {
     'no-unused-vars': 'off',
     'class-methods-use-this': 'off',
