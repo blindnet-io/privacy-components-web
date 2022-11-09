@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.12.0](https://github.com/blindnet-io/privacy-components-web/compare/v0.11.1...v0.12.0) (2022-11-09)
+
+
+### Features
+
+* **@blindnet/prci:** added fr, fr-CA, fr-FR locales ([e0a1e6c](https://github.com/blindnet-io/privacy-components-web/commit/e0a1e6c01fd1af6f601899178533371a4a5b8890))
+* **@blindnet/prci:** auto set locale on component load ([48f682f](https://github.com/blindnet-io/privacy-components-web/commit/48f682f01fbc7f89cd8df3098dbde68ae26febb2))
+* **@blindnet/prci:** requests list and status page ([2541a7a](https://github.com/blindnet-io/privacy-components-web/commit/2541a7af556ae0704e6e4e5f874b4f584b821306))
+* **@blindnet/prci:** revoke consent form ([7a603d1](https://github.com/blindnet-io/privacy-components-web/commit/7a603d125ae693b7e7f3da24c1319cc19a1a5913))
+* **@blindnet/prci:** UI/UX update ([0214544](https://github.com/blindnet-io/privacy-components-web/commit/0214544653033956ca23b0d91454716b5a8bb753))
+
+
+
+
+
 # [0.11.0](https://github.com/blindnet-io/privacy-components-web/compare/v0.10.0...v0.11.0) (2022-11-04)
 
 **Note:** Version bump only for package @blindnet/core

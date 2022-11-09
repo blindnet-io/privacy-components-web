@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.12.0](https://github.com/blindnet-io/privacy-components-web/compare/v0.11.1...v0.12.0) (2022-11-09)
+
+
+### Features
+
+* **@blindnet-demos/devkit-simple-tutorial:** updated demo UI ([39a2268](https://github.com/blindnet-io/privacy-components-web/commit/39a2268bac68f450f9ab5d509dcd670dbb7c91bd))
+* **@blindnet/prci:** UI/UX update ([0214544](https://github.com/blindnet-io/privacy-components-web/commit/0214544653033956ca23b0d91454716b5a8bb753))
+
+
+
+
+
 ## [0.11.1](https://github.com/blindnet-io/privacy-components-web/compare/v0.11.0...v0.11.1) (2022-11-04)
 
 

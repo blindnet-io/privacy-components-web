@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.12.0](https://github.com/blindnet-io/privacy-components-web/compare/v0.11.1...v0.12.0) (2022-11-09)
+
+
+### Features
+
+* **@blindnet/prci:** added fr, fr-CA, fr-FR locales ([e0a1e6c](https://github.com/blindnet-io/privacy-components-web/commit/e0a1e6c01fd1af6f601899178533371a4a5b8890))
+* **@blindnet/prci:** auto set locale on component load ([48f682f](https://github.com/blindnet-io/privacy-components-web/commit/48f682f01fbc7f89cd8df3098dbde68ae26febb2))
+
+
+
+
+
 # [0.11.0](https://github.com/blindnet-io/privacy-components-web/compare/v0.10.0...v0.11.0) (2022-11-04)
 
 **Note:** Version bump only for package @blindnet/dci
