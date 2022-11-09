@@ -1,69 +1,88 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-<file target-language="fr" source-language="en" original="lit-localize-inputs" datatype="plaintext">
+<file target-language="fr-FR" source-language="en-US" original="lit-localize-inputs" datatype="plaintext">
 <body>
 <trans-unit id="sef16778fe7074a8d">
   <source>Grant</source>
+  <target>Approuver</target>
 </trans-unit>
 <trans-unit id="sd0680e7343dedb27">
   <source>Deny</source>
+  <target>Refuser</target>
 </trans-unit>
 <trans-unit id="sa58a43eaa517ec9e">
   <source>Response</source>
+  <target>Réponse</target>
 </trans-unit>
 <trans-unit id="s12f6b3b9aa6fe76c">
   <source>Recommended</source>
+  <target>Recommandée</target>
 </trans-unit>
 <trans-unit id="sb0e683c9fb3cc3b5">
   <source>Not Recommended</source>
+  <target>Non Recommandée</target>
 </trans-unit>
 <trans-unit id="s28360fa3d4d84322">
   <source>Optional Message</source>
+  <target>Message optionnel</target>
 </trans-unit>
 <trans-unit id="sb3d4f79d9d8b71e5">
   <source>Submit</source>
+  <target>Envoyer</target>
 </trans-unit>
 <trans-unit id="s2b7bb3f9a459d7dd">
   <source>History view coming soon!</source>
+  <target>Historique bientôt disponible !</target>
 </trans-unit>
 <trans-unit id="s61d28f3db3da4264">
   <source>Response Submmitted</source>
+  <target>Réponse envoyée</target>
 </trans-unit>
 <trans-unit id="sb41b2cfbbc52565b">
   <source>Created</source>
+  <target>Création</target>
 </trans-unit>
 <trans-unit id="sd25a75c08073005d">
   <source>Data Subject</source>
+  <target>Personne concernée</target>
 </trans-unit>
 <trans-unit id="sa442044b586ec8bf">
   <source>Action</source>
+  <target>Action</target>
 </trans-unit>
 <trans-unit id="sb852d100f91db23f">
   <source>No requests to display.</source>
+  <target>Aucune demande à afficher</target>
 </trans-unit>
 <trans-unit id="sd3b15d6d4ea696f7">
   <source>My additional message:</source>
+  <target>Mon message additionnel :</target>
 </trans-unit>
 <trans-unit id="sebbb864b5cee4a82">
   <source>Please note that adding a personalized message might lead to the demand taking longer to be processed</source>
+  <target> Veuillez noter que l'ajout d'un message personnalisé peut entraîner un délai de traitement plus long de la demande</target>
 </trans-unit>
 <trans-unit id="sbaace8219b5f4612">
   <source>Select All</source>
 </trans-unit>
 <trans-unit id="h87332548e751bc1c">
   <source><x id="0" equiv-text="&lt;b&gt;"/>OTHER-DATA:<x id="1" equiv-text="&lt;/b&gt;"/> Specify another type of data</source>
+  <target><x id="0" equiv-text="&lt;b&gt;"/>Autres données :<x id="1" equiv-text="&lt;/b&gt;"/> Spécifiez un autre type de données</target>
 </trans-unit>
 <trans-unit id="s4618111b41da4ae5">
   <source>Other data type:</source>
+  <target>Autre type de données :</target>
 </trans-unit>
 <trans-unit id="s40717e0539504811">
   <source>Specify a date range for the selected data categories:</source>
 </trans-unit>
 <trans-unit id="sa6ab5184d6315895">
   <source>From</source>
+  <target>Depuis</target>
 </trans-unit>
 <trans-unit id="s08c83907b56ac0a4">
   <source>to</source>
+  <target>à</target>
 </trans-unit>
 <trans-unit id="s3b91d548b3c1db64">
   <source>Click to expand</source>
@@ -76,6 +95,7 @@
 </trans-unit>
 <trans-unit id="sdc673e73b5c13aea">
   <source>Delete</source>
+  <target>Supprimer</target>
 </trans-unit>
 <trans-unit id="sc420894701de5ea3">
   <source>Modify</source>
@@ -164,7 +184,7 @@
 </trans-unit>
 <trans-unit id="s0a2434ac9ab6d86f">
   <source>Demand information related to data processing practices and know if the system has data on me</source>
-  <target>Demander des information sur les pratiques de traitement de données et savoir si le système a des données sur moi</target>
+  <target>Demander des informations sur les pratiques de traitement de données et savoir si le système a des données sur moi</target>
 </trans-unit>
 <trans-unit id="s792decfb4eff6aa6">
   <source>Do or know something else. Please note it may take longer to be answered</source>
@@ -203,6 +223,7 @@
 </trans-unit>
 <trans-unit id="s943ff37beeb8970c">
   <source>The purpose of the processing of the data the organization has on me</source>
+  <target>Le but du traitement des données que l'organisation a sur moi</target>
 </trans-unit>
 <trans-unit id="sd1c189abaf754629">
   <source>For how long the data concerning me kept</source>
@@ -222,33 +243,43 @@
 </trans-unit>
 <trans-unit id="s3fc1f890d4f5a074">
   <source>All provenances</source>
+  <target>Toutes provenances</target>
 </trans-unit>
 <trans-unit id="s45aea633edb60ede">
   <source>The data provided by a user of the system (potentially the Data Subject)</source>
+  <target>Les données fournies par un utilisateur du système (potentiellement la personne concernée)</target>
 </trans-unit>
 <trans-unit id="s43184a4b085df935">
   <source>The data provided by the Data Subject</source>
+  <target>Les données fournies par la personne concernée</target>
 </trans-unit>
 <trans-unit id="sbb56c7b43dca3565">
   <source>The data derived from user actions, extracted from other data or inferred</source>
+  <target>Les données dérivées des actions de l'utilisateur, extraites d'autres données ou déduites</target>
 </trans-unit>
 <trans-unit id="scd73a2ff5bb51768">
   <source>The data obtained by transfer from another System</source>
+  <target>Les données obtenues par un transfert depuis un autre système</target>
 </trans-unit>
 <trans-unit id="s9f0a5e615ad80bfc">
   <source>Provided by a user of the system</source>
+  <target>Fournies par un utilisateur du système</target>
 </trans-unit>
 <trans-unit id="s6976edd03bbc39db">
   <source>Provided by you while using the system</source>
+  <target>Fournies par vous lors de l'utilisation du système</target>
 </trans-unit>
 <trans-unit id="safdf52d3db58ccbb">
   <source>Derived from user actions, extracted from other data or inferred by the system</source>
+  <target>Dérivées des actions de l'utilisateur, extraites d'autres données ou déduites</target>
 </trans-unit>
 <trans-unit id="s31a4a5e072be4a9d">
   <source>Obtained by transfer from another system</source>
+  <target>Obtenues par un transfert depuis un autre système</target>
 </trans-unit>
 <trans-unit id="scbf29ce484222325">
   <source></source>
+  <target/>
 </trans-unit>
 <trans-unit id="s63ce35e313760199">
   <source>Affiliation</source>
@@ -316,6 +347,7 @@
 </trans-unit>
 <trans-unit id="hcbf29ce484222325">
   <source/>
+  <target/>
 </trans-unit>
 <trans-unit id="h5974ce8e8b048cf4">
   <source>Data about my behavior</source>
@@ -366,36 +398,46 @@
 </trans-unit>
 <trans-unit id="ha8ea706cb7b3c5f2">
   <source>All targets</source>
+  <target>Toutes les cibles</target>
 </trans-unit>
 <trans-unit id="hb2029b140d2b8e3a">
   <source>This system</source>
+  <target>Ce système</target>
 </trans-unit>
 <trans-unit id="h13d5761d00e9feca">
   <source>This system and all systems within this organization</source>
+  <target>Ce système et tous les systèmes au sein de cette organisation</target>
 </trans-unit>
 <trans-unit id="h9552e7ccf7b9afc6">
   <source>This system, all systems within this organization, and all partners
         systems where data has been <x id="0" equiv-text="&lt;b&gt;"/>shared or obtained<x id="1" equiv-text="&lt;/b&gt;"/></source>
+  <target>Ce système, tous les systèmes au sein de cette organisation et tous les partenaires avec lesquels des données ont été <x id="0" equiv-text="&lt;b&gt;"/>partagées ou obtenues<x id="1" equiv-text="&lt;/b&gt;"/></target>
 </trans-unit>
 <trans-unit id="hcd600f5012ef03c7">
   <source>This system, all systems within this organization, and all partners
         systems with which data has been <x id="0" equiv-text="&lt;b&gt;"/>shared<x id="1" equiv-text="&lt;/b&gt;"/></source>
+  <target>Ce système, tous les systèmes au sein de cette organisation et tous les systèmes partenaires avec lesquels des données ont été <x id="0" equiv-text="&lt;b&gt;"/>partagées<x id="1" equiv-text="&lt;/b&gt;"/></target>
 </trans-unit>
 <trans-unit id="he7ee03a3b8cd0b3a">
   <source>This system, all systems within this organization, and all partners
         systems from which data has been <x id="0" equiv-text="&lt;b&gt;"/>obtained<x id="1" equiv-text="&lt;/b&gt;"/></source>
+  <target>Ce système, tous les systèmes au sein de cette organisation et tous les systèmes partenaires avec lesquels des données ont été <x id="0" equiv-text="&lt;b&gt;"/>obtenues<x id="1" equiv-text="&lt;/b&gt;"/></target>
 </trans-unit>
 <trans-unit id="hd63ace037da055b1">
   <source>In processing</source>
+  <target>En cours de traitement</target>
 </trans-unit>
 <trans-unit id="hff3b775b64d0793c">
   <source>Partially completed</source>
+  <target>Partiellement traitée</target>
 </trans-unit>
 <trans-unit id="h5033dab8c17f05f2">
   <source>Completed</source>
+  <target>Traitée</target>
 </trans-unit>
 <trans-unit id="ha30c4d3b566b6b1a">
   <source>Canceled</source>
+  <target>Annulée</target>
 </trans-unit>
 <trans-unit id="see4e21f60d66f454">
   <source>Granted</source>
@@ -414,24 +456,31 @@
 </trans-unit>
 <trans-unit id="s80ad94771c626ec2">
   <source>no longer than</source>
+  <target>pas plus longtemps que</target>
 </trans-unit>
 <trans-unit id="s49940a6f4a947f4a">
   <source>no less than</source>
+  <target>pas moins de</target>
 </trans-unit>
 <trans-unit id="s9f2760d67ffa4687">
   <source>capture date</source>
+  <target>date de capture</target>
 </trans-unit>
 <trans-unit id="s9807f589aabcdf73">
   <source>relationship start</source>
+  <target>début de la relation</target>
 </trans-unit>
 <trans-unit id="se4c36df50ac776c6">
   <source>relationship end</source>
+  <target>fin de la relation</target>
 </trans-unit>
 <trans-unit id="s98d8f26ab7b65ae0">
   <source>service start</source>
+  <target>début du service</target>
 </trans-unit>
 <trans-unit id="s86c0a813feb2e101">
   <source>service end</source>
+  <target>fin du service</target>
 </trans-unit>
 <trans-unit id="sf993bb199fefbe04">
   <source>All</source>
@@ -636,9 +685,11 @@
 </trans-unit>
 <trans-unit id="s3f2acea3f9106217">
   <source>I want to access:</source>
+  <target>Je souhaite accéder à :</target>
 </trans-unit>
 <trans-unit id="sf71bab33326da61c">
   <source>I want to delete:</source>
+  <target>Je souhaite sypprimer :</target>
 </trans-unit>
 <trans-unit id="s49928d6fe2a8fd6e">
   <source>I object to the processing of my data within the following scope:</source>
@@ -657,6 +708,7 @@
 </trans-unit>
 <trans-unit id="sd22025af1f467374">
   <source>I want to know:</source>
+  <target>Je voudrais savoir :</target>
 </trans-unit>
 <trans-unit id="sf33a710108e9f843">
   <source>Other options:</source>
@@ -678,12 +730,14 @@
 </trans-unit>
 <trans-unit id="s1caf5d7ab36059be">
   <source>Demand</source>
+  <target>Demande</target>
 </trans-unit>
 <trans-unit id="saedc3af85cfe6dc7">
   <source>Request Target</source>
 </trans-unit>
 <trans-unit id="s7629854d26f1c5e6">
   <source>I address my Privacy Request to:</source>
+  <target>J'adresse ma demande à</target>
 </trans-unit>
 <trans-unit id="s1204f9b176a19dfd">
   <source>Details of my <x id="0" equiv-text="${this.action}"/> Demand</source>
@@ -693,6 +747,7 @@
 </trans-unit>
 <trans-unit id="s6303c9c96b50c164">
   <source>My demand applies to data from the following provenance:</source>
+  <target>Ma demande s'applique aux données provenant de :</target>
 </trans-unit>
 <trans-unit id="sac8256732f2ee1e5">
   <source>Data</source>
@@ -754,9 +809,11 @@
 </trans-unit>
 <trans-unit id="sad3e3c8146fc920f">
   <source>Status</source>
+  <target>Status</target>
 </trans-unit>
 <trans-unit id="s1e55a47eccb89757">
   <source>Demands</source>
+  <target>Demandes</target>
 </trans-unit>
 <trans-unit id="s035f0451c192f516">
   <source>Loading your requests...</source>
@@ -800,6 +857,7 @@
 </trans-unit>
 <trans-unit id="se40a735383dec962">
   <source>Cancel Demand</source>
+  <target>Annuler la demande</target>
 </trans-unit>
 <trans-unit id="se9e76660770debd1">
   <source>This demand has been cancelled.</source>
@@ -809,6 +867,7 @@
 </trans-unit>
 <trans-unit id="s3137e812940ae6b7">
   <source>Obtaining data, please wait and refresh the page later.</source>
+  <target>Vos données sont en cours d'obtention, veuillez patienter et en pas rafraîchir la page</target>
 </trans-unit>
 <trans-unit id="s55b7584ba4fd4ba5">
   <source>Your delete demand has been granted.</source>

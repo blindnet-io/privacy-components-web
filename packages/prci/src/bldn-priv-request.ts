@@ -11,6 +11,7 @@ import { choose } from 'lit/directives/choose.js';
 import './bldn-request-builder.js';
 import './bldn-submitted-requests.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
+import { setLocale } from './utils/localization.js';
 
 enum PRCIUIState {
   createRequest,
@@ -34,6 +35,14 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
 
   constructor() {
     super();
+
+    // Set locale if current one is supported
+    try {
+      setLocale(navigator.language);
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.log(`Could not set locale to ${navigator.language}.`);
+    }
 
     // Check if a requestId passed
     const url = new URL(window.location.href);
