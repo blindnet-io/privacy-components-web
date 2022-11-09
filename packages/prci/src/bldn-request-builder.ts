@@ -192,7 +192,7 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
           PrivacyRequestDemand.action.TRANSPARENCY,
           () => html`
             <bldn-transparency-form
-              .transparencyActions=${this.actions.filter(a =>
+              .transparencyActions=${this._allowedActions.filter(a =>
                 a.includes('TRANSPARENCY')
               )}
               .demands=${this._demandGroupIndex !== undefined
