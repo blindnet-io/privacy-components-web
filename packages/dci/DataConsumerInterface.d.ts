@@ -8,6 +8,7 @@ declare const DataConsumerInterface_base: typeof LitElement & (new (...args: any
 export declare class DataConsumerInterface extends DataConsumerInterface_base {
     _uiState: DCIUIState;
     _demands: PendingDemandPayload[];
+    constructor();
     handleViewToggleChange(e: CustomEvent): void;
     connectedCallback(): void;
     protected willUpdate(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void;

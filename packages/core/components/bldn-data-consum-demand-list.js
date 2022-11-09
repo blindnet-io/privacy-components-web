@@ -4,7 +4,7 @@ import { css, LitElement, html } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
-import { bldnStyles } from './blindnet-wc-styles.js';
+import { bldnStyles } from './bldn-styles.js';
 import './bldn-data-consum-demand-list-item.js';
 
 let DataConsumerDemandList = class DataConsumerDemandList extends LitElement {

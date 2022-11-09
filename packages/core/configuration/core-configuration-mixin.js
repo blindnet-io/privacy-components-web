@@ -46,6 +46,10 @@ function CoreConfigurationMixin(superClass) {
         willUpdate(_changedProperties) {
             if (_changedProperties.has('apiToken') && this.apiToken) {
                 BlindnetCore.setToken(this.apiToken);
+                this.dispatchEvent(new CustomEvent('bldn-core:user-token-set', {
+                    composed: true,
+                    bubbles: true,
+                }));
             }
             if (_changedProperties.has('adminToken') && this.adminToken) {
                 BlindnetCore.setAdminToken(this.adminToken);

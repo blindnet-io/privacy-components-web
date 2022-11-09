@@ -11,10 +11,10 @@ let DataConsumerRequests = class DataConsumerRequests extends LitElement {
         return html `
       <bldn-horizontal-list
         choices=${JSON.stringify([
-            { id: 'all', display: 'All' },
-            { id: 'pending', display: 'Pending', selected: true },
-            { id: 'answered', display: 'Answered' },
-            { id: 'canceled', display: 'Canceled' },
+            { value: 'all', display: 'All' },
+            { value: 'pending', display: 'Pending', selected: true },
+            { value: 'answered', display: 'Answered' },
+            { value: 'canceled', display: 'Canceled' },
         ])}
       ></bldn-horizontal-list>
       <bldn-data-consum-demand-list

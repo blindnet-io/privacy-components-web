@@ -4,6 +4,7 @@ import { LitElement, html, css } from 'lit';
 import { state, customElement } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
 import { CoreConfigurationMixin, ComputationAPI } from '@blindnet/core';
+import { setLocale } from './utils/localization.js';
 
 var DCIUIState;
 (function (DCIUIState) {
@@ -12,9 +13,17 @@ var DCIUIState;
 })(DCIUIState || (DCIUIState = {}));
 let DataConsumerInterface = class DataConsumerInterface extends CoreConfigurationMixin(LitElement) {
     constructor() {
-        super(...arguments);
+        super();
         this._uiState = DCIUIState.requests;
         this._demands = [];
+        // Set locale if current one is supported
+        try {
+            setLocale(navigator.language);
+        }
+        catch (e) {
+            // eslint-disable-next-line no-console
+            console.log(`Could not set locale to ${navigator.language}.`);
+        }
     }
     handleViewToggleChange(e) {
         const { newValue } = e.detail;

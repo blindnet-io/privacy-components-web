@@ -7,6 +7,7 @@ import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
 import { ComputationAPI } from '../computation/computation-api.js';
 import '../computation/generated-models/models/CreateLegalBasePayload.js';
+import '../computation/generated-models/models/CreatePrivacyRequestPayload.js';
 import '../computation/generated-models/models/CreateProvenancePayload.js';
 import '../computation/generated-models/models/CreateRetentionPolicyPayload.js';
 import '../computation/generated-models/models/DemandResolution.js';
@@ -15,6 +16,7 @@ import '../computation/generated-models/models/LegalBase.js';
 import '../computation/generated-models/models/PendingDemandDetailsPayload.js';
 import '../computation/generated-models/models/PendingDemandPayload.js';
 import '../computation/generated-models/models/PrItem.js';
+import '../computation/generated-models/models/PrivacyRequestDemand.js';
 import '../computation/generated-models/models/PrivacyResponsePayload.js';
 import '../computation/generated-models/models/PrivacyScopeRestriction.js';
 import '../computation/generated-models/models/PrivacyScopeTriple.js';
@@ -23,7 +25,7 @@ import '../computation/generated-models/models/ProvenanceRestriction.js';
 import { Recommendation } from '../computation/generated-models/models/Recommendation.js';
 import '../computation/generated-models/models/RetentionPolicy.js';
 import '../computation/generated-models/models/ScopePayload.js';
-import { bldnStyles } from './blindnet-wc-styles.js';
+import { bldnStyles } from './bldn-styles.js';
 
 var DropdownUIState;
 (function (DropdownUIState) {

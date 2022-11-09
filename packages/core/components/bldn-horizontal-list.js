@@ -2,7 +2,7 @@ import { __decorate } from '../node_modules/tslib/tslib.es6.js';
 import { css, LitElement, html } from 'lit';
 import { property, state, customElement } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
-import { bldnStyles } from './blindnet-wc-styles.js';
+import { bldnStyles } from './bldn-styles.js';
 
 let HorizontalList = class HorizontalList extends LitElement {
     constructor() {
@@ -10,34 +10,37 @@ let HorizontalList = class HorizontalList extends LitElement {
         this.choices = [];
         this._selected = 0;
     }
+    handleChoiceClick(e) {
+        const { id } = e.target;
+        this._selected = this.choices.findIndex(c => c.value === id);
+        this.dispatchEvent(new CustomEvent('bldn-horizontal-list:choice-change', {
+            detail: {
+                value: id,
+            },
+        }));
+    }
     render() {
         return html `
-      ${map(this.choices, (choice, i) => html `
-          <button
-            id=${choice.id}
-            class="choice ${i === this._selected ? 'choice--selected' : ''}"
-            @click=${() => {
-            this._selected = i;
-        }}
-          >
-            ${choice.display}
-          </button>
-        `)}
+      <div>
+        ${map(this.choices, (choice, i) => html `
+            <button
+              id=${choice.value}
+              class="choice ${i === this._selected ? 'choice--selected' : ''}"
+              @click=${this.handleChoiceClick}
+            >
+              ${choice.display}
+            </button>
+          `)}
+      </div>
     `;
     }
     willUpdate(_changedProperties) {
-        if (_changedProperties.has('choices')) {
+        if (_changedProperties.has('choices') &&
+            _changedProperties.get('choices') === undefined) {
             this._selected = this.choices.findIndex(c => c.selected);
             if (this._selected < 0) {
                 this._selected = 0;
             }
-        }
-        if (_changedProperties.has('_selected')) {
-            this.dispatchEvent(new CustomEvent('horizontal-list-choice-change', {
-                detail: {
-                    selected: this.choices[this._selected],
-                },
-            }));
         }
     }
 };
@@ -45,6 +48,10 @@ HorizontalList.styles = [
     bldnStyles,
     css `
       :host {
+        display: block;
+      }
+
+      div {
         display: grid;
         grid-auto-flow: column;
         grid-auto-columns: 1fr;
@@ -63,7 +70,14 @@ HorizontalList.styles = [
 
       button {
         color: var(--color-dark);
-        font-size: 16px;
+        font-size: var(
+          --bldn-horizontal-list-font-size,
+          var(--font-size-medium)
+        );
+        background: var(
+          --bldn-horizontal-list-background-color,
+          var(--background)
+        );
       }
     `,
 ];

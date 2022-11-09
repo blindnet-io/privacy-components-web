@@ -1,4 +1,5 @@
 import './generated-models/models/CreateLegalBasePayload.js';
+import './generated-models/models/CreatePrivacyRequestPayload.js';
 import './generated-models/models/CreateProvenancePayload.js';
 import './generated-models/models/CreateRetentionPolicyPayload.js';
 import './generated-models/models/DemandResolution.js';
@@ -7,6 +8,7 @@ import './generated-models/models/LegalBase.js';
 import './generated-models/models/PendingDemandDetailsPayload.js';
 import './generated-models/models/PendingDemandPayload.js';
 import './generated-models/models/PrItem.js';
+import './generated-models/models/PrivacyRequestDemand.js';
 import './generated-models/models/PrivacyResponsePayload.js';
 import './generated-models/models/PrivacyScopeRestriction.js';
 import './generated-models/models/PrivacyScopeTriple.js';
@@ -61,13 +63,13 @@ class ComputationAPI {
     setToken(apiToken) {
         this._apiToken = apiToken;
     }
-    hasApiToken() {
+    apiTokenSet() {
         return this._apiToken !== '';
     }
     setAdminToken(adminToken) {
         this._adminToken = adminToken;
     }
-    hasAdminToken() {
+    adminTokenSet() {
         return this._adminToken !== '';
     }
     /**
@@ -123,17 +125,30 @@ class ComputationAPI {
      */
     getMockHeader(request) {
         // If more than 1 demand, send the default multi demand response
-        if (request.demands.length > 1) {
+        if (request.demands && request.demands.length > 1) {
             return 'code=200, example=TRANSPARENCY Multi-Response';
         }
         // Select the mock response corresponding to this action
-        if (request.demands.length === 1) {
+        if (request.demands && request.demands.length === 1) {
             const { action } = request.demands[0];
             return `code=200, example=${action} Response`;
         }
         // If no demands get bad request response
         return 'code=400';
     }
+    // Configuration endpoints
+    async getDataCategories() {
+        const endpoint = `/configure/data-categories`;
+        const response = await fetch(this.fullURL(endpoint), {
+            method: 'GET',
+            headers: this.headers(true),
+        });
+        if (!response.ok) {
+            throw new Error(response.statusText);
+        }
+        return response.json();
+    }
+    // Privacy Request Endpoints
     preProcessRequest(request) {
         // If all privacy scopes provided, this is the same as no restriction
         const allDataCategories = Object.values(DATA_CATEGORY).filter(dc => dc !== DATA_CATEGORY.ALL && !dc.includes('.'));
@@ -150,14 +165,14 @@ class ComputationAPI {
     }
     /**
      * Send a PrivacyRequest to the privacy-request API
-     * @param {PrivacyRequest} request Request body to send
+     * @param {CreatePrivacyRequestPayload} request Request body to send
      * @returns
      */
     async sendPrivacyRequest(request) {
         const endpoint = `/privacy-request`;
         const preparedRequest = this.preProcessRequest(request);
         // Only allow no auth header for certain requests
-        const authRequired = !request.demands.every(demand => demand.action.includes('TRANSPARENCY'));
+        const authRequired = request.demands.every(demand => demand.action.includes('TRANSPARENCY'));
         const response = await fetch(this.fullURL(endpoint), {
             method: 'POST',
             headers: this.headers(true, authRequired, request),
@@ -323,6 +338,24 @@ class ComputationAPI {
             if (!response.ok) {
                 throw new Error(response.statusText);
             }
+        });
+    }
+    // User info endpoints
+    /**
+     * Get consents given by the user authenticated by the current token
+     */
+    async getUserConsents() {
+        return fetch(`https://devkit-pce-staging.azurewebsites.net/v0/user/consents`, {
+            method: 'GET',
+            headers: {
+                accept: 'application/json',
+                Authorization: `Bearer ${this._apiToken}`,
+            },
+        }).then(response => {
+            if (!response.ok) {
+                throw new Error(response.statusText);
+            }
+            return response.json();
         });
     }
     static clean() {

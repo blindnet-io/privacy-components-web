@@ -3,20 +3,24 @@
 /**
  * The locale code that templates in this source code are written in.
  */
-const sourceLocale = `en`;
+const sourceLocale = `en-US`;
 /**
  * The other locale codes that this application is localized into. Sorted
  * lexicographically.
  */
 const targetLocales = [
     `fr`,
+    `fr-CA`,
+    `fr-FR`,
 ];
 /**
  * All valid project locale codes. Sorted lexicographically.
  */
 const allLocales = [
-    `en`,
+    `en-US`,
     `fr`,
+    `fr-CA`,
+    `fr-FR`,
 ];
 
 export { allLocales, sourceLocale, targetLocales };

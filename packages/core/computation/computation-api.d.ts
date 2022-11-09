@@ -1,7 +1,4 @@
-import { DenyDemandPayload, PendingDemandDetailsPayload, PendingDemandPayload } from './generated-models/index.js';
-import { HistoryResponse } from './models/history-response.js';
-import { PrivacyRequest } from './models/privacy-request.js';
-import { PrivacyResponse } from './models/privacy-response.js';
+import { CreatePrivacyRequestPayload, DataCategoryResponsePayload, DenyDemandPayload, GivenConsentsPayload, PendingDemandDetailsPayload, PendingDemandPayload, PrivacyResponsePayload, RequestHistoryPayload } from './generated-models/index.js';
 export declare class ComputationAPI {
     private static instance;
     static readonly MOCK_URL = "https://stoplight.io/mocks/blindnet/product-management:open-api/74767654";
@@ -19,10 +16,10 @@ export declare class ComputationAPI {
     get baseURL(): string;
     private _apiToken;
     setToken(apiToken: string): void;
-    hasApiToken(): boolean;
+    apiTokenSet(): boolean;
     private _adminToken;
     setAdminToken(adminToken: string): void;
-    hasAdminToken(): boolean;
+    adminTokenSet(): boolean;
     /**
      *
      * @param baseURL base URL (schema + host + port + base-path) to call (for default behavior, see mock)
@@ -38,17 +35,18 @@ export declare class ComputationAPI {
      * @returns String to be used in the "prefer" header
      */
     private getMockHeader;
+    getDataCategories(): Promise<DataCategoryResponsePayload[]>;
     private preProcessRequest;
     /**
      * Send a PrivacyRequest to the privacy-request API
-     * @param {PrivacyRequest} request Request body to send
+     * @param {CreatePrivacyRequestPayload} request Request body to send
      * @returns
      */
-    sendPrivacyRequest(request: PrivacyRequest): Promise<{
+    sendPrivacyRequest(request: CreatePrivacyRequestPayload): Promise<{
         request_id: string;
     }>;
-    getRequestHistory(): Promise<HistoryResponse>;
-    getRequest(requestId: string): Promise<PrivacyResponse>;
+    getRequestHistory(): Promise<RequestHistoryPayload>;
+    getRequest(requestId: string): Promise<PrivacyResponsePayload[]>;
     cancelDemand(demand_id: string): Promise<void>;
     /**
      * Gets a list of all demands which are pending a response
@@ -80,5 +78,9 @@ export declare class ComputationAPI {
      * @returns
      */
     denyDemand(id: string, motive?: DenyDemandPayload.motive, msg?: string, lang?: string, newAdminToken?: string): Promise<void>;
+    /**
+     * Get consents given by the user authenticated by the current token
+     */
+    getUserConsents(): Promise<GivenConsentsPayload[]>;
     static clean(): void;
 }

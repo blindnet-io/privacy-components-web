@@ -1,7 +1,7 @@
 import { __decorate } from '../node_modules/tslib/tslib.es6.js';
 import { css, LitElement, html } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
-import { bldnStyles } from './blindnet-wc-styles.js';
+import { bldnStyles } from './bldn-styles.js';
 
 let ToggleButton = class ToggleButton extends LitElement {
     constructor() {

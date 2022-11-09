@@ -2,7 +2,7 @@ import { __decorate } from '../node_modules/tslib/tslib.es6.js';
 import { css, LitElement, html } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
-import { bldnStyles } from './blindnet-wc-styles.js';
+import { bldnStyles } from './bldn-styles.js';
 
 const closeContainerArrowSvg = new URL(new URL('../assets/close-container-arrow.svg', import.meta.url).href, import.meta.url).href;
 const openContainerArrowSvg = new URL(new URL('../assets/open-container-arrow.svg', import.meta.url).href, import.meta.url).href;
