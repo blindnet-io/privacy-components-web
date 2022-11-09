@@ -154,6 +154,8 @@ export abstract class ActionForm extends LitElement {
   static styles = [
     css`
       :host {
+        /* display: block; */
+        width: 100%;
         margin: 0px;
       }
 

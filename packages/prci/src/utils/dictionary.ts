@@ -125,7 +125,7 @@ export const PROVENANCE_DESCRIPTIONS = {
     msg(
       'The data provided by a user of the system (potentially the Data Subject)'
     ),
-  'USER.DATA-SUBJECT': () => msg('The data is provided by the Data Subject'),
+  'USER.DATA-SUBJECT': () => msg('The data provided by the Data Subject'),
   DERIVED: () =>
     msg(
       'The data derived from user actions, extracted from other data or inferred'
@@ -183,7 +183,7 @@ export const DATA_CATEGORY_TITLES = {
   'UID.IP': () => msg(''),
   'UID.USER-ACCOUNT': () => msg(''),
   'UID.SOCIAL-MEDIA': () => msg(''),
-  'OTHER-DATA': () => msg('Other Data'),
+  'OTHER-DATA': () => msg('Other'),
   'OTHER-DATA.PROOF': () => msg('Other - Proof'),
 };
 
@@ -204,8 +204,8 @@ export const DATA_CATEGORY_DESCRIPTIONS = {
   'BEHAVIOR.CONNECTION': () => msg(html``),
   'BEHAVIOR.PREFERENCE': () => msg(html``),
   'BEHAVIOR.TELEMETRY': () => msg(html``),
-  BIOMETRIC: () => msg(html``),
-  CONTACT: () => msg(html`Data allowing to contact me `),
+  BIOMETRIC: () => msg(html`Data about my unique physical characteristics`),
+  CONTACT: () => msg(html`Data allowing to contact me`),
   'CONTACT.EMAIL': () => msg(html``),
   'CONTACT.ADDRESS': () => msg(html``),
   'CONTACT.PHONE': () => msg(html``),
@@ -223,7 +223,7 @@ export const DATA_CATEGORY_DESCRIPTIONS = {
       html`Payment data, financial history and data about my financial situation`
     ),
   'FINANCIAL.BANK-ACCOUNT': () => msg(html``),
-  GENETIC: () => msg(html``),
+  GENETIC: () => msg(html`Data related to my genetic characteristics`),
   HEALTH: () => msg(html`Data about my health`),
   IMAGE: () => msg(html`Any graphic representation (e.g., image, video) of me`),
   LOCATION: () => msg(html`Geographic location`),

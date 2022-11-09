@@ -42,7 +42,7 @@ export class BldnSubmittedRequests extends CoreConfigurationMixin(LitElement) {
     | string
     | undefined;
 
-  @state() _requests: PrItem[] = [];
+  @state() _requests: PrItem[] | undefined;
 
   @state() _requestFilter: 'all' | 'pending' | 'answered' | 'canceled' = 'all';
 
@@ -63,6 +63,11 @@ export class BldnSubmittedRequests extends CoreConfigurationMixin(LitElement) {
     this._uiState = RequestsUIState.requestStatus;
   }
 
+  handleBackClick() {
+    this._uiState = RequestsUIState.requestsList;
+    this.getRequests();
+  }
+
   /**
    * Get submitted requests once we have a token
    */
@@ -75,24 +80,31 @@ export class BldnSubmittedRequests extends CoreConfigurationMixin(LitElement) {
   }
 
   getRequestsToDisplay() {
-    switch (this._requestFilter) {
-      case 'all':
-        return this._requests;
+    if (this._requests !== undefined) {
+      switch (this._requestFilter) {
+        case 'all':
+          return this._requests;
 
-      case 'pending':
-        return this._requests.filter(
-          r => r.status === PrItem.status.IN_PROCESSING
-        );
+        case 'pending':
+          return this._requests.filter(
+            r => r.status === PrItem.status.IN_PROCESSING
+          );
 
-      case 'answered':
-        return this._requests.filter(r => r.status === PrItem.status.COMPLETED);
+        case 'answered':
+          return this._requests.filter(
+            r => r.status === PrItem.status.COMPLETED
+          );
 
-      case 'canceled':
-        return this._requests.filter(r => r.status === PrItem.status.CANCELED);
+        case 'canceled':
+          return this._requests.filter(
+            r => r.status === PrItem.status.CANCELED
+          );
 
-      default:
-        return this._requests;
+        default:
+          return this._requests;
+      }
     }
+    return this._requests;
   }
 
   goToStatus() {
@@ -132,9 +144,9 @@ export class BldnSubmittedRequests extends CoreConfigurationMixin(LitElement) {
           </bldn-submitted-requests-list>
         `,
         () => html`
-        <bldn-button mode='link-icon' underline-mode='none' @bldn-button:click=${() => {
-          this._uiState = RequestsUIState.requestsList;
-        }}>
+        <bldn-button mode='link-icon' underline-mode='none' @bldn-button:click=${
+          this.handleBackClick
+        }>
           <img src=${backSvg} alt='back to requests'></img>
           <span id='back-button'><b>${msg('Back to Requests')}</b></span>
         </bldn-button>

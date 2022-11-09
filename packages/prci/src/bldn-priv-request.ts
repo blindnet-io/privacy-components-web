@@ -21,26 +21,37 @@ enum PRCIUIState {
 @customElement('bldn-priv-request')
 export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
   /** @prop */
-  @property({ type: Array }) actions: PrivacyRequestDemand.action[] =
-    Object.values(PrivacyRequestDemand.action);
+  @property({ type: Array }) actions: PrivacyRequestDemand.action[] = [];
 
   /** @prop */
-  @property({ type: Array }) dataCategories: string[] = [];
+  @property({ type: Array, attribute: 'data-categories' })
+  dataCategories: string[] = [];
 
   /** @prop */
   @property({ type: Array }) requestId: undefined | string;
 
   @state() _uiState: PRCIUIState = PRCIUIState.createRequest;
 
-  handleActionsChange() {}
+  constructor() {
+    super();
 
-  handleDataCategoriesChange() {}
+    // Check if a requestId passed
+    const url = new URL(window.location.href);
+    const requestId = url.searchParams.get('requestId');
+    if (requestId) {
+      // Remove requestId from the URL after setting it
+      this.requestId = requestId;
+      url.searchParams.delete('requestId');
+      window.history.replaceState({}, '', url.href);
+    }
+  }
 
-  handleRequestIdChange() {}
-
-  goToStatus(e: Event) {
-    const { requestId } = (e as CustomEvent).detail;
+  handleRequestIdChange() {
     this._uiState = PRCIUIState.submittedRequests;
+  }
+
+  handleRequestSent(e: Event) {
+    const { requestId } = (e as CustomEvent).detail;
     this.requestId = requestId;
   }
 
@@ -49,6 +60,7 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
     if (value === 'create') {
       this._uiState = PRCIUIState.createRequest;
     } else {
+      this.requestId = undefined;
       this._uiState = PRCIUIState.submittedRequests;
     }
   }
@@ -57,9 +69,6 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
     _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
   ): void {
     super.willUpdate(_changedProperties);
-    if (_changedProperties.has('actions')) this.handleActionsChange();
-    if (_changedProperties.has('dataCategories'))
-      this.handleDataCategoriesChange();
     if (_changedProperties.has('requestId')) this.handleRequestIdChange();
   }
 
@@ -85,7 +94,9 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
             html`
               <bldn-request-builder
                 api-token=${ifDefined(this.apiToken)}
-                @bldn-request-builder:request-sent=${this.goToStatus}
+                data-categories=${JSON.stringify(this.dataCategories)}
+                actions=${JSON.stringify(this.actions)}
+                @bldn-request-builder:request-sent=${this.handleRequestSent}
               ></bldn-request-builder>
             `,
         ],
@@ -116,7 +127,7 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
       }
 
       bldn-submitted-requests {
-        padding: 0 20%;
+        padding: 0 10%;
       }
     `,
   ];

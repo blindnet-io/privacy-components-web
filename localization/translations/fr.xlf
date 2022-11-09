@@ -95,53 +95,41 @@
 <trans-unit id="s08e22a2dc90d9557">
   <source>Transparency</source>
 </trans-unit>
-<trans-unit id="s645ed7852e6d19f2">
-  <source>TRANSPARENCY.DATA-CATEGORIES</source>
-  <target>TRANSPARENCE.CATEGORIES-DONNEES</target>
+<trans-unit id="sd618af95c6055b8c">
+  <source>Transparency - Data Categories</source>
 </trans-unit>
-<trans-unit id="s125f16e45e07efd8">
-  <source>TRANSPARENCY.DPO</source>
-  <target>TRANSPARENCE.DPO</target>
+<trans-unit id="s47279c5508899779">
+  <source>Transparency - DPO</source>
 </trans-unit>
-<trans-unit id="s367f4075d68006b2">
-  <source>TRANSPARENCY.KNOWN</source>
-  <target>TRANSPARENCE.SAVOIR</target>
+<trans-unit id="s09d23403a2394adf">
+  <source>Transparency - Known</source>
 </trans-unit>
-<trans-unit id="s1a9f765301e6d99b">
-  <source>TRANSPARENCY.LEGAL-BASES</source>
-  <target>TRANSPARENCE.BASES_LEGALES</target>
+<trans-unit id="sfc317a214ea59dcf">
+  <source>Transparency - Legal Bases</source>
 </trans-unit>
-<trans-unit id="sbfce6b0291310f7c">
-  <source>TRANSPARENCY.ORGANIZATION</source>
-  <target>TRANSPARENCE.ORGANISATION</target>
+<trans-unit id="sd7c908a61557d927">
+  <source>Transparency - Organization</source>
 </trans-unit>
-<trans-unit id="sb364791d22c059dd">
-  <source>TRANSPARENCY.POLICY</source>
-  <target>TRANSPARENCE.POLITIQUE</target>
+<trans-unit id="sc35bea743e6a3aa2">
+  <source>Transparency - Policy</source>
 </trans-unit>
-<trans-unit id="sbb141a0dbcec49a3">
-  <source>TRANSPARENCY.PROCESSING-CATEGORIES</source>
-  <target>TRANSPARENCE.CATEGORIES-TRAITEMENT</target>
+<trans-unit id="s76752fb00b3ab121">
+  <source>Transparency - Processing Categories</source>
 </trans-unit>
-<trans-unit id="se51c61b6c140b7e8">
-  <source>TRANSPARENCY.PROVENANCE</source>
-  <target>TRANSPARENCE.PROVENANCE</target>
+<trans-unit id="s7faa0f0ebcb806db">
+  <source>Transparency - Provenance</source>
 </trans-unit>
-<trans-unit id="s81c9b82e6cd8a2af">
-  <source>TRANSPARENCY.PURPOSE</source>
-  <target>TRANSPARENCE.OBJECTIF</target>
+<trans-unit id="s1c62dea8a9fcc2ae">
+  <source>Transparency - Purpose</source>
 </trans-unit>
-<trans-unit id="sb5a8dace22e84d13">
-  <source>TRANSPARENCY.RETENTION</source>
-  <target>TRANSPARENCE.CONSERVATION</target>
+<trans-unit id="s208ea5ca39142a3a">
+  <source>Transparency - Retention</source>
 </trans-unit>
-<trans-unit id="s047a606c5815f8c2">
-  <source>TRANSPARENCY.WHERE</source>
-  <target>TRANSPARENCE.OÙ</target>
+<trans-unit id="se7db4c6959b7d393">
+  <source>Transparency - Where</source>
 </trans-unit>
-<trans-unit id="s6bfc4be3ff468c11">
-  <source>TRANSPARENCY.WHO</source>
-  <target>TRANSPARENCE.QUI</target>
+<trans-unit id="sd7146754c9355360">
+  <source>Transparency - Who</source>
 </trans-unit>
 <trans-unit id="sefcd28524d5a7a14">
   <source>Other Demand</source>
@@ -238,8 +226,8 @@
 <trans-unit id="s45aea633edb60ede">
   <source>The data provided by a user of the system (potentially the Data Subject)</source>
 </trans-unit>
-<trans-unit id="s4b55ea3273df7775">
-  <source>The data is provided by the Data Subject</source>
+<trans-unit id="s43184a4b085df935">
+  <source>The data provided by the Data Subject</source>
 </trans-unit>
 <trans-unit id="sbb56c7b43dca3565">
   <source>The data derived from user actions, extracted from other data or inferred</source>
@@ -313,8 +301,11 @@
 <trans-unit id="s6238f519db67980d">
   <source>UID</source>
 </trans-unit>
-<trans-unit id="s58c637868dc42597">
-  <source>Other Data</source>
+<trans-unit id="sc9e494c8346b7cb5">
+  <source>Other</source>
+</trans-unit>
+<trans-unit id="s7c398dddd3171afc">
+  <source>Other - Proof</source>
 </trans-unit>
 <trans-unit id="h2aec9ed333a3965d">
   <source><x id="0" equiv-text="&lt;b&gt;"/>All<x id="1" equiv-text="&lt;/b&gt;"/> categories of data the organization has on me</source>
@@ -329,8 +320,11 @@
 <trans-unit id="h5974ce8e8b048cf4">
   <source>Data about my behavior</source>
 </trans-unit>
-<trans-unit id="hf71b12bf88e7bb93">
-  <source>Data allowing to contact me </source>
+<trans-unit id="hd5c761f88f15ee20">
+  <source>Data about my unique physical characteristics</source>
+</trans-unit>
+<trans-unit id="h9210239263c5ae81">
+  <source>Data allowing to contact me</source>
 </trans-unit>
 <trans-unit id="h1c2eb9adfca54c27">
   <source>All information allowing to class me in a demographic category</source>
@@ -340,6 +334,9 @@
 </trans-unit>
 <trans-unit id="ha12117b3405289d5">
   <source>Payment data, financial history and data about my financial situation</source>
+</trans-unit>
+<trans-unit id="h2e0471ec4dcdc556">
+  <source>Data related to my genetic characteristics</source>
 </trans-unit>
 <trans-unit id="ha6a83bab31190c68">
   <source>Data about my health</source>
@@ -400,20 +397,20 @@
 <trans-unit id="ha30c4d3b566b6b1a">
   <source>Canceled</source>
 </trans-unit>
-<trans-unit id="sc3755f907034fcf4">
-  <source>granted</source>
+<trans-unit id="see4e21f60d66f454">
+  <source>Granted</source>
 </trans-unit>
-<trans-unit id="sae36324e0a5783d6">
-  <source>denied</source>
+<trans-unit id="s93390561e1afc0b6">
+  <source>Denied</source>
 </trans-unit>
-<trans-unit id="sfb005196e7ebf2da">
-  <source>partially granted</source>
+<trans-unit id="s538bd2706b2090da">
+  <source>Partially Granted</source>
 </trans-unit>
-<trans-unit id="se350209cc62601ef">
-  <source>under review</source>
+<trans-unit id="s36d273fcd01916af">
+  <source>Under Review</source>
 </trans-unit>
-<trans-unit id="see8b386a20d5d43a">
-  <source>canceled</source>
+<trans-unit id="sa30c4d3b566b6b1a">
+  <source>Canceled</source>
 </trans-unit>
 <trans-unit id="s80ad94771c626ec2">
   <source>no longer than</source>
@@ -626,13 +623,16 @@
   <source>Purposes</source>
 </trans-unit>
 <trans-unit id="sa2a57f4ca828f912">
-  <source>From <x id="0" equiv-text="${start}"/> to <x id="1" equiv-text="${end}"/></source>
+  <source>From <x id="0" equiv-text="${new Date(start).toLocaleDateString()}"/> to <x id="1" equiv-text="${new Date(end).toLocaleDateString()}"/></source>
 </trans-unit>
 <trans-unit id="s055718e64eaa99fb">
-  <source>Since <x id="0" equiv-text="${start}"/></source>
+  <source>Since <x id="0" equiv-text="${new Date(start).toLocaleDateString()}"/></source>
 </trans-unit>
 <trans-unit id="s7154a359944ac56f">
-  <source>Up to <x id="0" equiv-text="${end}"/></source>
+  <source>Up to <x id="0" equiv-text="${new Date(end).toLocaleDateString()}"/></source>
+</trans-unit>
+<trans-unit id="s4ffccdcb24fe516c">
+  <source>No valid dates!</source>
 </trans-unit>
 <trans-unit id="s3f2acea3f9106217">
   <source>I want to access:</source>
@@ -758,14 +758,101 @@
 <trans-unit id="s1e55a47eccb89757">
   <source>Demands</source>
 </trans-unit>
+<trans-unit id="s035f0451c192f516">
+  <source>Loading your requests...</source>
+</trans-unit>
+<trans-unit id="sb852d600f91dbabe">
+  <source>No requests to display!</source>
+</trans-unit>
+<trans-unit id="heb19908ed8209df2">
+  <source>Request Summary</source>
+</trans-unit>
+<trans-unit id="s9a2a2fda9cfa1ddc">
+  <source>Copy Link</source>
+</trans-unit>
+<trans-unit id="s7b7163270e57e8b4">
+  <source>Refresh</source>
+</trans-unit>
+<trans-unit id="hf75700d04ad87450">
+  <source><x id="0" equiv-text="${ACTION_TITLES[demand.requested_action]()}"/> Demand</source>
+</trans-unit>
+<trans-unit id="h4606c8f9df5fda02">
+  <source><x id="0" equiv-text="${ACTION_TITLES[subDemand.requested_action]()}"/>
+                            Demand</source>
+</trans-unit>
+<trans-unit id="sfef5aebda25a65db">
+  <source>Error getting request details. Please refresh later.</source>
+</trans-unit>
+<trans-unit id="s34596f334f77ca12">
+  <source>Loading request details...</source>
+</trans-unit>
+<trans-unit id="s9758d00d61bc6bfb">
+  <source>Requested:</source>
+</trans-unit>
+<trans-unit id="s4b044729b490b909">
+  <source>This demand has been denied. Reason: </source>
+</trans-unit>
+<trans-unit id="sae19feef2bd60f9f">
+  <source>This demand has been partially granted.</source>
+</trans-unit>
+<trans-unit id="s6e70bde5ac66f7de">
+  <source>This demand is still under review.</source>
+</trans-unit>
+<trans-unit id="se40a735383dec962">
+  <source>Cancel Demand</source>
+</trans-unit>
+<trans-unit id="se9e76660770debd1">
+  <source>This demand has been cancelled.</source>
+</trans-unit>
+<trans-unit id="s232c5da90a3947da">
+  <source>Download your data.</source>
+</trans-unit>
+<trans-unit id="s3137e812940ae6b7">
+  <source>Obtaining data, please wait and refresh the page later.</source>
+</trans-unit>
+<trans-unit id="s55b7584ba4fd4ba5">
+  <source>Your delete demand has been granted.</source>
+</trans-unit>
+<trans-unit id="sdf7c88ae65f54276">
+  <source>Your modify demand has been granted.</source>
+</trans-unit>
+<trans-unit id="sfdad6bb711adaff5">
+  <source>Your object demand has been granted</source>
+</trans-unit>
+<trans-unit id="s47665adef9b4c820">
+  <source>Your demand has been granted.</source>
+</trans-unit>
+<trans-unit id="s381b5599a35bcd11">
+  <source>Your portability demand has been granted.</source>
+</trans-unit>
+<trans-unit id="se05f0d609b64589c">
+  <source>Your restrict demand has been granted.</source>
+</trans-unit>
+<trans-unit id="sc12f511c98f7f0dc">
+  <source>Your revoke consent demand has been granted.</source>
+</trans-unit>
+<trans-unit id="sb7a10b9644ec1870">
+  <source>Your transparency demand has been granted and split into multiple demands below.</source>
+</trans-unit>
+<trans-unit id="h0432c8d86c610266">
+  <source>
+                  Type: <x id="0" equiv-text="${lb.lb_type}&lt;br&gt;"/>
+                  Name: <x id="1" equiv-text="${lb.name}&lt;br&gt;"/>
+                  Description: <x id="2" equiv-text="${lb.description}&lt;br&gt;&lt;br&gt;&#10;                "/></source>
+</trans-unit>
+<trans-unit id="hfdcde931c66b34c9">
+  <source><x id="0" equiv-text="&lt;b&gt;${dc[0]}"/> Data:<x id="1" equiv-text="&lt;/b&gt;"/> Source
+                            <x id="2" equiv-text="&lt;i&gt;${prov.provenance}&lt;/i&gt;"/> of the
+                            <x id="3" equiv-text="&lt;i&gt;${prov.system}&lt;/i&gt;"/> system.<x id="4" equiv-text="&lt;br&gt;"/></source>
+</trans-unit>
 <trans-unit id="s78636b92c1a3909c">
   <source>Pending</source>
 </trans-unit>
 <trans-unit id="s684a712107b118fe">
   <source>Answered</source>
 </trans-unit>
-<trans-unit id="sa30c4d3b566b6b1a">
-  <source>Canceled</source>
+<trans-unit id="s794f12abe8666b7f">
+  <source>Back to Requests</source>
 </trans-unit>
 </body>
 </file>

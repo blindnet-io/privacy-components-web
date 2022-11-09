@@ -70,6 +70,7 @@ export class BldnNavWrapper extends LitElement {
   static styles = css`
     :host {
       display: block;
+      /* width: 100%; */
       border: 2px solid
         var(--bldn-nav-wrapper-border-color, var(--color-medium));
       border-radius: 20px;
@@ -86,7 +87,7 @@ export class BldnNavWrapper extends LitElement {
       display: flex;
       justify-content: center;
       /* FIXME: Forces the wrapper to be a certain size */
-      column-gap: 12.5rem;
+      column-gap: 25%;
       /* margin: 0px 275px; */
       transform: translateY(22px);
     }

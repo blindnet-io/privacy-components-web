@@ -7,7 +7,10 @@ import { msg } from '@lit/localize';
 import { css, html, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
-import { DATA_CATEGORY_DESCRIPTIONS } from '../utils/dictionary.js';
+import {
+  DATA_CATEGORY_DESCRIPTIONS,
+  DATA_CATEGORY_TITLES,
+} from '../utils/dictionary.js';
 import { ActionForm } from './bldn-action-form.js';
 
 /**
@@ -37,9 +40,9 @@ export class BldnDeleteForm extends ActionForm {
           value: dc,
           display: html`${dc === '*'
             ? ''
-            : html`<b>${dc} ${msg('Data')}: </b>`}${DATA_CATEGORY_DESCRIPTIONS[
-            dc
-          ]()}`,
+            : html`<b
+                >${DATA_CATEGORY_TITLES[dc]()} ${msg('Data')}:
+              </b>`}${DATA_CATEGORY_DESCRIPTIONS[dc]()}`,
           checked:
             this.demands![0].restrictions?.privacy_scope?.findIndex(
               psr => psr.dc === dc

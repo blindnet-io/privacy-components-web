@@ -77,7 +77,8 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
     Object.values(PrivacyRequestDemand.action);
 
   /** @prop */
-  @property({ type: Array }) dataCategories: string[] = [];
+  @property({ type: Array, attribute: 'data-categories' })
+  dataCategories: string[] = [];
 
   @state() _uiState: RequestBuilderUIState = RequestBuilderUIState.menu;
 
@@ -87,7 +88,9 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
 
   @state() _demandGroups: PrivacyRequestDemand[][] = [];
 
-  @state() _allowedActions: PrivacyRequestDemand.action[] = [];
+  @state() _allowedActions: PrivacyRequestDemand.action[] = Object.values(
+    PrivacyRequestDemand.action
+  );
 
   @state() _allowedDataCategories: string[] = [];
 
@@ -172,6 +175,12 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
           () => html`
             <bldn-restrict-form
               data-categories=${JSON.stringify(this._allowedDataCategories)}
+              processing-categories=${JSON.stringify(
+                Object.values(PrivacyScopeRestriction.pc)
+              )}
+              purposes=${JSON.stringify(
+                Object.values(PrivacyScopeRestriction.pp)
+              )}
               .demands=${this._demandGroupIndex !== undefined
                 ? this._demandGroups[this._demandGroupIndex]
                 : ifDefined(undefined)}
@@ -364,9 +373,31 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
       this._allowedDataCategories = Object.values(DefaultDataCategories);
       // TODO: Set to some default data categories
     }
+
+    // Compare all allowed data categories with those passed in
+    const lowerCaseDataCategories = this.dataCategories.map(dc =>
+      dc.toLowerCase()
+    );
+    const selectedCategories = this._allowedDataCategories.filter(
+      dc => lowerCaseDataCategories.includes(dc.toLowerCase()) || dc === '*'
+    );
+    if (selectedCategories.length > 0) {
+      this._allowedDataCategories = selectedCategories;
+    }
   }
 
-  private handleActionsChange() {}
+  /**
+   * Filter our list of actions based on those passed in
+   */
+  private handleActionsChange() {
+    const lowerCaseActions = this.actions.map(a => a.toLowerCase());
+    const selectedActions = this._allowedActions.filter(a =>
+      lowerCaseActions.includes(a.toLowerCase())
+    );
+    if (selectedActions.length > 0) {
+      this._allowedActions = selectedActions;
+    }
+  }
 
   private handleTokenChange() {
     this.updateDataCategories();
@@ -439,7 +470,7 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
           RequestBuilderUIState.menu,
           () => html`
             <bldn-tile-menu
-              .tiles=${this.actions
+              .tiles=${this._allowedActions
                 .filter(a => !a.includes('.'))
                 .map(a => ({
                   title: ACTION_TITLES[a](),
@@ -471,6 +502,7 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
   static styles = css`
     :host {
       display: block;
+      width: 100%;
     }
   `;
 }

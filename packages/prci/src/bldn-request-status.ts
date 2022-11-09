@@ -38,6 +38,11 @@ const downloadSvg = new URL(
 const cancelSvg = new URL('./assets/icons/ic_round-cancel.svg', import.meta.url)
   .href;
 
+const refreshSvg = new URL(
+  './assets/icons/heroicons-solid_refresh.svg',
+  import.meta.url
+).href;
+
 /**
  * Get a user friendly string for a retention policy
  * @param dataCategory Data category the policy pertains to
@@ -76,11 +81,19 @@ export class BldnRequestStatus extends CoreConfigurationMixin(LitElement) {
 
   @state() _requestDetails: PrivacyResponsePayload[] = [];
 
+  @state() _error: boolean = false;
+
   getRequestDetails() {
     ComputationAPI.getInstance()
       .getRequest(this.requestId!)
       .then(requestDetails => {
         this._requestDetails = requestDetails;
+        this._error = false;
+      })
+      .catch(e => {
+        // eslint-disable-next-line no-console
+        console.log(e);
+        this._error = true;
       });
   }
 
@@ -96,8 +109,8 @@ export class BldnRequestStatus extends CoreConfigurationMixin(LitElement) {
     ComputationAPI.getInstance()
       .cancelDemand(demand.demand_id)
       .then(() => {
-        // eslint-disable-next-line no-param-reassign
-        demand.status = PrivacyResponsePayload.status.CANCELED;
+        // Refetch request status after cancelling
+        this.getRequestDetails();
       })
       .catch(e => {
         // eslint-disable-next-line no-console
@@ -105,11 +118,30 @@ export class BldnRequestStatus extends CoreConfigurationMixin(LitElement) {
       });
   }
 
+  handleRefreshClick() {
+    this.getRequestDetails();
+  }
+
   protected willUpdate(
     _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
   ): void {
-    if (_changedProperties.has('apiToken') && this.apiToken && this.requestId)
+    if (_changedProperties.has('apiToken') && this.apiToken && this.requestId) {
       this.getRequestDetails();
+    }
+
+    if (_changedProperties.has('requestId')) {
+      if (this.requestId && ComputationAPI.getInstance().apiTokenSet()) {
+        this.getRequestDetails();
+      } else if (this.requestId) {
+        // Try waiting 2 seconds incase there is a delay in setting the api token,
+        // such as in our demo
+        setTimeout(() => {
+          if (ComputationAPI.getInstance().apiTokenSet()) {
+            this.getRequestDetails();
+          }
+        }, 2000);
+      }
+    }
 
     if (
       _changedProperties.has('requestId') &&
@@ -122,39 +154,100 @@ export class BldnRequestStatus extends CoreConfigurationMixin(LitElement) {
   render() {
     return html`
       <bldn-dropdown class="main-section" mode="major" open>
-        <span slot="heading"><strong>${msg(html`Request Summary - `)}
+        <span slot="heading" id='summary-heading'><b>${msg(
+          html`Request Summary`
+        )}</b>
           <bldn-button mode='link-icon' underline-mode='none' @bldn-button:click=${
             this.handleCopyLinkClick
           }>
-            <span id='copy-link'><b>${msg('Copy Link')}</b></span>
+            <span class='request-action'><b>${msg('Copy Link')}</b></span>
             <img src=${linkSvg} alt='copy link to request status page'></img>
-          </bldn-button></strong>
+          </bldn-button>
+          <bldn-button mode='link-icon' underline-mode='none' @bldn-button:click=${
+            this.handleRefreshClick
+          }>
+            <span class='request-action'><b>${msg('Refresh')}</b></span>
+            <img src=${refreshSvg} alt='refresh this request'></img>
+          </bldn-button>
         </span>
-        ${this._requestDetails.map(demand => {
-          const classes = {
-            granted: demand.status === PrivacyResponsePayload.status.GRANTED,
-            denied: demand.status === PrivacyResponsePayload.status.DENIED,
-            partial:
-              demand.status ===
-                PrivacyResponsePayload.status.PARTIALLY_GRANTED ||
-              demand.status === PrivacyResponsePayload.status.UNDER_REVIEW,
-            canceled: demand.status === PrivacyResponsePayload.status.CANCELED,
-          };
-          return html`
-            <bldn-dropdown>
-              <span slot="heading"
-                ><strong
-                  >${msg(
-                    html`${ACTION_TITLES[demand.requested_action]()} Demand`
-                  )}&nbsp;&nbsp;&nbsp;<span class=${classMap(classes)}
-                    >${DEMAND_STATUS_DESCRIPTIONS[demand.status]()}</span
-                  ></strong
-                ></span
-              >
-              ${this.getStatusTemplate(demand)}
-            </bldn-dropdown>
-          `;
-        })}
+        ${when(
+          this._requestDetails.length > 0,
+          () => html`
+            ${this._requestDetails.map(demand => {
+              const classes = {
+                granted:
+                  demand.status === PrivacyResponsePayload.status.GRANTED,
+                denied: demand.status === PrivacyResponsePayload.status.DENIED,
+                partial:
+                  demand.status ===
+                    PrivacyResponsePayload.status.PARTIALLY_GRANTED ||
+                  demand.status === PrivacyResponsePayload.status.UNDER_REVIEW,
+                canceled:
+                  demand.status === PrivacyResponsePayload.status.CANCELED,
+              };
+              return html`
+                <bldn-dropdown>
+                  <span slot="heading"
+                    ><strong
+                      >${msg(
+                        html`${ACTION_TITLES[demand.requested_action]()} Demand`
+                      )}&nbsp;&nbsp;&nbsp;<span class=${classMap(classes)}
+                        >${DEMAND_STATUS_DESCRIPTIONS[demand.status]()}</span
+                      ></strong
+                    ></span
+                  >
+                  ${this.getStatusTemplate(demand)}
+                </bldn-dropdown>
+                ${map(demand.includes, subDemand => {
+                  const subClasses = {
+                    granted:
+                      subDemand.status ===
+                      PrivacyResponsePayload.status.GRANTED,
+                    denied:
+                      subDemand.status === PrivacyResponsePayload.status.DENIED,
+                    partial:
+                      subDemand.status ===
+                        PrivacyResponsePayload.status.PARTIALLY_GRANTED ||
+                      subDemand.status ===
+                        PrivacyResponsePayload.status.UNDER_REVIEW,
+                    canceled:
+                      subDemand.status ===
+                      PrivacyResponsePayload.status.CANCELED,
+                  };
+                  return html`
+                    <bldn-dropdown>
+                      <span slot="heading"
+                        ><strong
+                          >${msg(
+                            html`${ACTION_TITLES[subDemand.requested_action]()}
+                            Demand`
+                          )}&nbsp;&nbsp;&nbsp;<span
+                            class=${classMap(subClasses)}
+                            >${DEMAND_STATUS_DESCRIPTIONS[
+                              subDemand.status
+                            ]()}</span
+                          ></strong
+                        ></span
+                      >
+                      ${this.getStatusTemplate(subDemand)}
+                    </bldn-dropdown>
+                  `;
+                })}
+              `;
+            })}
+          `,
+          () => html`
+            <p id="loading-message">
+              ${when(
+                this._error,
+                () => html`
+                  ${msg('Error getting request details. Please refresh later.')}
+                `,
+                () => html` ${msg('Loading request details...')} `
+              )}
+            </p>
+          `
+        )}
       </bldn-dropdown>
     `;
   }
@@ -210,6 +303,7 @@ export class BldnRequestStatus extends CoreConfigurationMixin(LitElement) {
     `;
   }
 
+  // NOTE: For now, we assume demand.data is a JSON file
   getGrantedResponseTemplate(demand: PrivacyResponsePayload) {
     return html`
       ${choose(demand.requested_action, [
@@ -219,16 +313,11 @@ export class BldnRequestStatus extends CoreConfigurationMixin(LitElement) {
             ${when(
               demand.data,
               () => html`
-                ${msg(
-                  // NOTE: For now, we assume demand.data is a JSON file
-                  html`
                 <bldn-button mode='link-icon' @bldn-button:click=${() =>
                   this.handleDownloadClick(demand)}>
                   <img src=${downloadSvg} alt='download your data'></img>
                   <span>${msg('Download your data.')}</span>
                 </bldn-button>
-              `
-                )}
               `,
               () =>
                 html`<p>
@@ -241,42 +330,44 @@ export class BldnRequestStatus extends CoreConfigurationMixin(LitElement) {
         ],
         [
           PrivacyResponsePayload.requested_action.DELETE,
-          () => html` <p>${msg('Your delete request has been granted.')}</p> `,
+          () => html` <p>${msg('Your delete demand has been granted.')}</p> `,
         ],
         [
           PrivacyResponsePayload.requested_action.MODIFY,
-          () => html` <p>${msg('Your modify request has been granted.')}</p> `,
+          () => html` <p>${msg('Your modify demand has been granted.')}</p> `,
         ],
         [
           PrivacyResponsePayload.requested_action.OBJECT,
-          () => html` <p>${msg('Your object request has been granted')}</p> `,
+          () => html` <p>${msg('Your object demand has been granted')}</p> `,
         ],
         [
           PrivacyResponsePayload.requested_action.OTHER,
-          () => html` <p>${msg('Your request has been granted.')}</p> `,
+          () => html` <p>${msg('Your demand has been granted.')}</p> `,
         ],
         [
           PrivacyResponsePayload.requested_action.PORTABILITY,
           () => html`
-            <p>${msg('Your portability request has been granted.')}</p>
+            <p>${msg('Your portability demand has been granted.')}</p>
           `,
         ],
         [
           PrivacyResponsePayload.requested_action.RESTRICT,
-          () => html`
-            <p>${msg('Your restrict request has been granted.')}</p>
-          `,
+          () => html` <p>${msg('Your restrict demand has been granted.')}</p> `,
         ],
         [
           PrivacyResponsePayload.requested_action.REVOKE_CONSENT,
           () => html`
-            <p>${msg('Your revoke consent request has been granted.')}</p>
+            <p>${msg('Your revoke consent demand has been granted.')}</p>
           `,
         ],
         [
           PrivacyResponsePayload.requested_action.TRANSPARENCY,
           () => html`
-            <p>${msg('Your transparency request has been granted.')}</p>
+            <p>
+              ${msg(
+                'Your transparency demand has been granted and split into multiple demands below.'
+              )}
+            </p>
           `,
         ],
         [
@@ -297,13 +388,12 @@ export class BldnRequestStatus extends CoreConfigurationMixin(LitElement) {
           PrivacyResponsePayload.requested_action.TRANSPARENCY_LEGAL_BASES,
           () => html`
             <p>
-              ${map(
-                demand.answer as Array<LegalBase>,
-                lb => html`
+              ${map(demand.answer as Array<LegalBase>, lb =>
+                msg(html`
                   Type: ${lb.lb_type}<br />
                   Name: ${lb.name}<br />
                   Description: ${lb.description}<br /><br />
-                `
+                `)
               )}
             </p>
           `,
@@ -425,7 +515,7 @@ export class BldnRequestStatus extends CoreConfigurationMixin(LitElement) {
 
     bldn-dropdown.main-section {
       border: 2px solid
-        var(--bldn-action-form-section-border-color, var(--color-light));
+        var(--bldn-action-form-section-border-color, var(--color-dark));
       border-radius: 20px;
       padding: 2.5em;
       /* FIXME: This makes the border expansion jump weird */
@@ -434,13 +524,6 @@ export class BldnRequestStatus extends CoreConfigurationMixin(LitElement) {
 
     bldn-dropdown.main-section[open] {
       padding: 2.5em 2.5em 0.5em 2.5em;
-    }
-
-    bldn-dropdown.main-section:hover {
-      border: 2px solid
-        var(--bldn-action-form-section-border-color-hovered, var(--color-dark));
-      /* FIXME: This makes the border expansion jump weird */
-      /* transition: 0.3s ease; */
     }
 
     /* Font for main sections: Demand Details and Other Options */
@@ -464,7 +547,11 @@ export class BldnRequestStatus extends CoreConfigurationMixin(LitElement) {
       );
     }
 
-    bldn-dropdown bldn-dropdown span ~ p {
+    bldn-dropdown bldn-dropdown > span[slot='heading'] {
+      padding-left: 0;
+    }
+
+    bldn-dropdown bldn-dropdown > * {
       padding-left: 1.25em;
     }
 
@@ -479,7 +566,16 @@ export class BldnRequestStatus extends CoreConfigurationMixin(LitElement) {
       border-bottom: none;
     }
 
-    #copy-link {
+    #summary-heading {
+      display: flex;
+      gap: 1em;
+    }
+
+    #loading-message {
+      margin: 0.8em 0em;
+    }
+
+    .request-action {
       color: var(--color-medium);
     }
 
@@ -504,299 +600,3 @@ export class BldnRequestStatus extends CoreConfigurationMixin(LitElement) {
     }
   `;
 }
-
-// import { msg, str } from '@lit/localize';
-// import { css, html, LitElement, PropertyValueMap } from 'lit';
-// import { customElement, property, state } from 'lit/decorators.js';
-// import { map } from 'lit/directives/map.js';
-// import { when } from 'lit/directives/when.js';
-// import {
-//   ACTION,
-//   DEMAND_STATUS,
-//   PrivacyResponseItem,
-//   ComputationAPI,
-// } from '@blindnet/core';
-
-// import './StatusViewItem.js';
-// import { ComponentState } from './utils/states.js';
-// import { PRCIStyles } from './styles.js';
-// import { getRequestLink, removeQueryParam } from './utils/utils.js';
-
-// const linkSvg = new URL('./assets/icons/link.svg', import.meta.url).href;
-
-// /**
-//  * View the status of a Privacy Request
-//  */
-// @customElement('status-view')
-// export class StatusView extends LitElement {
-//   static styles = [
-//     PRCIStyles,
-//     css`
-//       :host {
-//         display: grid;
-//         row-gap: 20px;
-//         max-width: 900px;
-//         text-align: center;
-//         margin: auto;
-//       }
-
-//       .req-progress-ctr {
-//         display: grid;
-//         row-gap: 10px;
-//       }
-
-//       .dmds-ctr {
-//         display: grid;
-//         row-gap: 20px;
-//         padding: 30px 40px 40px 40px;
-//       }
-
-//       .dmds-ctr span {
-//         padding: 0px 0px 20px 0px;
-//       }
-
-//       #completed-dmds-ctr {
-//         border: 1px solid #18a0fb;
-//         background: rgba(24, 160, 251, 0.11);
-//       }
-
-//       #nav-btns-ctr {
-//         display: flex;
-//         /* grid-template-columns: repeat(2, 1fr); */
-//         column-gap: 20px;
-//         justify-content: center;
-//         justify-items: center;
-//       }
-
-//       .status-nav-btn {
-//         font-size: 18px;
-//       }
-
-//       p {
-//         display: flex;
-//         align-items: center;
-//         justify-content: center;
-//       }
-
-//       button {
-//         display: inline-flex;
-//         align-items: center;
-//       }
-//     `,
-//   ];
-
-//   @property({ type: String, attribute: 'request-id' }) requestId: string = '';
-
-//   @property({ type: Boolean }) newRequest: boolean = false;
-
-//   @state() _requestDate: Date = new Date();
-
-//   @state() _completedDemands: PrivacyResponseItem[] = [];
-
-//   @state() _processingDemands: PrivacyResponseItem[] = [];
-
-//   @state() _cancelledDemands: PrivacyResponseItem[] = [];
-
-//   // eslint-disable-next-line no-undef
-//   @state() _intervalId: any = undefined;
-
-//   reloadRequest() {
-//     ComputationAPI.getInstance()
-//       .getRequest(this.requestId)
-//       .then(response => {
-//         if (response.length > 0) {
-//           this._requestDate = new Date(response[0].date);
-//           this._completedDemands = response.filter(d =>
-//             [
-//               DEMAND_STATUS.GRANTED,
-//               DEMAND_STATUS['PARTIALLY-GRANTED'],
-//               DEMAND_STATUS.DENIED,
-//             ].includes(d.status)
-//           );
-//           this._processingDemands = response.filter(
-//             d => d.status === DEMAND_STATUS['UNDER-REVIEW']
-//           );
-//           this._cancelledDemands = response.filter(
-//             d => d.status === DEMAND_STATUS.CANCELED
-//           );
-//         }
-
-//         // If no more demands are processing, the reload interval exists, and the data for
-//         // all ACCESS responses has arrived, stop reloading the request.
-//         if (
-//           this._processingDemands.length === 0 &&
-//           this._intervalId &&
-//           !this._completedDemands.some(
-//             d => d.requested_action === ACTION.ACCESS && !d.data
-//           )
-//         ) {
-//           clearInterval(this._intervalId);
-//           this._intervalId = undefined;
-//         } else if (!this._intervalId && this._processingDemands.length !== 0) {
-//           // FIXME: reload should happen after a user interaction, not automatically
-//           // Setup an interval to get the status of processing demands every 3 seconds
-//           this._intervalId = setInterval(() => this.reloadRequest(), 3000);
-//         }
-//       });
-//   }
-
-//   protected willUpdate(
-//     _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
-//   ): void {
-//     if (_changedProperties.has('requestId') && this.requestId !== '') {
-//       this.reloadRequest();
-//     }
-//   }
-
-//   handleCopyIdClick() {
-//     navigator.clipboard.writeText(this.requestId);
-//   }
-
-//   handleCopyLinkClick() {
-//     navigator.clipboard.writeText(getRequestLink(this.requestId).toString());
-//   }
-
-//   handleBackClick() {
-//     removeQueryParam('requestId');
-//     this.dispatchEvent(
-//       new CustomEvent('component-state-change', {
-//         bubbles: true,
-//         composed: true,
-//         detail: {
-//           newState: ComponentState.REQUESTS,
-//         },
-//       })
-//     );
-//   }
-
-//   handleNewRequestClick() {
-//     removeQueryParam('requestId');
-//     this.dispatchEvent(
-//       new CustomEvent('component-state-change', {
-//         bubbles: true,
-//         composed: true,
-//         detail: {
-//           newState: ComponentState.MENU,
-//         },
-//       })
-//     );
-//   }
-
-//   render() {
-//     return html`
-//       ${when(
-//         this._processingDemands.length > 0,
-//         () => html`
-//           <p>
-//             ${msg(
-//               str`Your Privacy Request, sent on
-//               ${this._requestDate.toLocaleDateString('en-gb')}, is currently
-//               being processed.`
-//             )}
-//           </p>
-//           ${when(
-//             this._completedDemands.length > 0,
-//             () => html`
-//               <div class="req-progress-ctr">
-//                 <p>${msg('At the moment:')}</p>
-//                 <p>
-//                   <b
-//                     >${msg(
-//                       html`${this._completedDemands.length} demand(s) have been
-//                       completed${when(
-//                         this._cancelledDemands.length > 0,
-//                         () =>
-//                           html` and ${this._cancelledDemands.length} demand(s)
-//                           have been cancelled`
-//                       )}`
-//                     )}</b
-//                   >
-//                 </p>
-//                 <p>
-//                   ${msg(
-//                     html`${this._processingDemands.length} demand(s) are being
-//                     processed`
-//                   )}
-//                 </p>
-//               </div>
-//             `
-//           )}
-//         `,
-//         () => html`
-//           <p>
-//             ${msg(
-//               html`Your Privacy Request, sent on
-//               ${this._requestDate.toLocaleDateString('en-gb')}, has been
-//               processed.`
-//             )}
-//           </p>
-//         `
-//       )}
-//       <div>
-//         <button class='svg-btn' @click=${this.handleCopyLinkClick}>
-//           <img src=${linkSvg} alt='Copy status page link'></img>&nbsp;
-//           <span class='text--underline'>${msg('Copy link to this page')}</span>
-//         </button>
-//       </div>
-//       ${when(
-//         this._completedDemands.length > 0,
-//         () => html`
-//           <div
-//             id="completed-dmds-ctr"
-//             class="dmds-ctr border--medium border--rounded"
-//           >
-//             <span><b>${msg('Completed Demand(s)')}</b></span>
-//             ${map(
-//               this._completedDemands,
-//               d => html`<status-view-item .demand=${d}></status-view-item>`
-//             )}
-//           </div>
-//         `
-//       )}
-//       ${when(
-//         this._processingDemands.length > 0,
-//         () => html`
-//           <div
-//             id="processing-dmds-ctr"
-//             class="dmds-ctr border--medium border--rounded"
-//           >
-//             <span><b>${msg('Processing Demand(s)')}</b></span>
-//             ${map(
-//               this._processingDemands,
-//               d => html`<status-view-item .demand=${d}></status-view-item>`
-//             )}
-//           </div>
-//         `
-//       )}
-//       ${when(
-//         this._cancelledDemands.length > 0,
-//         () => html`
-//           <div
-//             id="cancelled-dmds-ctr"
-//             class="dmds-ctr border--medium border--rounded"
-//           >
-//             <span><b>${msg('Cancelled Demand(s)')}</b></span>
-//             ${map(
-//               this._cancelledDemands,
-//               d => html`<status-view-item .demand=${d}></status-view-item>`
-//             )}
-//           </div>
-//         `
-//       )}
-//       <div id="nav-btns-ctr">
-//         <button
-//           class="status-nav-btn link-btn dark-font text--underline"
-//           @click=${this.handleBackClick}
-//         >
-//           ${msg('Back to my Requests')}
-//         </button>
-//         <button
-//           class="status-nav-btn link-btn dark-font text--underline"
-//           @click=${this.handleNewRequestClick}
-//         >
-//           ${msg('Submit a new Privacy Request')}
-//         </button>
-//       </div>
-//     `;
-//   }
-// }

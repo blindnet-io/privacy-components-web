@@ -44,15 +44,16 @@ export class BldnNavToggle extends LitElement {
   }
 
   render() {
+    // The HTML comment between the two buttoms remove the space that browsers will insert
     return html`
       <div>
         <button
           class=${this._selected === 'left' ? 'selected' : ''}
           @click=${() => this.handleClick('left')}
         >
-          <strong>${this.left.label}</strong>
-        </button>
-        <button
+          <strong>${this.left.label}</strong></button
+        ><!--
+  --><button
           class=${this._selected === 'right' ? 'selected' : ''}
           @click=${() => this.handleClick('right')}
         >
@@ -68,13 +69,9 @@ export class BldnNavToggle extends LitElement {
       text-align: center;
     }
 
-    div {
-      /* Remove space between buttons */
-      font-size: 0px;
-    }
-
     button {
       border: none;
+      font-family: var(--bldn-nav-toggle-font-family, var(--font-family));
       font-size: var(--bldn-nav-toggle-font-size, var(--font-size-large));
       color: var(--bldn-nav-toggle-color-deselected, var(--color-medium));
       background: var(--bldn-nav-toggle-background, var(--background));

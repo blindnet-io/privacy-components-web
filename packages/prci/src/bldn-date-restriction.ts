@@ -31,7 +31,7 @@ export class BldnDateRestriction extends LitElement {
 
   private handleDateChange(e: Event) {
     const { id, value } = e.target as HTMLInputElement;
-    const date = new Date(value).toISOString().split('T')[0];
+    const date = new Date(value).toISOString();
 
     // Emit change event if date and element id are valid
     if (
@@ -56,20 +56,30 @@ export class BldnDateRestriction extends LitElement {
   }
 
   render() {
+    // Get properly formatted date strings to pass to input elements
+    const start =
+      this.start !== undefined
+        ? new Date(this.start).toISOString().split('T')[0]
+        : undefined;
+    const end =
+      this.end !== undefined
+        ? new Date(this.end).toISOString().split('T')[0]
+        : undefined;
+
     return html`
       <p>${msg('Specify a date range for the selected data categories:')}</p>
       <span>${msg('From')}</span>
       <input
         id="start-date"
         type="date"
-        value=${ifDefined(this.start)}
+        value=${ifDefined(start)}
         @input=${this.handleDateChange}
       />
       <span>${msg('to')}</span>
       <input
         id="end-date"
         type="date"
-        value=${ifDefined(this.end)}
+        value=${ifDefined(end)}
         @input=${this.handleDateChange}
       />
     `;

@@ -34,7 +34,7 @@ export const bldnStyles = css`
     --color-darkest: rgb(var(--bldn-color-darkest, 31, 31, 31));
     --color-darkest-rgb: var(--bldn-color-darkest, 31, 31, 31);
 
-    --background: rgb(var(--bldn-background, 255, 255, 255));
+    --background: rgb(var(--bldn-background, inherit));
 
     --font-size-small: var(--bldn-font-size-small, 1rem);
 

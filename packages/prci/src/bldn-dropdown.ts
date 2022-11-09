@@ -63,7 +63,8 @@ export class BldnDropdown extends LitElement {
     }
 
     :host([open][mode='major']) slot[name='heading'] {
-      text-indent: 2em;
+      display: inline-block;
+      margin-left: 2em;
     }
 
     :host([open][mode='major']) button {

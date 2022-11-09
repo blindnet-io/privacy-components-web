@@ -3,11 +3,12 @@ import { msg } from '@lit/localize';
 import { css, html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
+import { when } from 'lit/directives/when.js';
 import { STATUS_DESCRIPTIONS } from './utils/dictionary.js';
 
 @customElement('bldn-submitted-requests-list')
 export class BldnSubmittedRequestsList extends LitElement {
-  @property({ type: Array }) requests: PrItem[] = [];
+  @property({ type: Array }) requests: PrItem[] | undefined;
 
   handleItemClick(id: string) {
     this.dispatchEvent(
@@ -26,22 +27,34 @@ export class BldnSubmittedRequestsList extends LitElement {
         <span><b>${msg('Status')}</b></span>
         <span><b>${msg('Demands')}</b></span>
       </div>
-      <div id="items">
-        ${map(
-          this.requests,
-          r => html`
-            <button
-              id=${r.id}
-              class="item row"
-              @click=${() => this.handleItemClick(r.id)}
-            >
-              <span>${new Date(r.date).toLocaleString()}</span>
-              <span>${STATUS_DESCRIPTIONS[r.status]()}</span>
-              <span>${r.demands}</span>
-            </button>
-          `
-        )}
-      </div>
+      ${when(
+        this.requests && this.requests.length > 0,
+        () => html`
+          <div id="items">
+            ${map(
+              this.requests,
+              r => html`
+                <button
+                  id=${r.id}
+                  class="item row"
+                  @click=${() => this.handleItemClick(r.id)}
+                >
+                  <span>${new Date(r.date).toLocaleString()}</span>
+                  <span>${STATUS_DESCRIPTIONS[r.status]()}</span>
+                  <span>${r.demands}</span>
+                </button>
+              `
+            )}
+          </div>
+        `,
+        () => html`
+          ${when(
+            this.requests === undefined,
+            () => html` <p>${msg('Loading your requests...')}</p> `,
+            () => html` <p>${msg('No requests to display!')}</p> `
+          )}
+        `
+      )}
     `;
   }
 
@@ -49,6 +62,10 @@ export class BldnSubmittedRequestsList extends LitElement {
     :host {
       display: block;
       color: var(--bldn-submitted-requests-list-font-color, var(--color-dark));
+      font-size: var(
+        --bldn-submitted-requests-font-size,
+        var(--font-size-small)
+      );
     }
 
     #items {
@@ -73,7 +90,7 @@ export class BldnSubmittedRequestsList extends LitElement {
     }
 
     .item:hover {
-      border-color: var(--color-medium);
+      border-color: var(--color-dark);
       transition: 0.3s ease;
     }
 

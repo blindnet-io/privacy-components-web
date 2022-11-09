@@ -44,7 +44,7 @@ export class BldnButton extends LitElement {
         border-radius: var(--bldn-button-border-radius, 5px);
         padding: 0.625rem 2.5rem;
         color: white;
-        font-size: 16px;
+        font-size: var(--bldn-button-font-size, var(--font-size-small));
         background: var(--bldn-button-color-primary, var(--color-primary));
         /* box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1), 0px 2px 4px rgba(0, 0, 0, 0.2), 0px 4px 8px rgba(0, 0, 0, 0.2), 0px 8px 16px rgba(0, 0, 0, 0.2); */
       }
