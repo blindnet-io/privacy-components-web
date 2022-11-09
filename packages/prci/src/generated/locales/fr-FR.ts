@@ -266,7 +266,7 @@
 'ha9713792ec60139d': html`Revoke <b>specific</b> consents (select those you wish to
                 <b>revoke</b>)`,
 's035f0451c192f516': `Loading your requests...`,
-'sb852d600f91dbabe': `No requests to display!`,
+'s585fef41538d4f6b': `No requests to display`,
 'heb19908ed8209df2': html`Request Summary`,
 's9a2a2fda9cfa1ddc': `Copy Link`,
 's7b7163270e57e8b4': `Refresh`,
