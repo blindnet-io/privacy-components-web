@@ -51,7 +51,7 @@ export class BldnSubmittedRequestsList extends LitElement {
           ${when(
             this.requests === undefined,
             () => html` <p>${msg('Loading your requests...')}</p> `,
-            () => html` <p>${msg('No requests to display!')}</p> `
+            () => html` <p>${msg('No requests to display')}</p> `
           )}
         `
       )}
