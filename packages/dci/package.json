@@ -1,6 +1,6 @@
 {
   "name": "@blindnet/dci",
-  "version": "0.12.0",
+  "version": "0.12.1",
   "description": "Webcomponent for Data Consumers to manage data captures and privacy requests",
   "author": "blindnet <hello@blindnet.io>",
   "license": "MIT",
