@@ -3,18 +3,15 @@ import {
   PrivacyRequestDemand,
   bldnStyles,
 } from '@blindnet/core';
-import { localized, configureLocalization } from '@lit/localize';
+import { localized } from '@lit/localize';
 import { css, html, LitElement, PropertyValueMap } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
-// Generated via output.localeCodesModule
-import { sourceLocale, targetLocales } from './generated/locale-codes.js';
-
 import './bldn-request-builder.js';
 import './bldn-submitted-requests.js';
-// import { setLocale } from './utils/localization.js';
+import { setLocale, getLocale } from './utils/localization.js';
 
 enum PRCIUIState {
   createRequest,
@@ -38,12 +35,6 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
 
   constructor() {
     super();
-
-    const { getLocale, setLocale } = configureLocalization({
-      sourceLocale,
-      targetLocales,
-      loadLocale: locale => import(`./generated/locales/${locale}.js`),
-    });
 
     // Set locale if current one is supported
     try {
