@@ -7,6 +7,7 @@
   "scripts": {
     "postinstall": "lerna bootstrap",
     "lerna": "lerna",
+    "fix-locales": "node ./tasks/fix-locale-imports.js",
     "build:imports": "lerna exec --scope \"@blindnet/*\" -- \"importly --host=unpkg --lookup=unpkg --semver=minor < package.json > import-map.json\"",
     "build:localize": "node ./tasks/copy-localization-config.js && lerna run localize",
     "build:rollup": "rollup -c",
@@ -39,7 +40,8 @@
     "ignore-sync": "ignore-sync .",
     "bundle:build-demos": "lerna run build --scope \"@blindnet-demos/*\"",
     "bundle:copy": "node ./tasks/bundle-copy.js",
-    "bundle": "yarn bundle:build-demos && yarn storybook:build && yarn bundle:copy"
+    "bundle:fix-locales": "node ./tasks/bundle-fix-locales.js",
+    "bundle": "yarn bundle:build-demos && yarn storybook:build && yarn bundle:copy && yarn bundle:fix-locales"
   },
   "dependencies": {
     "@lit/localize": "^0.11.3",
