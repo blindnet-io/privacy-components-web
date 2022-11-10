@@ -27,7 +27,7 @@ import { ACTION_DESCRIPTIONS, ACTION_TITLES } from './utils/dictionary.js';
  * @returns Decoded string
  */
 function decode(input: string) {
-  let output = input.replace(/-/g, '+').replace(/_/g, '/');
+  let output = (input || '').replace(/-/g, '+').replace(/_/g, '/');
 
   switch (output.length % 4) {
     case 0:
