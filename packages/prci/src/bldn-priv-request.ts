@@ -40,6 +40,7 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
     try {
       setLocale(navigator.language).then(() => {
         console.log(`Set locale to ${getLocale()}`);
+        this.requestUpdate();
       });
     } catch (e) {
       // eslint-disable-next-line no-console
