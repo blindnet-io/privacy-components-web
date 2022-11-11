@@ -32,5 +32,8 @@ packages.forEach(pack => {
           if (err) return console.log(err);
         }
       );
+      console.log(
+        `replaced imports in ./build/packages/${pack}/generated/locales/${localeFile}`
+      );
     });
 });
