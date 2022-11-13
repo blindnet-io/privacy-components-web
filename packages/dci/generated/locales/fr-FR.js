@@ -1,5 +1,5 @@
-import { html } from 'lit';
-import { str } from '@lit/localize';
+import { html } from 'https://unpkg.com/@polymer/lit-element@latest/lit-element.js?module';
+import { str } from 'https://unpkg.com/@lit/localize@latest/lit-localize.js?module';
 
 // Do not modify this file by hand!
 /* eslint-disable no-irregular-whitespace */

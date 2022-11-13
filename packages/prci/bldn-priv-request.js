@@ -4,9 +4,9 @@ import { localized } from '@lit/localize';
 import { LitElement, html, css } from 'lit';
 import { property, state, customElement } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import './bldn-request-builder.js';
 import './bldn-submitted-requests.js';
-import { ifDefined } from 'lit/directives/if-defined.js';
 import { setLocale } from './utils/localization.js';
 
 var PRCIUIState;

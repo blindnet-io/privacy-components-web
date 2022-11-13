@@ -1,6 +1,6 @@
 import { __decorate } from './node_modules/tslib/tslib.es6.js';
 import { CoreConfigurationMixin, ComputationAPI, PrItem } from '@blindnet/core';
-import { msg } from '@lit/localize';
+import { msg, localized } from '@lit/localize';
 import { LitElement, html, css } from 'lit';
 import { property, state, customElement } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
@@ -155,6 +155,7 @@ __decorate([
     state()
 ], BldnSubmittedRequests.prototype, "_selectedRequest", void 0);
 BldnSubmittedRequests = __decorate([
+    localized(),
     customElement('bldn-submitted-requests')
 ], BldnSubmittedRequests);
 

@@ -13,6 +13,7 @@ import './action-forms/bldn-restrict-form.js';
 import './action-forms/bldn-revoke-consent-form.js';
 import './action-forms/bldn-transparency-form.js';
 import './action-forms/bldn-other-form.js';
+import { localized } from '@lit/localize';
 import { ACTION_TITLES, ACTION_DESCRIPTIONS } from './utils/dictionary.js';
 
 /**
@@ -438,6 +439,7 @@ __decorate([
     state()
 ], BldnRequestBuilder.prototype, "_allowedDataCategories", void 0);
 BldnRequestBuilder = __decorate([
+    localized(),
     customElement('bldn-request-builder')
 ], BldnRequestBuilder);
 
