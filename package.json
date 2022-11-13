@@ -10,8 +10,9 @@
     "fix-locales": "node ./tasks/fix-locale-imports.js",
     "build:imports": "lerna exec --scope \"@blindnet/*\" -- \"importly --host=unpkg --lookup=unpkg --semver=minor < package.json > import-map.json\"",
     "build:localize": "node ./tasks/copy-localization-config.js && lerna run localize",
+    "build:fix-locales": "node ./tasks/build-fix-locales.js",
     "build:rollup": "rollup -c",
-    "build": "yarn run build:imports && yarn run build:localize && yarn run build:rollup",
+    "build": "yarn run build:imports && yarn run build:localize && yarn run build:rollup && yarn run build:fix-locales",
     "watch": "yarn run build:rollup --configKeep --configRaw --watch",
     "analyze": "lerna exec -- \"cem analyze --litelement\"",
     "start": "wds",
@@ -40,7 +41,6 @@
     "ignore-sync": "ignore-sync .",
     "bundle:build-demos": "lerna run build --scope \"@blindnet-demos/*\"",
     "bundle:copy": "node ./tasks/bundle-copy.js",
-    "bundle:fix-locales": "node ./tasks/bundle-fix-locales.js",
     "bundle": "yarn bundle:build-demos && yarn storybook:build && yarn bundle:copy && yarn bundle:fix-locales"
   },
   "dependencies": {
