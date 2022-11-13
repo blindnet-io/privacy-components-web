@@ -1,7 +1,7 @@
 {
   "name": "@blindnet-demos/devkit-simple-tutorial",
   "description": "Simple tutorial for blindnet devkit",
-  "version": "0.12.1",
+  "version": "0.12.2",
   "license": "MIT",
   "private": true,
   "type": "module",
@@ -26,7 +26,7 @@
     "@auth0/auth0-spa-js": "^1.22.5",
     "@blindnet/core": "^0.12.0",
     "@blindnet/dci": "^0.12.1",
-    "@blindnet/prci": "^0.12.1",
+    "@blindnet/prci": "^0.12.2",
     "@magic-sdk/types": "^9.0.0",
     "@vaadin/router": "^1.7.4",
     "carbon-web-components": "^1.21.0",
