@@ -11,7 +11,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 
 import './bldn-request-builder.js';
 import './bldn-submitted-requests.js';
-import { setLocale, getLocale } from './utils/localization.js';
+// import { setLocale, getLocale } from './utils/localization.js';
 
 enum PRCIUIState {
   createRequest,
@@ -35,17 +35,6 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
 
   constructor() {
     super();
-
-    // Set locale if current one is supported
-    try {
-      setLocale(navigator.language).then(() => {
-        console.log(`Set locale to ${getLocale()}`);
-        this.requestUpdate();
-      });
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.log(`Could not set locale to ${navigator.language}.`);
-    }
 
     // Check if a requestId passed
     const url = new URL(window.location.href);
@@ -84,7 +73,21 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
     if (_changedProperties.has('requestId')) this.handleRequestIdChange();
   }
 
+  // connectedCallback(): void {
+  //   // Set locale if current one is supported
+  //   try {
+  //     setLocale(navigator.language).then(() => {
+  //       console.log(`Set locale to ${getLocale()}`);
+  //       this.requestUpdate();
+  //     });
+  //   } catch (e) {
+  //     // eslint-disable-next-line no-console
+  //     console.log(`Could not set locale to ${navigator.language}.`);
+  //   }
+  // }
+
   render() {
+    console.log('rendering prci');
     return html`
       <bldn-nav-toggle
         .left=${{

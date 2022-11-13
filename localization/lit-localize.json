@@ -4,8 +4,7 @@
   "targetLocales": ["fr", "fr-FR", "fr-CA"],
   "tsConfig": "../../tsconfig.json",
   "output": {
-    "mode": "runtime",
-    "outputDir": "./src/generated/locales",
+    "mode": "transform",
     "localeCodesModule": "./src/generated/locale-codes.ts"
   },
   "interchange": {

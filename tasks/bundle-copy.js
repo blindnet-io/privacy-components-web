@@ -35,6 +35,7 @@ async function copyPkgsToBundle(
         ...destSubDir,
         keepPkgDirName ? pkgDirName : ''
       );
+      console.log(`copying ${distPath} to ${destPath}`);
 
       return fs.copy(distPath, destPath);
     })

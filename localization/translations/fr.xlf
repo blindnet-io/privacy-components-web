@@ -54,6 +54,9 @@
   <source>No requests to display.</source>
   <target>Aucune demande à afficher</target>
 </trans-unit>
+<trans-unit id="sddf37916ba33f06c">
+  <source>Could not set locale to <x id="0" equiv-text="${navigator.language}"/>.</source>
+</trans-unit>
 <trans-unit id="sd3b15d6d4ea696f7">
   <source>My additional message:</source>
   <target>Mon message additionnel :</target>

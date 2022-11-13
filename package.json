@@ -11,7 +11,7 @@
     "build:imports": "lerna exec --scope \"@blindnet/*\" -- \"importly --host=unpkg --lookup=unpkg --semver=minor < package.json > import-map.json\"",
     "build:localize": "node ./tasks/copy-localization-config.js && lerna run localize",
     "build:rollup": "rollup -c",
-    "build": "yarn run build:imports && yarn run build:localize && yarn run build:rollup",
+    "build": "yarn run build:imports && yarn run build:rollup",
     "watch": "yarn run build:rollup --configKeep --configRaw --watch",
     "analyze": "lerna exec -- \"cem analyze --litelement\"",
     "start": "wds",
@@ -41,7 +41,7 @@
     "bundle:build-demos": "lerna run build --scope \"@blindnet-demos/*\"",
     "bundle:copy": "node ./tasks/bundle-copy.js",
     "bundle:fix-locales": "node ./tasks/bundle-fix-locales.js",
-    "bundle": "yarn bundle:build-demos && yarn storybook:build && yarn bundle:copy && yarn bundle:fix-locales"
+    "bundle": "yarn bundle:build-demos && yarn storybook:build && yarn bundle:fix-locales"
   },
   "dependencies": {
     "@lit/localize": "^0.11.3",
@@ -59,6 +59,7 @@
     "@rollup/plugin-commonjs": "^22.0.2",
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^13.3.0",
+    "@rollup/plugin-replace": "^5.0.1",
     "@rollup/plugin-typescript": "^8.3.4",
     "@types/babel__core": "^7.1.19",
     "@types/fs-extra": "^9.0.13",

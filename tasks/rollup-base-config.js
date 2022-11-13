@@ -5,10 +5,9 @@ import * as fs from 'fs';
 
 import filesizePlugin from 'rollup-plugin-filesize';
 import { terser } from 'rollup-plugin-terser';
-import typescript from '@rollup/plugin-typescript';
 import del from 'rollup-plugin-delete';
-import minifyHTML from 'rollup-plugin-minify-html-literals';
 import { importMetaAssets } from '@web/rollup-plugin-import-meta-assets';
+import replace from '@rollup/plugin-replace';
 import { optimize as optimizeSVG } from 'svgo';
 
 /**
@@ -149,6 +148,44 @@ export function importAndOptimizeMetaAssets() {
  * @returns {RollupOptions}
  */
 export function genBaseBundleConfig(basePath) {
+  // // Config is read from ./lit-localize.json by default.
+  // // Pass a path to read config from another location.
+  // const locales = localeTransformers();
+
+  // locales.map(({locale, localeTransformer}) => ({
+  //   input: path.join(basePath, directories.source, 'index.ts'),
+  //   output: [
+  //     {
+  //       file: `bundled-locales/${locale}/index.js`,
+  //       format: 'esm',
+  //       sourcemap: true,
+  //       assetFileNames: 'assets/[name].[ext]',
+  //     },
+  //   ],
+  //   plugins: [
+  //     typescript({
+  //       transformers: {
+  //         before: [localeTransformer]
+  //       },
+  //       compilerOptions: {
+  //         declaration: false,
+  //         declarationDir: undefined,
+  //         rootDir: path.join(basePath, directories.source),
+  //       },
+  //     }),
+  //     importAndOptimizeMetaAssets(),
+  //     terser({
+  //       output: { comments: false },
+  //     }),
+  //     minifyHTML(),
+  //     filesize(),
+  //     replace({
+  //       "'lit'": "'https://unpkg.com/@polymer/lit-element@latest/lit-element.js?module'",
+  //       "'@lit/localize'": "'https://unpkg.com/@lit/localize@latest/lit-localize.js?module'"
+  //     }),
+  //   ],
+  // }))
+
   return {
     input: path.join(basePath, directories.source, 'index.ts'),
     output: [
@@ -159,19 +196,18 @@ export function genBaseBundleConfig(basePath) {
       },
     ],
     plugins: [
-      typescript({
-        compilerOptions: {
-          declaration: false,
-          declarationDir: undefined,
-          rootDir: path.join(basePath, directories.source),
-        },
-      }),
       importAndOptimizeMetaAssets(),
       terser({
         output: { comments: false },
       }),
-      minifyHTML(),
+      // minifyHTML(), // TODO: Re-enable this
       filesize(),
+      replace({
+        "'lit'":
+          "'https://unpkg.com/@polymer/lit-element@latest/lit-element.js?module'",
+        "'@lit/localize'":
+          "'https://unpkg.com/@lit/localize@latest/lit-localize.js?module'",
+      }),
     ],
   };
 }
