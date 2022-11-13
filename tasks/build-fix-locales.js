@@ -11,7 +11,6 @@ packages.forEach(pack => {
   localeFiles
     .filter(f => f.endsWith('.js'))
     .forEach(localeFile => {
-      console.log(`./packages/${pack}/dist/generated/locales/${localeFile}`);
       const result = fs
         .readFileSync(
           `./packages/${pack}/dist/generated/locales/${localeFile}`,
@@ -25,7 +24,6 @@ packages.forEach(pack => {
           "'@lit/localize'",
           "'https://unpkg.com/@lit/localize@latest/lit-localize.js?module'"
         );
-      console.log(result);
       fs.writeFile(
         `./packages/${pack}/dist/generated/locales/${localeFile}`,
         result,
