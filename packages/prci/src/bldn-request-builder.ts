@@ -19,6 +19,7 @@ import './action-forms/bldn-restrict-form.js';
 import './action-forms/bldn-revoke-consent-form.js';
 import './action-forms/bldn-transparency-form.js';
 import './action-forms/bldn-other-form.js';
+import { localized } from '@lit/localize';
 import { ACTION_DESCRIPTIONS, ACTION_TITLES } from './utils/dictionary.js';
 
 /**
@@ -70,6 +71,7 @@ enum RequestBuilderUIState {
   review,
 }
 
+@localized()
 @customElement('bldn-request-builder')
 export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
   /** @prop */

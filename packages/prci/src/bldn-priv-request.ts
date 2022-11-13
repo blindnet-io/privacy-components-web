@@ -7,10 +7,10 @@ import { localized } from '@lit/localize';
 import { css, html, LitElement, PropertyValueMap } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 
 import './bldn-request-builder.js';
 import './bldn-submitted-requests.js';
-import { ifDefined } from 'lit/directives/if-defined.js';
 import { setLocale } from './utils/localization.js';
 
 enum PRCIUIState {
