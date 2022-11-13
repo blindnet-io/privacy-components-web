@@ -2,18 +2,19 @@
 /* eslint-disable no-console */
 import fs from 'fs-extra';
 
-const packages = fs.readdirSync('./build/packages');
+const packages = fs.readdirSync('./packages');
 
 packages.forEach(pack => {
   const localeFiles = fs.readdirSync(
-    `./build/packages/${pack}/generated/locales`
+    `./packages/${pack}/dist/generated/locales`
   );
   localeFiles
     .filter(f => f.endsWith('.js'))
     .forEach(localeFile => {
+      console.log(`./packages/${pack}/dist/generated/locales/${localeFile}`);
       const result = fs
         .readFileSync(
-          `./build/packages/${pack}/generated/locales/${localeFile}`,
+          `./packages/${pack}/dist/generated/locales/${localeFile}`,
           'utf-8'
         )
         .replace(
@@ -24,8 +25,9 @@ packages.forEach(pack => {
           "'@lit/localize'",
           "'https://unpkg.com/@lit/localize@latest/lit-localize.js?module'"
         );
+      console.log(result);
       fs.writeFile(
-        `./build/packages/${pack}/generated/locales/${localeFile}`,
+        `./packages/${pack}/dist/generated/locales/${localeFile}`,
         result,
         'utf8',
         err => {
