@@ -1,5 +1,5 @@
 import { ComputationAPI, CoreConfigurationMixin, PrItem } from '@blindnet/core';
-import { msg } from '@lit/localize';
+import { localized, msg } from '@lit/localize';
 import { css, html, LitElement, PropertyValueMap } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
@@ -36,6 +36,7 @@ const filterOptions = [
   },
 ];
 
+@localized()
 @customElement('bldn-submitted-requests')
 export class BldnSubmittedRequests extends CoreConfigurationMixin(LitElement) {
   @property({ type: String, attribute: 'request-id' }) requestId:
