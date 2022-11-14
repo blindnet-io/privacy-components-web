@@ -16,10 +16,7 @@ packages.forEach(pack => {
           `./packages/${pack}/dist/generated/locales/${localeFile}`,
           'utf-8'
         )
-        .replace(
-          "'lit'",
-          "'https://unpkg.com/@polymer/lit-element@latest/lit-element.js?module'"
-        )
+        .replace("'lit'", "'https://unpkg.com/lit@latest/index.js?module'")
         .replace(
           "'@lit/localize'",
           "'https://unpkg.com/@lit/localize@latest/lit-localize.js?module'"
