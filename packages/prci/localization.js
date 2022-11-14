@@ -1,5 +1,5 @@
 import { configureLocalization } from '@lit/localize';
-import { sourceLocale, targetLocales } from '../generated/locale-codes.js';
+import { sourceLocale, targetLocales } from './generated/locale-codes.js';
 
 /**
  * @license

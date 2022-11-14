@@ -7,7 +7,7 @@ import { choose } from 'lit/directives/choose.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import './bldn-request-builder.js';
 import './bldn-submitted-requests.js';
-import { setLocale } from './utils/localization.js';
+import { setLocale } from './localization.js';
 
 var PRCIUIState;
 (function (PRCIUIState) {
