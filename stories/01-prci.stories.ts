@@ -1,7 +1,7 @@
 import { html, TemplateResult } from 'lit';
 import '../packages/prci/dist/index.js';
 import { allLocales } from '../packages/prci/dist/generated/locale-codes.js';
-import { setLocale } from '../packages/prci/dist/utils/localization.js';
+import { setLocale } from '../packages/prci/dist/localization.js';
 
 export default {
   title: 'Privacy Request Capture Interface (PRCI)',
