@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.12.3](https://github.com/blindnet-io/privacy-components-web/compare/v0.12.2...v0.12.3) (2022-11-14)
+
+
+### Bug Fixes
+
+* **@blindnet/prci:** add localized headers ([f686b1c](https://github.com/blindnet-io/privacy-components-web/commit/f686b1ce46f2928391a4c27858a70545b2cc3653))
+* **@blindnet/prci:** fix local path and version ([b1d66ff](https://github.com/blindnet-io/privacy-components-web/commit/b1d66ff2b769b906e899e987e861cd8328f6bb69))
+* **@blindnet/prci:** fix replace call ([4ac4c23](https://github.com/blindnet-io/privacy-components-web/commit/4ac4c23691cf22632bb7abea473f57f4d42bc4fc))
+* **@blindnet/prci:** move localization back to util ([e988922](https://github.com/blindnet-io/privacy-components-web/commit/e9889228c5f2a48f5caecbf043dbb21addb6799d))
+* **@blindnet/prci:** proper locale path ([cf9f623](https://github.com/blindnet-io/privacy-components-web/commit/cf9f623c67be2aa6796f4f0c8ede0e7ec1a7af7b))
+* **@blindnet/prci:** use proper url for dynamic import ([5db7ec7](https://github.com/blindnet-io/privacy-components-web/commit/5db7ec746207bb3b44f70f0bfc39e8dc32b5f677))
+* remove localization file ([9775b3e](https://github.com/blindnet-io/privacy-components-web/commit/9775b3e227d9b9b469c9ad8b012f5553334dd403))
+
+
+### Reverts
+
+* fix(@blindnet/prci): proper locale path ([521332f](https://github.com/blindnet-io/privacy-components-web/commit/521332fa184d19babb9d1c762968d5f01d2ff2d4))
+
+
+
+
+
 ## [0.12.2](https://github.com/blindnet-io/privacy-components-web/compare/v0.12.1...v0.12.2) (2022-11-13)
 
 
