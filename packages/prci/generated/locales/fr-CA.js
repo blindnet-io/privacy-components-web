@@ -1,4 +1,4 @@
-import { html } from 'https://unpkg.com/@polymer/lit-element@latest/lit-element.js?module';
+import { html } from 'https://unpkg.com/lit@latest/index.js?module';
 import { str } from 'https://unpkg.com/@lit/localize@latest/lit-localize.js?module';
 
 // Do not modify this file by hand!
