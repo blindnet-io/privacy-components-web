@@ -11,7 +11,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 
 import './bldn-request-builder.js';
 import './bldn-submitted-requests.js';
-import { setLocale } from './utils/localization.js';
+import { setLocale } from './localization.js';
 
 enum PRCIUIState {
   createRequest,

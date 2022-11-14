@@ -47,7 +47,7 @@ function main() {
 
   // run all copies in parallel
   return Promise.all([
-    // copy builded demos
+    // copy built demos
     copyPkgsToBundle(
       ['demos'],
       true,
@@ -64,6 +64,12 @@ function main() {
 
     // copy storybook build to the root of the bundle
     fs.copy(path.resolve(rootDir, 'storybook-static'), bundleDirPath),
+
+    // write custom 404 page to root of bundle
+    fs.copy(
+      path.resolve(rootDir, 'pages-static/404.html'),
+      path.resolve(bundleDirPath, './404.html')
+    ),
   ]);
 }
 
