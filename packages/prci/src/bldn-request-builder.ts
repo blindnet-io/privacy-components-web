@@ -270,6 +270,9 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
     e.stopPropagation();
     const { demandGroupIndex } = (e as CustomEvent).detail;
     this._demandGroups.splice(demandGroupIndex, 1);
+    // Note: For now, we only support a single demand so when one is deleted
+    // we can just open the menu
+    this._uiState = RequestBuilderUIState.menu;
   }
 
   private editDemands(e: Event) {
