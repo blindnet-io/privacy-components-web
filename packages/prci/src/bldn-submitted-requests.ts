@@ -17,25 +17,6 @@ enum RequestsUIState {
   requestStatus,
 }
 
-const filterOptions = [
-  {
-    value: 'all',
-    display: msg('All'),
-  },
-  {
-    value: 'pending',
-    display: msg('Pending'),
-  },
-  {
-    value: 'answered',
-    display: msg('Answered'),
-  },
-  {
-    value: 'canceled',
-    display: msg('Canceled'),
-  },
-];
-
 @localized()
 @customElement('bldn-submitted-requests')
 export class BldnSubmittedRequests extends CoreConfigurationMixin(LitElement) {
@@ -133,7 +114,24 @@ export class BldnSubmittedRequests extends CoreConfigurationMixin(LitElement) {
         this._uiState === RequestsUIState.requestsList,
         () => html`
           <bldn-horizontal-list
-            .choices=${filterOptions}
+            .choices=${[
+              {
+                value: 'all',
+                display: msg('All'),
+              },
+              {
+                value: 'pending',
+                display: msg('Pending'),
+              },
+              {
+                value: 'answered',
+                display: msg('Answered'),
+              },
+              {
+                value: 'canceled',
+                display: msg('Canceled'),
+              },
+            ]}
             @bldn-horizontal-list:choice-change=${this
               .handleRequestsCategoryChange}
           ></bldn-horizontal-list>
