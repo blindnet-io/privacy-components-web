@@ -210,7 +210,7 @@ export class BldnPrivacyScopePicker extends LitElement {
   render() {
     return html`
       <p><b>${this.getModeTemplate()}</b></p>
-      <p>
+      <p id="scope-summary">
         ${msg(html`
           Data from
           <span class="scope-counter"
@@ -319,6 +319,10 @@ export class BldnPrivacyScopePicker extends LitElement {
 
     p {
       margin: 1.5em 0;
+    }
+
+    #scope-summary {
+      line-height: 30px;
     }
 
     .scope-counter {
