@@ -282,7 +282,7 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
     this._uiState = RequestBuilderUIState.edit;
   }
 
-  private cancelRequest(e: Event) {
+  private handleCancelRequest(e: Event) {
     e.stopPropagation();
 
     // Reset states
@@ -292,7 +292,7 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
     this._uiState = RequestBuilderUIState.menu;
   }
 
-  private submitRequest(e: Event) {
+  private handleSubmitRequest(e: Event) {
     e.stopPropagation();
 
     const { target } = (e as CustomEvent).detail;
@@ -341,12 +341,18 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
       });
   }
 
-  private goToMenu(e: Event) {
+  private handleBackClick(e: Event) {
     e.stopPropagation();
+    // Reset states
+    // Note: For now we do this when back is clicked as we don't fully
+    // support multiple demands yet
+    this._action = undefined;
+    this._demandGroupIndex = undefined;
+    this._demandGroups = [];
     this._uiState = RequestBuilderUIState.menu;
   }
 
-  private goToReview(e: Event) {
+  private handleReviewClick(e: Event) {
     e.stopPropagation();
     this._uiState = RequestBuilderUIState.review;
   }
@@ -417,8 +423,11 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
 
     // Request builder listeners
     this.addEventListener('bldn-action-form:set-demands', this.setDemands);
-    this.addEventListener('bldn-action-form:back-click', this.goToMenu);
-    this.addEventListener('bldn-action-form:next-click', this.goToReview);
+    this.addEventListener('bldn-action-form:back-click', this.handleBackClick);
+    this.addEventListener(
+      'bldn-action-form:next-click',
+      this.handleReviewClick
+    );
 
     // Request review listeners
     this.addEventListener(
@@ -428,11 +437,11 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
     this.addEventListener('bldn-request-review:edit-demands', this.editDemands);
     this.addEventListener(
       'bldn-request-review:cancel-request',
-      this.cancelRequest
+      this.handleCancelRequest
     );
     this.addEventListener(
       'bldn-request-review:submit-request',
-      this.submitRequest
+      this.handleSubmitRequest
     );
   }
 
@@ -449,14 +458,20 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
     );
     this.removeEventListener(
       'bldn-request-review:cancel-request',
-      this.cancelRequest
+      this.handleCancelRequest
     );
     this.removeEventListener(
       'bldn-request-review:submit-request',
-      this.submitRequest
+      this.handleSubmitRequest
     );
-    this.removeEventListener('bldn-action-form:back-click', this.goToMenu);
-    this.removeEventListener('bldn-action-form:next-click', this.goToReview);
+    this.removeEventListener(
+      'bldn-action-form:back-click',
+      this.handleBackClick
+    );
+    this.removeEventListener(
+      'bldn-action-form:next-click',
+      this.handleReviewClick
+    );
   }
 
   protected willUpdate(
