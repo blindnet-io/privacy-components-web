@@ -3,7 +3,7 @@ import {
   PrivacyRequestDemand,
   bldnStyles,
 } from '@blindnet/core';
-import { localized } from '@lit/localize';
+import { localized, msg } from '@lit/localize';
 import { css, html, LitElement, PropertyValueMap } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
@@ -85,12 +85,12 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
     return html`
       <bldn-nav-toggle
         .left=${{
-          label: 'Submit a Request',
+          label: msg('Submit a Request'),
           value: 'create',
           checked: this._uiState === PRCIUIState.createRequest,
         }}
         .right=${{
-          label: 'Submitted Requests',
+          label: msg('Submitted Requests'),
           value: 'submitted',
           checked: this._uiState === PRCIUIState.submittedRequests,
         }}
