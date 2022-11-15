@@ -74,11 +74,42 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
     }
   }
 
+  /**
+   * Set the apiToken property when component catches the set event
+   * @param e CustomEvent containing the token in the details object
+   */
+  handleApiTokenEvent(e: Event) {
+    const { token } = (e as CustomEvent).detail;
+    if (token) {
+      this.apiToken = token;
+    }
+  }
+
   protected willUpdate(
     _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
   ): void {
     super.willUpdate(_changedProperties);
     if (_changedProperties.has('requestId')) this.handleRequestIdChange();
+  }
+
+  connectedCallback(): void {
+    // eslint-disable-next-line wc/guard-super-call
+    super.connectedCallback();
+
+    this.addEventListener(
+      'bldn-priv-request-api-token:set',
+      this.handleApiTokenEvent
+    );
+  }
+
+  disconnectedCallback(): void {
+    // eslint-disable-next-line wc/guard-super-call
+    super.disconnectedCallback();
+
+    this.removeEventListener(
+      'bldn-priv-request-api-token:set',
+      this.handleApiTokenEvent
+    );
   }
 
   render() {
