@@ -60,7 +60,7 @@
 </trans-unit>
 <trans-unit id="sebbb864b5cee4a82">
   <source>Please note that adding a personalized message might lead to the demand taking longer to be processed</source>
-  <target> Veuillez noter que l'ajout d'un message personnalisé peut entraîner un délai de traitement de la demande plus long</target>
+  <target>Veuillez noter que l'ajout d'un message personnalisé peut entraîner un délai de traitement de la demande plus long</target>
 </trans-unit>
 <trans-unit id="sbaace8219b5f4612">
   <source>Select All</source>
@@ -607,7 +607,7 @@
 </trans-unit>
 <trans-unit id="s8086d8767e40329d">
   <source>Automated decision-making</source>
-  <target>Prise de décision automatisée<target>
+  <target>Prise de décision automatisée</target>
 </trans-unit>
 <trans-unit id="s8e533185069b8d9b">
   <source>Collecting data about the person from the person or from another source, including another person or a System</source>
@@ -619,7 +619,7 @@
 </trans-unit>
 <trans-unit id="s83de2f2eabcad899">
   <source>Matching the data about the same person across multiple data sources</source>
-  <target>Faire correspondre des données sur la même personne au travers de plusieurs sources de données</target>
+  <target>Faire correspondre des données sur une même personne au travers de plusieurs sources de données</target>
 </trans-unit>
 <trans-unit id="s65da2532e028b935">
   <source>Making data publicly available</source>
@@ -627,7 +627,7 @@
 </trans-unit>
 <trans-unit id="s5ce3b26debb20854">
   <source>Storing data for further use, including adaptations and formating of the data</source>
-  <target>Stocker des données pour une utilisation ultérieure, incluent l'adapation et le formatage des données</target>
+  <target>Stocker des données pour une utilisation ultérieure, incluant l'adapation et le formatage des données</target>
 </trans-unit>
 <trans-unit id="sf73152adfeeec472">
   <source>Sharing data in controled manner with clearly identified parties</source>
@@ -747,7 +747,7 @@
 </trans-unit>
 <trans-unit id="s3572e59cf0dcad41">
   <source>Processing is necessary for the performance of a task carried out in the public interest or in the exercise of official authority</source>
-  <target>Le traitement est nécessaire à l'exécution d'une mission effectuée dans l'intérêt public ou dans l'exercice d'une l'autorité publique</target>
+  <target>Le traitement est nécessaire à l'exécution d'une mission effectuée dans l'intérêt public ou dans l'exercice d'une autorité publique</target>
 </trans-unit>
 <trans-unit id="sbe01eafd8958380c">
   <source>Scientific and Market Research</source>
@@ -823,7 +823,7 @@
 </trans-unit>
 <trans-unit id="sf71bab33326da61c">
   <source>I want to delete:</source>
-  <target>Je souhaite sypprimer :</target>
+  <target>Je souhaite supprimer :</target>
 </trans-unit>
 <trans-unit id="s49928d6fe2a8fd6e">
   <source>I object to the processing of my data within the following scope:</source>
@@ -915,7 +915,7 @@
 </trans-unit>
 <trans-unit id="s43ceedf5cc8524cc">
   <source>I object to the processing of my data within the following</source>
-  <target>Je m'oppose au traitement des mes données au sein de</target>
+  <target>Je m'oppose au traitement des mes données pour</target>
 </trans-unit>
 <trans-unit id="sd5cb4c0ac4fa8ca6">
   <source>I restrict the processing of my data to the following</source>
@@ -957,7 +957,7 @@
 </trans-unit>
 <trans-unit id="s8f3d616b2891dd0d">
   <source>The ways data in my privacy scope is processed:</source>
-  <target>Les façons dont les données de périmètre sont traitées :</target>
+  <target>Les façons dont les données de mon périmètre sont traitées :</target>
 </trans-unit>
 <trans-unit id="s6068927c705090ea">
   <source>Purposes of Processing</source>
@@ -983,7 +983,7 @@
 </trans-unit>
 <trans-unit id="sad3e3c8146fc920f">
   <source>Status</source>
-  <target>Status</target>
+  <target>Statut</target>
 </trans-unit>
 <trans-unit id="s1e55a47eccb89757">
   <source>Demands</source>
@@ -1057,7 +1057,7 @@
 </trans-unit>
 <trans-unit id="s3137e812940ae6b7">
   <source>Obtaining data, please wait and refresh the page later.</source>
-  <target>Vos données sont en cours d'obtention, veuillez patienter et en pas actualiser la page</target>
+  <target>Vos données sont en cours d'obtention, veuillez patienter et ne pas actualiser la page</target>
 </trans-unit>
 <trans-unit id="s55b7584ba4fd4ba5">
   <source>Your delete demand has been granted.</source>
@@ -1085,7 +1085,7 @@
 </trans-unit>
 <trans-unit id="sc12f511c98f7f0dc">
   <source>Your revoke consent demand has been granted.</source>
-  <target>Votre demande de révocation de consentements a été approuvée</target>
+  <target>Votre demande de révocation de consentement a été approuvée</target>
 </trans-unit>
 <trans-unit id="sb7a10b9644ec1870">
   <source>Your transparency demand has been granted and split into multiple demands below.</source>
