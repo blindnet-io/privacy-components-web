@@ -35,6 +35,7 @@ export class AppPrivacy extends LitElement {
   static get properties() {
     return {
       _apiToken: { state: true },
+      _intervalId: { state: true },
     };
   }
 
@@ -88,6 +89,28 @@ export class AppPrivacy extends LitElement {
 
   handleLogoutClick() {
     auth0.logout();
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+
+    // Auto click the refresh button every 3 seconds if it exists
+    this._intervalId = setInterval(() => {
+      const refreshButton = this.renderRoot
+        .querySelector('bldn-priv-request')
+        ?.shadowRoot?.querySelector('bldn-submitted-requests')
+        ?.shadowRoot?.querySelector('bldn-request-status')
+        ?.shadowRoot?.querySelector('bldn-dropdown.main-section')
+        ?.querySelector('#summary-heading')
+        ?.querySelector('#refresh-request');
+      refreshButton?.dispatchEvent(new Event('bldn-button:click'));
+    }, 3000);
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    // Remove auto refresh click interval
+    clearInterval(this._intervalId);
   }
 
   render() {
