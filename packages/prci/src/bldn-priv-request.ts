@@ -3,7 +3,7 @@ import {
   PrivacyRequestDemand,
   bldnStyles,
 } from '@blindnet/core';
-import { localized } from '@lit/localize';
+import { localized, msg } from '@lit/localize';
 import { css, html, LitElement, PropertyValueMap } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
@@ -74,6 +74,17 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
     }
   }
 
+  /**
+   * Set the apiToken property when component catches the set event
+   * @param e CustomEvent containing the token in the details object
+   */
+  handleApiTokenEvent(e: Event) {
+    const { token } = (e as CustomEvent).detail;
+    if (token) {
+      this.apiToken = token;
+    }
+  }
+
   protected willUpdate(
     _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
   ): void {
@@ -81,16 +92,36 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
     if (_changedProperties.has('requestId')) this.handleRequestIdChange();
   }
 
+  connectedCallback(): void {
+    // eslint-disable-next-line wc/guard-super-call
+    super.connectedCallback();
+
+    this.addEventListener(
+      'bldn-priv-request-api-token:set',
+      this.handleApiTokenEvent
+    );
+  }
+
+  disconnectedCallback(): void {
+    // eslint-disable-next-line wc/guard-super-call
+    super.disconnectedCallback();
+
+    this.removeEventListener(
+      'bldn-priv-request-api-token:set',
+      this.handleApiTokenEvent
+    );
+  }
+
   render() {
     return html`
       <bldn-nav-toggle
         .left=${{
-          label: 'Submit a Request',
+          label: msg('Submit a Request'),
           value: 'create',
           checked: this._uiState === PRCIUIState.createRequest,
         }}
         .right=${{
-          label: 'Submitted Requests',
+          label: msg('Submitted Requests'),
           value: 'submitted',
           checked: this._uiState === PRCIUIState.submittedRequests,
         }}

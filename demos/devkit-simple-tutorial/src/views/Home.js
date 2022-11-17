@@ -38,7 +38,7 @@ export class AppHome extends LitElement {
         Check out
         <a
           class="app-link"
-          href="https://github.com/blindnet-io/privacy-components-web/tree/add-demos/demos/devkit-simple-tutorial"
+          href="https://github.com/blindnet-io/privacy-components-web/tree/main/demos/devkit-simple-tutorial"
           target="_blank"
           rel="noopener noreferrer"
         >
