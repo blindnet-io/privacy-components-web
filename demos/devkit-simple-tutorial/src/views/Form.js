@@ -171,7 +171,7 @@ export class AppParticipateForm extends LitElement {
       // Authorization: `Bearer ${this._apiToken}`,
     };
     await fetch(
-      'https://stage.computing.blindnet.io/v0/user-events/consent/unsafe',
+      'https://stage.computing.blindnet.io/v0/user-events/consent/public',
       {
         method: 'POST',
         headers,
