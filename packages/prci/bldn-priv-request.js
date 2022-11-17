@@ -1,6 +1,6 @@
 import { __decorate } from './node_modules/tslib/tslib.es6.js';
 import { CoreConfigurationMixin, bldnStyles } from '@blindnet/core';
-import { localized } from '@lit/localize';
+import { msg, localized } from '@lit/localize';
 import { LitElement, html, css } from 'lit';
 import { property, state, customElement } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
@@ -57,21 +57,41 @@ let BldnPrivRequest = class BldnPrivRequest extends CoreConfigurationMixin(LitEl
             this._uiState = PRCIUIState.submittedRequests;
         }
     }
+    /**
+     * Set the apiToken property when component catches the set event
+     * @param e CustomEvent containing the token in the details object
+     */
+    handleApiTokenEvent(e) {
+        const { token } = e.detail;
+        if (token) {
+            this.apiToken = token;
+        }
+    }
     willUpdate(_changedProperties) {
         super.willUpdate(_changedProperties);
         if (_changedProperties.has('requestId'))
             this.handleRequestIdChange();
     }
+    connectedCallback() {
+        // eslint-disable-next-line wc/guard-super-call
+        super.connectedCallback();
+        this.addEventListener('bldn-priv-request-api-token:set', this.handleApiTokenEvent);
+    }
+    disconnectedCallback() {
+        // eslint-disable-next-line wc/guard-super-call
+        super.disconnectedCallback();
+        this.removeEventListener('bldn-priv-request-api-token:set', this.handleApiTokenEvent);
+    }
     render() {
         return html `
       <bldn-nav-toggle
         .left=${{
-            label: 'Submit a Request',
+            label: msg('Submit a Request'),
             value: 'create',
             checked: this._uiState === PRCIUIState.createRequest,
         }}
         .right=${{
-            label: 'Submitted Requests',
+            label: msg('Submitted Requests'),
             value: 'submitted',
             checked: this._uiState === PRCIUIState.submittedRequests,
         }}

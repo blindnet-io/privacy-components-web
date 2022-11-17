@@ -48,10 +48,10 @@ export declare class BldnRequestBuilder extends BldnRequestBuilder_base {
      */
     private deleteDemands;
     private editDemands;
-    private cancelRequest;
-    private submitRequest;
-    private goToMenu;
-    private goToReview;
+    private handleCancelRequest;
+    private handleSubmitRequest;
+    private handleBackClick;
+    private handleReviewClick;
     private updateDataCategories;
     /**
      * Filter our list of actions based on those passed in

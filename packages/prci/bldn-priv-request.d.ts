@@ -19,7 +19,14 @@ export declare class BldnPrivRequest extends BldnPrivRequest_base {
     handleRequestIdChange(): void;
     handleRequestSent(e: Event): void;
     handleNavClick(e: Event): void;
+    /**
+     * Set the apiToken property when component catches the set event
+     * @param e CustomEvent containing the token in the details object
+     */
+    handleApiTokenEvent(e: Event): void;
     protected willUpdate(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void;
+    connectedCallback(): void;
+    disconnectedCallback(): void;
     render(): import("lit-html").TemplateResult<1>;
     static styles: import("lit").CSSResult[];
 }

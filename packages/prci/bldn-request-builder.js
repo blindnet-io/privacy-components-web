@@ -234,6 +234,9 @@ let BldnRequestBuilder = class BldnRequestBuilder extends CoreConfigurationMixin
         e.stopPropagation();
         const { demandGroupIndex } = e.detail;
         this._demandGroups.splice(demandGroupIndex, 1);
+        // Note: For now, we only support a single demand so when one is deleted
+        // we can just open the menu
+        this._uiState = RequestBuilderUIState.menu;
     }
     editDemands(e) {
         e.stopPropagation();
@@ -241,7 +244,7 @@ let BldnRequestBuilder = class BldnRequestBuilder extends CoreConfigurationMixin
         this._demandGroupIndex = demandGroupIndex;
         this._uiState = RequestBuilderUIState.edit;
     }
-    cancelRequest(e) {
+    handleCancelRequest(e) {
         e.stopPropagation();
         // Reset states
         this._action = undefined;
@@ -249,7 +252,7 @@ let BldnRequestBuilder = class BldnRequestBuilder extends CoreConfigurationMixin
         this._demandGroups = [];
         this._uiState = RequestBuilderUIState.menu;
     }
-    submitRequest(e) {
+    handleSubmitRequest(e) {
         e.stopPropagation();
         const { target } = e.detail;
         // Build privacy request object
@@ -288,11 +291,17 @@ let BldnRequestBuilder = class BldnRequestBuilder extends CoreConfigurationMixin
             }));
         });
     }
-    goToMenu(e) {
+    handleBackClick(e) {
         e.stopPropagation();
+        // Reset states
+        // Note: For now we do this when back is clicked as we don't fully
+        // support multiple demands yet
+        this._action = undefined;
+        this._demandGroupIndex = undefined;
+        this._demandGroups = [];
         this._uiState = RequestBuilderUIState.menu;
     }
-    goToReview(e) {
+    handleReviewClick(e) {
         e.stopPropagation();
         this._uiState = RequestBuilderUIState.review;
     }
@@ -345,23 +354,23 @@ let BldnRequestBuilder = class BldnRequestBuilder extends CoreConfigurationMixin
         this.addEventListener('bldn-tile-menu:tile-click', this.selectAction);
         // Request builder listeners
         this.addEventListener('bldn-action-form:set-demands', this.setDemands);
-        this.addEventListener('bldn-action-form:back-click', this.goToMenu);
-        this.addEventListener('bldn-action-form:next-click', this.goToReview);
+        this.addEventListener('bldn-action-form:back-click', this.handleBackClick);
+        this.addEventListener('bldn-action-form:next-click', this.handleReviewClick);
         // Request review listeners
         this.addEventListener('bldn-request-review:delete-demands', this.deleteDemands);
         this.addEventListener('bldn-request-review:edit-demands', this.editDemands);
-        this.addEventListener('bldn-request-review:cancel-request', this.cancelRequest);
-        this.addEventListener('bldn-request-review:submit-request', this.submitRequest);
+        this.addEventListener('bldn-request-review:cancel-request', this.handleCancelRequest);
+        this.addEventListener('bldn-request-review:submit-request', this.handleSubmitRequest);
     }
     disconnectedCallback() {
         this.removeEventListener('bldn-tile-menu:tile-click', this.selectAction);
         this.removeEventListener('bldn-action-form:set-demands', this.setDemands);
         this.removeEventListener('bldn-request-review:delete-demands', this.deleteDemands);
         this.removeEventListener('bldn-request-review:edit-demands', this.editDemands);
-        this.removeEventListener('bldn-request-review:cancel-request', this.cancelRequest);
-        this.removeEventListener('bldn-request-review:submit-request', this.submitRequest);
-        this.removeEventListener('bldn-action-form:back-click', this.goToMenu);
-        this.removeEventListener('bldn-action-form:next-click', this.goToReview);
+        this.removeEventListener('bldn-request-review:cancel-request', this.handleCancelRequest);
+        this.removeEventListener('bldn-request-review:submit-request', this.handleSubmitRequest);
+        this.removeEventListener('bldn-action-form:back-click', this.handleBackClick);
+        this.removeEventListener('bldn-action-form:next-click', this.handleReviewClick);
     }
     willUpdate(_changedProperties) {
         super.willUpdate(_changedProperties);

@@ -13,24 +13,6 @@ var RequestsUIState;
     RequestsUIState[RequestsUIState["requestsList"] = 0] = "requestsList";
     RequestsUIState[RequestsUIState["requestStatus"] = 1] = "requestStatus";
 })(RequestsUIState || (RequestsUIState = {}));
-const filterOptions = [
-    {
-        value: 'all',
-        display: msg('All'),
-    },
-    {
-        value: 'pending',
-        display: msg('Pending'),
-    },
-    {
-        value: 'answered',
-        display: msg('Answered'),
-    },
-    {
-        value: 'canceled',
-        display: msg('Canceled'),
-    },
-];
 let BldnSubmittedRequests = class BldnSubmittedRequests extends CoreConfigurationMixin(LitElement) {
     constructor() {
         super(...arguments);
@@ -100,7 +82,24 @@ let BldnSubmittedRequests = class BldnSubmittedRequests extends CoreConfiguratio
         return html `
       ${when(this._uiState === RequestsUIState.requestsList, () => html `
           <bldn-horizontal-list
-            .choices=${filterOptions}
+            .choices=${[
+            {
+                value: 'all',
+                display: msg('All'),
+            },
+            {
+                value: 'pending',
+                display: msg('Pending'),
+            },
+            {
+                value: 'answered',
+                display: msg('Answered'),
+            },
+            {
+                value: 'canceled',
+                display: msg('Canceled'),
+            },
+        ]}
             @bldn-horizontal-list:choice-change=${this
             .handleRequestsCategoryChange}
           ></bldn-horizontal-list>

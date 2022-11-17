@@ -111,7 +111,7 @@ let BldnRequestStatus = class BldnRequestStatus extends CoreConfigurationMixin(L
             <span class='request-action'><b>${msg('Copy Link')}</b></span>
             <img src=${linkSvg} alt='copy link to request status page'></img>
           </bldn-button>
-          <bldn-button mode='link-icon' underline-mode='none' @bldn-button:click=${this.handleRefreshClick}>
+          <bldn-button id='refresh-request' mode='link-icon' underline-mode='none' @bldn-button:click=${this.handleRefreshClick}>
             <span class='request-action'><b>${msg('Refresh')}</b></span>
             <img src=${refreshSvg} alt='refresh this request'></img>
           </bldn-button>
