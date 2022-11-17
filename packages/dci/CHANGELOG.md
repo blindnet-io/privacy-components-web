@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.13.0](https://github.com/blindnet-io/privacy-components-web/compare/v0.12.3...v0.13.0) (2022-11-17)
+
+
+### Features
+
+* **@blindnet/prci:** updated french translations ([acbaa69](https://github.com/blindnet-io/privacy-components-web/commit/acbaa6967881243d58fb15e4677b9c2e23aab7c2))
+
+
+
+
+
 ## [0.12.1](https://github.com/blindnet-io/privacy-components-web/compare/v0.12.0...v0.12.1) (2022-11-10)
 
 

@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.13.0](https://github.com/blindnet-io/privacy-components-web/compare/v0.12.3...v0.13.0) (2022-11-17)
+
+
+### Bug Fixes
+
+* **@blindnet-demos/devkit-simple-tutorial:** use correct demo repository link ([466d97b](https://github.com/blindnet-io/privacy-components-web/commit/466d97b44769c43c53c7a74421705439a6bdd967)), closes [#171](https://github.com/blindnet-io/privacy-components-web/issues/171)
+* **@blindnet/prci:** fix delete demand button ([82e252c](https://github.com/blindnet-io/privacy-components-web/commit/82e252c5e560cff7c0f6b51a1931e05c05178358)), closes [#229](https://github.com/blindnet-io/privacy-components-web/issues/229)
+* **@blindnet/prci:** increase line height in privacy scope picker ([3f49265](https://github.com/blindnet-io/privacy-components-web/commit/3f492654135bf16c2a81f41e4401cad9682fe252)), closes [#211](https://github.com/blindnet-io/privacy-components-web/issues/211)
+* **@blindnet/prci:** reset demands on back click ([d413b9d](https://github.com/blindnet-io/privacy-components-web/commit/d413b9d6a9a85b636a86bef93584e37f02c5c5c7)), closes [#230](https://github.com/blindnet-io/privacy-components-web/issues/230)
+
+
+### Features
+
+* **@blindnet/prci:** set api token via event ([49ef4cf](https://github.com/blindnet-io/privacy-components-web/commit/49ef4cf6a878439b4a89eeaea8a5d503fe6d57b0))
+* **@blindnet/prci:** updated french translations ([acbaa69](https://github.com/blindnet-io/privacy-components-web/commit/acbaa6967881243d58fb15e4677b9c2e23aab7c2))
+
+
+
+
+
 ## [0.12.3](https://github.com/blindnet-io/privacy-components-web/compare/v0.12.2...v0.12.3) (2022-11-14)
 
 
