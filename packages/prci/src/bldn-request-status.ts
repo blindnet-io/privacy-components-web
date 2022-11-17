@@ -163,7 +163,7 @@ export class BldnRequestStatus extends CoreConfigurationMixin(LitElement) {
             <span class='request-action'><b>${msg('Copy Link')}</b></span>
             <img src=${linkSvg} alt='copy link to request status page'></img>
           </bldn-button>
-          <bldn-button mode='link-icon' underline-mode='none' @bldn-button:click=${
+          <bldn-button id='refresh-request' mode='link-icon' underline-mode='none' @bldn-button:click=${
             this.handleRefreshClick
           }>
             <span class='request-action'><b>${msg('Refresh')}</b></span>
