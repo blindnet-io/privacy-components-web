@@ -10,6 +10,7 @@ import {
   PendingDemandPayload,
   Recommendation,
 } from '../computation/generated-models/index.js';
+import { ACTION_TITLES } from '../language/dictionary.js';
 
 import { bldnStyles } from './bldn-styles.js';
 
@@ -188,7 +189,9 @@ export class DataConsumerDemandListItem extends LitElement {
             <span class="list-item__text"
               >${this.demand!.data_subject?.id}</span
             >
-            <span class="list-item__text">${this.demand!.action}</span>
+            <span class="list-item__text"
+              >${ACTION_TITLES[this.demand!.action]()}</span
+            >
             <button
               id="list-item__expand-btn"
               class="svg-btn"
