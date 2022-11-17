@@ -2,98 +2,6 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
 <file target-language="fr-CA" source-language="en-US" original="lit-localize-inputs" datatype="plaintext">
 <body>
-<trans-unit id="sef16778fe7074a8d">
-  <source>Grant</source>
-  <target>Approuver</target>
-</trans-unit>
-<trans-unit id="sd0680e7343dedb27">
-  <source>Deny</source>
-  <target>Refuser</target>
-</trans-unit>
-<trans-unit id="sa58a43eaa517ec9e">
-  <source>Response</source>
-  <target>Réponse</target>
-</trans-unit>
-<trans-unit id="s12f6b3b9aa6fe76c">
-  <source>Recommended</source>
-  <target>Recommandée</target>
-</trans-unit>
-<trans-unit id="sb0e683c9fb3cc3b5">
-  <source>Not Recommended</source>
-  <target>Non Recommandée</target>
-</trans-unit>
-<trans-unit id="s28360fa3d4d84322">
-  <source>Optional Message</source>
-  <target>Message optionnel</target>
-</trans-unit>
-<trans-unit id="sb3d4f79d9d8b71e5">
-  <source>Submit</source>
-  <target>Envoyer</target>
-</trans-unit>
-<trans-unit id="s2b7bb3f9a459d7dd">
-  <source>History view coming soon!</source>
-  <target>Historique bientôt disponible !</target>
-</trans-unit>
-<trans-unit id="s61d28f3db3da4264">
-  <source>Response Submmitted</source>
-  <target>Réponse envoyée</target>
-</trans-unit>
-<trans-unit id="sb41b2cfbbc52565b">
-  <source>Created</source>
-  <target>Création</target>
-</trans-unit>
-<trans-unit id="sd25a75c08073005d">
-  <source>Data Subject</source>
-  <target>Personne concernée</target>
-</trans-unit>
-<trans-unit id="sa442044b586ec8bf">
-  <source>Action</source>
-  <target>Action</target>
-</trans-unit>
-<trans-unit id="sb852d100f91db23f">
-  <source>No requests to display.</source>
-  <target>Aucune demande à afficher</target>
-</trans-unit>
-<trans-unit id="sd3b15d6d4ea696f7">
-  <source>My additional message:</source>
-  <target>Mon message additionnel :</target>
-</trans-unit>
-<trans-unit id="sebbb864b5cee4a82">
-  <source>Please note that adding a personalized message might lead to the demand taking longer to be processed</source>
-  <target>Veuillez noter que l'ajout d'un message personnalisé peut entraîner un délai de traitement de la demande plus long</target>
-</trans-unit>
-<trans-unit id="sbaace8219b5f4612">
-  <source>Select All</source>
-  <target>Tout sélectionner</target>
-</trans-unit>
-<trans-unit id="h87332548e751bc1c">
-  <source><x id="0" equiv-text="&lt;b&gt;"/>OTHER-DATA:<x id="1" equiv-text="&lt;/b&gt;"/> Specify another type of data</source>
-  <target><x id="0" equiv-text="&lt;b&gt;"/>Autre donnée :<x id="1" equiv-text="&lt;/b&gt;"/> Spécifiez un autre type de donnée</target>
-</trans-unit>
-<trans-unit id="s4618111b41da4ae5">
-  <source>Other data type:</source>
-  <target>Autre type de donnée :</target>
-</trans-unit>
-<trans-unit id="s40717e0539504811">
-  <source>Specify a date range for the selected data categories:</source>
-  <target>Spécifier une période pour les catgéories de données sélectionnées</target>
-</trans-unit>
-<trans-unit id="sa6ab5184d6315895">
-  <source>From</source>
-  <target>De</target>
-</trans-unit>
-<trans-unit id="s08c83907b56ac0a4">
-  <source>to</source>
-  <target>à</target>
-</trans-unit>
-<trans-unit id="s3b91d548b3c1db64">
-  <source>Click to expand</source>
-  <target>Cliquez pour développer</target>
-</trans-unit>
-<trans-unit id="s41d0e1ff19aa568b">
-  <source>Arrow to expand or collapse the dropdown</source>
-  <target>Flèche pour développer ou réduire la liste déroulante</target>
-</trans-unit>
 <trans-unit id="s13c123f97668a70b">
   <source>Access</source>
   <target>Accès</target>
@@ -789,6 +697,114 @@
   <source>Other specific purpose</source>
   <target>Autre but spécifique</target>
 </trans-unit>
+<trans-unit id="sef16778fe7074a8d">
+  <source>Grant</source>
+  <target>Approuver</target>
+</trans-unit>
+<trans-unit id="sd0680e7343dedb27">
+  <source>Deny</source>
+  <target>Refuser</target>
+</trans-unit>
+<trans-unit id="sa58a43eaa517ec9e">
+  <source>Response</source>
+  <target>Réponse</target>
+</trans-unit>
+<trans-unit id="s12f6b3b9aa6fe76c">
+  <source>Recommended</source>
+  <target>Recommandée</target>
+</trans-unit>
+<trans-unit id="sb0e683c9fb3cc3b5">
+  <source>Not Recommended</source>
+  <target>Non Recommandée</target>
+</trans-unit>
+<trans-unit id="s28360fa3d4d84322">
+  <source>Optional Message</source>
+  <target>Message optionnel</target>
+</trans-unit>
+<trans-unit id="sb3d4f79d9d8b71e5">
+  <source>Submit</source>
+  <target>Envoyer</target>
+</trans-unit>
+<trans-unit id="s2b7bb3f9a459d7dd">
+  <source>History view coming soon!</source>
+  <target>Historique bientôt disponible !</target>
+</trans-unit>
+<trans-unit id="s61d28f3db3da4264">
+  <source>Response Submmitted</source>
+  <target>Réponse envoyée</target>
+</trans-unit>
+<trans-unit id="sb41b2cfbbc52565b">
+  <source>Created</source>
+  <target>Création</target>
+</trans-unit>
+<trans-unit id="sd25a75c08073005d">
+  <source>Data Subject</source>
+  <target>Personne concernée</target>
+</trans-unit>
+<trans-unit id="sa442044b586ec8bf">
+  <source>Action</source>
+  <target>Action</target>
+</trans-unit>
+<trans-unit id="sb852d100f91db23f">
+  <source>No requests to display.</source>
+  <target>Aucune demande à afficher</target>
+</trans-unit>
+<trans-unit id="s78636b92c1a3909c">
+  <source>Pending</source>
+  <target>En attente</target>
+</trans-unit>
+<trans-unit id="s684a712107b118fe">
+  <source>Answered</source>
+  <target>Traitées</target>
+</trans-unit>
+<trans-unit id="s8f83b5cb52f62fd3">
+  <source>Requests</source>
+  <target>Demandes</target>
+</trans-unit>
+<trans-unit id="s88d1c1e15ca1aade">
+  <source>Alerts</source>
+  <target>Alertes</target>
+</trans-unit>
+<trans-unit id="sd3b15d6d4ea696f7">
+  <source>My additional message:</source>
+  <target>Mon message additionnel :</target>
+</trans-unit>
+<trans-unit id="sebbb864b5cee4a82">
+  <source>Please note that adding a personalized message might lead to the demand taking longer to be processed</source>
+  <target>Veuillez noter que l'ajout d'un message personnalisé peut entraîner un délai de traitement de la demande plus long</target>
+</trans-unit>
+<trans-unit id="sbaace8219b5f4612">
+  <source>Select All</source>
+  <target>Tout sélectionner</target>
+</trans-unit>
+<trans-unit id="h87332548e751bc1c">
+  <source><x id="0" equiv-text="&lt;b&gt;"/>OTHER-DATA:<x id="1" equiv-text="&lt;/b&gt;"/> Specify another type of data</source>
+  <target><x id="0" equiv-text="&lt;b&gt;"/>Autre donnée :<x id="1" equiv-text="&lt;/b&gt;"/> Spécifiez un autre type de donnée</target>
+</trans-unit>
+<trans-unit id="s4618111b41da4ae5">
+  <source>Other data type:</source>
+  <target>Autre type de donnée :</target>
+</trans-unit>
+<trans-unit id="s40717e0539504811">
+  <source>Specify a date range for the selected data categories:</source>
+  <target>Spécifier une période pour les catgéories de données sélectionnées</target>
+</trans-unit>
+<trans-unit id="sa6ab5184d6315895">
+  <source>From</source>
+  <target>De</target>
+</trans-unit>
+<trans-unit id="s08c83907b56ac0a4">
+  <source>to</source>
+  <target>à</target>
+</trans-unit>
+<trans-unit id="s3b91d548b3c1db64">
+  <source>Click to expand</source>
+  <target>Cliquez pour développer</target>
+</trans-unit>
+<trans-unit id="s41d0e1ff19aa568b">
+  <source>Arrow to expand or collapse the dropdown</source>
+  <target>Flèche pour développer ou réduire la liste déroulante</target>
+</trans-unit>
 <trans-unit id="s3176f9811c35d533">
   <source>Data Categories</source>
   <target>Catégories de données</target>
@@ -1108,14 +1124,6 @@
   <target><x id="0" equiv-text="&lt;b&gt;${dc[0]}"/> Données :<x id="1" equiv-text="&lt;/b&gt;"/> Source
                             <x id="2" equiv-text="&lt;i&gt;${prov.provenance}&lt;/i&gt;"/> du
                             <x id="3" equiv-text="&lt;i&gt;${prov.system}&lt;/i&gt;"/> système<x id="4" equiv-text="&lt;br&gt;"/></target>
-</trans-unit>
-<trans-unit id="s78636b92c1a3909c">
-  <source>Pending</source>
-  <target>En attente</target>
-</trans-unit>
-<trans-unit id="s684a712107b118fe">
-  <source>Answered</source>
-  <target>Traitées</target>
 </trans-unit>
 <trans-unit id="s794f12abe8666b7f">
   <source>Back to Requests</source>
