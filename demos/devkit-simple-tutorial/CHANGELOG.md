@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.14.1](https://github.com/blindnet-io/privacy-components-web/compare/v0.14.0...v0.14.1) (2022-11-18)
+
+### Bug Fixes
+
+- **@blindnet/core:** demo localization ([d9b4d0b](https://github.com/blindnet-io/privacy-components-web/commit/d9b4d0bcf58da4217a840f7123bde5e897e73155))
+
 # [0.14.0](https://github.com/blindnet-io/privacy-components-web/compare/v0.13.0...v0.14.0) (2022-11-18)
 
 ### Features
