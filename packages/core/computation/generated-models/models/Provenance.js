@@ -10,7 +10,7 @@ var Provenance;
         provenance["USER"] = "USER";
         provenance["USER_DATA_SUBJECT"] = "USER.DATA-SUBJECT";
     })(Provenance.provenance || (Provenance.provenance = {}));
-})(Provenance || (Provenance = {}));
+})(Provenance = Provenance || (Provenance = {}));
 
 export { Provenance };
 //# sourceMappingURL=Provenance.js.map

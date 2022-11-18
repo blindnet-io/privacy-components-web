@@ -165,9 +165,11 @@ export declare const templates: {
     s86c0a813feb2e101: string;
     s87bae2710b2492c3: string;
     s87cacfb74533591e: string;
+    s88d1c1e15ca1aade: string;
     s8e533185069b8d9b: string;
     s8f3d616b2891dd0d: string;
     s8f4b90725c742dfd: string;
+    s8f83b5cb52f62fd3: string;
     s93390561e1afc0b6: string;
     s943ff37beeb8970c: string;
     s9758d00d61bc6bfb: string;

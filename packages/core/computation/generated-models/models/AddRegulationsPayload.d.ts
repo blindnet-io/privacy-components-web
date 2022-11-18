@@ -1,3 +1,3 @@
-export declare type AddRegulationsPayload = {
+export type AddRegulationsPayload = {
     regulation_ids?: Array<string>;
 };

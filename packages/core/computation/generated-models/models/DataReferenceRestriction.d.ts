@@ -1,3 +1,3 @@
-export declare type DataReferenceRestriction = {
+export type DataReferenceRestriction = {
     ref?: Array<string>;
 };

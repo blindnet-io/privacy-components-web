@@ -1,3 +1,3 @@
-export declare type CancelDemandPayload = {
+export type CancelDemandPayload = {
     demand_id: string;
 };

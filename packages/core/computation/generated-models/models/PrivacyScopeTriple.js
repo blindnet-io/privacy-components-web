@@ -37,7 +37,7 @@ var PrivacyScopeTriple;
         purpose["VITAL_INTERESTS"] = "VITAL-INTERESTS";
         purpose["OTHER_PURPOSE"] = "OTHER-PURPOSE";
     })(PrivacyScopeTriple.purpose || (PrivacyScopeTriple.purpose = {}));
-})(PrivacyScopeTriple || (PrivacyScopeTriple = {}));
+})(PrivacyScopeTriple = PrivacyScopeTriple || (PrivacyScopeTriple = {}));
 
 export { PrivacyScopeTriple };
 //# sourceMappingURL=PrivacyScopeTriple.js.map

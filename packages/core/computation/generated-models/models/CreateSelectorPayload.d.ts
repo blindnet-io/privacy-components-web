@@ -1,4 +1,4 @@
-export declare type CreateSelectorPayload = {
+export type CreateSelectorPayload = {
     /**
      * selector name
      */

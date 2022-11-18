@@ -1,4 +1,4 @@
 import type { PrivacyScopeTriple } from './PrivacyScopeTriple.js';
-export declare type PrivacyScope = {
+export type PrivacyScope = {
     triples?: Array<PrivacyScopeTriple>;
 };

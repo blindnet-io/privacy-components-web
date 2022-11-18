@@ -1,4 +1,4 @@
-export declare type DateRangeRestriction = {
+export type DateRangeRestriction = {
     from?: string;
     to?: string;
 };

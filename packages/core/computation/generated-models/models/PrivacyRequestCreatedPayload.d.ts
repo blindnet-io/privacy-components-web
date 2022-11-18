@@ -1,3 +1,3 @@
-export declare type PrivacyRequestCreatedPayload = {
+export type PrivacyRequestCreatedPayload = {
     request_id: string;
 };

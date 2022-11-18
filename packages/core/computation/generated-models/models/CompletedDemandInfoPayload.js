@@ -43,7 +43,7 @@ var CompletedDemandInfoPayload;
         motive["USER_UNKNOWN"] = "USER-UNKNOWN";
         motive["OTHER_MOTIVE"] = "OTHER-MOTIVE";
     })(CompletedDemandInfoPayload.motive || (CompletedDemandInfoPayload.motive = {}));
-})(CompletedDemandInfoPayload || (CompletedDemandInfoPayload = {}));
+})(CompletedDemandInfoPayload = CompletedDemandInfoPayload || (CompletedDemandInfoPayload = {}));
 
 export { CompletedDemandInfoPayload };
 //# sourceMappingURL=CompletedDemandInfoPayload.js.map

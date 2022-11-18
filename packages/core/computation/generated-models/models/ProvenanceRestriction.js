@@ -18,7 +18,7 @@ var ProvenanceRestriction;
         target["PARTNERS_DOWNWARD"] = "PARTNERS.DOWNWARD";
         target["PARTNERS_UPWARD"] = "PARTNERS.UPWARD";
     })(ProvenanceRestriction.target || (ProvenanceRestriction.target = {}));
-})(ProvenanceRestriction || (ProvenanceRestriction = {}));
+})(ProvenanceRestriction = ProvenanceRestriction || (ProvenanceRestriction = {}));
 
 export { ProvenanceRestriction };
 //# sourceMappingURL=ProvenanceRestriction.js.map

@@ -1,4 +1,4 @@
-export declare type ApiResult = {
+export type ApiResult = {
     readonly url: string;
     readonly ok: boolean;
     readonly status: number;

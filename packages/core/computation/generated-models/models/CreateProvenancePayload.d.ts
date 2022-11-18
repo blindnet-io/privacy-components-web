@@ -1,7 +1,7 @@
 /**
  * origin of the data category
  */
-export declare type CreateProvenancePayload = {
+export type CreateProvenancePayload = {
     /**
      * data category for which the provenance is created
      */

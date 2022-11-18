@@ -14,7 +14,7 @@ var RetentionPolicy;
         after["SERVICE_START"] = "SERVICE-START";
         after["SERVICE_END"] = "SERVICE-END";
     })(RetentionPolicy.after || (RetentionPolicy.after = {}));
-})(RetentionPolicy || (RetentionPolicy = {}));
+})(RetentionPolicy = RetentionPolicy || (RetentionPolicy = {}));
 
 export { RetentionPolicy };
 //# sourceMappingURL=RetentionPolicy.js.map

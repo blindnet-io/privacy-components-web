@@ -1,3 +1,3 @@
-export declare type ConsentRestriction = {
+export type ConsentRestriction = {
     id: string;
 };

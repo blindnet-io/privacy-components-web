@@ -1,4 +1,4 @@
-export declare type RetentionPolicy = {
+export type RetentionPolicy = {
     id: string;
     policy_type: RetentionPolicy.policy_type;
     duration: string;

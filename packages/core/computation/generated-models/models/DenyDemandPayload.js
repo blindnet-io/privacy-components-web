@@ -13,7 +13,7 @@ var DenyDemandPayload;
         motive["USER_UNKNOWN"] = "USER-UNKNOWN";
         motive["OTHER_MOTIVE"] = "OTHER-MOTIVE";
     })(DenyDemandPayload.motive || (DenyDemandPayload.motive = {}));
-})(DenyDemandPayload || (DenyDemandPayload = {}));
+})(DenyDemandPayload = DenyDemandPayload || (DenyDemandPayload = {}));
 
 export { DenyDemandPayload };
 //# sourceMappingURL=DenyDemandPayload.js.map

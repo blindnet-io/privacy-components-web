@@ -1,5 +1,5 @@
 import type { DataSubjectPayload } from './DataSubjectPayload.js';
-export declare type GiveConsentPayload = {
+export type GiveConsentPayload = {
     dataSubject: DataSubjectPayload;
     consentId: string;
     date: string;

@@ -1,6 +1,6 @@
 import type { DataSubjectPayload } from './DataSubjectPayload.js';
 import type { Recommendation } from './Recommendation.js';
-export declare type PendingDemandDetailsPayload = {
+export type PendingDemandDetailsPayload = {
     id: string;
     date: string;
     action: PendingDemandDetailsPayload.action;

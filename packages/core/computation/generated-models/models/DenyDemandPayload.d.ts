@@ -1,4 +1,4 @@
-export declare type DenyDemandPayload = {
+export type DenyDemandPayload = {
     id: string;
     motive: DenyDemandPayload.motive;
     msg?: string;

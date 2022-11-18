@@ -1,5 +1,5 @@
 import type { PrivacyScope } from './PrivacyScope.js';
-export declare type LegalBase = {
+export type LegalBase = {
     id: string;
     lb_type: LegalBase.lb_type;
     scope: PrivacyScope;

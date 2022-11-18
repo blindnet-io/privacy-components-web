@@ -1,5 +1,5 @@
 import type { DataSubjectPayload } from './DataSubjectPayload.js';
-export declare type EndContractPayload = {
+export type EndContractPayload = {
     dataSubject: DataSubjectPayload;
     contractId: string;
     date: string;

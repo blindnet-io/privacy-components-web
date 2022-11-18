@@ -14,7 +14,7 @@ var CreateRetentionPolicyPayload;
         after["SERVICE_START"] = "SERVICE-START";
         after["SERVICE_END"] = "SERVICE-END";
     })(CreateRetentionPolicyPayload.after || (CreateRetentionPolicyPayload.after = {}));
-})(CreateRetentionPolicyPayload || (CreateRetentionPolicyPayload = {}));
+})(CreateRetentionPolicyPayload = CreateRetentionPolicyPayload || (CreateRetentionPolicyPayload = {}));
 
 export { CreateRetentionPolicyPayload };
 //# sourceMappingURL=CreateRetentionPolicyPayload.js.map

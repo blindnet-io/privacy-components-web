@@ -33,7 +33,7 @@ var CompletedDemandPayload;
         status["UNDER_REVIEW"] = "UNDER-REVIEW";
         status["CANCELED"] = "CANCELED";
     })(CompletedDemandPayload.status || (CompletedDemandPayload.status = {}));
-})(CompletedDemandPayload || (CompletedDemandPayload = {}));
+})(CompletedDemandPayload = CompletedDemandPayload || (CompletedDemandPayload = {}));
 
 export { CompletedDemandPayload };
 //# sourceMappingURL=CompletedDemandPayload.js.map

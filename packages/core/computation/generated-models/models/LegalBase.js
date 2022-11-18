@@ -13,7 +13,7 @@ var LegalBase;
         lb_type["NECESSARY_VITAL_INTEREST"] = "NECESSARY.VITAL-INTEREST";
         lb_type["OTHER_LEGAL_BASE"] = "OTHER-LEGAL-BASE";
     })(LegalBase.lb_type || (LegalBase.lb_type = {}));
-})(LegalBase || (LegalBase = {}));
+})(LegalBase = LegalBase || (LegalBase = {}));
 
 export { LegalBase };
 //# sourceMappingURL=LegalBase.js.map

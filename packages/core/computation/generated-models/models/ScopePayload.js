@@ -37,7 +37,7 @@ var ScopePayload;
         pp["VITAL_INTERESTS"] = "VITAL-INTERESTS";
         pp["OTHER_PURPOSE"] = "OTHER-PURPOSE";
     })(ScopePayload.pp || (ScopePayload.pp = {}));
-})(ScopePayload || (ScopePayload = {}));
+})(ScopePayload = ScopePayload || (ScopePayload = {}));
 
 export { ScopePayload };
 //# sourceMappingURL=ScopePayload.js.map

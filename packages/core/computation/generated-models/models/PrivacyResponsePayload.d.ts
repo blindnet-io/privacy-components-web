@@ -1,4 +1,4 @@
-export declare type PrivacyResponsePayload = {
+export type PrivacyResponsePayload = {
     demand_id: string;
     date: string;
     requested_action: PrivacyResponsePayload.requested_action;

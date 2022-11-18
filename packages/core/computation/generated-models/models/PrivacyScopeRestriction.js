@@ -37,7 +37,7 @@ var PrivacyScopeRestriction;
         pp["VITAL_INTERESTS"] = "VITAL-INTERESTS";
         pp["OTHER_PURPOSE"] = "OTHER-PURPOSE";
     })(PrivacyScopeRestriction.pp || (PrivacyScopeRestriction.pp = {}));
-})(PrivacyScopeRestriction || (PrivacyScopeRestriction = {}));
+})(PrivacyScopeRestriction = PrivacyScopeRestriction || (PrivacyScopeRestriction = {}));
 
 export { PrivacyScopeRestriction };
 //# sourceMappingURL=PrivacyScopeRestriction.js.map

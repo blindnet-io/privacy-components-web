@@ -9,7 +9,7 @@ var PrItem;
         status["COMPLETED"] = "COMPLETED";
         status["CANCELED"] = "CANCELED";
     })(PrItem.status || (PrItem.status = {}));
-})(PrItem || (PrItem = {}));
+})(PrItem = PrItem || (PrItem = {}));
 
 export { PrItem };
 //# sourceMappingURL=PrItem.js.map

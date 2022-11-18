@@ -1,4 +1,4 @@
 import type { PrItem } from './PrItem.js';
-export declare type RequestHistoryPayload = {
+export type RequestHistoryPayload = {
     history?: Array<PrItem>;
 };

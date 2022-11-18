@@ -1,4 +1,4 @@
-export declare type PrivacyScopeTriple = {
+export type PrivacyScopeTriple = {
     data_category: string;
     processing_category: PrivacyScopeTriple.processing_category;
     purpose: PrivacyScopeTriple.purpose;

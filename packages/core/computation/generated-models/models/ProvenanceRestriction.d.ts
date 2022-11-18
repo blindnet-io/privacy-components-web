@@ -1,4 +1,4 @@
-export declare type ProvenanceRestriction = {
+export type ProvenanceRestriction = {
     term: ProvenanceRestriction.term;
     target?: ProvenanceRestriction.target;
 };

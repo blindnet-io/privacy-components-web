@@ -1,4 +1,4 @@
-export declare type PrivacyScopeRestriction = {
+export type PrivacyScopeRestriction = {
     dc: string;
     pc: PrivacyScopeRestriction.pc;
     pp: PrivacyScopeRestriction.pp;

@@ -1,5 +1,5 @@
 import type { DataSubjectPayload } from './DataSubjectPayload.js';
-export declare type CompletedDemandPayload = {
+export type CompletedDemandPayload = {
     id: string;
     action: CompletedDemandPayload.action;
     data_subject?: DataSubjectPayload;

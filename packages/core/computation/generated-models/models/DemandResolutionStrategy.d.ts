@@ -1,5 +1,5 @@
 import type { DemandResolution } from './DemandResolution.js';
-export declare type DemandResolutionStrategy = {
+export type DemandResolutionStrategy = {
     transparency: DemandResolution;
     access: DemandResolution;
     delete: DemandResolution;

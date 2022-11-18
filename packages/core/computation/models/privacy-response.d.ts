@@ -12,4 +12,4 @@ export interface PrivacyResponseItem {
     system: string;
     data?: string;
 }
-export declare type PrivacyResponse = PrivacyResponseItem[];
+export type PrivacyResponse = PrivacyResponseItem[];

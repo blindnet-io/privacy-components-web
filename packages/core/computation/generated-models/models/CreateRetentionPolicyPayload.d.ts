@@ -1,7 +1,7 @@
 /**
  * keep CONTACT for no longer than 30 days after a service defined by a legal base ends
  */
-export declare type CreateRetentionPolicyPayload = {
+export type CreateRetentionPolicyPayload = {
     /**
      * data category for which the policy is created
      */

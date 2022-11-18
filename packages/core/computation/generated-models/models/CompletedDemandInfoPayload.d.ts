@@ -1,4 +1,4 @@
-export declare type CompletedDemandInfoPayload = {
+export type CompletedDemandInfoPayload = {
     demand_id: string;
     response_id: string;
     request_date: string;

@@ -1,6 +1,6 @@
 import type { DataSubjectPayload } from './DataSubjectPayload.js';
 import type { PrivacyRequestDemand } from './PrivacyRequestDemand.js';
-export declare type CreatePrivacyRequestPayload = {
+export type CreatePrivacyRequestPayload = {
     target?: CreatePrivacyRequestPayload.target;
     email?: string;
     demands?: Array<PrivacyRequestDemand>;

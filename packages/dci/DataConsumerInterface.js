@@ -1,10 +1,10 @@
 import { __decorate } from './node_modules/tslib/tslib.es6.js';
-import { localized } from '@lit/localize';
+import { msg, localized } from '@lit/localize';
 import { LitElement, html, css } from 'lit';
 import { state, customElement } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
 import { CoreConfigurationMixin, ComputationAPI } from '@blindnet/core';
-import { setLocale } from './utils/localization.js';
+import { setLocale } from './localization.js';
 
 var DCIUIState;
 (function (DCIUIState) {
@@ -46,8 +46,8 @@ let DataConsumerInterface = class DataConsumerInterface extends CoreConfiguratio
     render() {
         return html `
       <bldn-toggle-button
-        left="Requests"
-        right="Alerts"
+        left=${msg('Requests')}
+        right=${msg('Alerts')}
         @bldn-toggle-button-change=${this.handleViewToggleChange}
       ></bldn-toggle-button>
       ${choose(this._uiState, [
@@ -80,8 +80,8 @@ __decorate([
     state()
 ], DataConsumerInterface.prototype, "_demands", void 0);
 DataConsumerInterface = __decorate([
-    customElement('bldn-data-consum'),
-    localized()
+    localized(),
+    customElement('bldn-data-consum')
 ], DataConsumerInterface);
 
 export { DataConsumerInterface };

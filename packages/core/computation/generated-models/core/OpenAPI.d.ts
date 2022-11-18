@@ -1,7 +1,7 @@
 import type { ApiRequestOptions } from './ApiRequestOptions.js';
-declare type Resolver<T> = (options: ApiRequestOptions) => Promise<T>;
-declare type Headers = Record<string, string>;
-export declare type OpenAPIConfig = {
+type Resolver<T> = (options: ApiRequestOptions) => Promise<T>;
+type Headers = Record<string, string>;
+export type OpenAPIConfig = {
     BASE: string;
     VERSION: string;
     WITH_CREDENTIALS: boolean;

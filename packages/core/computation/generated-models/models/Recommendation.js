@@ -35,7 +35,7 @@ var Recommendation;
         target["PARTNERS_DOWNWARD"] = "PARTNERS.DOWNWARD";
         target["PARTNERS_UPWARD"] = "PARTNERS.UPWARD";
     })(Recommendation.target || (Recommendation.target = {}));
-})(Recommendation || (Recommendation = {}));
+})(Recommendation = Recommendation || (Recommendation = {}));
 
 export { Recommendation };
 //# sourceMappingURL=Recommendation.js.map

@@ -1,5 +1,5 @@
 import type { ScopePayload } from './ScopePayload.js';
-export declare type CreateLegalBasePayload = {
+export type CreateLegalBasePayload = {
     /**
      * type of the legal base
      */

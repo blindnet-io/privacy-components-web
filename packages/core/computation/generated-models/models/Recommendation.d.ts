@@ -1,4 +1,4 @@
-export declare type Recommendation = {
+export type Recommendation = {
     id: string;
     d_id: string;
     status?: Recommendation.status;

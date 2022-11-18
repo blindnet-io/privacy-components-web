@@ -5,6 +5,6 @@ export interface RequestHistoryItem {
     demands: number;
     status: REQUEST_STATUS;
 }
-export declare type HistoryResponse = {
+export type HistoryResponse = {
     history: RequestHistoryItem[];
 };

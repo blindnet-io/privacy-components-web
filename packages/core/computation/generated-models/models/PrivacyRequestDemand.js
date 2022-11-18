@@ -26,7 +26,7 @@ var PrivacyRequestDemand;
         action["TRANSPARENCY_WHO"] = "TRANSPARENCY.WHO";
         action["OTHER"] = "OTHER";
     })(PrivacyRequestDemand.action || (PrivacyRequestDemand.action = {}));
-})(PrivacyRequestDemand || (PrivacyRequestDemand = {}));
+})(PrivacyRequestDemand = PrivacyRequestDemand || (PrivacyRequestDemand = {}));
 
 export { PrivacyRequestDemand };
 //# sourceMappingURL=PrivacyRequestDemand.js.map

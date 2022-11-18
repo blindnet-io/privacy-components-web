@@ -1,4 +1,4 @@
-export declare type DataSubjectPayload = {
+export type DataSubjectPayload = {
     id: string;
     schema?: string;
 };

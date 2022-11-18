@@ -1,4 +1,4 @@
-export declare type RegulationResponsePayload = {
+export type RegulationResponsePayload = {
     id: string;
     name: string;
     description?: string;

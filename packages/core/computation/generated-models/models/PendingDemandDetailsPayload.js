@@ -26,7 +26,7 @@ var PendingDemandDetailsPayload;
         action["TRANSPARENCY_WHO"] = "TRANSPARENCY.WHO";
         action["OTHER"] = "OTHER";
     })(PendingDemandDetailsPayload.action || (PendingDemandDetailsPayload.action = {}));
-})(PendingDemandDetailsPayload || (PendingDemandDetailsPayload = {}));
+})(PendingDemandDetailsPayload = PendingDemandDetailsPayload || (PendingDemandDetailsPayload = {}));
 
 export { PendingDemandDetailsPayload };
 //# sourceMappingURL=PendingDemandDetailsPayload.js.map

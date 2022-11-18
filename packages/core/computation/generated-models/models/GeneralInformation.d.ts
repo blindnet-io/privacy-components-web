@@ -1,4 +1,4 @@
-export declare type GeneralInformation = {
+export type GeneralInformation = {
     /**
      * countries where data servers are located (including those of the processors who are processing data on your behalf
      */

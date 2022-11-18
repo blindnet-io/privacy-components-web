@@ -1,4 +1,4 @@
-export declare type ScopePayload = {
+export type ScopePayload = {
     dc: string;
     pc: ScopePayload.pc;
     pp: ScopePayload.pp;

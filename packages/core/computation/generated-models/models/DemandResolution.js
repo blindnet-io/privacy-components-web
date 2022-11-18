@@ -5,7 +5,7 @@ var DemandResolution;
 (function (DemandResolution) {
     DemandResolution["AUTO"] = "auto";
     DemandResolution["MANUAL"] = "manual";
-})(DemandResolution || (DemandResolution = {}));
+})(DemandResolution = DemandResolution || (DemandResolution = {}));
 
 export { DemandResolution };
 //# sourceMappingURL=DemandResolution.js.map

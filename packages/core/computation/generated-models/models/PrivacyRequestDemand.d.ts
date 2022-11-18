@@ -1,5 +1,5 @@
 import type { Restrictions } from './Restrictions.js';
-export declare type PrivacyRequestDemand = {
+export type PrivacyRequestDemand = {
     id: string;
     action: PrivacyRequestDemand.action;
     message?: string;

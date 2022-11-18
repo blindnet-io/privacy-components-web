@@ -25,6 +25,7 @@ import '../computation/generated-models/models/ProvenanceRestriction.js';
 import { Recommendation } from '../computation/generated-models/models/Recommendation.js';
 import '../computation/generated-models/models/RetentionPolicy.js';
 import '../computation/generated-models/models/ScopePayload.js';
+import { ACTION_TITLES } from '../language/dictionary.js';
 import { bldnStyles } from './bldn-styles.js';
 
 var DropdownUIState;
@@ -176,7 +177,9 @@ let DataConsumerDemandListItem = class DataConsumerDemandListItem extends LitEle
             <span class="list-item__text"
               >${(_a = this.demand.data_subject) === null || _a === void 0 ? void 0 : _a.id}</span
             >
-            <span class="list-item__text">${this.demand.action}</span>
+            <span class="list-item__text"
+              >${ACTION_TITLES[this.demand.action]()}</span
+            >
             <button
               id="list-item__expand-btn"
               class="svg-btn"

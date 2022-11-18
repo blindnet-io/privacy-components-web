@@ -13,7 +13,7 @@ var CreateLegalBasePayload;
         lb_type["NECESSARY_VITAL_INTEREST"] = "NECESSARY.VITAL-INTEREST";
         lb_type["OTHER_LEGAL_BASE"] = "OTHER-LEGAL-BASE";
     })(CreateLegalBasePayload.lb_type || (CreateLegalBasePayload.lb_type = {}));
-})(CreateLegalBasePayload || (CreateLegalBasePayload = {}));
+})(CreateLegalBasePayload = CreateLegalBasePayload || (CreateLegalBasePayload = {}));
 
 export { CreateLegalBasePayload };
 //# sourceMappingURL=CreateLegalBasePayload.js.map

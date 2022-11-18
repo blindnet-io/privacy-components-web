@@ -43,7 +43,7 @@ var PrivacyResponsePayload;
         motive["USER_UNKNOWN"] = "USER-UNKNOWN";
         motive["OTHER_MOTIVE"] = "OTHER-MOTIVE";
     })(PrivacyResponsePayload.motive || (PrivacyResponsePayload.motive = {}));
-})(PrivacyResponsePayload || (PrivacyResponsePayload = {}));
+})(PrivacyResponsePayload = PrivacyResponsePayload || (PrivacyResponsePayload = {}));
 
 export { PrivacyResponsePayload };
 //# sourceMappingURL=PrivacyResponsePayload.js.map

@@ -1,4 +1,4 @@
-export declare type Provenance = {
+export type Provenance = {
     id: string;
     provenance: Provenance.provenance;
     system?: string;

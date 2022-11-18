@@ -41,4 +41,5 @@ export { BldnButton } from './components/bldn-button.js';
 export { BldnInput } from './components/bldn-input.js';
 export { BldnNavToggle } from './components/bldn-nav-toggle.js';
 export { bldnStyles } from './components/bldn-styles.js';
+export { ACTION_DESCRIPTIONS, ACTION_TITLES, AFTER_TITLES, DATA_CATEGORY_DESCRIPTIONS, DATA_CATEGORY_TITLES, DEMAND_STATUS_DESCRIPTIONS, POLICY_TYPE_TITLES, PROCESSING_CATEGORIES, PROCESSING_CATEGORY_DESCRIPTIONS, PROVENANCE_DESCRIPTIONS, PROVENANCE_DESCRIPTIONS_STATUS_VIEW, PURPOSES, PURPOSE_DESCRIPTIONS, STATUS_DESCRIPTIONS, TARGET_DESCRIPTIONS, TRANSPARENCY_ACTION_DESCRIPTIONS } from './language/dictionary.js';
 //# sourceMappingURL=index.js.map

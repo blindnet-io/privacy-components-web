@@ -1,4 +1,4 @@
-export declare type PrItem = {
+export type PrItem = {
     id: string;
     date: string;
     demands: number;
