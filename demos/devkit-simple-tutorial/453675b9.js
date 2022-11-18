@@ -120,7 +120,7 @@ class ee{constructor(){this.settled=!1,this.promise=new Promise(((t,e)=>{this._r
  * Copyright 2020 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */
-let pe=jt,Ie=!1;const Ce=["fr","fr-CA","fr-FR"],{getLocale:ue,setLocale:Oe}=(ge={sourceLocale:"en-US",targetLocales:Ce,loadLocale:t=>import(`../generated/locales/${t}.js`)},function(t){if(Ie)throw new Error("lit-localize can only be configured once");pe=t,Ie=!0}(((t,e)=>se(Re,t,e))),ce=le=ge.sourceLocale,de=new Set(ge.targetLocales),de.add(ge.sourceLocale),Ae=ge.loadLocale,{getLocale:Se,setLocale:he});var ge;let ve=class extends Gt{constructor(){super();try{Oe(navigator.language)}catch(t){console.log(`Could not set locale to ${navigator.language}.`)}}render(){return ht`Alerts view coming soon!`}};ve=G([Qt(),Mt("bldn-data-consum-alerts")],ve);
+let pe=jt,Ie=!1;const Ce=["fr","fr-CA","fr-FR"],{getLocale:ue,setLocale:Oe}=(ge={sourceLocale:"en-US",targetLocales:Ce,loadLocale:t=>import(`./generated/locales/${t}.js`)},function(t){if(Ie)throw new Error("lit-localize can only be configured once");pe=t,Ie=!0}(((t,e)=>se(Re,t,e))),ce=le=ge.sourceLocale,de=new Set(ge.targetLocales),de.add(ge.sourceLocale),Ae=ge.loadLocale,{getLocale:Se,setLocale:he});var ge;let ve=class extends Gt{constructor(){super();try{Oe(navigator.language)}catch(t){console.log(`Could not set locale to ${navigator.language}.`)}}render(){return ht`Alerts view coming soon!`}};ve=G([Qt(),Mt("bldn-data-consum-alerts")],ve);
 /**
  * @license
  * Copyright 2021 Google LLC
