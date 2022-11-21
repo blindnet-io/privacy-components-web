@@ -305,6 +305,7 @@ export class BldnRequestStatus extends CoreConfigurationMixin(LitElement) {
 
   // NOTE: For now, we assume demand.data is a JSON file
   getGrantedResponseTemplate(demand: PrivacyResponsePayload) {
+    const answer = JSON.parse(demand.answer);
     return html`
       ${choose(demand.requested_action, [
         [
@@ -373,22 +374,22 @@ export class BldnRequestStatus extends CoreConfigurationMixin(LitElement) {
         [
           PrivacyResponsePayload.requested_action.TRANSPARENCY_DATA_CATEGORIES,
           () => html`
-            ${map(demand.answer as Array<string>, dc => html` ${dc}<br /> `)}
+            ${map(answer as Array<string>, dc => html` ${dc}<br /> `)}
           `,
         ],
         [
           PrivacyResponsePayload.requested_action.TRANSPARENCY_DPO,
-          () => html` <p>${demand.answer}</p> `,
+          () => html` <p>${answer}</p> `,
         ],
         [
           PrivacyResponsePayload.requested_action.TRANSPARENCY_KNOWN,
-          () => html` <p>${demand.answer}</p> `,
+          () => html` <p>${answer}</p> `,
         ],
         [
           PrivacyResponsePayload.requested_action.TRANSPARENCY_LEGAL_BASES,
           () => html`
             <p>
-              ${map(demand.answer as Array<LegalBase>, lb =>
+              ${map(answer as Array<LegalBase>, lb =>
                 msg(html`
                   Type: ${lb.lb_type}<br />
                   Name: ${lb.name}<br />
@@ -400,11 +401,11 @@ export class BldnRequestStatus extends CoreConfigurationMixin(LitElement) {
         ],
         [
           PrivacyResponsePayload.requested_action.TRANSPARENCY_ORGANIZATION,
-          () => html` <p>${demand.answer}</p> `,
+          () => html` <p>${answer}</p> `,
         ],
         [
           PrivacyResponsePayload.requested_action.TRANSPARENCY_POLICY,
-          () => html` <p>${demand.answer}</p> `,
+          () => html` <p>${answer}</p> `,
         ],
         [
           PrivacyResponsePayload.requested_action
@@ -412,7 +413,7 @@ export class BldnRequestStatus extends CoreConfigurationMixin(LitElement) {
           () => html`
             <p>
               ${map(
-                demand.answer as Array<PrivacyScopeTriple.processing_category>,
+                answer as Array<PrivacyScopeTriple.processing_category>,
                 pc => html` ${pc}<br /> `
               )}
             </p>
@@ -421,9 +422,7 @@ export class BldnRequestStatus extends CoreConfigurationMixin(LitElement) {
         [
           PrivacyResponsePayload.requested_action.TRANSPARENCY_PROVENANCE,
           () => {
-            const provs: [string, [Provenance]][] = Object.entries(
-              demand.answer
-            );
+            const provs: [string, [Provenance]][] = Object.entries(answer);
             return html`
               <p>
                 ${map(
@@ -450,7 +449,7 @@ export class BldnRequestStatus extends CoreConfigurationMixin(LitElement) {
           () => html`
             <p>
               ${map(
-                demand.answer as Array<PrivacyScopeTriple.purpose>,
+                answer as Array<PrivacyScopeTriple.purpose>,
                 purpose => html` ${purpose}<br /> `
               )}
             </p>
@@ -459,13 +458,13 @@ export class BldnRequestStatus extends CoreConfigurationMixin(LitElement) {
         [
           PrivacyResponsePayload.requested_action.TRANSPARENCY_RETENTION,
           () => {
-            const answer = demand.answer as {
+            const policies = answer as {
               NAME: RetentionPolicy[];
             };
             return html`
               <p>
                 ${map(
-                  answer.NAME,
+                  policies.NAME,
                   rp =>
                     html`<p>
                       ${getRetentionPolicyString(
@@ -484,22 +483,14 @@ export class BldnRequestStatus extends CoreConfigurationMixin(LitElement) {
           PrivacyResponsePayload.requested_action.TRANSPARENCY_WHERE,
           () => html`
             <p>
-              ${map(
-                demand.answer as Array<string>,
-                where => html` ${where}<br /> `
-              )}
+              ${map(answer as Array<string>, where => html` ${where}<br /> `)}
             </p>
           `,
         ],
         [
           PrivacyResponsePayload.requested_action.TRANSPARENCY_WHO,
           () => html`
-            <p>
-              ${map(
-                demand.answer as Array<string>,
-                who => html` ${who}<br /> `
-              )}
-            </p>
+            <p>${map(answer as Array<string>, who => html` ${who}<br /> `)}</p>
           `,
         ],
       ])}
