@@ -1,5 +1,10 @@
 import { css, html, LitElement, PropertyValueMap, TemplateResult } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import {
+  customElement,
+  property,
+  queryAssignedElements,
+  state,
+} from 'lit/decorators.js';
 import {
   ComputationAPI,
   CoreConfigurationMixin,
@@ -12,6 +17,8 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 
 import './bldn-tile-menu.js';
 import './bldn-request-review.js';
+import { localized } from '@lit/localize';
+import { BldnRequestModule } from './bldn-request-module.js';
 import './action-forms/bldn-access-form.js';
 import './action-forms/bldn-delete-form.js';
 import './action-forms/bldn-object-form.js';
@@ -19,7 +26,6 @@ import './action-forms/bldn-restrict-form.js';
 import './action-forms/bldn-revoke-consent-form.js';
 import './action-forms/bldn-transparency-form.js';
 import './action-forms/bldn-other-form.js';
-import { localized } from '@lit/localize';
 import { ACTION_DESCRIPTIONS, ACTION_TITLES } from './utils/dictionary.js';
 
 /**
@@ -66,8 +72,10 @@ enum DefaultDataCategories {
 }
 
 enum RequestBuilderUIState {
+  preModules,
   menu,
   edit,
+  postModules,
   review,
 }
 
@@ -95,6 +103,25 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
   );
 
   @state() _allowedDataCategories: string[] = [];
+
+  // _preFormModules!: undefined | Array<HTMLElement>;
+
+  // @state()
+  // get _preFormModules() {
+  //   const elements = this.shadowRoot!.querySelectorAll('slot[name=preFormModule]');
+  //   return elements
+  // }
+
+  // set _preFormModules(value) {
+  //   this._preFormModules = value
+  //   this.requestUpdate('_preFormModules', )
+  // }
+
+  @queryAssignedElements({ slot: 'preFormModule' })
+  _preFormModules!: Array<HTMLElement>;
+
+  @queryAssignedElements({ slot: 'postFormModule' })
+  _postFormModules!: Array<HTMLElement>;
 
   /**
    * Factory method to get the action form for a specific action
@@ -244,7 +271,7 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
 
       // We want the request builder for a new demand group (not editing existing)
       this._demandGroupIndex = undefined;
-      this._uiState = RequestBuilderUIState.edit;
+      this._uiState = RequestBuilderUIState.preModules;
     }
   }
 
@@ -484,7 +511,13 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
   }
 
   render() {
+    console.log(this._preFormModules);
+    if (this._preFormModules.length > 0) {
+      console.log((this._preFormModules[0] as BldnRequestModule).isValid());
+    }
     return html`
+      <slot name="preFormModule"></slot>
+      <!-- <slot name='preFormModule'></slot> -->
       ${choose(this._uiState, [
         [
           RequestBuilderUIState.menu,
@@ -501,12 +534,25 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
           `,
         ],
         [
+          RequestBuilderUIState.preModules,
+          () => {
+            console.log(this._preFormModules);
+            return html`
+              <!-- <slot name='preFormModule'></slot> -->
+              <!-- <slot name='preFormModule'>
+                <bldn-request-module skip></bldn-request-module>
+              </slot> -->
+            `;
+          },
+        ],
+        [
           RequestBuilderUIState.edit,
           () =>
             this.getActionForm(
               this._action ?? PrivacyRequestDemand.action.ACCESS
             ),
         ],
+        [RequestBuilderUIState.postModules, () => html``],
         [
           RequestBuilderUIState.review,
           () => html`

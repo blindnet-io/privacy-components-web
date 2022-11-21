@@ -5,11 +5,18 @@ import {
 } from '@blindnet/core';
 import { localized, msg } from '@lit/localize';
 import { css, html, LitElement, PropertyValueMap } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import {
+  customElement,
+  property,
+  queryAssignedElements,
+  state,
+} from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
+import { map } from 'lit/directives/map.js';
 
 import './bldn-request-builder.js';
+import { BldnRequestModule } from './bldn-request-module.js';
 import './bldn-submitted-requests.js';
 import { setLocale } from './localization.js';
 
@@ -32,6 +39,12 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
   @property({ type: Array }) requestId: undefined | string;
 
   @state() _uiState: PRCIUIState = PRCIUIState.createRequest;
+
+  @queryAssignedElements({ slot: 'preFormModule' })
+  _preFormModules!: Array<HTMLElement>;
+
+  @queryAssignedElements({ slot: 'postFormModule' })
+  _postFormModules!: Array<HTMLElement>;
 
   constructor() {
     super();
@@ -82,7 +95,13 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
   }
 
   render() {
+    console.log(this._preFormModules);
+    if (this._preFormModules.length > 0) {
+      console.log((this._preFormModules[0] as BldnRequestModule).isValid());
+    }
     return html`
+      <slot name="preFormModule" slot="preFormModule"></slot>
+      <slot name="postFormModule" slot="postFormModule"></slot>
       <bldn-nav-toggle
         .left=${{
           label: msg('Submit a Request'),
@@ -106,7 +125,9 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
                 data-categories=${JSON.stringify(this.dataCategories)}
                 actions=${JSON.stringify(this.actions)}
                 @bldn-request-builder:request-sent=${this.handleRequestSent}
-              ></bldn-request-builder>
+              >
+                ${map(this._preFormModules, module => module)}
+              </bldn-request-builder>
             `,
         ],
         [
