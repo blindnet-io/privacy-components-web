@@ -771,7 +771,7 @@
 </trans-unit>
 <trans-unit id="sebbb864b5cee4a82">
   <source>Please note that adding a personalized message might lead to the demand taking longer to be processed</source>
-  <target>Veuillez noter que l'ajout d'un message personnalisé peut entraîner un délai de traitement de la demande plus long</target>
+  <target>Veuillez noter que l'ajout d'un message personnalisé peut entraîner un délai de traitement plus long</target>
 </trans-unit>
 <trans-unit id="sbaace8219b5f4612">
   <source>Select All</source>
@@ -871,11 +871,11 @@
 </trans-unit>
 <trans-unit id="s7c9992bcec8e44cf">
   <source>Date Restriction</source>
-  <target>Restreindre sur une période spécifique</target>
+  <target>Restreindre pour une période spécifique</target>
 </trans-unit>
 <trans-unit id="s0aa4aeddbaeb0008">
   <source>Provenance Restriction</source>
-  <target>Restreindre sur une provenance spécifique</target>
+  <target>Restreindre pour une provenance spécifique</target>
 </trans-unit>
 <trans-unit id="se2b203c77031740e">
   <source>Other Message</source>
@@ -931,7 +931,7 @@
 </trans-unit>
 <trans-unit id="s43ceedf5cc8524cc">
   <source>I object to the processing of my data within the following</source>
-  <target>Je m'oppose au traitement des mes données pour</target>
+  <target>Je m'oppose au traitement des mes données pour un</target>
 </trans-unit>
 <trans-unit id="sd5cb4c0ac4fa8ca6">
   <source>I restrict the processing of my data to the following</source>
@@ -1057,7 +1057,7 @@
 </trans-unit>
 <trans-unit id="s6e70bde5ac66f7de">
   <source>This demand is still under review.</source>
-  <target>Cette demande est encore en cours de traitement</target>
+  <target>Cette demande en cours de traitement</target>
 </trans-unit>
 <trans-unit id="se40a735383dec962">
   <source>Cancel Demand</source>
@@ -1135,7 +1135,7 @@
 </trans-unit>
 <trans-unit id="s24713431bc8a3ec8">
   <source>Submitted Requests</source>
-  <target>Demandes soumises</target>
+  <target>Demandes envoyées</target>
 </trans-unit>
 </body>
 </file>
