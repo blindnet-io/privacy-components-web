@@ -12,13 +12,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 
 import './bldn-tile-menu.js';
 import './bldn-request-review.js';
-import './action-forms/bldn-access-form.js';
-import './action-forms/bldn-delete-form.js';
-import './action-forms/bldn-object-form.js';
-import './action-forms/bldn-restrict-form.js';
-import './action-forms/bldn-revoke-consent-form.js';
-import './action-forms/bldn-transparency-form.js';
-import './action-forms/bldn-other-form.js';
+import './action-forms/index.js';
 import { localized } from '@lit/localize';
 import { ACTION_DESCRIPTIONS, ACTION_TITLES } from './utils/dictionary.js';
 
@@ -140,13 +134,13 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
         [
           PrivacyRequestDemand.action.MODIFY,
           () => html`
-            <bldn-other-form
+            <bldn-modify-form
               data-categories=${JSON.stringify(this._allowedDataCategories)}
               .demands=${this._demandGroupIndex !== undefined
                 ? this._demandGroups[this._demandGroupIndex]
                 : ifDefined(undefined)}
               demand-group-index=${ifDefined(this._demandGroupIndex)}
-            ></bldn-other-form>
+            ></bldn-modify-form>
           `,
         ],
         [
@@ -170,13 +164,13 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
         [
           PrivacyRequestDemand.action.PORTABILITY,
           () => html`
-            <bldn-other-form
+            <bldn-portability-form
               data-categories=${JSON.stringify(this._allowedDataCategories)}
               .demands=${this._demandGroupIndex !== undefined
                 ? this._demandGroups[this._demandGroupIndex]
                 : ifDefined(undefined)}
               demand-group-index=${ifDefined(this._demandGroupIndex)}
-            ></bldn-other-form>
+            ></bldn-portability-form>
           `,
         ],
         [
