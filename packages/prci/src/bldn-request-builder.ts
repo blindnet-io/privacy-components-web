@@ -71,6 +71,13 @@ enum RequestBuilderUIState {
   review,
 }
 
+/**
+ * Interface for building privacy requests
+ *
+ * @event {CustomEvent} bldn-request-builder:request-created Event containing request object in details
+ * @event {CustomEvent} bldn-request-builder:request-sent Event containing request ID in details.
+ *     Only emitted if using with PCE.
+ */
 @localized()
 @customElement('bldn-request-builder')
 export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
@@ -325,20 +332,28 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
       })
     );
 
-    // Send request and emit event with ID
-    ComputationAPI.getInstance()
-      .sendPrivacyRequest(request)
-      .then(response => {
-        this.dispatchEvent(
-          new CustomEvent('bldn-request-builder:request-sent', {
-            bubbles: true,
-            composed: true,
-            detail: {
-              requestId: response.request_id,
-            },
-          })
-        );
-      });
+    // Send request and emit event with ID, if using with PCE
+    if (ComputationAPI.getInstance().apiTokenSet()) {
+      ComputationAPI.getInstance()
+        .sendPrivacyRequest(request)
+        .then(response => {
+          this.dispatchEvent(
+            new CustomEvent('bldn-request-builder:request-sent', {
+              bubbles: true,
+              composed: true,
+              detail: {
+                requestId: response.request_id,
+              },
+            })
+          );
+        });
+    } else {
+      // Reset states and go back to menu if not using with PCE
+      this._action = undefined;
+      this._demandGroupIndex = undefined;
+      this._demandGroups = [];
+      this._uiState = RequestBuilderUIState.menu;
+    }
   }
 
   private handleBackClick(e: Event) {
