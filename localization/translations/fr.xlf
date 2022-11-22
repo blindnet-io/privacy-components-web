@@ -771,7 +771,7 @@
 </trans-unit>
 <trans-unit id="sebbb864b5cee4a82">
   <source>Please note that adding a personalized message might lead to the demand taking longer to be processed</source>
-  <target>Veuillez noter que l'ajout d'un message personnalisé peut entraîner un délai de traitement de la demande plus long</target>
+  <target>Veuillez noter que l'ajout d'un message personnalisé peut entraîner un délai de traitement plus long</target>
 </trans-unit>
 <trans-unit id="sbaace8219b5f4612">
   <source>Select All</source>
@@ -871,11 +871,11 @@
 </trans-unit>
 <trans-unit id="s7c9992bcec8e44cf">
   <source>Date Restriction</source>
-  <target>Restreindre sur une période spécifique</target>
+  <target>Restreindre pour une période spécifique</target>
 </trans-unit>
 <trans-unit id="s0aa4aeddbaeb0008">
   <source>Provenance Restriction</source>
-  <target>Restreindre sur une provenance spécifique</target>
+  <target>Restreindre pour une provenance spécifique</target>
 </trans-unit>
 <trans-unit id="se2b203c77031740e">
   <source>Other Message</source>
@@ -901,9 +901,21 @@
   <source>I address my Privacy Request to:</source>
   <target>J'adresse ma demande à :</target>
 </trans-unit>
-<trans-unit id="s1204f9b176a19dfd">
-  <source>Details of my <x id="0" equiv-text="${this.action}"/> Demand</source>
-  <target>Details de ma <x id="0" equiv-text="${this.action}"/> Demande</target>
+<trans-unit id="sc16e00a7a8b2fde2">
+  <source>Back</source>
+  <target>Retour</target>
+</trans-unit>
+<trans-unit id="s0fbf6dc6a1966408">
+  <source>Next</source>
+  <target>Suivant</target>
+</trans-unit>
+<trans-unit id="demand-form-action-sentence-start">
+  <source>Details of my</source>
+  <target>Détails de ma demande</target>
+</trans-unit>
+<trans-unit id="demand-form-action-sentence-end">
+  <source>demand</source>
+  <target> </target>
 </trans-unit>
 <trans-unit id="s29ec563d56cf6c6b">
   <source>Other Options</source>
@@ -931,7 +943,7 @@
 </trans-unit>
 <trans-unit id="s43ceedf5cc8524cc">
   <source>I object to the processing of my data within the following</source>
-  <target>Je m'oppose au traitement des mes données pour</target>
+  <target>Je m'oppose au traitement des mes données pour un</target>
 </trans-unit>
 <trans-unit id="sd5cb4c0ac4fa8ca6">
   <source>I restrict the processing of my data to the following</source>
@@ -1057,7 +1069,7 @@
 </trans-unit>
 <trans-unit id="s6e70bde5ac66f7de">
   <source>This demand is still under review.</source>
-  <target>Cette demande est encore en cours de traitement</target>
+  <target>Cette demande en cours de traitement</target>
 </trans-unit>
 <trans-unit id="se40a735383dec962">
   <source>Cancel Demand</source>
@@ -1107,23 +1119,32 @@
   <source>Your transparency demand has been granted and split into multiple demands below.</source>
   <target>Votre demande de transparence a été approuvée et divisée en plusieurs demandes ci-dessous</target>
 </trans-unit>
-<trans-unit id="h0432c8d86c610266">
-  <source>
-                  Type: <x id="0" equiv-text="${lb.lb_type}&lt;br&gt;"/>
-                  Name: <x id="1" equiv-text="${lb.name}&lt;br&gt;"/>
-                  Description: <x id="2" equiv-text="${lb.description}&lt;br&gt;&lt;br&gt;&#10;                "/></source>
-  <target>
-                  Type: <x id="0" equiv-text="${lb.lb_type}&lt;br&gt;"/>
-                  Nom: <x id="1" equiv-text="${lb.name}&lt;br&gt;"/>
-                  Description: <x id="2" equiv-text="${lb.description}&lt;br&gt;&lt;br&gt;&#10;                "/></target>
+<trans-unit id="s42c2e491086a8e4d">
+  <source>The organization has no categories of data on you</source>
 </trans-unit>
-<trans-unit id="hfdcde931c66b34c9">
-  <source><x id="0" equiv-text="&lt;b&gt;${dc[0]}"/> Data:<x id="1" equiv-text="&lt;/b&gt;"/> Source
-                            <x id="2" equiv-text="&lt;i&gt;${prov.provenance}&lt;/i&gt;"/> of the
-                            <x id="3" equiv-text="&lt;i&gt;${prov.system}&lt;/i&gt;"/> system.<x id="4" equiv-text="&lt;br&gt;"/></source>
-  <target><x id="0" equiv-text="&lt;b&gt;${dc[0]}"/> Données :<x id="1" equiv-text="&lt;/b&gt;"/> Source
-                            <x id="2" equiv-text="&lt;i&gt;${prov.provenance}&lt;/i&gt;"/> du
-                            <x id="3" equiv-text="&lt;i&gt;${prov.system}&lt;/i&gt;"/> système<x id="4" equiv-text="&lt;br&gt;"/></target>
+<trans-unit id="scffbf96e7b10ac80">
+  <source>The organization has no listed DPO.</source>
+</trans-unit>
+<trans-unit id="se4cf30e3928e4f2b">
+  <source>The organization does not have data on you.</source>
+</trans-unit>
+<trans-unit id="s68bf29e07c2bbcb5">
+  <source>The organization has data on you.</source>
+</trans-unit>
+<trans-unit id="sd4d1e4a953d6e62b">
+  <source>Could not get information regarding whether the organization has data on you.</source>
+</trans-unit>
+<trans-unit id="s9d29c94545a33542">
+  <source>There are no legal bases for processing your data.</source>
+</trans-unit>
+<trans-unit id="s0e7c28293c660b7a">
+  <source>Could not get organization information.</source>
+</trans-unit>
+<trans-unit id="sdd5d1a64a38b2939">
+  <source>Could not get policy information.</source>
+</trans-unit>
+<trans-unit id="s6c90beb5e021512c">
+  <source>Could not get processing categories.</source>
 </trans-unit>
 <trans-unit id="s794f12abe8666b7f">
   <source>Back to Requests</source>
@@ -1135,7 +1156,7 @@
 </trans-unit>
 <trans-unit id="s24713431bc8a3ec8">
   <source>Submitted Requests</source>
-  <target>Demandes soumises</target>
+  <target>Demandes envoyées</target>
 </trans-unit>
 </body>
 </file>
