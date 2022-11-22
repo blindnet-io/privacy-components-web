@@ -9,11 +9,8 @@
     /* eslint-disable @typescript-eslint/no-explicit-any */
 
     export const templates = {
-      'h0432c8d86c610266': html`
-                  Type: ${0}<br>
-                  Nom: ${1}<br>
-                  Description: ${2}<br><br>
-                `,
+      'demand-form-action-sentence-end': ` `,
+'demand-form-action-sentence-start': `Détails de ma demande`,
 'h13d5761d00e9feca': html`Ce système et tous les systèmes au sein de cette organisation`,
 'h19239c6c3bcb708a': html`Toutes représentations graphiques (image, vidéo) de moi`,
 'h1c2eb9adfca54c27': html`Toutes les informations permettant de me classer dans une catégorie démographique`,
@@ -63,9 +60,6 @@
           buts
         `,
 'hf75700d04ad87450': html`${0} Demande`,
-'hfdcde931c66b34c9': html`<b>${0} Données :</b> Source
-                            <i>${1}</i> du
-                            <i>${2}</i> système<br>`,
 'hfde9788418b19230': html`<b>périmètre</b>`,
 'hff3b775b64d0793c': html`Partiellement traitée`,
 'hff91edfe0b603c35': html`Données sur l'appareil que j'ai utilisé`,
@@ -78,14 +72,14 @@
 's08e22a2dc90d9557': `Transparence`,
 's09d23403a2394adf': `Transparence - Connaissance`,
 's0a2434ac9ab6d86f': `Demander des informations sur les pratiques de traitement de données et savoir si le système a des données sur moi`,
-'s0aa4aeddbaeb0008': `Restreindre sur une provenance spécifique`,
+'s0aa4aeddbaeb0008': `Restreindre pour une provenance spécifique`,
 's0b0a02a4470de153': `Appareil`,
 's0bc8fc90c7fe8285': `Biométrique`,
 's0c69f72a518db453': `Emploi`,
 's0e871352ba4b17d3': `Révocation`,
+'s0fbf6dc6a1966408': `Suivant`,
 's112704ba77c815e3': `Vendre des données à un tiers`,
 's11bafd52956fc434': `Aucune demande à traiter !`,
-'s1204f9b176a19dfd': str`Details de ma ${0} Demande`,
 's12ee89ea2db800f3': `Anonymisation`,
 's12f6b3b9aa6fe76c': `Recommandée`,
 's13c123f97668a70b': `Accès`,
@@ -99,7 +93,7 @@
 's208ea5ca39142a3a': `Transparence - Rétention`,
 's2142728a8840d713': `Affiliation adhésion`,
 's232c5da90a3947da': `Télécharger vos données`,
-'s24713431bc8a3ec8': `Demandes soumises`,
+'s24713431bc8a3ec8': `Demandes envoyées`,
 's255eaeef4249ebf2': `Qui peut accéder aux données que l'organisation a sur moi`,
 's28360fa3d4d84322': `Message optionnel`,
 's298104654055b365': `Restriction`,
@@ -129,7 +123,7 @@
 's4143d6263470dc7e': `Le traitement est nécessaire à des fins de médecine préventive ou de médecine du travail, pour l'évaluation de la capacité de travail de l'employé, le diagnostic médical, la procuration de soins ou de traitements sanitaires ou sociaux ou la gestion des systèmes et services de santé ou sociaux`,
 's41d0e1ff19aa568b': `Flèche pour développer ou réduire la liste déroulante`,
 's43184a4b085df935': `Les données fournies par la personne concernée`,
-'s43ceedf5cc8524cc': `Je m'oppose au traitement des mes données pour`,
+'s43ceedf5cc8524cc': `Je m'oppose au traitement des mes données pour un`,
 's44c3458a53fa9c48': `Services - Services Basiques`,
 's45aea633edb60ede': `Les données fournies par un utilisateur du système (potentiellement la personne concernée)`,
 's4618111b41da4ae5': `Autre type de donnée :`,
@@ -167,7 +161,7 @@
 's684a712107b118fe': `Traitées`,
 's6976edd03bbc39db': `Fournies par vous lors de l'utilisation du système`,
 's6b89c52fe7ea6744': `Portabilité`,
-'s6e70bde5ac66f7de': `Cette demande est encore en cours de traitement`,
+'s6e70bde5ac66f7de': `Cette demande en cours de traitement`,
 's6e7271676eaebf45': `Intérêt Vital`,
 's6f90b5eab3bb96bb': `Les types de données dans mon périmètre sont :`,
 's7154a359944ac56f': str`À ${0}`,
@@ -183,7 +177,7 @@
 's7b81fc085a19b55a': `Les raisons pour traiter les données dans mon périmètre :`,
 's7bcc6ab045e037e2': `Restreindre le traitement de mes données à un périmètre particulier`,
 's7c398dddd3171afc': `Autre - Preuve`,
-'s7c9992bcec8e44cf': `Restreindre sur une période spécifique`,
+'s7c9992bcec8e44cf': `Restreindre pour une période spécifique`,
 's7faa0f0ebcb806db': `Transparence - Provenance`,
 's8086d8767e40329d': `Prise de décision automatisée`,
 's80ad94771c626ec2': `pas plus de`,
@@ -238,6 +232,7 @@
 'sbe01eafd8958380c': `Recherche Scientifique et Étude de Marché`,
 'sc0903d723b382f53': `Détails de ma demande :`,
 'sc12f511c98f7f0dc': `Votre demande de révocation de consentement a été approuvée`,
+'sc16e00a7a8b2fde2': `Retour`,
 'sc35bea743e6a3aa2': `Transparence - Politiques`,
 'sc3f063a1f8ee6d42': `Les politiques appliquées au traitement de mes données`,
 'sc420894701de5ea3': `Modification`,
@@ -276,7 +271,7 @@
 'se7db4c6959b7d393': `Transparence - Où`,
 'se9e76660770debd1': `Cette demande a été annulée`,
 'seb19908ed8209df2': `Résumé de la Demande`,
-'sebbb864b5cee4a82': `Veuillez noter que l'ajout d'un message personnalisé peut entraîner un délai de traitement de la demande plus long`,
+'sebbb864b5cee4a82': `Veuillez noter que l'ajout d'un message personnalisé peut entraîner un délai de traitement plus long`,
 'see2fcaedf9743ec6': `Localisation`,
 'see4e21f60d66f454': `Approuvée`,
 'see4fad7db93f594b': `Intérêt Public`,
@@ -300,5 +295,14 @@
 'sfdad6bb711adaff5': `Votre demande d'opposition a été approuvée`,
 'sfef5aebda25a65db': `Erreur lors de l'obtention des détails de la demande. Veuillez actualiser la plage plus tard.`,
 'sff7e60a212b3fa64': `Prendre mes données et les faire transférer ailleurs`,
+'s42c2e491086a8e4d': `The organization has no categories of data on you`,
+'scffbf96e7b10ac80': `The organization has no listed DPO.`,
+'se4cf30e3928e4f2b': `The organization does not have data on you.`,
+'s68bf29e07c2bbcb5': `The organization has data on you.`,
+'sd4d1e4a953d6e62b': `Could not get information regarding whether the organization has data on you.`,
+'s9d29c94545a33542': `There are no legal bases for processing your data.`,
+'s0e7c28293c660b7a': `Could not get organization information.`,
+'sdd5d1a64a38b2939': `Could not get policy information.`,
+'s6c90beb5e021512c': `Could not get processing categories.`,
     };
   
