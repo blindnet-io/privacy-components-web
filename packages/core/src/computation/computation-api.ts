@@ -10,8 +10,7 @@ import {
   PendingDemandPayload,
   PrivacyResponsePayload,
   RequestHistoryPayload,
-} from './generated-models/index.js';
-import { DATA_CATEGORY } from './models/priv-terms.js';
+} from '../models/generated-models/index.js';
 
 export class ComputationAPI {
   private static instance: ComputationAPI | null = null;
@@ -200,25 +199,25 @@ export class ComputationAPI {
 
   // Privacy Request Endpoints
 
-  private preProcessRequest(
-    request: CreatePrivacyRequestPayload
-  ): CreatePrivacyRequestPayload {
-    // If all privacy scopes provided, this is the same as no restriction
-    const allDataCategories = Object.values(DATA_CATEGORY).filter(
-      dc => dc !== DATA_CATEGORY.ALL && !dc.includes('.')
-    );
-    request.demands!.forEach(d => {
-      if (d.restrictions && d.restrictions.privacy_scope) {
-        const demandDcs = d.restrictions.privacy_scope!.map(psr => psr.dc);
-        if (allDataCategories.every(dc => demandDcs.includes(dc))) {
-          const demand = d;
-          delete demand.restrictions!.privacy_scope;
-        }
-      }
-    });
+  // private preProcessRequest(
+  //   request: CreatePrivacyRequestPayload
+  // ): CreatePrivacyRequestPayload {
+  //   // If all privacy scopes provided, this is the same as no restriction
+  //   const allDataCategories = Object.values(DATA_CATEGORY).filter(
+  //     dc => dc !== DATA_CATEGORY.ALL && !dc.includes('.')
+  //   );
+  //   request.demands!.forEach(d => {
+  //     if (d.restrictions && d.restrictions.privacy_scope) {
+  //       const demandDcs = d.restrictions.privacy_scope!.map(psr => psr.dc);
+  //       if (allDataCategories.every(dc => demandDcs.includes(dc))) {
+  //         const demand = d;
+  //         delete demand.restrictions!.privacy_scope;
+  //       }
+  //     }
+  //   });
 
-    return request;
-  }
+  //   return request;
+  // }
 
   /**
    * Send a PrivacyRequest to the privacy-request API
@@ -230,7 +229,7 @@ export class ComputationAPI {
   ): Promise<{ request_id: string }> {
     const endpoint = `/privacy-request`;
 
-    const preparedRequest = this.preProcessRequest(request);
+    // const preparedRequest = this.preProcessRequest(request);
 
     // Only allow no auth header for certain requests
     const authRequired = request.demands!.every(demand =>
@@ -240,7 +239,7 @@ export class ComputationAPI {
     const response = await fetch(this.fullURL(endpoint), {
       method: 'POST',
       headers: this.headers(true, authRequired, request),
-      body: JSON.stringify(preparedRequest),
+      body: JSON.stringify(request),
     });
 
     if (!response.ok) {

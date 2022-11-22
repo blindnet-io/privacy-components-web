@@ -1,7 +1,7 @@
 import { localized, msg } from '@lit/localize';
 import { css, html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { PendingDemandPayload } from '../computation/generated-models/index.js';
+import { PendingDemandPayload } from '../models/generated-models/index.js';
 import { setLocale } from './localization.js';
 
 @localized()

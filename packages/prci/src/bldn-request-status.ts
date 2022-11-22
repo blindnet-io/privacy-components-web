@@ -7,6 +7,7 @@ import {
   PrivacyScopeTriple,
   RetentionPolicy,
   Provenance,
+  PrivacyResponseAnswer,
 } from '@blindnet/core';
 import { msg } from '@lit/localize';
 import { css, html, LitElement, PropertyValueMap } from 'lit';
@@ -305,6 +306,8 @@ export class BldnRequestStatus extends CoreConfigurationMixin(LitElement) {
 
   // NOTE: For now, we assume demand.data is a JSON file
   getGrantedResponseTemplate(demand: PrivacyResponsePayload) {
+    const answer = JSON.parse(demand.answer);
+
     return html`
       ${choose(demand.requested_action, [
         [
@@ -373,72 +376,79 @@ export class BldnRequestStatus extends CoreConfigurationMixin(LitElement) {
         [
           PrivacyResponsePayload.requested_action.TRANSPARENCY_DATA_CATEGORIES,
           () => html`
-            ${map(demand.answer as Array<string>, dc => html` ${dc}<br /> `)}
+            <p>
+              ${when(
+                answer.length > 0,
+                () => html`
+                  ${map(
+                    answer as PrivacyResponseAnswer.TRANSPARENCY_DATA_CATEGORIES,
+                    dc => html` ${dc}<br /> `
+                  )}
+                `,
+                () => html`
+                  ${msg('The organization has no categories of data on you')}
+                `
+              )}
+            </p>
           `,
         ],
         [
           PrivacyResponsePayload.requested_action.TRANSPARENCY_DPO,
-          () => html` <p>${demand.answer}</p> `,
+          () => html`
+            <p>
+              ${when(
+                answer,
+                () => html`
+                  ${answer as PrivacyResponseAnswer.TRANSPARENCY_DPO}
+                `,
+                () => html` ${msg('The organization has no listed DPO.')} `
+              )}
+            </p>
+          `,
         ],
         [
           PrivacyResponsePayload.requested_action.TRANSPARENCY_KNOWN,
-          () => html` <p>${demand.answer}</p> `,
+          () => html`
+            <p>
+              ${choose(
+                answer as PrivacyResponseAnswer.TRANSPARENCY_KNOWN,
+                [
+                  [
+                    'NO',
+                    () =>
+                      html`${msg(
+                        'The organization does not have data on you.'
+                      )}`,
+                  ],
+                  [
+                    'YES',
+                    () => html`${msg('The organization has data on you.')}`,
+                  ],
+                ],
+                () =>
+                  html`${msg(
+                    'Could not get information regarding whether the organization has data on you.'
+                  )}`
+              )}
+            </p>
+          `,
         ],
         [
           PrivacyResponsePayload.requested_action.TRANSPARENCY_LEGAL_BASES,
-          () => html`
-            <p>
-              ${map(demand.answer as Array<LegalBase>, lb =>
-                msg(html`
-                  Type: ${lb.lb_type}<br />
-                  Name: ${lb.name}<br />
-                  Description: ${lb.description}<br /><br />
-                `)
-              )}
-            </p>
-          `,
-        ],
-        [
-          PrivacyResponsePayload.requested_action.TRANSPARENCY_ORGANIZATION,
-          () => html` <p>${demand.answer}</p> `,
-        ],
-        [
-          PrivacyResponsePayload.requested_action.TRANSPARENCY_POLICY,
-          () => html` <p>${demand.answer}</p> `,
-        ],
-        [
-          PrivacyResponsePayload.requested_action
-            .TRANSPARENCY_PROCESSING_CATEGORIES,
-          () => html`
-            <p>
-              ${map(
-                demand.answer as Array<PrivacyScopeTriple.processing_category>,
-                pc => html` ${pc}<br /> `
-              )}
-            </p>
-          `,
-        ],
-        [
-          PrivacyResponsePayload.requested_action.TRANSPARENCY_PROVENANCE,
           () => {
-            const provs: [string, [Provenance]][] = Object.entries(
-              demand.answer
-            );
+            const lbAnswer =
+              answer as PrivacyResponseAnswer.TRANSPARENCY_LEGAL_BASES;
             return html`
               <p>
-                ${map(
-                  provs,
-                  dc => html`
-                    ${map(
-                      dc[1],
-                      prov => html`
-                        ${msg(
-                          html`<b>${dc[0]} Data:</b> Source
-                            <i>${prov.provenance}</i> of the
-                            <i>${prov.system}</i> system.<br />`
-                        )}
-                      `
-                    )}
+                ${when(
+                  Object.keys(lbAnswer).length > 0,
+                  () => html`
+                    Type: ${lbAnswer.lb_type}<br />
+                    Name: ${lbAnswer.name}<br />
+                    Description: ${lbAnswer.description}<br /><br />
+                  `,
+                  () => html`
+                    ${msg('There are no legal bases for processing your data.')}
                   `
                 )}
               </p>
@@ -446,11 +456,84 @@ export class BldnRequestStatus extends CoreConfigurationMixin(LitElement) {
           },
         ],
         [
+          PrivacyResponsePayload.requested_action.TRANSPARENCY_ORGANIZATION,
+          () => html`
+            <p>
+              ${when(
+                answer,
+                () => html`
+                  ${answer as PrivacyResponseAnswer.TRANSPARENCY_ORGANIZATION}
+                `,
+                () => html` ${msg('Could not get organization information.')} `
+              )}
+            </p>
+          `,
+        ],
+        [
+          PrivacyResponsePayload.requested_action.TRANSPARENCY_POLICY,
+          () => html`
+            <p>
+              ${when(
+                answer,
+                () => html`
+                  ${answer as PrivacyResponseAnswer.TRANSPARENCY_POLICY}
+                `,
+                () => html` ${msg('Could not get policy information.')} `
+              )}
+            </p>
+          `,
+        ],
+        [
+          PrivacyResponsePayload.requested_action
+            .TRANSPARENCY_PROCESSING_CATEGORIES,
+          () => html`
+            <p>
+              ${when(
+                answer.length > 0,
+                () => html`
+                  ${map(
+                    answer as PrivacyResponseAnswer.TRANSPARENCY_PROCESSING_CATEGORIES,
+                    pc => html` ${pc}<br /> `
+                  )}
+                `,
+                () => html`${msg('Could not get processing categories.')}`
+              )}
+            </p>
+          `,
+        ],
+        [
+          PrivacyResponsePayload.requested_action.TRANSPARENCY_PROVENANCE,
+          () => {
+            const provAnswer =
+              answer as PrivacyResponseAnswer.TRANSPARENCY_PROVENANCE;
+            // console.log(provAnswer)
+            return html``;
+            // return html`
+            //   <p>
+            //     ${map((answer as PrivacyResponseAnswer.TRANSPARENCY_PROVENANCE).entries(),
+            //       dc => html`
+            //         ${map(
+            //           dc,
+            //           prov => html`
+            //             ${msg(
+            //               html`<b>${dc[0]} Data:</b> Source
+            //                 <i>${prov.provenance}</i> of the
+            //                 <i>${prov.system}</i> system.<br />`
+            //             )}
+            //           `
+            //         )}
+            //       `
+            //     )}
+            //   </p>
+            // `;
+          },
+        ],
+        [
           PrivacyResponsePayload.requested_action.TRANSPARENCY_PURPOSE,
           () => html`
             <p>
               ${map(
-                demand.answer as Array<PrivacyScopeTriple.purpose>,
+                answer as PrivacyResponseAnswer.TRANSPARENCY_PURPOSE,
                 purpose => html` ${purpose}<br /> `
               )}
             </p>
@@ -459,25 +542,26 @@ export class BldnRequestStatus extends CoreConfigurationMixin(LitElement) {
         [
           PrivacyResponsePayload.requested_action.TRANSPARENCY_RETENTION,
           () => {
-            const answer = demand.answer as {
-              NAME: RetentionPolicy[];
-            };
-            return html`
-              <p>
-                ${map(
-                  answer.NAME,
-                  rp =>
-                    html`<p>
-                      ${getRetentionPolicyString(
-                        'Data',
-                        rp.policy_type,
-                        rp.duration,
-                        rp.after
-                      )}
-                    </p>`
-                )}
-              </p>
-            `;
+            const retAnswer =
+              answer as PrivacyResponseAnswer.TRANSPARENCY_RETENTION;
+            // console.log(retAnswer)
+            return html``;
+            // return html`
+            //   <p>
+            //     ${map(
+            //       answer.NAME,
+            //       rp =>
+            //         html`<p>
+            //           ${getRetentionPolicyString(
+            //             'Data',
+            //             rp.policy_type,
+            //             rp.duration,
+            //             rp.after
+            //           )}
+            //         </p>`
+            //     )}
+            //   </p>
+            // `;
           },
         ],
         [
@@ -485,7 +569,7 @@ export class BldnRequestStatus extends CoreConfigurationMixin(LitElement) {
           () => html`
             <p>
               ${map(
-                demand.answer as Array<string>,
+                answer as PrivacyResponseAnswer.TRANSPARENCY_WHERE,
                 where => html` ${where}<br /> `
               )}
             </p>
@@ -496,7 +580,7 @@ export class BldnRequestStatus extends CoreConfigurationMixin(LitElement) {
           () => html`
             <p>
               ${map(
-                demand.answer as Array<string>,
+                answer as PrivacyResponseAnswer.TRANSPARENCY_WHO,
                 who => html` ${who}<br /> `
               )}
             </p>
