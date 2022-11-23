@@ -1,4 +1,4 @@
-import { localized } from '@lit/localize';
+import { localized, msg } from '@lit/localize';
 import { css, html, LitElement, PropertyValueMap } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
@@ -8,15 +8,15 @@ import {
   CoreConfigurationMixin,
   PendingDemandPayload,
 } from '@blindnet/core';
-import { setLocale } from './utils/localization.js';
+import { setLocale } from './localization.js';
 
 enum DCIUIState {
   requests,
   alerts,
 }
 
-@customElement('bldn-data-consum')
 @localized()
+@customElement('bldn-data-consum')
 export class DataConsumerInterface extends CoreConfigurationMixin(LitElement) {
   @state() _uiState: DCIUIState = DCIUIState.requests;
 
@@ -60,8 +60,8 @@ export class DataConsumerInterface extends CoreConfigurationMixin(LitElement) {
   render() {
     return html`
       <bldn-toggle-button
-        left="Requests"
-        right="Alerts"
+        left=${msg('Requests')}
+        right=${msg('Alerts')}
         @bldn-toggle-button-change=${this.handleViewToggleChange}
       ></bldn-toggle-button>
       ${choose(this._uiState, [
@@ -82,6 +82,7 @@ export class DataConsumerInterface extends CoreConfigurationMixin(LitElement) {
 
   static styles = css`
     :host {
+      display: block;
       width: 100%;
     }
     bldn-toggle-button {

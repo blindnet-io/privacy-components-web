@@ -20,6 +20,26 @@ import { BldnRequestModule } from './bldn-request-module.js';
 import './bldn-submitted-requests.js';
 import { setLocale } from './localization.js';
 
+enum DefaultDataCategories {
+  'ALL' = '*',
+  'AFFILIATION' = 'AFFILIATION',
+  'BEHAVIOR' = 'BEHAVIOR',
+  'BIOMETRIC' = 'BIOMETRIC',
+  'CONTACT' = 'CONTACT',
+  'DEMOGRAPHIC' = 'DEMOGRAPHIC',
+  'DEVICE' = 'DEVICE',
+  'FINANCIAL' = 'FINANCIAL',
+  'GENETIC' = 'GENETIC',
+  'HEALTH' = 'HEALTH',
+  'IMAGE' = 'IMAGE',
+  'LOCATION' = 'LOCATION',
+  'NAME' = 'NAME',
+  'PROFILING' = 'PROFILING',
+  'RELATIONSHIPS' = 'RELATIONSHIPS',
+  'UID' = 'UID',
+  'OTHER-DATA' = 'OTHER-DATA',
+}
+
 enum PRCIUIState {
   createRequest,
   submittedRequests,
@@ -33,7 +53,7 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
 
   /** @prop */
   @property({ type: Array, attribute: 'data-categories' })
-  dataCategories: string[] = [];
+  dataCategories: string[] = Object.values(DefaultDataCategories);
 
   /** @prop */
   @property({ type: Array }) requestId: undefined | string;
@@ -87,11 +107,42 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
     }
   }
 
+  /**
+   * Set the apiToken property when component catches the set event
+   * @param e CustomEvent containing the token in the details object
+   */
+  handleApiTokenEvent(e: Event) {
+    const { token } = (e as CustomEvent).detail;
+    if (token) {
+      this.apiToken = token;
+    }
+  }
+
   protected willUpdate(
     _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
   ): void {
     super.willUpdate(_changedProperties);
     if (_changedProperties.has('requestId')) this.handleRequestIdChange();
+  }
+
+  connectedCallback(): void {
+    // eslint-disable-next-line wc/guard-super-call
+    super.connectedCallback();
+
+    this.addEventListener(
+      'bldn-priv-request-api-token:set',
+      this.handleApiTokenEvent
+    );
+  }
+
+  disconnectedCallback(): void {
+    // eslint-disable-next-line wc/guard-super-call
+    super.disconnectedCallback();
+
+    this.removeEventListener(
+      'bldn-priv-request-api-token:set',
+      this.handleApiTokenEvent
+    );
   }
 
   render() {

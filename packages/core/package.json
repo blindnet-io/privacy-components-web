@@ -1,6 +1,6 @@
 {
   "name": "@blindnet/core",
-  "version": "0.12.0",
+  "version": "0.14.1",
   "description": "Core shared library",
   "keywords": [],
   "author": "blindnet <hello@blindnet.io>",
@@ -42,11 +42,6 @@
   },
   "dependencies": {
     "@lit/localize": "^0.11.4",
-    "@magic-sdk/types": "^9.0.0",
-    "lit": "^2.3.1",
-    "magic-sdk": "^10.0.0"
-  },
-  "devDependencies": {
-    "@magic-sdk/types": "^9.0.0"
+    "lit": "^2.4.1"
   }
 }

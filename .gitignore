@@ -19,7 +19,7 @@ custom-elements.json
 build/
 import-map.json
 stories-build/
-packages/*/lit-localize.json
+# packages/*/lit-localize.json
 
 ### Git ###
 

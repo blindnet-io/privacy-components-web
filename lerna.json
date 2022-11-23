@@ -1,11 +1,8 @@
 {
-  "packages": [
-    "packages/*",
-    "demos/*"
-  ],
+  "packages": ["packages/*", "demos/*"],
   "npmClient": "yarn",
   "useWorkspaces": true,
-  "version": "0.12.3",
+  "version": "0.14.1",
   "command": {
     "version": {
       "message": "chore: publish %s\n\n[skip ci]",
