@@ -1075,7 +1075,7 @@
 </trans-unit>
 <trans-unit id="sc30e2031cb4c1e39">
   <source>Device data</source>
-  <target>Données de l'Appareil</target>
+  <target>Données d'Appareil</target>
 </trans-unit>
 <trans-unit id="sbbb81705e6790a3c">
   <source>Financial data</source>
@@ -1167,7 +1167,7 @@
 </trans-unit>
 <trans-unit id="s4ffccdcb24fe516c">
   <source>No valid dates!</source>
-  <target>Date non valides !</target>
+  <target>Dates non valides !</target>
 </trans-unit>
 <trans-unit id="s3f2acea3f9106217">
   <source>I want to access:</source>
@@ -1519,7 +1519,7 @@
 </trans-unit>
 <trans-unit id="se6589c06149b15cc">
   <source>There is no listed DPO.</source>
-  <target>Il n'y a pas de DPO repertorié</target>
+  <target>Il n'y a aucun DPO repertorié</target>
 </trans-unit>
 <trans-unit id="h00995735c540a9b2">
   <source>The organization <x id="0" equiv-text="&lt;strong&gt;"/>does not<x id="1" equiv-text="&lt;/strong&gt;"/> have
@@ -1551,7 +1551,7 @@
 </trans-unit>
 <trans-unit id="s9d29c94545a33542">
   <source>There are no legal bases for processing your data.</source>
-  <target>Il n'y a aucune bases légales pour le traitement de vos données</target>
+  <target>Il n'y a aucune base légale pour le traitement de vos données</target>
 </trans-unit>
 <trans-unit id="se33c5b54381239f7">
   <source>There is no organization information.</source>
@@ -1567,11 +1567,11 @@
 </trans-unit>
 <trans-unit id="s2a32ad5ec5fc7e5c">
   <source>There are no sources of data concerning you.</source>
-  <target>Il n'y a pas de sources de données vous concernant</target>
+  <target>Il n'y a pas de source de données vous concernant</target>
 </trans-unit>
 <trans-unit id="scce5ff1ed4bbfeb2">
   <source>There is no information about the purposes for processing your data.</source>
-  <target>Il n'y a aucune information sur les buts de traitement de vos données</target>
+  <target>Il n'y a aucune information sur les buts de traitements de vos données</target>
 </trans-unit>
 <trans-unit id="sbed7c16bacbe2364">
   <source>There is no information about how long your data is kept.</source>
