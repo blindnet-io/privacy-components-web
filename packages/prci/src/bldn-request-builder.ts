@@ -81,7 +81,7 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
 
   /** @prop */
   @property({ type: Array, attribute: 'data-categories' })
-  dataCategories: string[] = [];
+  dataCategories: string[] = Object.values(DefaultDataCategories);
 
   @state() _uiState: RequestBuilderUIState = RequestBuilderUIState.menu;
 
