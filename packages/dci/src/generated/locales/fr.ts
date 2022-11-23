@@ -9,8 +9,8 @@
     /* eslint-disable @typescript-eslint/no-explicit-any */
 
     export const templates = {
-      'demand-form-action-sentence-end': ` `,
-'demand-form-action-sentence-start': `Détails de ma demande`,
+      'demand-form-action-sentence-start': `Détails de ma demande`,
+'demand-used-after-action': ` `,
 'h13d5761d00e9feca': html`Ce système et tous les systèmes au sein de cette organisation`,
 'h19239c6c3bcb708a': html`Toutes représentations graphiques (image, vidéo) de moi`,
 'h1c2eb9adfca54c27': html`Toutes les informations permettant de me classer dans une catégorie démographique`,
@@ -87,7 +87,6 @@
 's1ac72a304e9962fd': `Les catégories de données que l'organisation a sur moi`,
 's1b5927bac5c7499e': `Modifier ou compléter mes données`,
 's1c62dea8a9fcc2ae': `Transparence - But`,
-'s1caf5d7ab36059be': `Demande`,
 's1e55a47eccb89757': `Demandes`,
 's1ebe491408762bb4': `Je limite le traitement de mes données au périmètre suivant :`,
 's208ea5ca39142a3a': `Transparence - Rétention`,
@@ -187,6 +186,7 @@
 's87bae2710b2492c3': `Contact`,
 's87cacfb74533591e': `Pour la formation du personnel, le recrutement, la paie, la gestion, etc.`,
 's88d1c1e15ca1aade': `Alertes`,
+'s8db5bd427e71652a': `Affiliation adhésion`,
 's8e533185069b8d9b': `Collecter des données sur la personne auprès de la personne ou d'une autre source, y compris une autre personne ou un système`,
 's8f3d616b2891dd0d': `Les façons dont les données de mon périmètre sont traitées :`,
 's8f4b90725c742dfd': `Financière compte en banque`,
@@ -211,7 +211,6 @@
 'sa7ee6646f0fd7ced': `Où sont stockées les données me concernant`,
 'sa7eea45fe1e4d231': `Collecte`,
 'sa8fb9f24637f10f5': `Accéder à mes données`,
-'sac8256732f2ee1e5': `Données`,
 'sacc3aa0c8f59f856': `Buts`,
 'sad3e3c8146fc920f': `Statut`,
 'sae19feef2bd60f9f': `Cette demande a été partiellement approuvée`,
@@ -295,6 +294,8 @@
 'sfdad6bb711adaff5': `Votre demande d'opposition a été approuvée`,
 'sfef5aebda25a65db': `Erreur lors de l'obtention des détails de la demande. Veuillez actualiser la plage plus tard.`,
 'sff7e60a212b3fa64': `Prendre mes données et les faire transférer ailleurs`,
+'s956cfa37796224d1': `I want to access data from the following categories:`,
+'sc93bffea1ecccd28': `I want to delete data from the following categories:`,
 's42c2e491086a8e4d': `The organization has no categories of data on you`,
 'scffbf96e7b10ac80': `The organization has no listed DPO.`,
 'se4cf30e3928e4f2b': `The organization does not have data on you.`,

@@ -805,6 +805,10 @@
   <source>Arrow to expand or collapse the dropdown</source>
   <target>Flèche pour développer ou réduire la liste déroulante</target>
 </trans-unit>
+<trans-unit id="s8db5bd427e71652a">
+  <source>Affiliation - Membership</source>
+  <target>Affiliation adhésion</target>
+</trans-unit>
 <trans-unit id="s3176f9811c35d533">
   <source>Data Categories</source>
   <target>Catégories de données</target>
@@ -889,9 +893,9 @@
   <source>Request Summary</source>
   <target>Résumé de la Demande</target>
 </trans-unit>
-<trans-unit id="s1caf5d7ab36059be">
+<trans-unit id="demand-used-after-action">
   <source>Demand</source>
-  <target>Demande</target>
+  <target> </target>
 </trans-unit>
 <trans-unit id="saedc3af85cfe6dc7">
   <source>Request Target</source>
@@ -913,10 +917,6 @@
   <source>Details of my</source>
   <target>Détails de ma demande</target>
 </trans-unit>
-<trans-unit id="demand-form-action-sentence-end">
-  <source>demand</source>
-  <target> </target>
-</trans-unit>
 <trans-unit id="s29ec563d56cf6c6b">
   <source>Other Options</source>
   <target>Autres Options</target>
@@ -925,13 +925,15 @@
   <source>My demand applies to data from the following provenance:</source>
   <target>Ma demande s'applique aux données provenant de :</target>
 </trans-unit>
-<trans-unit id="sac8256732f2ee1e5">
-  <source>Data</source>
-  <target>Données</target>
+<trans-unit id="s956cfa37796224d1">
+  <source>I want to access data from the following categories:</source>
 </trans-unit>
 <trans-unit id="s7174e3af10fba733">
   <source>Additional Message</source>
   <target>Message additionnel</target>
+</trans-unit>
+<trans-unit id="sc93bffea1ecccd28">
+  <source>I want to delete data from the following categories:</source>
 </trans-unit>
 <trans-unit id="s38ad01608e1ddf20">
   <source>I select the following</source>

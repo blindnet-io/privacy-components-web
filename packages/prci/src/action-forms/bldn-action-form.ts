@@ -136,8 +136,8 @@ export abstract class ActionForm extends LitElement {
                 id: 'demand-form-action-sentence-start',
               })}
               ${ACTION_TITLES[this.action]()}
-              ${msg('demand', {
-                id: 'demand-form-action-sentence-end',
+              ${msg('Demand', {
+                id: 'demand-used-after-action',
               })}</strong
             ></span
           >
