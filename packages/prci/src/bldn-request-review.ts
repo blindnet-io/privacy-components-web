@@ -17,6 +17,8 @@ import './bldn-nav-wrapper.js';
 import './bldn-dropdown.js';
 import './bldn-radio-list.js';
 import {
+  ACTION_TITLES,
+  ACTION_TITLES_WITH_DEMAND,
   DATA_CATEGORY_DESCRIPTIONS,
   DATA_CATEGORY_TITLES,
   PROCESSING_CATEGORIES,
@@ -127,7 +129,7 @@ export class BldnRequestReview extends LitElement {
           dc => html`
             ${dc === '*'
               ? DATA_CATEGORY_DESCRIPTIONS[dc]()
-              : html`<b>${DATA_CATEGORY_TITLES[dc]()} Data:</b>
+              : html`<b>${DATA_CATEGORY_TITLES[dc]()}</b>
                   ${DATA_CATEGORY_DESCRIPTIONS[dc]()}`}
           `
         )
@@ -393,9 +395,11 @@ export class BldnRequestReview extends LitElement {
                   <bldn-dropdown>
                     <span slot="heading"
                       ><strong
-                        >${group[0].action.split('.')[0]} ${msg(
-                  'Demand'
-                )}</strong
+                        >${ACTION_TITLES_WITH_DEMAND[
+                          group[0].action.split('.')[0]
+                        ]()} ${msg('Demand', {
+                  id: 'demand-used-after-action',
+                })}</strong
                       >
                       <button class='img-button' @click=${() =>
                         this.handleEditDemandGroupClick(i)}>

@@ -30,6 +30,35 @@ export const ACTION_TITLES = {
 };
 
 /**
+ * Mapping of PRIV Actions to corresponding titles.
+ */
+export const ACTION_TITLES_WITH_DEMAND = {
+  ACCESS: () => msg('Access Demand'),
+  DELETE: () => msg('Delete Demand'),
+  MODIFY: () => msg('Modify Demand'),
+  OBJECT: () => msg('Object Demand'),
+  PORTABILITY: () => msg('Portability Demand'),
+  RESTRICT: () => msg('Restrict Demand'),
+  'REVOKE-CONSENT': () => msg('Revoke Demand'),
+  TRANSPARENCY: () => msg('Transparency Demand'),
+  'TRANSPARENCY.DATA-CATEGORIES': () =>
+    msg('Transparency - Data Categories Demand'),
+  'TRANSPARENCY.DPO': () => msg('Transparency - DPO Demand'),
+  'TRANSPARENCY.KNOWN': () => msg('Transparency - Known Demand'),
+  'TRANSPARENCY.LEGAL-BASES': () => msg('Transparency - Legal Bases Demand'),
+  'TRANSPARENCY.ORGANIZATION': () => msg('Transparency - Organization Demand'),
+  'TRANSPARENCY.POLICY': () => msg('Transparency - Policy Demand'),
+  'TRANSPARENCY.PROCESSING-CATEGORIES': () =>
+    msg('Transparency - Processing Categories Demand'),
+  'TRANSPARENCY.PROVENANCE': () => msg('Transparency - Provenance Demand'),
+  'TRANSPARENCY.PURPOSE': () => msg('Transparency - Purpose Demand'),
+  'TRANSPARENCY.RETENTION': () => msg('Transparency - Retention Demand'),
+  'TRANSPARENCY.WHERE': () => msg('Transparency - Where Demand'),
+  'TRANSPARENCY.WHO': () => msg('Transparency - Who Demand'),
+  OTHER: () => msg('Other Demand'),
+};
+
+/**
  * Mapping of PRIV Actions to corresponding descriptions.
  */
 export const ACTION_DESCRIPTIONS = {
@@ -147,7 +176,7 @@ export const PROVENANCE_DESCRIPTIONS_STATUS_VIEW = {
 export const DATA_CATEGORY_TITLES = {
   '*': () => msg(''),
   AFFILIATION: () => msg('Affiliation'),
-  'AFFILIATION.MEMBERSHIP': () => msg('Affiliation membership'),
+  'AFFILIATION.MEMBERSHIP': () => msg('Affiliation - Membership'),
   'AFFILIATION.MEMBERSHIP.UNION': () => msg(''),
   'AFFILIATION.SCHOOL': () => msg(''),
   'AFFILIATION.WORKPLACE': () => msg(''),
