@@ -13,6 +13,26 @@ import './bldn-request-builder.js';
 import './bldn-submitted-requests.js';
 import { setLocale } from './localization.js';
 
+enum DefaultDataCategories {
+  'ALL' = '*',
+  'AFFILIATION' = 'AFFILIATION',
+  'BEHAVIOR' = 'BEHAVIOR',
+  'BIOMETRIC' = 'BIOMETRIC',
+  'CONTACT' = 'CONTACT',
+  'DEMOGRAPHIC' = 'DEMOGRAPHIC',
+  'DEVICE' = 'DEVICE',
+  'FINANCIAL' = 'FINANCIAL',
+  'GENETIC' = 'GENETIC',
+  'HEALTH' = 'HEALTH',
+  'IMAGE' = 'IMAGE',
+  'LOCATION' = 'LOCATION',
+  'NAME' = 'NAME',
+  'PROFILING' = 'PROFILING',
+  'RELATIONSHIPS' = 'RELATIONSHIPS',
+  'UID' = 'UID',
+  'OTHER-DATA' = 'OTHER-DATA',
+}
+
 enum PRCIUIState {
   createRequest,
   submittedRequests,
@@ -26,7 +46,7 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
 
   /** @prop */
   @property({ type: Array, attribute: 'data-categories' })
-  dataCategories: string[] = [];
+  dataCategories: string[] = Object.values(DefaultDataCategories);
 
   /** @prop */
   @property({ type: Array }) requestId: undefined | string;
