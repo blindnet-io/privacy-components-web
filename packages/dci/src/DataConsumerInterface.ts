@@ -82,6 +82,7 @@ export class DataConsumerInterface extends CoreConfigurationMixin(LitElement) {
 
   static styles = css`
     :host {
+      display: block;
       width: 100%;
     }
     bldn-toggle-button {
