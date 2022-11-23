@@ -381,20 +381,27 @@
 'sc93bffea1ecccd28': `I want to delete data from the following categories:`,
 's213a15cab3105248': `is kept for`,
 's25b9a7c705c6942c': `months after`,
-'h4eea3c28e0a06374': html`Obtained from a user, another system and/or derived from existing data, in the <i>${0}</i> system`,
-'h26798779aa8c8fb0': html`Obtained from a user, another system and/or derived from existing data, in some other system.`,
-'hcbd800b223aa6c91': html`Obtained from a user of the <i>${0}</i> system`,
+'hcce222f3306e9a66': html`Obtained from a user, another system and/or derived from
+                  existing data, in the <i>${0}</i> system`,
+'hc7ebaff05b625ee2': html`Obtained from a user, another system and/or derived from
+                existing data, in some other system.`,
+'hc70db2f9828c4ea7': html`Obtained from a user of the
+                  <i>${0}</i> system`,
 'h9c3201e3fb42f57f': html`Obtained from a user`,
-'h26aa829fcb628694': html`Obtained from a user, providing data about theirself, in the <i>${0}</i> system`,
+'h5ca5531e6edbcbd6': html`Obtained from a user, providing data about theirself, in
+                  the <i>${0}</i> system`,
 'h3e84c2b5bd403e6a': html`Obtained from a user, providing data about theirself`,
 'h5c13ee829f9345d8': html`Transfered from the <i>${0}</i> system`,
 'h4cdb7d228db17962': html`Transfered from some other system`,
-'h2381c32dacf485c9': html`Derived from existing data in the <i>${0}</i> system`,
+'hcaaf3c1a2b64d70f': html`Derived from existing data in the
+                  <i>${0}</i> system`,
 'he2005086fb53a347': html`Derived from existing data in some other system`,
 's4c243c3f1453ac59': `There are no categories of data on you.`,
 'se6589c06149b15cc': `There is no listed DPO.`,
-'hbeced3fbea397a34': html`The organization <strong>does not</strong> have data on you.`,
-'h887742c2662570bf': html`The organization <strong>does</strong> have data on you.`,
+'h00995735c540a9b2': html`The organization <strong>does not</strong> have
+                          data on you.`,
+'hcb47993d17bb887d': html`The organization <strong>does</strong> have data on
+                          you.`,
 'sa226344a76b563a2': `There is no information regarding whether the organization has data on you.`,
 's3934f6f7d7ba151c': `Name: `,
 'sa2597570ae2a514b': `Description: `,

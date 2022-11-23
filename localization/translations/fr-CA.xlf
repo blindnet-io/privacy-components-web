@@ -1282,20 +1282,24 @@
 <trans-unit id="s25b9a7c705c6942c">
   <source>months after</source>
 </trans-unit>
-<trans-unit id="h4eea3c28e0a06374">
-  <source>Obtained from a user, another system and/or derived from existing data, in the <x id="0" equiv-text="&lt;i&gt;${provenance.system}&lt;/i&gt;"/> system</source>
+<trans-unit id="hcce222f3306e9a66">
+  <source>Obtained from a user, another system and/or derived from
+                  existing data, in the <x id="0" equiv-text="&lt;i&gt;${provenance.system}&lt;/i&gt;"/> system</source>
 </trans-unit>
-<trans-unit id="h26798779aa8c8fb0">
-  <source>Obtained from a user, another system and/or derived from existing data, in some other system.</source>
+<trans-unit id="hc7ebaff05b625ee2">
+  <source>Obtained from a user, another system and/or derived from
+                existing data, in some other system.</source>
 </trans-unit>
-<trans-unit id="hcbd800b223aa6c91">
-  <source>Obtained from a user of the <x id="0" equiv-text="&lt;i&gt;${provenance.system}&lt;/i&gt;"/> system</source>
+<trans-unit id="hc70db2f9828c4ea7">
+  <source>Obtained from a user of the
+                  <x id="0" equiv-text="&lt;i&gt;${provenance.system}&lt;/i&gt;"/> system</source>
 </trans-unit>
 <trans-unit id="h9c3201e3fb42f57f">
   <source>Obtained from a user</source>
 </trans-unit>
-<trans-unit id="h26aa829fcb628694">
-  <source>Obtained from a user, providing data about theirself, in the <x id="0" equiv-text="&lt;i&gt;${provenance.system}&lt;/i&gt;"/> system</source>
+<trans-unit id="h5ca5531e6edbcbd6">
+  <source>Obtained from a user, providing data about theirself, in
+                  the <x id="0" equiv-text="&lt;i&gt;${provenance.system}&lt;/i&gt;"/> system</source>
 </trans-unit>
 <trans-unit id="h3e84c2b5bd403e6a">
   <source>Obtained from a user, providing data about theirself</source>
@@ -1306,8 +1310,9 @@
 <trans-unit id="h4cdb7d228db17962">
   <source>Transfered from some other system</source>
 </trans-unit>
-<trans-unit id="h2381c32dacf485c9">
-  <source>Derived from existing data in the <x id="0" equiv-text="&lt;i&gt;${provenance.system}&lt;/i&gt;"/> system</source>
+<trans-unit id="hcaaf3c1a2b64d70f">
+  <source>Derived from existing data in the
+                  <x id="0" equiv-text="&lt;i&gt;${provenance.system}&lt;/i&gt;"/> system</source>
 </trans-unit>
 <trans-unit id="he2005086fb53a347">
   <source>Derived from existing data in some other system</source>
@@ -1412,11 +1417,13 @@
 <trans-unit id="se6589c06149b15cc">
   <source>There is no listed DPO.</source>
 </trans-unit>
-<trans-unit id="hbeced3fbea397a34">
-  <source>The organization <x id="0" equiv-text="&lt;strong&gt;"/>does not<x id="1" equiv-text="&lt;/strong&gt;"/> have data on you.</source>
+<trans-unit id="h00995735c540a9b2">
+  <source>The organization <x id="0" equiv-text="&lt;strong&gt;"/>does not<x id="1" equiv-text="&lt;/strong&gt;"/> have
+                          data on you.</source>
 </trans-unit>
-<trans-unit id="h887742c2662570bf">
-  <source>The organization <x id="0" equiv-text="&lt;strong&gt;"/>does<x id="1" equiv-text="&lt;/strong&gt;"/> have data on you.</source>
+<trans-unit id="hcb47993d17bb887d">
+  <source>The organization <x id="0" equiv-text="&lt;strong&gt;"/>does<x id="1" equiv-text="&lt;/strong&gt;"/> have data on
+                          you.</source>
 </trans-unit>
 <trans-unit id="sa226344a76b563a2">
   <source>There is no information regarding whether the organization has data on you.</source>
