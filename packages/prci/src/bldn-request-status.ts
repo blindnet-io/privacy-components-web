@@ -22,6 +22,7 @@ import {
   ACTION_DESCRIPTIONS,
   ACTION_TITLES,
   AFTER_TITLES,
+  DATA_CATEGORY_TITLES_WITH_DATA,
   DEMAND_STATUS_DESCRIPTIONS,
   POLICY_TYPE_TITLES,
 } from './utils/dictionary.js';
@@ -59,10 +60,121 @@ export function getRetentionPolicyString(
   after: RetentionPolicy.after
 ) {
   // FIXME: For our first demo, we assume duration is in months
-  return html`<i>${dataCategory.toLocaleUpperCase()}</i> data is kept
+  return html`<i
+      >${DATA_CATEGORY_TITLES_WITH_DATA[dataCategory.toLocaleUpperCase()]()}</i
+    >
+    ${msg('is kept for')}
     <i>${POLICY_TYPE_TITLES[policyType]().toLocaleUpperCase()}</i>
-    <i>${duration}</i> months after
+    <i>${duration}</i> ${msg('months after')}
     <i>${AFTER_TITLES[after]().toLocaleUpperCase()}</i>`;
+}
+
+/**
+ * Get a user friendly string for a provenance in regard to some data category
+ * @param dataCategory Data category the provenance pertains to
+ * @param provenance Provenance object
+ * @returns String combining the data category and provenance into a readable form
+ */
+function getProvenanceString(dataCategory: string, provenance: Provenance) {
+  return html`
+    ${choose(provenance.provenance, [
+      [
+        Provenance.provenance._,
+        () => html`
+          ${when(
+            provenance.system,
+            () => html`
+              <b>${DATA_CATEGORY_TITLES_WITH_DATA[dataCategory]()}:</b> ${msg(
+                html`Obtained from a user, another system and/or derived from
+                  existing data, in the <i>${provenance.system}</i> system`
+              )}
+            `,
+            () => html`
+              <b>${DATA_CATEGORY_TITLES_WITH_DATA[dataCategory]()}:</b> ${msg(
+                html`Obtained from a user, another system and/or derived from
+                existing data, in some other system.`
+              )}
+            `
+          )}
+        `,
+      ],
+      [
+        Provenance.provenance.USER,
+        () => html`
+          ${when(
+            provenance.system,
+            () => html`
+              <b>${DATA_CATEGORY_TITLES_WITH_DATA[dataCategory]()}:</b> ${msg(
+                html`Obtained from a user of the
+                  <i>${provenance.system}</i> system`
+              )}
+            `,
+            () => html`
+              <b>${DATA_CATEGORY_TITLES_WITH_DATA[dataCategory]()}:</b> ${msg(
+                html`Obtained from a user`
+              )}
+            `
+          )}
+        `,
+      ],
+      [
+        Provenance.provenance.USER_DATA_SUBJECT,
+        () => html`
+          ${when(
+            provenance.system,
+            () => html`
+              <b>${DATA_CATEGORY_TITLES_WITH_DATA[dataCategory]()}:</b> ${msg(
+                html`Obtained from a user, providing data about theirself, in
+                  the <i>${provenance.system}</i> system`
+              )}
+            `,
+            () => html`
+              <b>${DATA_CATEGORY_TITLES_WITH_DATA[dataCategory]()}:</b> ${msg(
+                html`Obtained from a user, providing data about theirself`
+              )}
+            `
+          )}
+        `,
+      ],
+      [
+        Provenance.provenance.TRANSFERRED,
+        () => html`
+          ${when(
+            provenance.system,
+            () => html`
+              <b>${DATA_CATEGORY_TITLES_WITH_DATA[dataCategory]()}:</b> ${msg(
+                html`Transfered from the <i>${provenance.system}</i> system`
+              )}
+            `,
+            () => html`
+              <b>${DATA_CATEGORY_TITLES_WITH_DATA[dataCategory]()}:</b> ${msg(
+                html`Transfered from some other system`
+              )}
+            `
+          )}
+        `,
+      ],
+      [
+        Provenance.provenance.DERIVED,
+        () => html`
+          ${when(
+            provenance.system,
+            () => html`
+              <b>${DATA_CATEGORY_TITLES_WITH_DATA[dataCategory]()}:</b> ${msg(
+                html`Derived from existing data in the
+                  <i>${provenance.system}</i> system`
+              )}
+            `,
+            () => html`
+              <b>${DATA_CATEGORY_TITLES_WITH_DATA[dataCategory]()}:</b> ${msg(
+                html`Derived from existing data in some other system`
+              )}
+            `
+          )}
+        `,
+      ],
+    ])}
+  `;
 }
 
 /**
@@ -385,9 +497,7 @@ export class BldnRequestStatus extends CoreConfigurationMixin(LitElement) {
                     dc => html` ${dc}<br /> `
                   )}
                 `,
-                () => html`
-                  ${msg('The organization has no categories of data on you')}
-                `
+                () => html` ${msg('There are no categories of data on you.')} `
               )}
             </p>
           `,
@@ -401,7 +511,7 @@ export class BldnRequestStatus extends CoreConfigurationMixin(LitElement) {
                 () => html`
                   ${answer as PrivacyResponseAnswer.TRANSPARENCY_DPO}
                 `,
-                () => html` ${msg('The organization has no listed DPO.')} `
+                () => html` ${msg('There is no listed DPO.')} `
               )}
             </p>
           `,
@@ -417,17 +527,22 @@ export class BldnRequestStatus extends CoreConfigurationMixin(LitElement) {
                     'NO',
                     () =>
                       html`${msg(
-                        'The organization does not have data on you.'
+                        html`The organization <strong>does not</strong> have
+                          data on you.`
                       )}`,
                   ],
                   [
                     'YES',
-                    () => html`${msg('The organization has data on you.')}`,
+                    () =>
+                      html`${msg(
+                        html`The organization <strong>does</strong> have data on
+                          you.`
+                      )}`,
                   ],
                 ],
                 () =>
                   html`${msg(
-                    'Could not get information regarding whether the organization has data on you.'
+                    'There is no information regarding whether the organization has data on you.'
                   )}`
               )}
             </p>
@@ -443,9 +558,22 @@ export class BldnRequestStatus extends CoreConfigurationMixin(LitElement) {
                 ${when(
                   Object.keys(lbAnswer).length > 0,
                   () => html`
-                    Type: ${lbAnswer.lb_type}<br />
-                    Name: ${lbAnswer.name}<br />
-                    Description: ${lbAnswer.description}<br /><br />
+                    ${map(
+                      lbAnswer,
+                      lb => html`
+                        <p>
+                          ${msg('Name: ')}${lb.name}<br />
+                          ${when(
+                            lb.description,
+                            () =>
+                              html`${msg(
+                                  'Description: '
+                                )}${lb.description}<br />`
+                          )}
+                          ${msg('Type: ')}${lb.lb_type}<br />
+                        </p>
+                      `
+                    )}
                   `,
                   () => html`
                     ${msg('There are no legal bases for processing your data.')}
@@ -464,7 +592,7 @@ export class BldnRequestStatus extends CoreConfigurationMixin(LitElement) {
                 () => html`
                   ${answer as PrivacyResponseAnswer.TRANSPARENCY_ORGANIZATION}
                 `,
-                () => html` ${msg('Could not get organization information.')} `
+                () => html` ${msg('There is no organization information.')} `
               )}
             </p>
           `,
@@ -478,7 +606,7 @@ export class BldnRequestStatus extends CoreConfigurationMixin(LitElement) {
                 () => html`
                   ${answer as PrivacyResponseAnswer.TRANSPARENCY_POLICY}
                 `,
-                () => html` ${msg('Could not get policy information.')} `
+                () => html` ${msg('There is no policy information.')} `
               )}
             </p>
           `,
@@ -496,7 +624,10 @@ export class BldnRequestStatus extends CoreConfigurationMixin(LitElement) {
                     pc => html` ${pc}<br /> `
                   )}
                 `,
-                () => html`${msg('Could not get processing categories.')}`
+                () =>
+                  html`${msg(
+                    'There are no categories of processing being done on your data.'
+                  )}`
               )}
             </p>
           `,
@@ -506,35 +637,48 @@ export class BldnRequestStatus extends CoreConfigurationMixin(LitElement) {
           () => {
             const provAnswer =
               answer as PrivacyResponseAnswer.TRANSPARENCY_PROVENANCE;
-            // console.log(provAnswer)
-            return html``;
-            // return html`
-            //   <p>
-            //     ${map((answer as PrivacyResponseAnswer.TRANSPARENCY_PROVENANCE).entries(),
-            //       dc => html`
-            //         ${map(
-            //           dc,
-            //           prov => html`
-            //             ${msg(
-            //               html`<b>${dc[0]} Data:</b> Source
-            //                 <i>${prov.provenance}</i> of the
-            //                 <i>${prov.system}</i> system.<br />`
-            //             )}
-            //           `
-            //         )}
-            //       `
-            //     )}
-            //   </p>
-            // `;
+            return html`
+              <p>
+                ${when(
+                  Object.keys(provAnswer).length > 0,
+                  () => html`
+                    ${map(
+                      Object.entries(provAnswer),
+                      ([dc, provs]) => html`
+                        ${map(
+                          provs,
+                          prov => html`
+                            ${getProvenanceString(dc, { ...prov })}<br />
+                          `
+                        )}
+                      `
+                    )}
+                  `,
+                  () => html`
+                    ${msg('There are no sources of data concerning you.')}
+                  `
+                )}
+              </p>
+            `;
           },
         ],
         [
           PrivacyResponsePayload.requested_action.TRANSPARENCY_PURPOSE,
           () => html`
             <p>
-              ${map(
-                answer as PrivacyResponseAnswer.TRANSPARENCY_PURPOSE,
-                purpose => html` ${purpose}<br /> `
+              ${when(
+                answer.length > 0,
+                () => html`
+                  ${map(
+                    answer as PrivacyResponseAnswer.TRANSPARENCY_PURPOSE,
+                    purpose => html` ${purpose}<br /> `
+                  )}
+                `,
+                () => html`
+                  ${msg(
+                    'There is no information about the purposes for processing your data.'
+                  )}
+                `
               )}
             </p>
           `,
@@ -544,33 +688,55 @@ export class BldnRequestStatus extends CoreConfigurationMixin(LitElement) {
           () => {
             const retAnswer =
               answer as PrivacyResponseAnswer.TRANSPARENCY_RETENTION;
-            // console.log(retAnswer)
-            return html``;
-            // return html`
-            //   <p>
-            //     ${map(
-            //       answer.NAME,
-            //       rp =>
-            //         html`<p>
-            //           ${getRetentionPolicyString(
-            //             'Data',
-            //             rp.policy_type,
-            //             rp.duration,
-            //             rp.after
-            //           )}
-            //         </p>`
-            //     )}
-            //   </p>
-            // `;
+            return html`
+              <p>
+                ${when(
+                  Object.keys(retAnswer).length > 0,
+                  () => html`
+                    ${map(
+                      Object.entries(retAnswer),
+                      ([dc, rp]) => html`
+                        ${map(
+                          rp,
+                          policy => html`
+                            ${getRetentionPolicyString(
+                              dc,
+                              policy.policy_type,
+                              policy.duration,
+                              policy.after
+                            )}<br />
+                          `
+                        )}
+                      `
+                    )}
+                  `,
+                  () => html`
+                    ${msg(
+                      'There is no information about how long your data is kept.'
+                    )}
+                  `
+                )}
+              </p>
+            `;
           },
         ],
         [
           PrivacyResponsePayload.requested_action.TRANSPARENCY_WHERE,
           () => html`
             <p>
-              ${map(
-                answer as PrivacyResponseAnswer.TRANSPARENCY_WHERE,
-                where => html` ${where}<br /> `
+              ${when(
+                answer.length > 0,
+                () => html`
+                  ${map(
+                    answer as PrivacyResponseAnswer.TRANSPARENCY_WHERE,
+                    where => html` ${where}<br /> `
+                  )}
+                `,
+                () => html`
+                  ${msg(
+                    'There is no information about where your data is stored.'
+                  )}
+                `
               )}
             </p>
           `,
@@ -579,9 +745,19 @@ export class BldnRequestStatus extends CoreConfigurationMixin(LitElement) {
           PrivacyResponsePayload.requested_action.TRANSPARENCY_WHO,
           () => html`
             <p>
-              ${map(
-                answer as PrivacyResponseAnswer.TRANSPARENCY_WHO,
-                who => html` ${who}<br /> `
+              ${when(
+                answer.length > 0,
+                () => html`
+                  ${map(
+                    answer as PrivacyResponseAnswer.TRANSPARENCY_WHO,
+                    who => html` ${who}<br /> `
+                  )}
+                `,
+                () => html`
+                  ${msg(
+                    'There is no information about who has access to your data.'
+                  )}
+                `
               )}
             </p>
           `,

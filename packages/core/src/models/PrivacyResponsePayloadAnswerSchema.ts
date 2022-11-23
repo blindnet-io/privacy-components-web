@@ -13,7 +13,7 @@ export namespace PrivacyResponseAnswer {
     name: string;
     description: string;
     active: boolean;
-  };
+  }[];
   export type TRANSPARENCY_ORGANIZATION = string;
   export type TRANSPARENCY_POLICY = string;
   export type TRANSPARENCY_PROCESSING_CATEGORIES = string[];
