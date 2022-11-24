@@ -37,7 +37,7 @@ let BldnObjectForm = class BldnObjectForm extends ActionForm {
             value: dc,
             display: dc === '*'
                 ? html `${DATA_CATEGORY_DESCRIPTIONS[dc]()}`
-                : html `<b>${DATA_CATEGORY_TITLES[dc]()} ${msg('Data')}:</b>
+                : html `<b>${DATA_CATEGORY_TITLES[dc]()}:</b>
                   ${DATA_CATEGORY_DESCRIPTIONS[dc]()}`,
             allChoice: dc === '*',
         }))}

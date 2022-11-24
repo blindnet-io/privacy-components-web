@@ -9,7 +9,7 @@ import { when } from 'lit/directives/when.js';
 import './bldn-nav-wrapper.js';
 import './bldn-dropdown.js';
 import './bldn-radio-list.js';
-import { DATA_CATEGORY_DESCRIPTIONS, DATA_CATEGORY_TITLES, PROCESSING_CATEGORY_DESCRIPTIONS, PROCESSING_CATEGORIES, PURPOSE_DESCRIPTIONS, PURPOSES, TRANSPARENCY_ACTION_DESCRIPTIONS, PROVENANCE_DESCRIPTIONS, TARGET_DESCRIPTIONS } from './utils/dictionary.js';
+import { DATA_CATEGORY_DESCRIPTIONS, DATA_CATEGORY_TITLES, PROCESSING_CATEGORY_DESCRIPTIONS, PROCESSING_CATEGORIES, PURPOSE_DESCRIPTIONS, PURPOSES, TRANSPARENCY_ACTION_DESCRIPTIONS, PROVENANCE_DESCRIPTIONS, ACTION_TITLES_WITH_DEMAND, TARGET_DESCRIPTIONS } from './utils/dictionary.js';
 
 const editSvg = new URL(new URL('assets/akar-icons_edit.svg', import.meta.url).href, import.meta.url)
     .href;
@@ -84,7 +84,7 @@ let BldnRequestReview = class BldnRequestReview extends LitElement {
       ${this.getListTemplate(uniqueDataCategories.map(dc => html `
             ${dc === '*'
             ? DATA_CATEGORY_DESCRIPTIONS[dc]()
-            : html `<b>${DATA_CATEGORY_TITLES[dc]()} Data:</b>
+            : html `<b>${DATA_CATEGORY_TITLES[dc]()}</b>
                   ${DATA_CATEGORY_DESCRIPTIONS[dc]()}`}
           `))}
       <p>${msg('Processing Categories')}</p>
@@ -268,7 +268,7 @@ let BldnRequestReview = class BldnRequestReview extends LitElement {
                   <bldn-dropdown>
                     <span slot="heading"
                       ><strong
-                        >${group[0].action.split('.')[0]} ${msg('Demand')}</strong
+                        >${ACTION_TITLES_WITH_DEMAND[group[0].action.split('.')[0]]()}</strong
                       >
                       <button class='img-button' @click=${() => this.handleEditDemandGroupClick(i)}>
                         <img src=${editSvg} alt='edit demand group'></img>

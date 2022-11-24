@@ -1,5 +1,5 @@
 import { __decorate } from './node_modules/tslib/tslib.es6.js';
-import { CoreConfigurationMixin, ComputationAPI, PrivacyResponsePayload } from '@blindnet/core';
+import { CoreConfigurationMixin, ComputationAPI, PrivacyResponsePayload, Provenance } from '@blindnet/core';
 import { msg } from '@lit/localize';
 import { LitElement, html, css } from 'lit';
 import { property, state, customElement } from 'lit/decorators.js';
@@ -8,7 +8,7 @@ import { classMap } from 'lit/directives/class-map.js';
 import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
 import './bldn-dropdown.js';
-import { ACTION_TITLES, DEMAND_STATUS_DESCRIPTIONS, ACTION_DESCRIPTIONS, POLICY_TYPE_TITLES, AFTER_TITLES } from './utils/dictionary.js';
+import { ACTION_TITLES, DEMAND_STATUS_DESCRIPTIONS, ACTION_DESCRIPTIONS, DATA_CATEGORY_TITLES_WITH_DATA, POLICY_TYPE_TITLES, AFTER_TITLES } from './utils/dictionary.js';
 
 const linkSvg = new URL(new URL('assets/akar-icons_link-chain.svg', import.meta.url).href, import.meta.url).href;
 const downloadSvg = new URL(new URL('assets/akar-icons_download.svg', import.meta.url).href, import.meta.url).href;
@@ -25,10 +25,80 @@ const refreshSvg = new URL(new URL('assets/heroicons-solid_refresh.svg', import.
  */
 function getRetentionPolicyString(dataCategory, policyType, duration, after) {
     // FIXME: For our first demo, we assume duration is in months
-    return html `<i>${dataCategory.toLocaleUpperCase()}</i> data is kept
+    return html `<i
+      >${DATA_CATEGORY_TITLES_WITH_DATA[dataCategory.toLocaleUpperCase()]()}</i
+    >
+    ${msg('is kept for')}
     <i>${POLICY_TYPE_TITLES[policyType]().toLocaleUpperCase()}</i>
-    <i>${duration}</i> months after
+    <i>${duration}</i> ${msg('months after')}
     <i>${AFTER_TITLES[after]().toLocaleUpperCase()}</i>`;
+}
+/**
+ * Get a user friendly string for a provenance in regard to some data category
+ * @param dataCategory Data category the provenance pertains to
+ * @param provenance Provenance object
+ * @returns String combining the data category and provenance into a readable form
+ */
+function getProvenanceString(dataCategory, provenance) {
+    return html `
+    ${choose(provenance.provenance, [
+        [
+            Provenance.provenance._,
+            () => html `
+          ${when(provenance.system, () => html `
+              <b>${DATA_CATEGORY_TITLES_WITH_DATA[dataCategory]()}:</b> ${msg(html `Obtained from a user, another system and/or derived from
+                  existing data, in the <i>${provenance.system}</i> system`)}
+            `, () => html `
+              <b>${DATA_CATEGORY_TITLES_WITH_DATA[dataCategory]()}:</b> ${msg(html `Obtained from a user, another system and/or derived from
+                existing data, in some other system.`)}
+            `)}
+        `,
+        ],
+        [
+            Provenance.provenance.USER,
+            () => html `
+          ${when(provenance.system, () => html `
+              <b>${DATA_CATEGORY_TITLES_WITH_DATA[dataCategory]()}:</b> ${msg(html `Obtained from a user of the
+                  <i>${provenance.system}</i> system`)}
+            `, () => html `
+              <b>${DATA_CATEGORY_TITLES_WITH_DATA[dataCategory]()}:</b> ${msg(html `Obtained from a user`)}
+            `)}
+        `,
+        ],
+        [
+            Provenance.provenance.USER_DATA_SUBJECT,
+            () => html `
+          ${when(provenance.system, () => html `
+              <b>${DATA_CATEGORY_TITLES_WITH_DATA[dataCategory]()}:</b> ${msg(html `Obtained from a user, providing data about theirself, in
+                  the <i>${provenance.system}</i> system`)}
+            `, () => html `
+              <b>${DATA_CATEGORY_TITLES_WITH_DATA[dataCategory]()}:</b> ${msg(html `Obtained from a user, providing data about theirself`)}
+            `)}
+        `,
+        ],
+        [
+            Provenance.provenance.TRANSFERRED,
+            () => html `
+          ${when(provenance.system, () => html `
+              <b>${DATA_CATEGORY_TITLES_WITH_DATA[dataCategory]()}:</b> ${msg(html `Transfered from the <i>${provenance.system}</i> system`)}
+            `, () => html `
+              <b>${DATA_CATEGORY_TITLES_WITH_DATA[dataCategory]()}:</b> ${msg(html `Transfered from some other system`)}
+            `)}
+        `,
+        ],
+        [
+            Provenance.provenance.DERIVED,
+            () => html `
+          ${when(provenance.system, () => html `
+              <b>${DATA_CATEGORY_TITLES_WITH_DATA[dataCategory]()}:</b> ${msg(html `Derived from existing data in the
+                  <i>${provenance.system}</i> system`)}
+            `, () => html `
+              <b>${DATA_CATEGORY_TITLES_WITH_DATA[dataCategory]()}:</b> ${msg(html `Derived from existing data in some other system`)}
+            `)}
+        `,
+        ],
+    ])}
+  `;
 }
 /**
  * Get a link to the status page for the request denoted by requestId
@@ -226,6 +296,7 @@ let BldnRequestStatus = class BldnRequestStatus extends CoreConfigurationMixin(L
     }
     // NOTE: For now, we assume demand.data is a JSON file
     getGrantedResponseTemplate(demand) {
+        const answer = JSON.parse(demand.answer);
         return html `
       ${choose(demand.requested_action, [
             [
@@ -284,58 +355,108 @@ let BldnRequestStatus = class BldnRequestStatus extends CoreConfigurationMixin(L
             [
                 PrivacyResponsePayload.requested_action.TRANSPARENCY_DATA_CATEGORIES,
                 () => html `
-            ${map(demand.answer, dc => html ` ${dc}<br /> `)}
-          `,
-            ],
-            [
-                PrivacyResponsePayload.requested_action.TRANSPARENCY_DPO,
-                () => html ` <p>${demand.answer}</p> `,
-            ],
-            [
-                PrivacyResponsePayload.requested_action.TRANSPARENCY_KNOWN,
-                () => html ` <p>${demand.answer}</p> `,
-            ],
-            [
-                PrivacyResponsePayload.requested_action.TRANSPARENCY_LEGAL_BASES,
-                () => html `
             <p>
-              ${map(demand.answer, lb => msg(html `
-                  Type: ${lb.lb_type}<br />
-                  Name: ${lb.name}<br />
-                  Description: ${lb.description}<br /><br />
-                `))}
+              ${when(answer.length > 0, () => html `
+                  ${map(answer, dc => html ` ${dc}<br /> `)}
+                `, () => html ` ${msg('There are no categories of data on you.')} `)}
             </p>
           `,
             ],
             [
+                PrivacyResponsePayload.requested_action.TRANSPARENCY_DPO,
+                () => html `
+            <p>
+              ${when(answer, () => html `
+                  ${answer}
+                `, () => html ` ${msg('There is no listed DPO.')} `)}
+            </p>
+          `,
+            ],
+            [
+                PrivacyResponsePayload.requested_action.TRANSPARENCY_KNOWN,
+                () => html `
+            <p>
+              ${choose(answer, [
+                    [
+                        'NO',
+                        () => html `${msg(html `The organization <strong>does not</strong> have
+                          data on you.`)}`,
+                    ],
+                    [
+                        'YES',
+                        () => html `${msg(html `The organization <strong>does</strong> have data on
+                          you.`)}`,
+                    ],
+                ], () => html `${msg('There is no information regarding whether the organization has data on you.')}`)}
+            </p>
+          `,
+            ],
+            [
+                PrivacyResponsePayload.requested_action.TRANSPARENCY_LEGAL_BASES,
+                () => {
+                    const lbAnswer = answer;
+                    return html `
+              <p>
+                ${when(Object.keys(lbAnswer).length > 0, () => html `
+                    ${map(lbAnswer, lb => html `
+                        <p>
+                          ${msg('Name: ')}${lb.name}<br />
+                          ${when(lb.description, () => html `${msg('Description: ')}${lb.description}<br />`)}
+                          ${msg('Type: ')}${lb.lb_type}<br />
+                        </p>
+                      `)}
+                  `, () => html `
+                    ${msg('There are no legal bases for processing your data.')}
+                  `)}
+              </p>
+            `;
+                },
+            ],
+            [
                 PrivacyResponsePayload.requested_action.TRANSPARENCY_ORGANIZATION,
-                () => html ` <p>${demand.answer}</p> `,
+                () => html `
+            <p>
+              ${when(answer, () => html `
+                  ${answer}
+                `, () => html ` ${msg('There is no organization information.')} `)}
+            </p>
+          `,
             ],
             [
                 PrivacyResponsePayload.requested_action.TRANSPARENCY_POLICY,
-                () => html ` <p>${demand.answer}</p> `,
+                () => html `
+            <p>
+              ${when(answer, () => html `
+                  ${answer}
+                `, () => html ` ${msg('There is no policy information.')} `)}
+            </p>
+          `,
             ],
             [
                 PrivacyResponsePayload.requested_action
                     .TRANSPARENCY_PROCESSING_CATEGORIES,
                 () => html `
             <p>
-              ${map(demand.answer, pc => html ` ${pc}<br /> `)}
+              ${when(answer.length > 0, () => html `
+                  ${map(answer, pc => html ` ${pc}<br /> `)}
+                `, () => html `${msg('There are no categories of processing being done on your data.')}`)}
             </p>
           `,
             ],
             [
                 PrivacyResponsePayload.requested_action.TRANSPARENCY_PROVENANCE,
                 () => {
-                    const provs = Object.entries(demand.answer);
+                    const provAnswer = answer;
                     return html `
               <p>
-                ${map(provs, dc => html `
-                    ${map(dc[1], prov => html `
-                        ${msg(html `<b>${dc[0]} Data:</b> Source
-                            <i>${prov.provenance}</i> of the
-                            <i>${prov.system}</i> system.<br />`)}
+                ${when(Object.keys(provAnswer).length > 0, () => html `
+                    ${map(Object.entries(provAnswer), ([dc, provs]) => html `
+                        ${map(provs, prov => html `
+                            ${getProvenanceString(dc, { ...prov })}<br />
+                          `)}
                       `)}
+                  `, () => html `
+                    ${msg('There are no sources of data concerning you.')}
                   `)}
               </p>
             `;
@@ -345,19 +466,29 @@ let BldnRequestStatus = class BldnRequestStatus extends CoreConfigurationMixin(L
                 PrivacyResponsePayload.requested_action.TRANSPARENCY_PURPOSE,
                 () => html `
             <p>
-              ${map(demand.answer, purpose => html ` ${purpose}<br /> `)}
+              ${when(answer.length > 0, () => html `
+                  ${map(answer, purpose => html ` ${purpose}<br /> `)}
+                `, () => html `
+                  ${msg('There is no information about the purposes for processing your data.')}
+                `)}
             </p>
           `,
             ],
             [
                 PrivacyResponsePayload.requested_action.TRANSPARENCY_RETENTION,
                 () => {
-                    const answer = demand.answer;
+                    const retAnswer = answer;
                     return html `
               <p>
-                ${map(answer.NAME, rp => html `<p>
-                      ${getRetentionPolicyString('Data', rp.policy_type, rp.duration, rp.after)}
-                    </p>`)}
+                ${when(Object.keys(retAnswer).length > 0, () => html `
+                    ${map(Object.entries(retAnswer), ([dc, rp]) => html `
+                        ${map(rp, policy => html `
+                            ${getRetentionPolicyString(dc, policy.policy_type, policy.duration, policy.after)}<br />
+                          `)}
+                      `)}
+                  `, () => html `
+                    ${msg('There is no information about how long your data is kept.')}
+                  `)}
               </p>
             `;
                 },
@@ -366,7 +497,11 @@ let BldnRequestStatus = class BldnRequestStatus extends CoreConfigurationMixin(L
                 PrivacyResponsePayload.requested_action.TRANSPARENCY_WHERE,
                 () => html `
             <p>
-              ${map(demand.answer, where => html ` ${where}<br /> `)}
+              ${when(answer.length > 0, () => html `
+                  ${map(answer, where => html ` ${where}<br /> `)}
+                `, () => html `
+                  ${msg('There is no information about where your data is stored.')}
+                `)}
             </p>
           `,
             ],
@@ -374,7 +509,11 @@ let BldnRequestStatus = class BldnRequestStatus extends CoreConfigurationMixin(L
                 PrivacyResponsePayload.requested_action.TRANSPARENCY_WHO,
                 () => html `
             <p>
-              ${map(demand.answer, who => html ` ${who}<br /> `)}
+              ${when(answer.length > 0, () => html `
+                  ${map(answer, who => html ` ${who}<br /> `)}
+                `, () => html `
+                  ${msg('There is no information about who has access to your data.')}
+                `)}
             </p>
           `,
             ],

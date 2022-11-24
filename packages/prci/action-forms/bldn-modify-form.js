@@ -1,7 +1,8 @@
 import { __decorate } from '../node_modules/tslib/tslib.es6.js';
 import { PrivacyRequestDemand } from '@blindnet/core';
-import { css } from 'lit';
+import { css, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { ActionForm } from './bldn-action-form.js';
 
 /**
@@ -11,36 +12,67 @@ let BldnModifyForm = class BldnModifyForm extends ActionForm {
     constructor() {
         super(...arguments);
         this.action = PrivacyRequestDemand.action.MODIFY;
+        // Remove other options dropdown for this form
+        this.includeOptions = false;
     }
     validateActionInput() {
-        throw new Error('Method not implemented.');
+        return undefined;
     }
     validateOptionsInput() {
-        throw new Error('Method not implemented.');
+        return undefined;
     }
     getFormTemplate() {
-        throw new Error('Method not implemented.');
+        return html `
+      <bldn-additional-message
+        message=${ifDefined(this.demands[0].message)}
+      ></bldn-additional-message>
+    `;
     }
     getOptionsTemplate() {
-        throw new Error('Method not implemented.');
+        return html ``;
     }
     getDefaultDemands() {
-        throw new Error('Method not implemented.');
+        return [
+            {
+                id: '',
+                action: PrivacyRequestDemand.action.MODIFY,
+            },
+        ];
     }
     // Listener Functions
+    /**
+     * Update the message for this demand
+     * @param e {CustomEvent} Event containing the data category string to add
+     */
+    changeMessage(e) {
+        e.stopPropagation();
+        const { message } = e.detail;
+        this.demands[0].message = message;
+    }
     /**
      * Add listeners for elements of this ActionForm
      */
     connectedCallback() {
         // eslint-disable-next-line wc/guard-super-call
         super.connectedCallback();
+        // Message listener
+        this.addEventListener('bldn-additional-message:message-change', this.changeMessage);
     }
     /**
      * Remove all listeners
      */
-    disconnectedCallback() { }
+    disconnectedCallback() {
+        this.removeEventListener('bldn-additional-message:message-change', this.changeMessage);
+    }
 };
-BldnModifyForm.styles = [ActionForm.styles, css ``];
+BldnModifyForm.styles = [
+    ActionForm.styles,
+    css `
+      bldn-additional-message {
+        margin: 2em 0;
+      }
+    `,
+];
 BldnModifyForm = __decorate([
     customElement('bldn-modify-form')
 ], BldnModifyForm);

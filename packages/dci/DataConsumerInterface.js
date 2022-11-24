@@ -67,6 +67,7 @@ let DataConsumerInterface = class DataConsumerInterface extends CoreConfiguratio
 };
 DataConsumerInterface.styles = css `
     :host {
+      display: block;
       width: 100%;
     }
     bldn-toggle-button {

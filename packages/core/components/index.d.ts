@@ -1,4 +1,3 @@
-export * from './SlottedDropdown.js';
 export * from './bldn-data-consum-alerts.js';
 export * from './bldn-data-consum-demand-list-item.js';
 export * from './bldn-data-consum-demand-list.js';

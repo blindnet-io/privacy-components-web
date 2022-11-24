@@ -1,5 +1,5 @@
 import { LitElement } from 'lit';
-import { PendingDemandPayload } from '../computation/generated-models/index.js';
+import { PendingDemandPayload } from '../models/generated-models/index.js';
 export declare class DataConsumerRequests extends LitElement {
     demands: PendingDemandPayload[];
     constructor();

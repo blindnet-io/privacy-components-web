@@ -8,7 +8,9 @@ import './bldn-tile-menu.js';
 import './bldn-request-review.js';
 import './action-forms/bldn-access-form.js';
 import './action-forms/bldn-delete-form.js';
+import './action-forms/bldn-modify-form.js';
 import './action-forms/bldn-object-form.js';
+import './action-forms/bldn-portability-form.js';
 import './action-forms/bldn-restrict-form.js';
 import './action-forms/bldn-revoke-consent-form.js';
 import './action-forms/bldn-transparency-form.js';
@@ -63,13 +65,20 @@ var RequestBuilderUIState;
     RequestBuilderUIState[RequestBuilderUIState["edit"] = 1] = "edit";
     RequestBuilderUIState[RequestBuilderUIState["review"] = 2] = "review";
 })(RequestBuilderUIState || (RequestBuilderUIState = {}));
+/**
+ * Interface for building privacy requests
+ *
+ * @event {CustomEvent} bldn-request-builder:request-created Event containing request object in details
+ * @event {CustomEvent} bldn-request-builder:request-sent Event containing request ID in details.
+ *     Only emitted if using with PCE.
+ */
 let BldnRequestBuilder = class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
     constructor() {
         super(...arguments);
         /** @prop */
         this.actions = Object.values(PrivacyRequestDemand.action);
         /** @prop */
-        this.dataCategories = [];
+        this.dataCategories = Object.values(DefaultDataCategories);
         this._uiState = RequestBuilderUIState.menu;
         this._demandGroups = [];
         this._allowedActions = Object.values(PrivacyRequestDemand.action);
@@ -110,13 +119,13 @@ let BldnRequestBuilder = class BldnRequestBuilder extends CoreConfigurationMixin
             [
                 PrivacyRequestDemand.action.MODIFY,
                 () => html `
-            <bldn-other-form
+            <bldn-modify-form
               data-categories=${JSON.stringify(this._allowedDataCategories)}
               .demands=${this._demandGroupIndex !== undefined
                     ? this._demandGroups[this._demandGroupIndex]
                     : ifDefined(undefined)}
               demand-group-index=${ifDefined(this._demandGroupIndex)}
-            ></bldn-other-form>
+            ></bldn-modify-form>
           `,
             ],
             [
@@ -136,13 +145,13 @@ let BldnRequestBuilder = class BldnRequestBuilder extends CoreConfigurationMixin
             [
                 PrivacyRequestDemand.action.PORTABILITY,
                 () => html `
-            <bldn-other-form
+            <bldn-portability-form
               data-categories=${JSON.stringify(this._allowedDataCategories)}
               .demands=${this._demandGroupIndex !== undefined
                     ? this._demandGroups[this._demandGroupIndex]
                     : ifDefined(undefined)}
               demand-group-index=${ifDefined(this._demandGroupIndex)}
-            ></bldn-other-form>
+            ></bldn-portability-form>
           `,
             ],
             [
@@ -278,18 +287,27 @@ let BldnRequestBuilder = class BldnRequestBuilder extends CoreConfigurationMixin
                 request,
             },
         }));
-        // Send request and emit event with ID
-        ComputationAPI.getInstance()
-            .sendPrivacyRequest(request)
-            .then(response => {
-            this.dispatchEvent(new CustomEvent('bldn-request-builder:request-sent', {
-                bubbles: true,
-                composed: true,
-                detail: {
-                    requestId: response.request_id,
-                },
-            }));
-        });
+        // Send request and emit event with ID, if using with PCE
+        if (ComputationAPI.getInstance().apiTokenSet()) {
+            ComputationAPI.getInstance()
+                .sendPrivacyRequest(request)
+                .then(response => {
+                this.dispatchEvent(new CustomEvent('bldn-request-builder:request-sent', {
+                    bubbles: true,
+                    composed: true,
+                    detail: {
+                        requestId: response.request_id,
+                    },
+                }));
+            });
+        }
+        else {
+            // Reset states and go back to menu if not using with PCE
+            this._action = undefined;
+            this._demandGroupIndex = undefined;
+            this._demandGroups = [];
+            this._uiState = RequestBuilderUIState.menu;
+        }
     }
     handleBackClick(e) {
         e.stopPropagation();

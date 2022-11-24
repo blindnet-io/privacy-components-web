@@ -1,4 +1,3 @@
-export { SlottedDropdown } from './SlottedDropdown.js';
 export { DataConsumerAlerts } from './bldn-data-consum-alerts.js';
 export { DataConsumerDemandListItem } from './bldn-data-consum-demand-list-item.js';
 export { DataConsumerDemandList } from './bldn-data-consum-demand-list.js';

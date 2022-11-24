@@ -2,19 +2,20 @@ import { LitElement, PropertyValueMap, TemplateResult } from 'lit';
 import { PrivacyRequestDemand } from '@blindnet/core';
 import './bldn-tile-menu.js';
 import './bldn-request-review.js';
-import './action-forms/bldn-access-form.js';
-import './action-forms/bldn-delete-form.js';
-import './action-forms/bldn-object-form.js';
-import './action-forms/bldn-restrict-form.js';
-import './action-forms/bldn-revoke-consent-form.js';
-import './action-forms/bldn-transparency-form.js';
-import './action-forms/bldn-other-form.js';
+import './action-forms/index.js';
 declare enum RequestBuilderUIState {
     menu = 0,
     edit = 1,
     review = 2
 }
 declare const BldnRequestBuilder_base: typeof LitElement & (new (...args: any[]) => import("@blindnet/core").CoreConfigurationMixinInterface);
+/**
+ * Interface for building privacy requests
+ *
+ * @event {CustomEvent} bldn-request-builder:request-created Event containing request object in details
+ * @event {CustomEvent} bldn-request-builder:request-sent Event containing request ID in details.
+ *     Only emitted if using with PCE.
+ */
 export declare class BldnRequestBuilder extends BldnRequestBuilder_base {
     /** @prop */
     actions: PrivacyRequestDemand.action[];

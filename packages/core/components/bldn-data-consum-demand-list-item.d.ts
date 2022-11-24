@@ -1,5 +1,5 @@
 import { LitElement, PropertyValueMap } from 'lit';
-import { PendingDemandDetailsPayload, PendingDemandPayload, Recommendation } from '../computation/generated-models/index.js';
+import { PendingDemandDetailsPayload, PendingDemandPayload, Recommendation } from '../models/generated-models/index.js';
 declare enum DropdownUIState {
     Respond = 0,
     History = 1,

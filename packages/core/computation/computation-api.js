@@ -1,23 +1,22 @@
-import './generated-models/models/CreateLegalBasePayload.js';
-import './generated-models/models/CreatePrivacyRequestPayload.js';
-import './generated-models/models/CreateProvenancePayload.js';
-import './generated-models/models/CreateRetentionPolicyPayload.js';
-import './generated-models/models/DemandResolution.js';
-import { DenyDemandPayload } from './generated-models/models/DenyDemandPayload.js';
-import './generated-models/models/LegalBase.js';
-import './generated-models/models/PendingDemandDetailsPayload.js';
-import './generated-models/models/PendingDemandPayload.js';
-import './generated-models/models/PrItem.js';
-import './generated-models/models/PrivacyRequestDemand.js';
-import './generated-models/models/PrivacyResponsePayload.js';
-import './generated-models/models/PrivacyScopeRestriction.js';
-import './generated-models/models/PrivacyScopeTriple.js';
-import './generated-models/models/Provenance.js';
-import './generated-models/models/ProvenanceRestriction.js';
-import './generated-models/models/Recommendation.js';
-import './generated-models/models/RetentionPolicy.js';
-import './generated-models/models/ScopePayload.js';
-import { DATA_CATEGORY } from './models/priv-terms.js';
+import '../models/generated-models/models/CreateLegalBasePayload.js';
+import '../models/generated-models/models/CreatePrivacyRequestPayload.js';
+import '../models/generated-models/models/CreateProvenancePayload.js';
+import '../models/generated-models/models/CreateRetentionPolicyPayload.js';
+import '../models/generated-models/models/DemandResolution.js';
+import { DenyDemandPayload } from '../models/generated-models/models/DenyDemandPayload.js';
+import '../models/generated-models/models/LegalBase.js';
+import '../models/generated-models/models/PendingDemandDetailsPayload.js';
+import '../models/generated-models/models/PendingDemandPayload.js';
+import '../models/generated-models/models/PrItem.js';
+import '../models/generated-models/models/PrivacyRequestDemand.js';
+import '../models/generated-models/models/PrivacyResponsePayload.js';
+import '../models/generated-models/models/PrivacyScopeRestriction.js';
+import '../models/generated-models/models/PrivacyScopeTriple.js';
+import '../models/generated-models/models/Provenance.js';
+import '../models/generated-models/models/ProvenanceRestriction.js';
+import '../models/generated-models/models/Recommendation.js';
+import '../models/generated-models/models/RetentionPolicy.js';
+import '../models/generated-models/models/ScopePayload.js';
 
 /* eslint-disable no-param-reassign */
 class ComputationAPI {
@@ -149,20 +148,24 @@ class ComputationAPI {
         return response.json();
     }
     // Privacy Request Endpoints
-    preProcessRequest(request) {
-        // If all privacy scopes provided, this is the same as no restriction
-        const allDataCategories = Object.values(DATA_CATEGORY).filter(dc => dc !== DATA_CATEGORY.ALL && !dc.includes('.'));
-        request.demands.forEach(d => {
-            if (d.restrictions && d.restrictions.privacy_scope) {
-                const demandDcs = d.restrictions.privacy_scope.map(psr => psr.dc);
-                if (allDataCategories.every(dc => demandDcs.includes(dc))) {
-                    const demand = d;
-                    delete demand.restrictions.privacy_scope;
-                }
-            }
-        });
-        return request;
-    }
+    // private preProcessRequest(
+    //   request: CreatePrivacyRequestPayload
+    // ): CreatePrivacyRequestPayload {
+    //   // If all privacy scopes provided, this is the same as no restriction
+    //   const allDataCategories = Object.values(DATA_CATEGORY).filter(
+    //     dc => dc !== DATA_CATEGORY.ALL && !dc.includes('.')
+    //   );
+    //   request.demands!.forEach(d => {
+    //     if (d.restrictions && d.restrictions.privacy_scope) {
+    //       const demandDcs = d.restrictions.privacy_scope!.map(psr => psr.dc);
+    //       if (allDataCategories.every(dc => demandDcs.includes(dc))) {
+    //         const demand = d;
+    //         delete demand.restrictions!.privacy_scope;
+    //       }
+    //     }
+    //   });
+    //   return request;
+    // }
     /**
      * Send a PrivacyRequest to the privacy-request API
      * @param {CreatePrivacyRequestPayload} request Request body to send
@@ -170,13 +173,13 @@ class ComputationAPI {
      */
     async sendPrivacyRequest(request) {
         const endpoint = `/privacy-request`;
-        const preparedRequest = this.preProcessRequest(request);
+        // const preparedRequest = this.preProcessRequest(request);
         // Only allow no auth header for certain requests
         const authRequired = request.demands.every(demand => demand.action.includes('TRANSPARENCY'));
         const response = await fetch(this.fullURL(endpoint), {
             method: 'POST',
             headers: this.headers(true, authRequired, request),
-            body: JSON.stringify(preparedRequest),
+            body: JSON.stringify(request),
         });
         if (!response.ok) {
             throw new Error(response.statusText);

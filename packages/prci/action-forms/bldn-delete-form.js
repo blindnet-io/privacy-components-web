@@ -25,7 +25,7 @@ let BldnDeleteForm = class BldnDeleteForm extends ActionForm {
     }
     getFormTemplate() {
         return html `
-      <p>${msg('I want to delete:')}</p>
+      <p>${msg('I want to delete data from the following categories:')}</p>
       <bldn-all-checklist
         .choices=${this.dataCategories.map(dc => {
             var _a, _b;
@@ -34,7 +34,7 @@ let BldnDeleteForm = class BldnDeleteForm extends ActionForm {
                 display: html `${dc === '*'
                     ? ''
                     : html `<b
-                >${DATA_CATEGORY_TITLES[dc]()} ${msg('Data')}:
+                >${DATA_CATEGORY_TITLES[dc]()}:
               </b>`}${DATA_CATEGORY_DESCRIPTIONS[dc]()}`,
                 checked: ((_b = (_a = this.demands[0].restrictions) === null || _a === void 0 ? void 0 : _a.privacy_scope) === null || _b === void 0 ? void 0 : _b.findIndex(psr => psr.dc === dc)) !== -1,
                 allChoice: dc === '*',

@@ -1,4 +1,4 @@
-import { CreatePrivacyRequestPayload, DataCategoryResponsePayload, DenyDemandPayload, GivenConsentsPayload, PendingDemandDetailsPayload, PendingDemandPayload, PrivacyResponsePayload, RequestHistoryPayload } from './generated-models/index.js';
+import { CreatePrivacyRequestPayload, DataCategoryResponsePayload, DenyDemandPayload, GivenConsentsPayload, PendingDemandDetailsPayload, PendingDemandPayload, PrivacyResponsePayload, RequestHistoryPayload } from '../models/generated-models/index.js';
 export declare class ComputationAPI {
     private static instance;
     static readonly MOCK_URL = "https://stoplight.io/mocks/blindnet/product-management:open-api/74767654";
@@ -36,7 +36,6 @@ export declare class ComputationAPI {
      */
     private getMockHeader;
     getDataCategories(): Promise<DataCategoryResponsePayload[]>;
-    private preProcessRequest;
     /**
      * Send a PrivacyRequest to the privacy-request API
      * @param {CreatePrivacyRequestPayload} request Request body to send

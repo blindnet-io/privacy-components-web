@@ -1,10 +1,11 @@
 import { __decorate } from '../node_modules/tslib/tslib.es6.js';
-import { msg, str } from '@lit/localize';
+import { msg } from '@lit/localize';
 import { css, LitElement, html } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import '../bldn-nav-wrapper.js';
 import '../bldn-dropdown.js';
 import { when } from 'lit/directives/when.js';
+import { ACTION_TITLES_WITH_DEMAND } from '../utils/dictionary.js';
 
 /**
  * Abstract class for a form that allows the user to create or edit a demand.
@@ -67,16 +68,19 @@ class ActionForm extends LitElement {
     render() {
         return html `
       <bldn-nav-wrapper
-        left-button="Back"
-        right-button="Next"
+        left-button=${msg('Back')}
+        right-button=${msg('Next')}
         @bldn-nav-wrapper:left-click=${this.handleBackClick}
         @bldn-nav-wrapper:right-click=${this.handleAddClick}
       >
         <bldn-dropdown class="main-section" mode="major" open>
           <span slot="heading"
             ><strong
-              >${msg(str `Details of my ${this.action} Demand`)}</strong
-            ></span
+              >${msg('Details of my', {
+            id: 'demand-form-action-sentence-start',
+        })}
+              ${ACTION_TITLES_WITH_DEMAND[this.action]()}
+            </strong></span
           >
           ${this.getFormTemplate()}
         </bldn-dropdown>

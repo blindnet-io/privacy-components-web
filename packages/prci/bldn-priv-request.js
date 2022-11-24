@@ -9,6 +9,26 @@ import './bldn-request-builder.js';
 import './bldn-submitted-requests.js';
 import { setLocale } from './localization.js';
 
+var DefaultDataCategories;
+(function (DefaultDataCategories) {
+    DefaultDataCategories["ALL"] = "*";
+    DefaultDataCategories["AFFILIATION"] = "AFFILIATION";
+    DefaultDataCategories["BEHAVIOR"] = "BEHAVIOR";
+    DefaultDataCategories["BIOMETRIC"] = "BIOMETRIC";
+    DefaultDataCategories["CONTACT"] = "CONTACT";
+    DefaultDataCategories["DEMOGRAPHIC"] = "DEMOGRAPHIC";
+    DefaultDataCategories["DEVICE"] = "DEVICE";
+    DefaultDataCategories["FINANCIAL"] = "FINANCIAL";
+    DefaultDataCategories["GENETIC"] = "GENETIC";
+    DefaultDataCategories["HEALTH"] = "HEALTH";
+    DefaultDataCategories["IMAGE"] = "IMAGE";
+    DefaultDataCategories["LOCATION"] = "LOCATION";
+    DefaultDataCategories["NAME"] = "NAME";
+    DefaultDataCategories["PROFILING"] = "PROFILING";
+    DefaultDataCategories["RELATIONSHIPS"] = "RELATIONSHIPS";
+    DefaultDataCategories["UID"] = "UID";
+    DefaultDataCategories["OTHER-DATA"] = "OTHER-DATA";
+})(DefaultDataCategories || (DefaultDataCategories = {}));
 var PRCIUIState;
 (function (PRCIUIState) {
     PRCIUIState[PRCIUIState["createRequest"] = 0] = "createRequest";
@@ -20,7 +40,7 @@ let BldnPrivRequest = class BldnPrivRequest extends CoreConfigurationMixin(LitEl
         /** @prop */
         this.actions = [];
         /** @prop */
-        this.dataCategories = [];
+        this.dataCategories = Object.values(DefaultDataCategories);
         this._uiState = PRCIUIState.createRequest;
         // Set locale if current one is supported
         try {
