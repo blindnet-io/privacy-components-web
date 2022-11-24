@@ -12,13 +12,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 
 import './bldn-tile-menu.js';
 import './bldn-request-review.js';
-import './action-forms/bldn-access-form.js';
-import './action-forms/bldn-delete-form.js';
-import './action-forms/bldn-object-form.js';
-import './action-forms/bldn-restrict-form.js';
-import './action-forms/bldn-revoke-consent-form.js';
-import './action-forms/bldn-transparency-form.js';
-import './action-forms/bldn-other-form.js';
+import './action-forms/index.js';
 import { localized } from '@lit/localize';
 import { ACTION_DESCRIPTIONS, ACTION_TITLES } from './utils/dictionary.js';
 
@@ -71,6 +65,13 @@ enum RequestBuilderUIState {
   review,
 }
 
+/**
+ * Interface for building privacy requests
+ *
+ * @event {CustomEvent} bldn-request-builder:request-created Event containing request object in details
+ * @event {CustomEvent} bldn-request-builder:request-sent Event containing request ID in details.
+ *     Only emitted if using with PCE.
+ */
 @localized()
 @customElement('bldn-request-builder')
 export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
@@ -80,7 +81,7 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
 
   /** @prop */
   @property({ type: Array, attribute: 'data-categories' })
-  dataCategories: string[] = [];
+  dataCategories: string[] = Object.values(DefaultDataCategories);
 
   @state() _uiState: RequestBuilderUIState = RequestBuilderUIState.menu;
 
@@ -133,13 +134,13 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
         [
           PrivacyRequestDemand.action.MODIFY,
           () => html`
-            <bldn-other-form
+            <bldn-modify-form
               data-categories=${JSON.stringify(this._allowedDataCategories)}
               .demands=${this._demandGroupIndex !== undefined
                 ? this._demandGroups[this._demandGroupIndex]
                 : ifDefined(undefined)}
               demand-group-index=${ifDefined(this._demandGroupIndex)}
-            ></bldn-other-form>
+            ></bldn-modify-form>
           `,
         ],
         [
@@ -163,13 +164,13 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
         [
           PrivacyRequestDemand.action.PORTABILITY,
           () => html`
-            <bldn-other-form
+            <bldn-portability-form
               data-categories=${JSON.stringify(this._allowedDataCategories)}
               .demands=${this._demandGroupIndex !== undefined
                 ? this._demandGroups[this._demandGroupIndex]
                 : ifDefined(undefined)}
               demand-group-index=${ifDefined(this._demandGroupIndex)}
-            ></bldn-other-form>
+            ></bldn-portability-form>
           `,
         ],
         [
@@ -325,20 +326,28 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
       })
     );
 
-    // Send request and emit event with ID
-    ComputationAPI.getInstance()
-      .sendPrivacyRequest(request)
-      .then(response => {
-        this.dispatchEvent(
-          new CustomEvent('bldn-request-builder:request-sent', {
-            bubbles: true,
-            composed: true,
-            detail: {
-              requestId: response.request_id,
-            },
-          })
-        );
-      });
+    // Send request and emit event with ID, if using with PCE
+    if (ComputationAPI.getInstance().apiTokenSet()) {
+      ComputationAPI.getInstance()
+        .sendPrivacyRequest(request)
+        .then(response => {
+          this.dispatchEvent(
+            new CustomEvent('bldn-request-builder:request-sent', {
+              bubbles: true,
+              composed: true,
+              detail: {
+                requestId: response.request_id,
+              },
+            })
+          );
+        });
+    } else {
+      // Reset states and go back to menu if not using with PCE
+      this._action = undefined;
+      this._demandGroupIndex = undefined;
+      this._demandGroups = [];
+      this._uiState = RequestBuilderUIState.menu;
+    }
   }
 
   private handleBackClick(e: Event) {

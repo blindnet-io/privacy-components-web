@@ -30,6 +30,35 @@ export const ACTION_TITLES = {
 };
 
 /**
+ * Mapping of PRIV Actions to corresponding titles.
+ */
+export const ACTION_TITLES_WITH_DEMAND = {
+  ACCESS: () => msg('Access Demand'),
+  DELETE: () => msg('Delete Demand'),
+  MODIFY: () => msg('Modify Demand'),
+  OBJECT: () => msg('Object Demand'),
+  PORTABILITY: () => msg('Portability Demand'),
+  RESTRICT: () => msg('Restrict Demand'),
+  'REVOKE-CONSENT': () => msg('Revoke Demand'),
+  TRANSPARENCY: () => msg('Transparency Demand'),
+  'TRANSPARENCY.DATA-CATEGORIES': () =>
+    msg('Transparency - Data Categories Demand'),
+  'TRANSPARENCY.DPO': () => msg('Transparency - DPO Demand'),
+  'TRANSPARENCY.KNOWN': () => msg('Transparency - Known Demand'),
+  'TRANSPARENCY.LEGAL-BASES': () => msg('Transparency - Legal Bases Demand'),
+  'TRANSPARENCY.ORGANIZATION': () => msg('Transparency - Organization Demand'),
+  'TRANSPARENCY.POLICY': () => msg('Transparency - Policy Demand'),
+  'TRANSPARENCY.PROCESSING-CATEGORIES': () =>
+    msg('Transparency - Processing Categories Demand'),
+  'TRANSPARENCY.PROVENANCE': () => msg('Transparency - Provenance Demand'),
+  'TRANSPARENCY.PURPOSE': () => msg('Transparency - Purpose Demand'),
+  'TRANSPARENCY.RETENTION': () => msg('Transparency - Retention Demand'),
+  'TRANSPARENCY.WHERE': () => msg('Transparency - Where Demand'),
+  'TRANSPARENCY.WHO': () => msg('Transparency - Who Demand'),
+  OTHER: () => msg('Other Demand'),
+};
+
+/**
  * Mapping of PRIV Actions to corresponding descriptions.
  */
 export const ACTION_DESCRIPTIONS = {
@@ -119,6 +148,14 @@ export const TRANSPARENCY_ACTION_DESCRIPTIONS = {
     msg('Who can access the data that the organization has on me'),
 };
 
+export const PROVENANCE_TITLES = {
+  '*': () => msg(''),
+  USER: () => msg('user'),
+  'USER.DATA-SUBJECT': () => msg('user - data subject'),
+  DERIVED: () => msg('derived'),
+  TRANSFERRED: () => msg('transferred'),
+};
+
 export const PROVENANCE_DESCRIPTIONS = {
   '*': () => msg('All provenances'),
   USER: () =>
@@ -147,27 +184,28 @@ export const PROVENANCE_DESCRIPTIONS_STATUS_VIEW = {
 export const DATA_CATEGORY_TITLES = {
   '*': () => msg(''),
   AFFILIATION: () => msg('Affiliation'),
-  'AFFILIATION.MEMBERSHIP': () => msg('Affiliation membership'),
-  'AFFILIATION.MEMBERSHIP.UNION': () => msg(''),
-  'AFFILIATION.SCHOOL': () => msg(''),
-  'AFFILIATION.WORKPLACE': () => msg(''),
+  'AFFILIATION.MEMBERSHIP': () => msg('Affiliation - Membership'),
+  'AFFILIATION.MEMBERSHIP.UNION': () => msg('Affiliation - Membership Union'),
+  'AFFILIATION.SCHOOL': () => msg('Affiliation - School'),
+  'AFFILIATION.WORKPLACE': () => msg('Affiliation - Workplace'),
   BEHAVIOR: () => msg('Behavior'),
-  'BEHAVIOR.ACTIVITY': () => msg(''),
-  'BEHAVIOR.CONNECTION': () => msg(''),
-  'BEHAVIOR.PREFERENCE': () => msg(''),
-  'BEHAVIOR.TELEMETRY': () => msg(''),
+  'BEHAVIOR.ACTIVITY': () => msg('Behavior - Activity'),
+  'BEHAVIOR.CONNECTION': () => msg('Behavior - Connection'),
+  'BEHAVIOR.PREFERENCE': () => msg('Behavior - Preference'),
+  'BEHAVIOR.TELEMETRY': () => msg('Behavior - Telemetry'),
   BIOMETRIC: () => msg('Biometric'),
   CONTACT: () => msg('Contact'),
-  'CONTACT.EMAIL': () => msg(''),
-  'CONTACT.ADDRESS': () => msg(''),
-  'CONTACT.PHONE': () => msg(''),
+  'CONTACT.EMAIL': () => msg('Contact - Email'),
+  'CONTACT.ADDRESS': () => msg('Contact - Address'),
+  'CONTACT.PHONE': () => msg('Contact - Phone'),
   DEMOGRAPHIC: () => msg('Demographic'),
-  'DEMOGRAPHIC.AGE': () => msg(''),
-  'DEMOGRAPHIC.BELIEFS': () => msg(''),
-  'DEMOGRAPHIC.GENDER': () => msg(''),
-  'DEMOGRAPHIC.ORIGIN': () => msg(''),
-  'DEMOGRAPHIC.RACE': () => msg(''),
-  'DEMOGRAPHIC.SEXUAL-ORIENTATION': () => msg(''),
+  'DEMOGRAPHIC.AGE': () => msg('Demographic - Age'),
+  'DEMOGRAPHIC.BELIEFS': () => msg('Demographic - Beliefs'),
+  'DEMOGRAPHIC.GENDER': () => msg('Demographic - Gender'),
+  'DEMOGRAPHIC.ORIGIN': () => msg('Demographic - Origin'),
+  'DEMOGRAPHIC.RACE': () => msg('Demographic - Race'),
+  'DEMOGRAPHIC.SEXUAL-ORIENTATION': () =>
+    msg('Demographic - Sexual Orientation'),
   DEVICE: () => msg('Device'),
   FINANCIAL: () => msg('Financial'),
   'FINANCIAL.BANK-ACCOUNT': () => msg('Finacial bank account'),
@@ -179,12 +217,57 @@ export const DATA_CATEGORY_TITLES = {
   PROFILING: () => msg('Profiling'),
   RELATIONSHIPS: () => msg('Relationships'),
   UID: () => msg('UID'),
-  'UID.ID': () => msg(''),
-  'UID.IP': () => msg(''),
-  'UID.USER-ACCOUNT': () => msg(''),
-  'UID.SOCIAL-MEDIA': () => msg(''),
+  'UID.ID': () => msg('UID - ID'),
+  'UID.IP': () => msg('UID - IP'),
+  'UID.USER-ACCOUNT': () => msg('UID - User Account'),
+  'UID.SOCIAL-MEDIA': () => msg('UID - Social Media'),
   'OTHER-DATA': () => msg('Other'),
   'OTHER-DATA.PROOF': () => msg('Other - Proof'),
+};
+
+export const DATA_CATEGORY_TITLES_WITH_DATA = {
+  '*': () => msg(''),
+  AFFILIATION: () => msg('Affiliation data'),
+  'AFFILIATION.MEMBERSHIP': () => msg('Affiliation - Membership data'),
+  'AFFILIATION.MEMBERSHIP.UNION': () =>
+    msg('Affiliation - Membership Union data'),
+  'AFFILIATION.SCHOOL': () => msg('Affiliation - School data'),
+  'AFFILIATION.WORKPLACE': () => msg('Affiliation - Workplace data'),
+  BEHAVIOR: () => msg('Behavior data'),
+  'BEHAVIOR.ACTIVITY': () => msg('Behavior - Activity data'),
+  'BEHAVIOR.CONNECTION': () => msg('Behavior - Connection data'),
+  'BEHAVIOR.PREFERENCE': () => msg('Behavior - Preference data'),
+  'BEHAVIOR.TELEMETRY': () => msg('Behavior - Telemetry data'),
+  BIOMETRIC: () => msg('Biometric data'),
+  CONTACT: () => msg('Contact data'),
+  'CONTACT.EMAIL': () => msg('Contact - Email data'),
+  'CONTACT.ADDRESS': () => msg('Contact - Address data'),
+  'CONTACT.PHONE': () => msg('Contact - Phone data'),
+  DEMOGRAPHIC: () => msg('Demographic data'),
+  'DEMOGRAPHIC.AGE': () => msg('Demographic - Age data'),
+  'DEMOGRAPHIC.BELIEFS': () => msg('Demographic - Beliefs data'),
+  'DEMOGRAPHIC.GENDER': () => msg('Demographic - Gender data'),
+  'DEMOGRAPHIC.ORIGIN': () => msg('Demographic - Origin data'),
+  'DEMOGRAPHIC.RACE': () => msg('Demographic - Race data'),
+  'DEMOGRAPHIC.SEXUAL-ORIENTATION': () =>
+    msg('Demographic - Sexual Orientation data'),
+  DEVICE: () => msg('Device data'),
+  FINANCIAL: () => msg('Financial data'),
+  'FINANCIAL.BANK-ACCOUNT': () => msg('Finacial bank account data'),
+  GENETIC: () => msg('Genetic data'),
+  HEALTH: () => msg('Health data'),
+  IMAGE: () => msg('Image data'),
+  LOCATION: () => msg('Location data'),
+  NAME: () => msg('Name data'),
+  PROFILING: () => msg('Profiling data'),
+  RELATIONSHIPS: () => msg('Relationships data'),
+  UID: () => msg('UID data'),
+  'UID.ID': () => msg('UID - ID data'),
+  'UID.IP': () => msg('UID - IP data'),
+  'UID.USER-ACCOUNT': () => msg('UID - User Account data'),
+  'UID.SOCIAL-MEDIA': () => msg('UID - Social Media data'),
+  'OTHER-DATA': () => msg('Other data'),
+  'OTHER-DATA.PROOF': () => msg('Other - Proof data'),
 };
 
 export const DATA_CATEGORY_DESCRIPTIONS = {
