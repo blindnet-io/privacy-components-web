@@ -16,7 +16,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { map } from 'lit/directives/map.js';
 
 import './bldn-request-builder.js';
-import { BldnRequestModule } from './bldn-request-module.js';
+import './bldn-request-module.js';
 import './bldn-submitted-requests.js';
 import { setLocale } from './localization.js';
 
@@ -60,10 +60,16 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
 
   @state() _uiState: PRCIUIState = PRCIUIState.createRequest;
 
-  @queryAssignedElements({ slot: 'preFormModule' })
+  @queryAssignedElements({
+    slot: 'preFormModule',
+    selector: 'bldn-request-module',
+  })
   _preFormModules!: Array<HTMLElement>;
 
-  @queryAssignedElements({ slot: 'postFormModule' })
+  @queryAssignedElements({
+    slot: 'postFormModule',
+    selector: 'bldn-request-module',
+  })
   _postFormModules!: Array<HTMLElement>;
 
   constructor() {
@@ -145,14 +151,14 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
     );
   }
 
+  handleSlotChange(e: Event) {
+    console.log('slot changed!');
+    console.log((e.target as HTMLSlotElement).assignedElements());
+  }
+
   render() {
-    console.log(this._preFormModules);
-    if (this._preFormModules.length > 0) {
-      console.log((this._preFormModules[0] as BldnRequestModule).isValid());
-    }
+    console.log('rendering');
     return html`
-      <slot name="preFormModule" slot="preFormModule"></slot>
-      <slot name="postFormModule" slot="postFormModule"></slot>
       <bldn-nav-toggle
         .left=${{
           label: msg('Submit a Request'),
@@ -169,17 +175,21 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
       ${choose(this._uiState, [
         [
           PRCIUIState.createRequest,
-          () =>
-            html`
-              <bldn-request-builder
-                api-token=${ifDefined(this.apiToken)}
-                data-categories=${JSON.stringify(this.dataCategories)}
-                actions=${JSON.stringify(this.actions)}
-                @bldn-request-builder:request-sent=${this.handleRequestSent}
-              >
-                ${map(this._preFormModules, module => module)}
-              </bldn-request-builder>
-            `,
+          () => html`
+            <bldn-request-builder
+              api-token=${ifDefined(this.apiToken)}
+              data-categories=${JSON.stringify(this.dataCategories)}
+              actions=${JSON.stringify(this.actions)}
+              @bldn-request-builder:request-sent=${this.handleRequestSent}
+            >
+              <slot
+                @slotchange=${this.handleSlotChange}
+                name="preFormModule"
+                slot="preFormModule"
+              ></slot>
+              <!-- <bldn-request-module slot="preFormModule"></bldn-request-module> -->
+            </bldn-request-builder>
+          `,
         ],
         [
           PRCIUIState.submittedRequests,

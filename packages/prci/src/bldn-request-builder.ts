@@ -17,9 +17,9 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 
 import './bldn-tile-menu.js';
 import './bldn-request-review.js';
+import { localized } from '@lit/localize';
 import { BldnRequestModule } from './bldn-request-module.js';
 import './action-forms/index.js';
-import { localized } from '@lit/localize';
 import { ACTION_DESCRIPTIONS, ACTION_TITLES } from './utils/dictionary.js';
 
 /**
@@ -105,23 +105,16 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
 
   @state() _allowedDataCategories: string[] = [];
 
-  // _preFormModules!: undefined | Array<HTMLElement>;
-
-  // @state()
-  // get _preFormModules() {
-  //   const elements = this.shadowRoot!.querySelectorAll('slot[name=preFormModule]');
-  //   return elements
-  // }
-
-  // set _preFormModules(value) {
-  //   this._preFormModules = value
-  //   this.requestUpdate('_preFormModules', )
-  // }
-
-  @queryAssignedElements({ slot: 'preFormModule' })
+  @queryAssignedElements({
+    slot: 'preFormModule',
+    selector: 'slot, bldn-request-module',
+  })
   _preFormModules!: Array<HTMLElement>;
 
-  @queryAssignedElements({ slot: 'postFormModule' })
+  @queryAssignedElements({
+    slot: 'postFormModule',
+    selector: 'bldn-request-module',
+  })
   _postFormModules!: Array<HTMLElement>;
 
   /**
@@ -519,14 +512,29 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
     if (_changedProperties.has('apiToken')) this.handleTokenChange();
   }
 
-  render() {
+  handleSlotChange(e: Event) {
+    console.log('slot changed!');
     console.log(this._preFormModules);
-    if (this._preFormModules.length > 0) {
-      console.log((this._preFormModules[0] as BldnRequestModule).isValid());
+    // console.log((e.target as HTMLSlotElement).assignedElements()[0])
+    // console.log(e.target)
+    // console.log(((e.target as HTMLSlotElement).assignedElements()[0] as HTMLSlotElement).assignedElements())
+    if (
+      (e.target as HTMLSlotElement).assignedElements()[0] instanceof
+      HTMLSlotElement
+    ) {
+      console.log('is slot');
+    } else if (
+      (e.target as HTMLSlotElement).assignedElements()[0] instanceof
+      BldnRequestModule
+    ) {
+      console.log('is module');
+    } else {
+      console.log('is neither');
     }
+  }
+
+  render() {
     return html`
-      <slot name="preFormModule"></slot>
-      <!-- <slot name='preFormModule'></slot> -->
       ${choose(this._uiState, [
         [
           RequestBuilderUIState.menu,
@@ -544,15 +552,17 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
         ],
         [
           RequestBuilderUIState.preModules,
-          () => {
-            console.log(this._preFormModules);
-            return html`
-              <!-- <slot name='preFormModule'></slot> -->
-              <!-- <slot name='preFormModule'>
-                <bldn-request-module skip></bldn-request-module>
-              </slot> -->
-            `;
-          },
+          () => html`
+            <!-- Plan
+                  - Put the bldn-wrapper in module code
+                  - Validate and show error based on isValid method passed in
+                  - Need to add slot to module so users can define UI
+              -->
+            <slot
+              name="preFormModule"
+              @slotchange=${this.handleSlotChange}
+            ></slot>
+          `,
         ],
         [
           RequestBuilderUIState.edit,

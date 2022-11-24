@@ -141,9 +141,7 @@ export class AppPrivacy extends LitElement {
         data-categories='["contact", "name", "uid", "other-data"]'
         api-token=${ifDefined(this._apiToken)}
       >
-        <bldn-request-module slot="preFormModule"></bldn-request-module>
-        <!-- <span slot="preFormModule">Pre Module</span> -->
-        <!-- <span slot="postFormModule">Post Module</span> -->
+        <bldn-request-module slot="preFormModule">Woah</bldn-request-module>
       </bldn-priv-request>
 
       ${when(

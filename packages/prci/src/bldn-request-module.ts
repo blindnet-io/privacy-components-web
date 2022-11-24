@@ -17,8 +17,8 @@ export class BldnRequestModule extends LitElement {
   @property({ type: Boolean }) skip: boolean = false;
 
   render() {
-    console.log('Rendering module!');
-    console.log(this.skip);
+    // console.log('Rendering module!');
+    // console.log(this.skip);
     if (this.skip) {
       return html`Module to skip`;
     }
