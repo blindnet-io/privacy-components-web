@@ -1225,10 +1225,6 @@
   <source>Request Summary</source>
   <target>Résumé de la Demande</target>
 </trans-unit>
-<trans-unit id="demand-used-after-action">
-  <source>Demand</source>
-  <target>Demande</target>
-</trans-unit>
 <trans-unit id="saedc3af85cfe6dc7">
   <source>Request Target</source>
   <target>Cible de la Demande</target>
@@ -1247,7 +1243,7 @@
 </trans-unit>
 <trans-unit id="demand-form-action-sentence-start">
   <source>Details of my</source>
-  <target>Détails de ma demande</target>
+  <target>Détails de ma</target>
 </trans-unit>
 <trans-unit id="s29ec563d56cf6c6b">
   <source>Other Options</source>

@@ -6,7 +6,10 @@ import { PrivacyRequestDemand } from '@blindnet/core';
 import '../bldn-nav-wrapper.js';
 import '../bldn-dropdown.js';
 import { when } from 'lit/directives/when.js';
-import { ACTION_TITLES } from '../utils/dictionary.js';
+import {
+  ACTION_TITLES,
+  ACTION_TITLES_WITH_DEMAND,
+} from '../utils/dictionary.js';
 
 /**
  * Abstract class for a form that allows the user to create or edit a demand.
@@ -135,11 +138,8 @@ export abstract class ActionForm extends LitElement {
               >${msg('Details of my', {
                 id: 'demand-form-action-sentence-start',
               })}
-              ${ACTION_TITLES[this.action]()}
-              ${msg('Demand', {
-                id: 'demand-used-after-action',
-              })}</strong
-            ></span
+              ${ACTION_TITLES_WITH_DEMAND[this.action]()}
+            </strong></span
           >
           ${this.getFormTemplate()}
         </bldn-dropdown>

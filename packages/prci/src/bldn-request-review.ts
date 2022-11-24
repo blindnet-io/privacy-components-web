@@ -397,9 +397,7 @@ export class BldnRequestReview extends LitElement {
                       ><strong
                         >${ACTION_TITLES_WITH_DEMAND[
                           group[0].action.split('.')[0]
-                        ]()} ${msg('Demand', {
-                  id: 'demand-used-after-action',
-                })}</strong
+                        ]()}</strong
                       >
                       <button class='img-button' @click=${() =>
                         this.handleEditDemandGroupClick(i)}>

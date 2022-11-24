@@ -9,8 +9,7 @@
     /* eslint-disable @typescript-eslint/no-explicit-any */
 
     export const templates = {
-      'demand-form-action-sentence-start': `Détails de ma demande`,
-'demand-used-after-action': `Demande`,
+      'demand-form-action-sentence-start': `Détails de ma`,
 'h00995735c540a9b2': html`L'organisation <strong>n'a pas</strong> de
                           données sur vous`,
 'h13d5761d00e9feca': html`Ce système et tous les systèmes au sein de cette organisation`,
