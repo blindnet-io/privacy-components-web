@@ -300,5 +300,8 @@
 'sfdad6bb711adaff5': `Votre demande d'opposition a été approuvée`,
 'sfef5aebda25a65db': `Erreur lors de l'obtention des détails de la demande. Veuillez actualiser la plage plus tard.`,
 'sff7e60a212b3fa64': `Prendre mes données et les faire transférer ailleurs`,
+'sc16e00a7a8b2fde2': `Back`,
+'s0fbf6dc6a1966408': `Next`,
+'s293e3a9c7dea3414': `Invalid Input`,
     };
   

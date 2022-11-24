@@ -61,6 +61,10 @@ export class AppPrivacy extends LitElement {
       bldn-priv-request {
         margin-bottom: 65px;
       }
+
+      #additional-info-module {
+        margin: 4em;
+      }
     `;
   }
 
@@ -141,7 +145,19 @@ export class AppPrivacy extends LitElement {
         data-categories='["contact", "name", "uid", "other-data"]'
         api-token=${ifDefined(this._apiToken)}
       >
-        <bldn-request-module slot="preFormModule">Woah</bldn-request-module>
+        <bldn-request-module slot="preFormModule" .onSubmit=${() => 'bad'}>
+          <div id="additional-info-module">
+            <label for="fname">First name:</label><br />
+            <input type="text" id="fname" name="fname" value="John" /><br />
+            <label for="lname">Last name:</label><br />
+            <input
+              type="text"
+              id="lname"
+              name="lname"
+              value="Doe"
+            /><br /><br />
+          </div>
+        </bldn-request-module>
       </bldn-priv-request>
 
       ${when(

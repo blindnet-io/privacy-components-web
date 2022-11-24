@@ -105,6 +105,8 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
 
   @state() _allowedDataCategories: string[] = [];
 
+  @state() _hasModules: boolean = false;
+
   @queryAssignedElements({
     slot: 'preFormModule',
     selector: 'slot, bldn-request-module',
@@ -378,12 +380,24 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
     this._action = undefined;
     this._demandGroupIndex = undefined;
     this._demandGroups = [];
-    this._uiState = RequestBuilderUIState.menu;
+    this._uiState = this._hasModules
+      ? RequestBuilderUIState.preModules
+      : RequestBuilderUIState.menu;
   }
 
   private handleReviewClick(e: Event) {
     e.stopPropagation();
     this._uiState = RequestBuilderUIState.review;
+  }
+
+  private handleModuleBack(e: Event) {
+    e.stopPropagation();
+    this._uiState = RequestBuilderUIState.menu;
+  }
+
+  private handleModuleNext(e: Event) {
+    e.stopPropagation();
+    this._uiState = RequestBuilderUIState.edit;
   }
 
   private updateDataCategories() {
@@ -443,6 +457,29 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
     this.updateDataCategories();
   }
 
+  handleSlotChange(e: Event) {
+    const slots = (e.target as HTMLSlotElement).assignedElements();
+    if (slots[0] instanceof HTMLSlotElement) {
+      const nestedSlots = (slots[0] as HTMLSlotElement).assignedElements();
+      // Check if any modules were passed to bldn-priv-request
+      this._hasModules =
+        this._hasModules ||
+        (nestedSlots.length !== 0 &&
+          nestedSlots.every(slot => slot instanceof BldnRequestModule));
+    } else {
+      // Check if any modules were passed to bldn-request-builder
+      this._hasModules =
+        this._hasModules ||
+        (slots.length !== 0 &&
+          slots.every(slot => slot instanceof BldnRequestModule));
+    }
+
+    // Switch to action form if there are no modules
+    if (!this._hasModules) {
+      this._uiState = RequestBuilderUIState.edit;
+    }
+  }
+
   connectedCallback(): void {
     // eslint-disable-next-line wc/guard-super-call
     super.connectedCallback();
@@ -450,7 +487,14 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
     // Action menu listeners
     this.addEventListener('bldn-tile-menu:tile-click', this.selectAction);
 
-    // Request builder listeners
+    // Module listeners
+    this.addEventListener('bldn-request-module:back', this.handleModuleBack);
+    this.addEventListener(
+      'bldn-request-module:complete',
+      this.handleModuleNext
+    );
+
+    // Action form listeners
     this.addEventListener('bldn-action-form:set-demands', this.setDemands);
     this.addEventListener('bldn-action-form:back-click', this.handleBackClick);
     this.addEventListener(
@@ -476,6 +520,11 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
 
   disconnectedCallback(): void {
     this.removeEventListener('bldn-tile-menu:tile-click', this.selectAction);
+    this.removeEventListener('bldn-request-module:back', this.handleModuleBack);
+    this.removeEventListener(
+      'bldn-request-module:complete',
+      this.handleModuleNext
+    );
     this.removeEventListener('bldn-action-form:set-demands', this.setDemands);
     this.removeEventListener(
       'bldn-request-review:delete-demands',
@@ -512,27 +561,6 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
     if (_changedProperties.has('apiToken')) this.handleTokenChange();
   }
 
-  handleSlotChange(e: Event) {
-    console.log('slot changed!');
-    console.log(this._preFormModules);
-    // console.log((e.target as HTMLSlotElement).assignedElements()[0])
-    // console.log(e.target)
-    // console.log(((e.target as HTMLSlotElement).assignedElements()[0] as HTMLSlotElement).assignedElements())
-    if (
-      (e.target as HTMLSlotElement).assignedElements()[0] instanceof
-      HTMLSlotElement
-    ) {
-      console.log('is slot');
-    } else if (
-      (e.target as HTMLSlotElement).assignedElements()[0] instanceof
-      BldnRequestModule
-    ) {
-      console.log('is module');
-    } else {
-      console.log('is neither');
-    }
-  }
-
   render() {
     return html`
       ${choose(this._uiState, [
@@ -558,10 +586,9 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
                   - Validate and show error based on isValid method passed in
                   - Need to add slot to module so users can define UI
               -->
-            <slot
-              name="preFormModule"
-              @slotchange=${this.handleSlotChange}
-            ></slot>
+            <slot name="preFormModule" @slotchange=${this.handleSlotChange}
+              ><span><!-- Default Slot Content --></span></slot
+            >
           `,
         ],
         [

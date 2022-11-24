@@ -901,6 +901,15 @@
   <source>I address my Privacy Request to:</source>
   <target>J'adresse ma demande à :</target>
 </trans-unit>
+<trans-unit id="sc16e00a7a8b2fde2">
+  <source>Back</source>
+</trans-unit>
+<trans-unit id="s0fbf6dc6a1966408">
+  <source>Next</source>
+</trans-unit>
+<trans-unit id="s293e3a9c7dea3414">
+  <source>Invalid Input</source>
+</trans-unit>
 <trans-unit id="s1204f9b176a19dfd">
   <source>Details of my <x id="0" equiv-text="${this.action}"/> Demand</source>
   <target>Details de ma <x id="0" equiv-text="${this.action}"/> Demande</target>

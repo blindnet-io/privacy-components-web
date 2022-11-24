@@ -13,7 +13,6 @@ import {
 } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
-import { map } from 'lit/directives/map.js';
 
 import './bldn-request-builder.js';
 import './bldn-request-module.js';
@@ -151,13 +150,7 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
     );
   }
 
-  handleSlotChange(e: Event) {
-    console.log('slot changed!');
-    console.log((e.target as HTMLSlotElement).assignedElements());
-  }
-
   render() {
-    console.log('rendering');
     return html`
       <bldn-nav-toggle
         .left=${{
@@ -182,12 +175,11 @@ export class BldnPrivRequest extends CoreConfigurationMixin(LitElement) {
               actions=${JSON.stringify(this.actions)}
               @bldn-request-builder:request-sent=${this.handleRequestSent}
             >
-              <slot
-                @slotchange=${this.handleSlotChange}
-                name="preFormModule"
-                slot="preFormModule"
-              ></slot>
+              <slot name="preFormModule" slot="preFormModule"
+                ><span><!-- Default Slot Content --></span></slot
+              >
               <!-- <bldn-request-module slot="preFormModule"></bldn-request-module> -->
+              <!-- <div slot="preFormModule">bad slot</div> -->
             </bldn-request-builder>
           `,
         ],
