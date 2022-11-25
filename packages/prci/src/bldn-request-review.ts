@@ -379,8 +379,8 @@ export class BldnRequestReview extends LitElement {
   render() {
     return html`
       <bldn-nav-wrapper
-        left-button="Cancel Request"
-        right-button="Submit Request"
+        left-button=${msg('Cancel Request')}
+        right-button=${msg('Submit Request')}
         @bldn-nav-wrapper:left-click=${this.handleCancelClick}
         @bldn-nav-wrapper:right-click=${this.handleSubmitClick}
       >

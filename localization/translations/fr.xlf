@@ -1221,6 +1221,14 @@
   <source>No demands to review!</source>
   <target>Aucune demande à traiter !</target>
 </trans-unit>
+<trans-unit id="sb51c8a60c26a33b6">
+  <source>Cancel Request</source>
+  <target>Annuler la demande</target>
+</trans-unit>
+<trans-unit id="se1ad99292eaa4000">
+  <source>Submit Request</source>
+  <target>Envoyer la demande</target>
+</trans-unit>
 <trans-unit id="seb19908ed8209df2">
   <source>Request Summary</source>
   <target>Résumé de la Demande</target>
@@ -1426,9 +1434,8 @@
   <source>Refresh</source>
   <target>Actualiser</target>
 </trans-unit>
-<trans-unit id="hf75700d04ad87450">
-  <source><x id="0" equiv-text="${ACTION_TITLES[demand.requested_action]()}"/> Demand</source>
-  <target><x id="0" equiv-text="${ACTION_TITLES[demand.requested_action]()}"/> Demande</target>
+<trans-unit id="haf63d34c8601dd41">
+  <source><x id="0" equiv-text="${ACTION_TITLES_WITH_DEMAND[demand.requested_action]()}"/></source>
 </trans-unit>
 <trans-unit id="h4606c8f9df5fda02">
   <source><x id="0" equiv-text="${ACTION_TITLES[subDemand.requested_action]()}"/>

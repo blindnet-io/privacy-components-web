@@ -77,7 +77,6 @@
           <span class="scope-counter"><b>${2}</b></span>
           buts
         `,
-'hf75700d04ad87450': html`${0} Demande`,
 'hfde9788418b19230': html`<b>périmètre</b>`,
 'hff3b775b64d0793c': html`Partiellement traitée`,
 'hff91edfe0b603c35': html`Données sur l'appareil que j'ai utilisé`,
@@ -308,6 +307,7 @@
 'sb3e8587e0fb82077': `Affiliation - Données d'Adhésion Syndicale`,
 'sb41b2cfbbc52565b': `Création`,
 'sb48ca5b949c9e482': `Données de Localisation`,
+'sb51c8a60c26a33b6': `Annuler la demande`,
 'sb58ce3ee7c93d3b5': `Produire de nouvelles données relatives à la personne comme l'enregistrement de photo, voix ou vidéo, ou l'enregistrement d'actions utilisateurs pour en faire un historique`,
 'sb5a6f73a21ad7dc5': `Développez la liste déroulante pour personnaliser votre périmètre`,
 'sb7a10b9644ec1870': `Votre demande de transparence a été approuvée et divisée en plusieurs demandes ci-dessous`,
@@ -371,6 +371,7 @@
 'sdf7c88ae65f54276': `Votre demande de modification a été approuvée`,
 'se025d2a5dd4128f5': `Affiliation - Adhésion Syndicale`,
 'se05f0d609b64589c': `Votre demande de restriction a été approuvée`,
+'se1ad99292eaa4000': `Envoyer la demande`,
 'se1c45b4c74b2840a': `Conformité`,
 'se22c8d93a5dec6c3': `Données d'Affiliation`,
 'se2b203c77031740e': `Autre message`,
@@ -414,5 +415,6 @@
 'sfef5aebda25a65db': `Erreur lors de l'obtention des détails de la demande. Veuillez actualiser la plage plus tard.`,
 'sff7e60a212b3fa64': `Prendre mes données et les faire transférer ailleurs`,
 's213a15cab3105248': `is kept for`,
+'haf63d34c8601dd41': html`${0}`,
     };
   

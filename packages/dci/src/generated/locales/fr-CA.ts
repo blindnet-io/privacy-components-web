@@ -77,7 +77,6 @@
           <span class="scope-counter"><b>${2}</b></span>
           buts
         `,
-'hf75700d04ad87450': html`${0} Demande`,
 'hfde9788418b19230': html`<b>périmètre</b>`,
 'hff3b775b64d0793c': html`Partiellement traitée`,
 'hff91edfe0b603c35': html`Données sur l'appareil que j'ai utilisé`,
@@ -413,6 +412,9 @@
 'sfdad6bb711adaff5': `Votre demande d'opposition a été approuvée`,
 'sfef5aebda25a65db': `Erreur lors de l'obtention des détails de la demande. Veuillez actualiser la plage plus tard.`,
 'sff7e60a212b3fa64': `Prendre mes données et les faire transférer ailleurs`,
+'sb51c8a60c26a33b6': `Cancel Request`,
+'se1ad99292eaa4000': `Submit Request`,
 's213a15cab3105248': `is kept for`,
+'haf63d34c8601dd41': html`${0}`,
     };
   

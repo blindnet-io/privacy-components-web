@@ -21,6 +21,7 @@ import './bldn-dropdown.js';
 import {
   ACTION_DESCRIPTIONS,
   ACTION_TITLES,
+  ACTION_TITLES_WITH_DEMAND,
   AFTER_TITLES,
   DATA_CATEGORY_TITLES_WITH_DATA,
   DEMAND_STATUS_DESCRIPTIONS,
@@ -303,7 +304,9 @@ export class BldnRequestStatus extends CoreConfigurationMixin(LitElement) {
                   <span slot="heading"
                     ><strong
                       >${msg(
-                        html`${ACTION_TITLES[demand.requested_action]()} Demand`
+                        html`${ACTION_TITLES_WITH_DEMAND[
+                          demand.requested_action
+                        ]()}`
                       )}&nbsp;&nbsp;&nbsp;<span class=${classMap(classes)}
                         >${DEMAND_STATUS_DESCRIPTIONS[demand.status]()}</span
                       ></strong
