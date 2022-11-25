@@ -1,23 +1,20 @@
 {
-  "name": "@blindnet/prci",
+  "name": "@blindnet/bldn-badge",
   "version": "0.14.1",
-  "description": "Webcomponent for data subjects to create and monitor privacy requests",
-  "keywords": [],
+  "description": "Info badge with various modes",
   "author": "blindnet <hello@blindnet.io>",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/blindnet-io/privacy-components-web.git",
-    "directory": "packages/prci"
+    "directory": "packages/bldn-badge"
   },
   "bugs": {
     "url": "https://github.com/blindnet-io/privacy-components-web/issues"
   },
   "homepage": "https://github.com/blindnet-io/privacy-components-web#readme",
   "scripts": {
-    "localize": "lit-localize extract && lit-localize build",
-    "localize:extract": "lit-localize extract",
-    "localize:build": "lit-localize build"
+    "localize": "lit-localize extract && lit-localize build"
   },
   "type": "module",
   "main": "dist/index.js",
@@ -37,7 +34,6 @@
     "access": "public"
   },
   "dependencies": {
-    "@blindnet/bldn-badge": "^0.14.1",
     "@blindnet/core": "^0.14.1",
     "@lit/localize": "^0.11.3",
     "lit": "^2.4.1"
