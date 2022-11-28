@@ -34,14 +34,14 @@ export class BldnDeleteForm extends ActionForm {
 
   getFormTemplate(): TemplateResult<1 | 2> {
     return html`
-      <p>${msg('I want to delete:')}</p>
+      <p>${msg('I want to delete data from the following categories:')}</p>
       <bldn-all-checklist
         .choices=${this.dataCategories.map(dc => ({
           value: dc,
           display: html`${dc === '*'
             ? ''
             : html`<b
-                >${DATA_CATEGORY_TITLES[dc]()} ${msg('Data')}:
+                >${DATA_CATEGORY_TITLES[dc]()}:
               </b>`}${DATA_CATEGORY_DESCRIPTIONS[dc]()}`,
           checked:
             this.demands![0].restrictions?.privacy_scope?.findIndex(

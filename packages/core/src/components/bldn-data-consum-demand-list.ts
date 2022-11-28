@@ -6,7 +6,7 @@ import { when } from 'lit/directives/when.js';
 import { bldnStyles } from './bldn-styles.js';
 
 import './bldn-data-consum-demand-list-item.js';
-import { PendingDemandPayload } from '../computation/generated-models/index.js';
+import { PendingDemandPayload } from '../models/generated-models/index.js';
 
 @customElement('bldn-data-consum-demand-list')
 export class DataConsumerDemandList extends LitElement {

@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.15.0](https://github.com/blindnet-io/privacy-components-web/compare/v0.14.1...v0.15.0) (2022-11-24)
+
+### Bug Fixes
+
+- **@blindnet/prci:** incorrect translations ([31273fd](https://github.com/blindnet-io/privacy-components-web/commit/31273fddae53de5022e94b175cba499dbdb6b719))
+
+### Features
+
+- **@blindnet/prci:** improved response strings for transparency demands ([fb6706f](https://github.com/blindnet-io/privacy-components-web/commit/fb6706f4b24e93fb0214ee97f4046554efb6f57d))
+
 ## [0.14.1](https://github.com/blindnet-io/privacy-components-web/compare/v0.14.0...v0.14.1) (2022-11-18)
 
 ### Bug Fixes

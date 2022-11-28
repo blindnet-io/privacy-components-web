@@ -9,7 +9,7 @@ import {
   PendingDemandDetailsPayload,
   PendingDemandPayload,
   Recommendation,
-} from '../computation/generated-models/index.js';
+} from '../models/generated-models/index.js';
 import { ACTION_TITLES } from '../language/dictionary.js';
 
 import { bldnStyles } from './bldn-styles.js';
