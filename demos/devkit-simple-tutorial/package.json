@@ -25,8 +25,8 @@
   "dependencies": {
     "@auth0/auth0-spa-js": "^1.22.5",
     "@blindnet/core": "^0.15.0",
-    "@blindnet/dci": "^0.15.0",
-    "@blindnet/prci": "^0.15.0",
+    "@blindnet/bridge": "^0.15.0",
+    "@blindnet/privacy-portal": "^0.15.0",
     "@magic-sdk/types": "^9.0.0",
     "@vaadin/router": "^1.7.4",
     "carbon-web-components": "^1.21.0",

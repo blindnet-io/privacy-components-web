@@ -1,3 +1,4 @@
+/* eslint-disable lit/binding-positions */
 import { LitElement, html, css } from 'lit';
 import { when } from 'lit/directives/when.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
@@ -5,7 +6,7 @@ import { Auth0Client } from '@auth0/auth0-spa-js';
 // eslint-disable-next-line camelcase
 import jwt_decode from 'jwt-decode';
 
-import '@blindnet/prci';
+import '@blindnet/privacy-portal';
 
 // Get an auth0 instance
 const auth0 = new Auth0Client({
@@ -141,11 +142,11 @@ export class AppPrivacy extends LitElement {
     }
 
     return html`
-      <bldn-priv-request
+      <bldn-privacy-portal
         data-categories='["contact", "name", "uid", "other-data"]'
         api-token=${ifDefined(this._apiToken)}
       >
-        <bldn-request-module slot="preFormModule" .onSubmit=${() => 'bad'}>
+        <!-- <bldn-request-module slot="preFormModule" .onSubmit=${() => 'bad'}>
           <div id="additional-info-module">
             <label for="fname">First name:</label><br />
             <input type="text" id="fname" name="fname" value="John" /><br />
@@ -157,8 +158,8 @@ export class AppPrivacy extends LitElement {
               value="Doe"
             /><br /><br />
           </div>
-        </bldn-request-module>
-      </bldn-priv-request>
+        </bldn-request-module> -->
+      </bldn-privacy-portal>
 
       ${when(
         this._apiToken,

@@ -1,5 +1,5 @@
 import { LitElement, html, css } from 'lit';
-import '@blindnet/dci';
+import '@blindnet/bridge';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 export class AppDCI extends LitElement {
@@ -27,9 +27,7 @@ export class AppDCI extends LitElement {
     this._apiToken = localStorage.getItem('dci_admin_token');
     setTimeout(() => {}, 1000);
     return html`
-      <bldn-data-consum
-        admin-token=${ifDefined(this._apiToken)}
-      ></bldn-data-consum>
+      <bldn-bridge admin-token=${ifDefined(this._apiToken)}></bldn-bridge>
     `;
   }
 }

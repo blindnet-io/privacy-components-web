@@ -765,14 +765,6 @@
   <source>Alerts</source>
   <target>Alertes</target>
 </trans-unit>
-<trans-unit id="sd3b15d6d4ea696f7">
-  <source>My additional message:</source>
-  <target>Mon message additionnel :</target>
-</trans-unit>
-<trans-unit id="sebbb864b5cee4a82">
-  <source>Please note that adding a personalized message might lead to the demand taking longer to be processed</source>
-  <target>Veuillez noter que l'ajout d'un message personnalisé peut entraîner un délai de traitement plus long</target>
-</trans-unit>
 <trans-unit id="sbaace8219b5f4612">
   <source>Select All</source>
   <target>Tout sélectionner</target>
@@ -784,18 +776,6 @@
 <trans-unit id="s4618111b41da4ae5">
   <source>Other data type:</source>
   <target>Autre type de donnée :</target>
-</trans-unit>
-<trans-unit id="s40717e0539504811">
-  <source>Specify a date range for the selected data categories:</source>
-  <target>Spécifier une période pour les catgéories de données sélectionnées</target>
-</trans-unit>
-<trans-unit id="sa6ab5184d6315895">
-  <source>From</source>
-  <target>De</target>
-</trans-unit>
-<trans-unit id="s08c83907b56ac0a4">
-  <source>to</source>
-  <target>à</target>
 </trans-unit>
 <trans-unit id="s3b91d548b3c1db64">
   <source>Click to expand</source>
@@ -1260,9 +1240,29 @@
   <source>Other Options</source>
   <target>Autres Options</target>
 </trans-unit>
+<trans-unit id="s40717e0539504811">
+  <source>Specify a date range for the selected data categories:</source>
+  <target>Spécifier une période pour les catgéories de données sélectionnées</target>
+</trans-unit>
+<trans-unit id="sa6ab5184d6315895">
+  <source>From</source>
+  <target>De</target>
+</trans-unit>
+<trans-unit id="s08c83907b56ac0a4">
+  <source>to</source>
+  <target>à</target>
+</trans-unit>
 <trans-unit id="s6303c9c96b50c164">
   <source>My demand applies to data from the following provenance:</source>
   <target>Ma demande s'applique aux données provenant de :</target>
+</trans-unit>
+<trans-unit id="sd3b15d6d4ea696f7">
+  <source>My additional message:</source>
+  <target>Mon message additionnel :</target>
+</trans-unit>
+<trans-unit id="sebbb864b5cee4a82">
+  <source>Please note that adding a personalized message might lead to the demand taking longer to be processed</source>
+  <target>Veuillez noter que l'ajout d'un message personnalisé peut entraîner un délai de traitement plus long</target>
 </trans-unit>
 <trans-unit id="s956cfa37796224d1">
   <source>I want to access data from the following categories:</source>
