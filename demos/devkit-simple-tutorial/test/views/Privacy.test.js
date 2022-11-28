@@ -11,7 +11,7 @@ describe('AppHome', () => {
   });
 
   it('renders the PRCI', async () => {
-    const prciEl = element.shadowRoot?.querySelector('bldn-priv-request');
+    const prciEl = element.shadowRoot?.querySelector('bldn-privacy-portal');
     expect(prciEl).to.exist;
     if (prciEl) {
       await elementUpdated(prciEl);
