@@ -75,6 +75,8 @@ export class BldnBadge extends LitElement {
       display: inline-flex;
       align-items: center;
       padding: 0.2em 0.8em;
+      border-radius: 1em;
+      color: var(--bldn-badge-font-color, var(--color-darkest));
     }
 
     .neutral {

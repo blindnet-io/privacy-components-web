@@ -146,11 +146,50 @@ export class AppPrivacy extends LitElement {
         data-categories='["contact", "name", "uid", "other-data"]'
         api-token=${ifDefined(this._apiToken)}
       >
-        <!-- <bldn-request-module slot="preFormModule" .onSubmit=${() => 'bad'}>
+        <!-- <bldn-request-module slot="preFormModule" .onSubmit=${() => false}>
           <div id="additional-info-module">
-            <label for="fname">First name:</label><br />
+            <label for="fname">First name 1:</label><br />
             <input type="text" id="fname" name="fname" value="John" /><br />
-            <label for="lname">Last name:</label><br />
+            <label for="lname">Last name 1:</label><br />
+            <input
+              type="text"
+              id="lname"
+              name="lname"
+              value="Doe"
+            /><br /><br />
+          </div>
+        </bldn-request-module>
+        <bldn-request-module slot="preFormModule" .onSubmit=${() => false}>
+          <div id="additional-info-module">
+            <label for="fname">First name 2:</label><br />
+            <input type="text" id="fname" name="fname" value="John" /><br />
+            <label for="lname">Last name 2:</label><br />
+            <input
+              type="text"
+              id="lname"
+              name="lname"
+              value="Doe"
+            /><br /><br />
+          </div>
+        </bldn-request-module>
+        <bldn-request-module slot="postFormModule" .onSubmit=${() => false}>
+          <div id="additional-info-module">
+            <label for="fname">First name 1:</label><br />
+            <input type="text" id="fname" name="fname" value="John" /><br />
+            <label for="lname">Last name 1:</label><br />
+            <input
+              type="text"
+              id="lname"
+              name="lname"
+              value="Doe"
+            /><br /><br />
+          </div>
+        </bldn-request-module>
+        <bldn-request-module slot="postFormModule" .onSubmit=${() => false}>
+          <div id="additional-info-module">
+            <label for="fname">First name 2:</label><br />
+            <input type="text" id="fname" name="fname" value="John" /><br />
+            <label for="lname">Last name 2:</label><br />
             <input
               type="text"
               id="lname"

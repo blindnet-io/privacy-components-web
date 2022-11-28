@@ -75,7 +75,10 @@ export class BldnRequestModule extends LitElement {
         @bldn-nav-wrapper:left-click=${this.handleBackClick}
         @bldn-nav-wrapper:right-click=${this.handNextClick}
       >
-        ${when(this._error, () => html` <bldn-badge></bldn-badge> `)}
+        ${when(
+          this._error,
+          () => html` <bldn-badge>${this._errorMessage}</bldn-badge> `
+        )}
         <slot></slot>
       </bldn-nav-wrapper>
     `;
@@ -84,6 +87,10 @@ export class BldnRequestModule extends LitElement {
   static styles = css`
     :host {
       text-align: center;
+    }
+
+    bldn-badge {
+      margin: 1em;
     }
   `;
 }

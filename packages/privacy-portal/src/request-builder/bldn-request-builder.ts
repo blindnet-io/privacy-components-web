@@ -105,7 +105,13 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
 
   @state() _allowedDataCategories: string[] = [];
 
-  @state() _hasModules: boolean = false;
+  @state() _preModules: Element[] = [];
+
+  @state() _postModules: Element[] = [];
+
+  @state() _currentPreModule: number = 0;
+
+  @state() _currentPostModule: number = 0;
 
   @queryAssignedElements({
     slot: 'preFormModule',
@@ -307,12 +313,10 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
 
   private handleCancelRequest(e: Event) {
     e.stopPropagation();
-
-    // Reset states
-    this._action = undefined;
-    this._demandGroupIndex = undefined;
-    this._demandGroups = [];
-    this._uiState = RequestBuilderUIState.menu;
+    this._uiState =
+      this._postModules.length === 0
+        ? RequestBuilderUIState.edit
+        : RequestBuilderUIState.postModules;
   }
 
   private handleSubmitRequest(e: Event) {
@@ -374,30 +378,61 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
 
   private handleBackClick(e: Event) {
     e.stopPropagation();
-    // Reset states
-    // Note: For now we do this when back is clicked as we don't fully
-    // support multiple demands yet
-    this._action = undefined;
-    this._demandGroupIndex = undefined;
-    this._demandGroups = [];
-    this._uiState = this._hasModules
-      ? RequestBuilderUIState.preModules
-      : RequestBuilderUIState.menu;
+    if (this._preModules.length === 0) {
+      // Reset states and go back to menu
+      this._action = undefined;
+      this._demandGroupIndex = undefined;
+      this._demandGroups = [];
+      this._uiState = RequestBuilderUIState.menu;
+    } else {
+      // Go back to last pre-module
+      this._uiState = RequestBuilderUIState.preModules;
+    }
   }
 
   private handleReviewClick(e: Event) {
     e.stopPropagation();
-    this._uiState = RequestBuilderUIState.review;
+    this._uiState = RequestBuilderUIState.postModules;
   }
 
   private handleModuleBack(e: Event) {
     e.stopPropagation();
-    this._uiState = RequestBuilderUIState.menu;
+    const moduleType = (e.composedPath()[0] as BldnRequestModule).slot;
+    if (moduleType === 'preFormModule') {
+      if (this._currentPreModule === 0) {
+        // Reset states and go back to menu
+        this._action = undefined;
+        this._demandGroupIndex = undefined;
+        this._demandGroups = [];
+        this._uiState = RequestBuilderUIState.menu;
+      } else {
+        this._currentPreModule -= 1;
+      }
+    } else if (moduleType === 'postFormModule') {
+      if (this._currentPostModule === 0) {
+        this._uiState = RequestBuilderUIState.edit;
+      } else {
+        this._currentPostModule -= 1;
+      }
+    }
   }
 
   private handleModuleNext(e: Event) {
     e.stopPropagation();
-    this._uiState = RequestBuilderUIState.edit;
+    const moduleType = (e.composedPath()[0] as BldnRequestModule).slot;
+    if (moduleType === 'preFormModule') {
+      if (this._currentPreModule === this._preModules.length - 1) {
+        this._uiState = RequestBuilderUIState.edit;
+      } else {
+        this._currentPreModule += 1;
+      }
+    } else if (moduleType === 'postFormModule') {
+      if (this._currentPostModule === this._postModules.length - 1) {
+        this._uiState = RequestBuilderUIState.review;
+      } else {
+        this._currentPostModule += 1;
+      }
+    }
   }
 
   private updateDataCategories() {
@@ -457,26 +492,57 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
     this.updateDataCategories();
   }
 
-  handleSlotChange(e: Event) {
+  handlePreModuleSlotChange(e: Event) {
     const slots = (e.target as HTMLSlotElement).assignedElements();
     if (slots[0] instanceof HTMLSlotElement) {
       const nestedSlots = (slots[0] as HTMLSlotElement).assignedElements();
       // Check if any modules were passed to bldn-priv-request
-      this._hasModules =
-        this._hasModules ||
-        (nestedSlots.length !== 0 &&
-          nestedSlots.every(slot => slot instanceof BldnRequestModule));
-    } else {
+      if (
+        this._preModules.length === 0 &&
+        nestedSlots.length !== 0 &&
+        nestedSlots.every(slot => slot instanceof BldnRequestModule)
+      ) {
+        this._preModules = nestedSlots;
+      }
       // Check if any modules were passed to bldn-request-builder
-      this._hasModules =
-        this._hasModules ||
-        (slots.length !== 0 &&
-          slots.every(slot => slot instanceof BldnRequestModule));
+    } else if (
+      this._preModules.length === 0 &&
+      slots.length !== 0 &&
+      slots.every(slot => slot instanceof BldnRequestModule)
+    ) {
+      this._preModules = slots;
     }
 
     // Switch to action form if there are no modules
-    if (!this._hasModules) {
+    if (this._preModules.length === 0) {
       this._uiState = RequestBuilderUIState.edit;
+    }
+  }
+
+  handlePostModuleSlotChange(e: Event) {
+    const slots = (e.target as HTMLSlotElement).assignedElements();
+    if (slots[0] instanceof HTMLSlotElement) {
+      const nestedSlots = (slots[0] as HTMLSlotElement).assignedElements();
+      // Check if any modules were passed to bldn-priv-request
+      if (
+        this._postModules.length === 0 &&
+        nestedSlots.length !== 0 &&
+        nestedSlots.every(slot => slot instanceof BldnRequestModule)
+      ) {
+        this._postModules = nestedSlots;
+      }
+      // Check if any modules were passed to bldn-request-builder
+    } else if (
+      this._postModules.length === 0 &&
+      slots.length !== 0 &&
+      slots.every(slot => slot instanceof BldnRequestModule)
+    ) {
+      this._postModules = slots;
+    }
+
+    // Switch to review if there are no modules
+    if (this._postModules.length === 0) {
+      this._uiState = RequestBuilderUIState.review;
     }
   }
 
@@ -580,16 +646,19 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
         ],
         [
           RequestBuilderUIState.preModules,
-          () => html`
-            <!-- Plan
-                  - Put the bldn-wrapper in module code
-                  - Validate and show error based on isValid method passed in
-                  - Need to add slot to module so users can define UI
-              -->
-            <slot name="preFormModule" @slotchange=${this.handleSlotChange}
-              ><span><!-- Default Slot Content --></span></slot
-            >
-          `,
+          () => {
+            if (this._preModules.length > 0) {
+              return html`${this._preModules[this._currentPreModule]}`;
+            }
+
+            return html`
+              <slot
+                name="preFormModule"
+                @slotchange=${this.handlePreModuleSlotChange}
+                ><span><!-- Default Slot Content --></span></slot
+              >
+            `;
+          },
         ],
         [
           RequestBuilderUIState.edit,
@@ -598,7 +667,22 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
               this._action ?? PrivacyRequestDemand.action.ACCESS
             ),
         ],
-        [RequestBuilderUIState.postModules, () => html``],
+        [
+          RequestBuilderUIState.postModules,
+          () => {
+            if (this._postModules.length > 0) {
+              return html`${this._postModules[this._currentPostModule]}`;
+            }
+
+            return html`
+              <slot
+                name="postFormModule"
+                @slotchange=${this.handlePostModuleSlotChange}
+                ><span><!-- Default Slot Content --></span></slot
+              >
+            `;
+          },
+        ],
         [
           RequestBuilderUIState.review,
           () => html`

@@ -78,7 +78,7 @@ export class BldnNavWrapper extends LitElement {
     }
 
     #content {
-      display: grid;
+      display: block;
       row-gap: 40px;
     }
 

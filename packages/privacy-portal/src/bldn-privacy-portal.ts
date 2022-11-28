@@ -175,8 +175,9 @@ export class BldnPrivacyPortal extends CoreConfigurationMixin(LitElement) {
               <slot name="preFormModule" slot="preFormModule"
                 ><span><!-- Default Slot Content --></span></slot
               >
-              <!-- <bldn-request-module slot="preFormModule"></bldn-request-module> -->
-              <!-- <div slot="preFormModule">bad slot</div> -->
+              <slot name="postFormModule" slot="postFormModule"
+                ><span><!-- Default Slot Content --></span></slot
+              >
             </bldn-request-builder>
           `,
         ],
