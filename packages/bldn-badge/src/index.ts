@@ -1,1 +1,1 @@
-export { BldnBadge } from './bldn-badge.js'
+export { BldnBadge } from './bldn-badge.js';

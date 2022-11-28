@@ -1,13 +1,12 @@
-import { css, CSSResultGroup, html, LitElement } from "lit";
-import { customElement, property } from "lit/decorators.js";
-import { classMap } from "lit/directives/class-map.js";
+import { css, CSSResultGroup, html, LitElement } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map.js';
 
 @customElement('bldn-badge')
 export class BldnBadge extends LitElement {
-
-  /** 
+  /**
    * @prop neutral - Badge should have a neutral (non-colored) display
-   * 
+   *
    * This prop takes priority over the others if multiple are set.
    */
   @property({ type: Boolean }) neutral: boolean = false;
@@ -22,27 +21,51 @@ export class BldnBadge extends LitElement {
   @property({ type: Boolean }) warning: boolean = false;
 
   /** @prop danger - Badge should indicate danger */
-  @property({ type: Boolean }) danger: boolean = false;  
+  @property({ type: Boolean }) danger: boolean = false;
 
   render() {
-
-    // Decide class, will default to neutral if 
+    // Decide class, will default to neutral if
     const classes = {
-      neutral: this.neutral || (!this.neutral && !this.info && !this.success && !this.warning && !this.danger),
-      info: !this.neutral && this.info && !this.success && !this.warning && !this.danger,
-      success: !this.neutral && !this.info && this.success && !this.warning && !this.danger,
-      warning: !this.neutral && !this.info && !this.success && this.warning && !this.danger,
-      danger: !this.neutral && !this.info && !this.success && !this.warning && this.danger
-    }
+      neutral:
+        this.neutral ||
+        (!this.neutral &&
+          !this.info &&
+          !this.success &&
+          !this.warning &&
+          !this.danger),
+      info:
+        !this.neutral &&
+        this.info &&
+        !this.success &&
+        !this.warning &&
+        !this.danger,
+      success:
+        !this.neutral &&
+        !this.info &&
+        this.success &&
+        !this.warning &&
+        !this.danger,
+      warning:
+        !this.neutral &&
+        !this.info &&
+        !this.success &&
+        this.warning &&
+        !this.danger,
+      danger:
+        !this.neutral &&
+        !this.info &&
+        !this.success &&
+        !this.warning &&
+        this.danger,
+    };
 
     return html`
-      <span class='badge ${classMap(classes)}'>
+      <span class="badge ${classMap(classes)}">
         <slot></slot>
       </span>
-    `
-
+    `;
   }
-  
+
   static styles: CSSResultGroup | undefined = css`
     :host {
       display: inline-block;
@@ -73,5 +96,5 @@ export class BldnBadge extends LitElement {
     .danger {
       background-color: var(--bldn-badge-danger-color, var(--color-negative));
     }
-  `
+  `;
 }
