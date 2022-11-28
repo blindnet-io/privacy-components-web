@@ -1249,6 +1249,9 @@
   <source>Next</source>
   <target>Suivant</target>
 </trans-unit>
+<trans-unit id="s293e3a9c7dea3414">
+  <source>Invalid Input</source>
+</trans-unit>
 <trans-unit id="demand-form-action-sentence-start">
   <source>Details of my</source>
   <target>Détails de ma</target>
@@ -1598,6 +1601,29 @@
 <trans-unit id="s24713431bc8a3ec8">
   <source>Submitted Requests</source>
   <target>Demandes envoyées</target>
+</trans-unit>
+<trans-unit id="s1caf5d7ab36059be">
+  <source>Demand</source>
+</trans-unit>
+<trans-unit id="hf75700d04ad87450">
+  <source><x id="0" equiv-text="${ACTION_TITLES[demand.requested_action]()}"/> Demand</source>
+</trans-unit>
+<trans-unit id="h0432c8d86c610266">
+  <source>
+                  Type: <x id="0" equiv-text="${lb.lb_type}&lt;br&gt;"/>
+                  Name: <x id="1" equiv-text="${lb.name}&lt;br&gt;"/>
+                  Description: <x id="2" equiv-text="${lb.description}&lt;br&gt;&lt;br&gt;&#10;                "/></source>
+</trans-unit>
+<trans-unit id="hfdcde931c66b34c9">
+  <source><x id="0" equiv-text="&lt;b&gt;${dc[0]}"/> Data:<x id="1" equiv-text="&lt;/b&gt;"/> Source
+                            <x id="2" equiv-text="&lt;i&gt;${prov.provenance}&lt;/i&gt;"/> of the
+                            <x id="3" equiv-text="&lt;i&gt;${prov.system}&lt;/i&gt;"/> system.<x id="4" equiv-text="&lt;br&gt;"/></source>
+</trans-unit>
+<trans-unit id="sac8256732f2ee1e5">
+  <source>Data</source>
+</trans-unit>
+<trans-unit id="s1204f9b176a19dfd">
+  <source>Details of my <x id="0" equiv-text="${this.action}"/> Demand</source>
 </trans-unit>
 </body>
 </file>

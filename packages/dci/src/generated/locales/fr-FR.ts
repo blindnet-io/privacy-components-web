@@ -414,7 +414,20 @@
 'sff7e60a212b3fa64': `Prendre mes données et les faire transférer ailleurs`,
 'sb51c8a60c26a33b6': `Cancel Request`,
 'se1ad99292eaa4000': `Submit Request`,
+'s293e3a9c7dea3414': `Invalid Input`,
 's213a15cab3105248': `is kept for`,
 'haf63d34c8601dd41': html`${0}`,
+'s1caf5d7ab36059be': `Demand`,
+'hf75700d04ad87450': html`${0} Demand`,
+'h0432c8d86c610266': html`
+                  Type: ${0}<br>
+                  Name: ${1}<br>
+                  Description: ${2}<br><br>
+                `,
+'hfdcde931c66b34c9': html`<b>${0} Data:</b> Source
+                            <i>${1}</i> of the
+                            <i>${2}</i> system.<br>`,
+'sac8256732f2ee1e5': `Data`,
+'s1204f9b176a19dfd': str`Details of my ${0} Demand`,
     };
   

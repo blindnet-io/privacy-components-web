@@ -1017,6 +1017,14 @@
     "@babel/helper-validator-identifier" "^7.19.1"
     to-fast-properties "^2.0.0"
 
+"@blindnet/core@^0.14.1":
+  version "0.14.1"
+  resolved "https://registry.yarnpkg.com/@blindnet/core/-/core-0.14.1.tgz#f3d66d4101591256cc98ba1ad03c745de15bfc1a"
+  integrity sha512-JnoKBNEku3XXjAdjpOHf+1gyoJ71gBnP/9vwqJTD6eJwN8QnC4DAu2GP6vJYBVTx20u9btucai+Zlb7YBA0o5g==
+  dependencies:
+    "@lit/localize" "^0.11.4"
+    lit "^2.4.1"
+
 "@carbon/telemetry@0.0.0-alpha.6":
   version "0.0.0-alpha.6"
   resolved "https://registry.yarnpkg.com/@carbon/telemetry/-/telemetry-0.0.0-alpha.6.tgz#1d11e64f310e98f32c3db0c55f02e047f2398087"

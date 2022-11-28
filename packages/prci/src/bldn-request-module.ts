@@ -3,8 +3,6 @@ import { css, html, LitElement } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 
-import '@blindnet/bldn-badge';
-
 /**
  * @event {Event} bldn-request-module:back Fired when back button is clicked
  * @event {Event} bldn-request-module:complete Fired when next button is clicked and onSubmit() returns true
