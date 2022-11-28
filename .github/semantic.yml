@@ -1,4 +1,4 @@
-titleAndCommits: true
+commitsOnly: true
 types:
   - build
   - ci
@@ -11,11 +11,14 @@ types:
   - test
   - chore
 scopes:
-  - '@blindnet/dci'
-  - '@blindnet/prci'
+  - '@blindnet/bridge'
+  - '@blindnet/privacy-portal'
   - '@blindnet/core'
+  - '@blindnet/core-ui'
+  - '@blindnet/consent-checkbox'
+  - '@blindnet/configuration'
   - '@blindnet-demos/devkit-simple-tutorial'
   - '@blindnet-demos/static'
 allowMergeCommits: false
-allowRevertCommits: false
+allowRevertCommits: true
 targetUrl: 'https://github.com/blindnet-io/privacy-components-web/blob/main/CONTRIBUTING.md#-commit-message-guidelines'
