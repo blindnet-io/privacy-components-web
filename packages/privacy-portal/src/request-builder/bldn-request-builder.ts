@@ -1,10 +1,5 @@
 import { css, html, LitElement, PropertyValueMap, TemplateResult } from 'lit';
-import {
-  customElement,
-  property,
-  queryAssignedElements,
-  state,
-} from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
 import {
   ComputationAPI,
@@ -18,7 +13,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import '@blindnet/core-ui';
 import './bldn-request-review.js';
 import { localized } from '@lit/localize';
-import { BldnRequestModule } from './request-modules/bldn-request-addon.js';
+import { BldnRequestAddon } from './request-modules/bldn-request-addon.js';
 import './action-forms/index.js';
 import { ACTION_DESCRIPTIONS, ACTION_TITLES } from '../utils/dictionary.js';
 
@@ -112,18 +107,6 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
   @state() _currentPreModule: number = 0;
 
   @state() _currentPostModule: number = 0;
-
-  @queryAssignedElements({
-    slot: 'preFormModule',
-    selector: 'slot, bldn-request-module',
-  })
-  _preFormModules!: Array<HTMLElement>;
-
-  @queryAssignedElements({
-    slot: 'postFormModule',
-    selector: 'bldn-request-module',
-  })
-  _postFormModules!: Array<HTMLElement>;
 
   /**
    * Factory method to get the action form for a specific action
@@ -397,7 +380,7 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
 
   private handleModuleBack(e: Event) {
     e.stopPropagation();
-    const moduleType = (e.composedPath()[0] as BldnRequestModule).slot;
+    const moduleType = (e.composedPath()[0] as BldnRequestAddon).slot;
     if (moduleType === 'preFormModule') {
       if (this._currentPreModule === 0) {
         // Reset states and go back to menu
@@ -419,7 +402,7 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
 
   private handleModuleNext(e: Event) {
     e.stopPropagation();
-    const moduleType = (e.composedPath()[0] as BldnRequestModule).slot;
+    const moduleType = (e.composedPath()[0] as BldnRequestAddon).slot;
     if (moduleType === 'preFormModule') {
       if (this._currentPreModule === this._preModules.length - 1) {
         this._uiState = RequestBuilderUIState.edit;
@@ -500,7 +483,7 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
       if (
         this._preModules.length === 0 &&
         nestedSlots.length !== 0 &&
-        nestedSlots.every(slot => slot instanceof BldnRequestModule)
+        nestedSlots.every(slot => slot instanceof BldnRequestAddon)
       ) {
         this._preModules = nestedSlots;
       }
@@ -508,7 +491,7 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
     } else if (
       this._preModules.length === 0 &&
       slots.length !== 0 &&
-      slots.every(slot => slot instanceof BldnRequestModule)
+      slots.every(slot => slot instanceof BldnRequestAddon)
     ) {
       this._preModules = slots;
     }
@@ -527,7 +510,7 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
       if (
         this._postModules.length === 0 &&
         nestedSlots.length !== 0 &&
-        nestedSlots.every(slot => slot instanceof BldnRequestModule)
+        nestedSlots.every(slot => slot instanceof BldnRequestAddon)
       ) {
         this._postModules = nestedSlots;
       }
@@ -535,7 +518,7 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
     } else if (
       this._postModules.length === 0 &&
       slots.length !== 0 &&
-      slots.every(slot => slot instanceof BldnRequestModule)
+      slots.every(slot => slot instanceof BldnRequestAddon)
     ) {
       this._postModules = slots;
     }
@@ -554,11 +537,8 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
     this.addEventListener('bldn-tile-menu:tile-click', this.selectAction);
 
     // Module listeners
-    this.addEventListener('bldn-request-module:back', this.handleModuleBack);
-    this.addEventListener(
-      'bldn-request-module:complete',
-      this.handleModuleNext
-    );
+    this.addEventListener('bldn-request-addon:back', this.handleModuleBack);
+    this.addEventListener('bldn-request-addon:complete', this.handleModuleNext);
 
     // Action form listeners
     this.addEventListener('bldn-action-form:set-demands', this.setDemands);
@@ -586,9 +566,9 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
 
   disconnectedCallback(): void {
     this.removeEventListener('bldn-tile-menu:tile-click', this.selectAction);
-    this.removeEventListener('bldn-request-module:back', this.handleModuleBack);
+    this.removeEventListener('bldn-request-addon:back', this.handleModuleBack);
     this.removeEventListener(
-      'bldn-request-module:complete',
+      'bldn-request-addon:complete',
       this.handleModuleNext
     );
     this.removeEventListener('bldn-action-form:set-demands', this.setDemands);

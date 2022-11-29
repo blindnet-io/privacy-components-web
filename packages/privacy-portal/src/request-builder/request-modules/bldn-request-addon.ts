@@ -90,7 +90,7 @@ export class BldnRequestAddon extends LitElement {
     }
 
     bldn-badge {
-      margin: 1em;
+      margin-bottom: 1em;
     }
   `;
 }
