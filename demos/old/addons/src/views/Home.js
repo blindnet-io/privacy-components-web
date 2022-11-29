@@ -26,7 +26,7 @@ export class AppHome extends LitElement {
 
   constructor() {
     super();
-    this.title = 'devkit simple tutorial';
+    this.title = 'Addons Demo';
   }
 
   render() {

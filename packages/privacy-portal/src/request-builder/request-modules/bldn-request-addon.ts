@@ -6,11 +6,11 @@ import { when } from 'lit/directives/when.js';
 import '@blindnet/core-ui';
 
 /**
- * @event {Event} bldn-request-module:back Fired when back button is clicked
- * @event {Event} bldn-request-module:complete Fired when next button is clicked and onSubmit() returns true
+ * @event {Event} bldn-request-addon:back Fired when back button is clicked
+ * @event {Event} bldn-request-addon:complete Fired when next button is clicked and onSubmit() returns true
  */
-@customElement('bldn-request-module')
-export class BldnRequestModule extends LitElement {
+@customElement('bldn-request-addon')
+export class BldnRequestAddon extends LitElement {
   /**
    * @prop onSubmit
    *
@@ -40,7 +40,7 @@ export class BldnRequestModule extends LitElement {
   handleBackClick(e: Event) {
     e.stopPropagation();
     this.dispatchEvent(
-      new Event('bldn-request-module:back', {
+      new Event('bldn-request-addon:back', {
         bubbles: true,
         composed: true,
       })
@@ -59,7 +59,7 @@ export class BldnRequestModule extends LitElement {
     // Fire event if there are no errors
     if (this._error === false) {
       this.dispatchEvent(
-        new Event('bldn-request-module:complete', {
+        new Event('bldn-request-addon:complete', {
           bubbles: true,
           composed: true,
         })

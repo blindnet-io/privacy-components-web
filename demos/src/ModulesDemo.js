@@ -1,9 +1,8 @@
 import { LitElement, html, css } from 'lit';
 import { Router } from '@vaadin/router';
 import 'carbon-web-components/es/components/ui-shell/index.js';
-import './views/Home.js';
 
-export class DevkitSimpleTutorial extends LitElement {
+export class ModulesDemo extends LitElement {
   static get styles() {
     return css`
       :host {
@@ -51,45 +50,20 @@ export class DevkitSimpleTutorial extends LitElement {
     const outlet = this.renderRoot.querySelector('#router-outlet');
     const router = new Router(outlet);
     router.setRoutes([
-      { path: '/', component: 'app-home' },
+      // { path: '/', component: 'app-home' },
       {
-        path: '/login',
+        path: '/basic',
         action: async () => {
-          await import('./views/Login.js');
+          await import('./views/basic/Basic.js');
         },
-        component: 'app-login',
+        component: 'basic',
       },
       {
-        path: '/privacy',
+        path: '/addons',
         action: async () => {
-          await import('./views/Privacy.js');
+          await import('./views/addons/Addons.js');
         },
-        component: 'app-privacy',
-      },
-      {
-        path: '/backoffice',
-        action: async () => {
-          await import('./views/BackOffice.js');
-        },
-        component: 'app-backoffice',
-      },
-      {
-        path: '/admin',
-        action: async () => {
-          await import('./views/DCI.js');
-        },
-        component: 'app-dci',
-      },
-      {
-        path: '/participate',
-        action: async () => {
-          await import('./views/Form.js');
-        },
-        component: 'app-form',
-      },
-      {
-        path: '',
-        redirect: '/',
+        component: 'addons',
       },
     ]);
   }
@@ -97,13 +71,20 @@ export class DevkitSimpleTutorial extends LitElement {
   render() {
     return html`
       <bx-header aria-label="blindnet devkit simple tutorial">
-        <bx-header-menu-button
+        <!-- <bx-header-menu-button
           button-label-active="Close menu"
           button-label-inactive="Open menu"
-        ></bx-header-menu-button>
-        <bx-header-name href="./" prefix="blindnet devkit"
+        ></bx-header-menu-button> -->
+        <!-- <bx-header-name href="./" prefix="blindnet devkit"
           >tutorial</bx-header-name
+        > -->
+        <bx-header-menu
+          menu-label="Blindnet Demos"
+          trigger-content="Blindnet Demos"
         >
+          <bx-header-menu-item title="Basic"></bx-header-menu-item>
+          <bx-header-menu-item title="Request Addons"></bx-header-menu-item>
+        </bx-header-menu>
         <bx-header-nav menu-bar-label="blindnet devkit tutorial">
           <bx-header-nav-item href="./participate"
             >Submit an entry</bx-header-nav-item
@@ -116,7 +97,7 @@ export class DevkitSimpleTutorial extends LitElement {
           >
         </bx-header-nav>
       </bx-header>
-      <bx-side-nav aria-label="Side navigation" collapseMode="fixed">
+      <!-- <bx-side-nav aria-label="Side navigation" collapseMode="fixed">
         <bx-side-nav-items>
           <bx-side-nav-link href="./">Home</bx-side-nav-link>
           <bx-side-nav-link href="./participate"
@@ -129,7 +110,7 @@ export class DevkitSimpleTutorial extends LitElement {
             >Back office management</bx-side-nav-link
           >
         </bx-side-nav-items>
-      </bx-side-nav>
+      </bx-side-nav> -->
       <main>
         <div id="router-outlet"></div>
       </main>

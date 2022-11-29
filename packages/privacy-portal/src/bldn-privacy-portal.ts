@@ -11,7 +11,7 @@ import {
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 import './request-builder/bldn-request-builder.js';
-import './request-builder/request-modules/bldn-request-module.js';
+import './request-builder/request-modules/bldn-request-addon.js';
 import './request-viewer/bldn-request-viewer.js';
 import { choose } from 'lit/directives/choose.js';
 import { setLocale } from './localization.js';

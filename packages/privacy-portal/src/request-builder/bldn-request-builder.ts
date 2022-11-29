@@ -18,7 +18,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import '@blindnet/core-ui';
 import './bldn-request-review.js';
 import { localized } from '@lit/localize';
-import { BldnRequestModule } from './request-modules/bldn-request-module.js';
+import { BldnRequestModule } from './request-modules/bldn-request-addon.js';
 import './action-forms/index.js';
 import { ACTION_DESCRIPTIONS, ACTION_TITLES } from '../utils/dictionary.js';
 
