@@ -100,13 +100,13 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
 
   @state() _allowedDataCategories: string[] = [];
 
-  @state() _preModules: Element[] = [];
+  @state() _preAddons: Element[] = [];
 
-  @state() _postModules: Element[] = [];
+  @state() _postAddons: Element[] = [];
 
-  @state() _currentPreModule: number = 0;
+  @state() _currentPreAddon: number = 0;
 
-  @state() _currentPostModule: number = 0;
+  @state() _currentPostAddon: number = 0;
 
   /**
    * Factory method to get the action form for a specific action
@@ -297,7 +297,7 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
   private handleCancelRequest(e: Event) {
     e.stopPropagation();
     this._uiState =
-      this._postModules.length === 0
+      this._postAddons.length === 0
         ? RequestBuilderUIState.edit
         : RequestBuilderUIState.postModules;
   }
@@ -361,7 +361,7 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
 
   private handleBackClick(e: Event) {
     e.stopPropagation();
-    if (this._preModules.length === 0) {
+    if (this._preAddons.length === 0) {
       // Reset states and go back to menu
       this._action = undefined;
       this._demandGroupIndex = undefined;
@@ -382,20 +382,20 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
     e.stopPropagation();
     const moduleType = (e.composedPath()[0] as BldnRequestAddon).slot;
     if (moduleType === 'preFormModule') {
-      if (this._currentPreModule === 0) {
+      if (this._currentPreAddon === 0) {
         // Reset states and go back to menu
         this._action = undefined;
         this._demandGroupIndex = undefined;
         this._demandGroups = [];
         this._uiState = RequestBuilderUIState.menu;
       } else {
-        this._currentPreModule -= 1;
+        this._currentPreAddon -= 1;
       }
     } else if (moduleType === 'postFormModule') {
-      if (this._currentPostModule === 0) {
+      if (this._currentPostAddon === 0) {
         this._uiState = RequestBuilderUIState.edit;
       } else {
-        this._currentPostModule -= 1;
+        this._currentPostAddon -= 1;
       }
     }
   }
@@ -404,16 +404,16 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
     e.stopPropagation();
     const moduleType = (e.composedPath()[0] as BldnRequestAddon).slot;
     if (moduleType === 'preFormModule') {
-      if (this._currentPreModule === this._preModules.length - 1) {
+      if (this._currentPreAddon === this._preAddons.length - 1) {
         this._uiState = RequestBuilderUIState.edit;
       } else {
-        this._currentPreModule += 1;
+        this._currentPreAddon += 1;
       }
     } else if (moduleType === 'postFormModule') {
-      if (this._currentPostModule === this._postModules.length - 1) {
+      if (this._currentPostAddon === this._postAddons.length - 1) {
         this._uiState = RequestBuilderUIState.review;
       } else {
-        this._currentPostModule += 1;
+        this._currentPostAddon += 1;
       }
     }
   }
@@ -481,23 +481,23 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
       const nestedSlots = (slots[0] as HTMLSlotElement).assignedElements();
       // Check if any modules were passed to bldn-priv-request
       if (
-        this._preModules.length === 0 &&
+        this._preAddons.length === 0 &&
         nestedSlots.length !== 0 &&
         nestedSlots.every(slot => slot instanceof BldnRequestAddon)
       ) {
-        this._preModules = nestedSlots;
+        this._preAddons = nestedSlots;
       }
       // Check if any modules were passed to bldn-request-builder
     } else if (
-      this._preModules.length === 0 &&
+      this._preAddons.length === 0 &&
       slots.length !== 0 &&
       slots.every(slot => slot instanceof BldnRequestAddon)
     ) {
-      this._preModules = slots;
+      this._preAddons = slots;
     }
 
     // Switch to action form if there are no modules
-    if (this._preModules.length === 0) {
+    if (this._preAddons.length === 0) {
       this._uiState = RequestBuilderUIState.edit;
     }
   }
@@ -508,23 +508,23 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
       const nestedSlots = (slots[0] as HTMLSlotElement).assignedElements();
       // Check if any modules were passed to bldn-priv-request
       if (
-        this._postModules.length === 0 &&
+        this._postAddons.length === 0 &&
         nestedSlots.length !== 0 &&
         nestedSlots.every(slot => slot instanceof BldnRequestAddon)
       ) {
-        this._postModules = nestedSlots;
+        this._postAddons = nestedSlots;
       }
       // Check if any modules were passed to bldn-request-builder
     } else if (
-      this._postModules.length === 0 &&
+      this._postAddons.length === 0 &&
       slots.length !== 0 &&
       slots.every(slot => slot instanceof BldnRequestAddon)
     ) {
-      this._postModules = slots;
+      this._postAddons = slots;
     }
 
     // Switch to review if there are no modules
-    if (this._postModules.length === 0) {
+    if (this._postAddons.length === 0) {
       this._uiState = RequestBuilderUIState.review;
     }
   }
@@ -627,13 +627,13 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
         [
           RequestBuilderUIState.preModules,
           () => {
-            if (this._preModules.length > 0) {
-              return html`${this._preModules[this._currentPreModule]}`;
+            if (this._preAddons.length > 0) {
+              return html`${this._preAddons[this._currentPreAddon]}`;
             }
 
             return html`
               <slot
-                name="preFormModule"
+                name="preFormAddon"
                 @slotchange=${this.handlePreModuleSlotChange}
                 ><span><!-- Default Slot Content --></span></slot
               >
@@ -650,13 +650,13 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
         [
           RequestBuilderUIState.postModules,
           () => {
-            if (this._postModules.length > 0) {
-              return html`${this._postModules[this._currentPostModule]}`;
+            if (this._postAddons.length > 0) {
+              return html`${this._postAddons[this._currentPostAddon]}`;
             }
 
             return html`
               <slot
-                name="postFormModule"
+                name="postFormAddon"
                 @slotchange=${this.handlePostModuleSlotChange}
                 ><span><!-- Default Slot Content --></span></slot
               >

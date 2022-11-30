@@ -158,7 +158,7 @@ export class AppPrivacy extends LitElement {
         data-categories='["contact", "name", "uid", "other-data"]'
         api-token=${ifDefined(this._apiToken)}
       >
-        <bldn-request-addon slot="postFormModule" .onSubmit=${() => {
+        <bldn-request-addon slot="postFormAddon" .onSubmit=${() => {
           const fileAdded =
             this.renderRoot
               .querySelector('bldn-privacy-portal')

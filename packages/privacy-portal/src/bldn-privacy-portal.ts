@@ -172,10 +172,10 @@ export class BldnPrivacyPortal extends CoreConfigurationMixin(LitElement) {
               actions=${JSON.stringify(this.actions)}
               @bldn-request-builder:request-sent=${this.handleRequestSent}
             >
-              <slot name="preFormModule" slot="preFormModule"
+              <slot name="preFormAddon" slot="preFormAddon"
                 ><span><!-- Default Slot Content --></span></slot
               >
-              <slot name="postFormModule" slot="postFormModule"
+              <slot name="postFormAddon" slot="postFormAddon"
                 ><span><!-- Default Slot Content --></span></slot
               >
             </bldn-request-builder>
