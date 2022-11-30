@@ -167,7 +167,7 @@ export class ModulesDemo extends LitElement {
       if (path.includes('/modules/addons')) {
         this.selectedDemo = ModuleDemo.addons;
       } else {
-        this.selectedDemo = ModuleDemo.basic
+        this.selectedDemo = ModuleDemo.basic;
       }
     }
     Router.go(`${window.location.origin}/demos/modules/${this.selectedDemo}`);
