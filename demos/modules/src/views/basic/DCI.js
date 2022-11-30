@@ -20,6 +20,12 @@ export class AppDCI extends LitElement {
           0px 0.500862px 1.50259px rgba(0, 0, 0, 0.17);
         border-radius: 20px;
       }
+
+      @media (min-width: 1250px) {
+        :host {
+          width: 950px;
+        }
+      }
     `;
   }
 

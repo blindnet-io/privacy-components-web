@@ -21,6 +21,12 @@ export class AppBackOffice extends LitElement {
         border-radius: 20px;
       }
 
+      @media (min-width: 1250px) {
+        :host {
+          width: 950px;
+        }
+      }
+
       h1 {
         margin-top: 0;
       }
@@ -32,7 +38,7 @@ export class AppBackOffice extends LitElement {
     // TODO: report issue to Vaadin
     // alternatively, we could use a popstate event
     const baseURL = document.querySelector('base')?.href || '/';
-    const routed = Router.go(`${baseURL}admin`);
+    const routed = Router.go(`${window.location.origin}/demos/modules/addons/admin`);
     if (!routed) {
       // eslint-disable-next-line no-console
       console.error('admin route not found');

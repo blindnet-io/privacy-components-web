@@ -13,9 +13,9 @@ const auth0 = new Auth0Client({
   domain: 'blindnet.eu.auth0.com',
   client_id: '1C0uhFCpzvJAkFi4uqoq2oAWSgQicqHc',
   audience: 'https://blindnet-connector-demo-staging.azurewebsites.net',
-  redirect_uri: `${window.location.origin}/demos/devkit-simple-tutorial/privacy`,
+  redirect_uri: `${window.location.origin}/demos/modules/basic/privacy`,
   authorizationParams: {
-    redirect_uri: `${window.location.origin}/demos/devkit-simple-tutorial/privacy`,
+    redirect_uri: `${window.location.origin}/demos/modules/basic/privacy`,
   },
   languageDictionary: {
     title: 'Let us verify your e-mail',
@@ -44,8 +44,6 @@ export class AppPrivacy extends LitElement {
     return css`
       :host {
         display: block;
-        width: 40vw;
-        max-width: 950px;
         padding: 50px 100px;
         background: white;
         box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.34),
@@ -57,6 +55,12 @@ export class AppPrivacy extends LitElement {
         /* --bldn-font-size-medium: 2.5em; */
         /* --bldn-font-size-large: 3em; */
         /* --bldn-font-family: cursive; */
+      }
+
+      @media (min-width: 1250px) {
+        :host {
+          width: 950px;
+        }
       }
 
       bldn-privacy-portal {
@@ -89,7 +93,7 @@ export class AppPrivacy extends LitElement {
   }
 
   handleLoginClick() {
-    window.location.href = `${window.location.origin}/demos/devkit-simple-tutorial/login`;
+    window.location.href = `${window.location.origin}/demos/modules/basic/login`;
   }
 
   handleLogoutClick() {
@@ -119,6 +123,19 @@ export class AppPrivacy extends LitElement {
   }
 
   render() {
+
+    // Handle redirect from login page
+    const search = new URLSearchParams(window.location.search)
+    if (search.has('code') && search.has('state')) {
+      auth0.handleRedirectCallback()
+        .then(result => {
+          console.log(result)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    }
+
     // Try to get an auth0 token
     if (this._apiToken === undefined) {
       auth0
@@ -136,7 +153,9 @@ export class AppPrivacy extends LitElement {
               console.log(error);
             });
         })
-        .catch(() => {
+        .catch(error => {
+          // eslint-disable-next-line no-console
+          console.log(error);
           // If not logged in, do nothing as PRCI can be used unauthenticated
         });
     }

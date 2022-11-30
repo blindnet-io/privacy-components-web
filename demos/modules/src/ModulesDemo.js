@@ -3,6 +3,8 @@ import { Router } from '@vaadin/router';
 import 'carbon-web-components/es/components/ui-shell/index.js';
 import { choose } from 'lit/directives/choose.js';
 
+const logo = new URL('../../../assets/blindnet-logo-cropped.png', import.meta.url).href;
+
 const ModuleDemo = {
   basic: 'basic',
   addons: 'addons',
@@ -15,7 +17,7 @@ export class ModulesDemo extends LitElement {
 
   constructor() {
     super();
-    this.selectedDemo = ModuleDemo.addons;  // TODO: Change back to default to basic, below too
+    this.selectedDemo = ModuleDemo.basic;  // TODO: Change back to default to basic, below too
   }
 
   static get styles() {
@@ -39,12 +41,17 @@ export class ModulesDemo extends LitElement {
       }
 
       .app-footer {
+        margin-bottom: 1em;
         font-size: calc(12px + 0.5vmin);
-        align-items: center;
       }
 
-      .app-footer a {
-        margin-left: 5px;
+      .app-footer span {
+        vertical-align: middle;
+      }
+
+      .app-footer img {
+        vertical-align: middle;
+        margin-bottom: 5px;
       }
     `;
   }
@@ -145,12 +152,16 @@ export class ModulesDemo extends LitElement {
   }
 
   willUpdate(changedProperties) {
-    window.history.replaceState(
-      null,
-      null,
-      `${window.location.origin}/demos/modules/${this.selectedDemo}/privacy`
-    );
-    Router.go(`${window.location.origin}/demos/modules/${this.selectedDemo}/privacy`);
+    if (changedProperties.has('selectedDemo') && changedProperties.get('selectedDemo') === undefined) {
+      const path = window.location.pathname
+      if (path.includes('/modules/basic')) {
+        this.selectedDemo = ModuleDemo.basic
+      } else {
+        this.selectedDemo = ModuleDemo.addons
+      }
+
+    }
+    Router.go(`${window.location.origin}/demos/modules/${this.selectedDemo}`);
   }
 
   render() {
@@ -164,6 +175,7 @@ export class ModulesDemo extends LitElement {
             this.selectedDemo = ModuleDemo.addons;
           }}></bx-header-menu-item>
         </bx-header-menu>
+        <bx-header-nav>
           ${choose(this.selectedDemo, [
             [
               ModuleDemo.basic,
@@ -201,29 +213,12 @@ export class ModulesDemo extends LitElement {
         <div id="router-outlet"></div>
       </main>
 
-      <p class="app-footer">
-        🖤 Made with love by
-        <a target="_blank" rel="noopener noreferrer" href="https://blindnet.dev"
-          >blindnet</a
-        >
-        with
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://github.com/open-wc"
-          >open-wc</a
-        >,
-        <a target="_blank" rel="noopener noreferrer" href="https://vaadin.com/"
-          >Vaadin</a
-        >
-        and
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://github.com/carbon-design-system/carbon-web-components"
-          >Carbon Web Components</a
-        >.
-      </p>
+      <div class='app-footer'>
+        <span>🖤 Made with love by</span>
+        <a href='https://www.blindnet.io/'>
+          <img src=${logo} alt='blindnet logo' width='100px'/>
+        </a>
+      </div>
     `;
   }
 }
