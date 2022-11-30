@@ -3,7 +3,10 @@ import { Router } from '@vaadin/router';
 import 'carbon-web-components/es/components/ui-shell/index.js';
 import { choose } from 'lit/directives/choose.js';
 
-const logo = new URL('../../../assets/blindnet-logo-cropped.png', import.meta.url).href;
+const logo = new URL(
+  '../../../assets/blindnet-logo-cropped.png',
+  import.meta.url
+).href;
 
 const ModuleDemo = {
   basic: 'basic',
@@ -17,7 +20,7 @@ export class ModulesDemo extends LitElement {
 
   constructor() {
     super();
-    this.selectedDemo = ModuleDemo.basic;  // TODO: Change back to default to basic, below too
+    this.selectedDemo = ModuleDemo.basic; // TODO: Change back to default to basic, below too
   }
 
   static get styles() {
@@ -152,14 +155,16 @@ export class ModulesDemo extends LitElement {
   }
 
   willUpdate(changedProperties) {
-    if (changedProperties.has('selectedDemo') && changedProperties.get('selectedDemo') === undefined) {
-      const path = window.location.pathname
+    if (
+      changedProperties.has('selectedDemo') &&
+      changedProperties.get('selectedDemo') === undefined
+    ) {
+      const path = window.location.pathname;
       if (path.includes('/modules/basic')) {
-        this.selectedDemo = ModuleDemo.basic
+        this.selectedDemo = ModuleDemo.basic;
       } else {
-        this.selectedDemo = ModuleDemo.addons
+        this.selectedDemo = ModuleDemo.addons;
       }
-
     }
     Router.go(`${window.location.origin}/demos/modules/${this.selectedDemo}`);
   }
@@ -167,13 +172,22 @@ export class ModulesDemo extends LitElement {
   render() {
     return html`
       <bx-header aria-label="Demos">
-        <bx-header-menu menu-label='Choose a Demo' trigger-content="Choose a Demo">
-          <bx-header-menu-item title="Basic" @click=${() => {
-            this.selectedDemo = ModuleDemo.basic;
-          }}></bx-header-menu-item>
-          <bx-header-menu-item title="Addons" @click=${() => {
-            this.selectedDemo = ModuleDemo.addons;
-          }}></bx-header-menu-item>
+        <bx-header-menu
+          menu-label="Choose a Demo"
+          trigger-content="Choose a Demo"
+        >
+          <bx-header-menu-item
+            title="Basic"
+            @click=${() => {
+              this.selectedDemo = ModuleDemo.basic;
+            }}
+          ></bx-header-menu-item>
+          <bx-header-menu-item
+            title="Addons"
+            @click=${() => {
+              this.selectedDemo = ModuleDemo.addons;
+            }}
+          ></bx-header-menu-item>
         </bx-header-menu>
         <bx-header-nav>
           ${choose(this.selectedDemo, [
@@ -208,15 +222,15 @@ export class ModulesDemo extends LitElement {
           ])}
         </bx-header-nav>
       </bx-header>
-      
+
       <main>
         <div id="router-outlet"></div>
       </main>
 
-      <div class='app-footer'>
+      <div class="app-footer">
         <span>🖤 Made with love by</span>
-        <a href='https://www.blindnet.io/'>
-          <img src=${logo} alt='blindnet logo' width='100px'/>
+        <a href="https://www.blindnet.io/">
+          <img src=${logo} alt="blindnet logo" width="100px" />
         </a>
       </div>
     `;

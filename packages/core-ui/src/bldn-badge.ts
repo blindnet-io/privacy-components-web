@@ -97,7 +97,10 @@ export class BldnBadge extends LitElement {
 
     .danger {
       border: 1px solid var(--bldn-badge-danger-color, var(--color-negative));
-      background-color: rgba(var(--bldn-badge-danger-color-rgb, var(--color-negative-rgb)), 0.2);
+      background-color: rgba(
+        var(--bldn-badge-danger-color-rgb, var(--color-negative-rgb)),
+        0.2
+      );
     }
   `;
 }

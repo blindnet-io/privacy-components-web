@@ -175,7 +175,7 @@ export abstract class ActionForm extends LitElement {
         /* transition: 0.3s ease-out; */
       }
 
-      bldn-dropdown.main-section:not(:first-child){
+      bldn-dropdown.main-section:not(:first-child) {
         margin-top: 2.5em;
       }
 

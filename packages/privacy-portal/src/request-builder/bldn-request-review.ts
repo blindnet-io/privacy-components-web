@@ -493,9 +493,9 @@ export class BldnRequestReview extends LitElement {
       );
     }
 
-    bldn-dropdown.main-section:not(:first-child){
-        margin-top: 2.5em;
-      }
+    bldn-dropdown.main-section:not(:first-child) {
+      margin-top: 2.5em;
+    }
 
     /* Padding in each other option dropdown */
     bldn-dropdown bldn-dropdown[open] {

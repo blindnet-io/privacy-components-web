@@ -8,7 +8,8 @@ import jwt_decode from 'jwt-decode';
 
 import '@blindnet/privacy-portal';
 
-const fileUpload = new URL('../../../assets/file-upload.svg', import.meta.url).href;
+const fileUpload = new URL('../../../assets/file-upload.svg', import.meta.url)
+  .href;
 
 // Get an auth0 instance
 const auth0 = new Auth0Client({
@@ -43,35 +44,35 @@ export class AppPrivacy extends LitElement {
   }
 
   static styles = css`
+    :host {
+      display: block;
+      padding: 50px 100px;
+      background: white;
+      box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.34),
+        0px 0.500862px 1.50259px rgba(0, 0, 0, 0.17);
+      border-radius: 20px;
+
+      /* --bldn-background: 128, 128, 128; */
+      /* --bldn-font-size-small: 2em; */
+      /* --bldn-font-size-medium: 2.5em; */
+      /* --bldn-font-size-large: 3em; */
+      /* --bldn-font-family: cursive; */
+    }
+
+    @media (min-width: 1250px) {
       :host {
-        display: block;        
-        padding: 50px 100px;
-        background: white;
-        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.34),
-          0px 0.500862px 1.50259px rgba(0, 0, 0, 0.17);
-        border-radius: 20px;
-
-        /* --bldn-background: 128, 128, 128; */
-        /* --bldn-font-size-small: 2em; */
-        /* --bldn-font-size-medium: 2.5em; */
-        /* --bldn-font-size-large: 3em; */
-        /* --bldn-font-family: cursive; */
+        width: 950px;
       }
+    }
 
-      @media (min-width: 1250px) {
-        :host {
-          width: 950px;
-        }
-      }
+    bldn-privacy-portal {
+      margin-bottom: 65px;
+    }
 
-      bldn-privacy-portal {
-        margin-bottom: 65px;
-      }
-
-      #id-addon {
-        background: black;
-      }
-    `;
+    #id-addon {
+      background: black;
+    }
+  `;
 
   /**
    * Get a blindnet token given an auth0 ones
@@ -123,17 +124,17 @@ export class AppPrivacy extends LitElement {
   }
 
   render() {
-
     // Handle redirect from login page
-    const search = new URLSearchParams(window.location.search)
+    const search = new URLSearchParams(window.location.search);
     if (search.has('code') && search.has('state')) {
-      auth0.handleRedirectCallback()
+      auth0
+        .handleRedirectCallback()
         .then(result => {
-          console.log(result)
+          console.log(result);
         })
         .catch(error => {
-          console.log(error)
-        })
+          console.log(error);
+        });
     }
 
     // Try to get an auth0 token
@@ -165,21 +166,24 @@ export class AppPrivacy extends LitElement {
         api-token=${ifDefined(this._apiToken)}
       >
         <bldn-request-addon slot="postFormModule" .onSubmit=${() => {
-          const fileAdded = this.renderRoot.querySelector('bldn-privacy-portal')
-          ?.shadowRoot?.querySelector('bldn-request-builder')
-          ?.shadowRoot?.querySelector('bldn-request-addon')
-          ?.querySelector('#id-addon')
-          // @ts-ignore
-          ?.querySelector('#file-upload')?.value !== ""
-          const consentGiven = this.renderRoot.querySelector('bldn-privacy-portal')
-          ?.shadowRoot?.querySelector('bldn-request-builder')
-          ?.shadowRoot?.querySelector('bldn-request-addon')
-          // @ts-ignore
-          ?.querySelector('#consent')?.checked
-          if (fileAdded && consentGiven) return true
-          if (consentGiven) return 'You must upload an ID document!'
-          if (fileAdded) return 'You must give consent!'
-          return 'You must upload an ID document and give consent!'
+          const fileAdded =
+            this.renderRoot
+              .querySelector('bldn-privacy-portal')
+              ?.shadowRoot?.querySelector('bldn-request-builder')
+              ?.shadowRoot?.querySelector('bldn-request-addon')
+              ?.querySelector('#id-addon')
+              // @ts-ignore
+              ?.querySelector('#file-upload')?.value !== '';
+          const consentGiven = this.renderRoot
+            .querySelector('bldn-privacy-portal')
+            ?.shadowRoot?.querySelector('bldn-request-builder')
+            ?.shadowRoot?.querySelector('bldn-request-addon')
+            // @ts-ignore
+            ?.querySelector('#consent')?.checked;
+          if (fileAdded && consentGiven) return true;
+          if (consentGiven) return 'You must upload an ID document!';
+          if (fileAdded) return 'You must give consent!';
+          return 'You must upload an ID document and give consent!';
         }}>
           <div id="id-addon" style="
             margin: 2em auto;
@@ -205,8 +209,9 @@ export class AppPrivacy extends LitElement {
               Upload File
             </label>
             <p id="file-name" style="margin: 2em 0em 0em 0em;"></p>
-            <input id="file-upload" type="file" style="display: none;" @change=${(e) => {
-              e.path[1].querySelector('#file-name').textContent = e.path[0].value.split('\\').at(-1)
+            <input id="file-upload" type="file" style="display: none;" @change=${e => {
+              e.path[1].querySelector('#file-name').textContent =
+                e.path[0].value.split('\\').at(-1);
             }}/>
 
           </div>

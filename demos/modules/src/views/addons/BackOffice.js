@@ -38,7 +38,9 @@ export class AppBackOffice extends LitElement {
     // TODO: report issue to Vaadin
     // alternatively, we could use a popstate event
     const baseURL = document.querySelector('base')?.href || '/';
-    const routed = Router.go(`${window.location.origin}/demos/modules/addons/admin`);
+    const routed = Router.go(
+      `${window.location.origin}/demos/modules/addons/admin`
+    );
     if (!routed) {
       // eslint-disable-next-line no-console
       console.error('admin route not found');
