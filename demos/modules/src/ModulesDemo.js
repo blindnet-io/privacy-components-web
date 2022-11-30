@@ -64,6 +64,10 @@ export class ModulesDemo extends LitElement {
     const router = new Router(outlet);
     router.setRoutes([
       {
+        path: '/',
+        redirect: '/basic'
+      },
+      {
         path: '/basic',
         action: async () => {
           await import('./views/basic/Home.js');

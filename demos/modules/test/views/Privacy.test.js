@@ -1,13 +1,13 @@
 import { html } from 'lit';
 import { fixture, expect, elementUpdated } from '@open-wc/testing';
 
-import '../../src/views/Privacy.js';
+import '../../src/views/basic/Privacy.js';
 
 describe('AppHome', () => {
   /** @type {NonNullable<Element>} */
   let element;
   beforeEach(async () => {
-    element = await fixture(html`<app-privacy></app-privacy>`);
+    element = await fixture(html`<basic-demo-privacy></basic-demo-privacy>`);
   });
 
   it('renders the PRCI', async () => {
