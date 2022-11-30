@@ -20,7 +20,7 @@ export class ModulesDemo extends LitElement {
 
   constructor() {
     super();
-    this.selectedDemo = ModuleDemo.basic; // TODO: Change back to default to basic, below too
+    this.selectedDemo = ModuleDemo.basic;
   }
 
   static get styles() {
@@ -164,10 +164,10 @@ export class ModulesDemo extends LitElement {
       changedProperties.get('selectedDemo') === undefined
     ) {
       const path = window.location.pathname;
-      if (path.includes('/modules/basic')) {
-        this.selectedDemo = ModuleDemo.basic;
-      } else {
+      if (path.includes('/modules/addons')) {
         this.selectedDemo = ModuleDemo.addons;
+      } else {
+        this.selectedDemo = ModuleDemo.basic
       }
     }
     Router.go(`${window.location.origin}/demos/modules/${this.selectedDemo}`);
