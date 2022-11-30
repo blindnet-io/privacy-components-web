@@ -8,6 +8,8 @@ import jwt_decode from 'jwt-decode';
 
 import '@blindnet/privacy-portal';
 
+const fileUpload = new URL('../../../assets/file-upload.svg', import.meta.url).href;
+
 // Get an auth0 instance
 const auth0 = new Auth0Client({
   domain: 'blindnet.eu.auth0.com',
@@ -40,8 +42,7 @@ export class AppPrivacy extends LitElement {
     };
   }
 
-  static get styles() {
-    return css`
+  static styles = css`
       :host {
         display: block;
         width: 40vw;
@@ -63,11 +64,10 @@ export class AppPrivacy extends LitElement {
         margin-bottom: 65px;
       }
 
-      #additional-info-module {
-        margin: 4em;
+      #id-addon {
+        background: black;
       }
     `;
-  }
 
   /**
    * Get a blindnet token given an auth0 ones
@@ -142,40 +142,63 @@ export class AppPrivacy extends LitElement {
     }
 
     return html`
+
       <bldn-privacy-portal
         data-categories='["contact", "name", "uid", "other-data"]'
         api-token=${ifDefined(this._apiToken)}
       >
-        <bldn-request-addon slot="preFormModule" .onSubmit=${() => false}>
-          <div id="additional-info-module">
-            <label for="fname">First name 1:</label><br />
-            <input type="text" id="fname" name="fname" value="John" /><br />
-            <label for="lname">Last name 1:</label><br />
-            <input type="text" id="lname" name="lname" value="Doe" />
+        <bldn-request-addon slot="postFormModule" .onSubmit=${() => {
+          const fileAdded = this.renderRoot.querySelector('bldn-privacy-portal')
+          ?.shadowRoot?.querySelector('bldn-request-builder')
+          ?.shadowRoot?.querySelector('bldn-request-addon')
+          ?.querySelector('#id-addon')
+          // @ts-ignore
+          ?.querySelector('#file-upload')?.value !== ""
+          const consentGiven = this.renderRoot.querySelector('bldn-privacy-portal')
+          ?.shadowRoot?.querySelector('bldn-request-builder')
+          ?.shadowRoot?.querySelector('bldn-request-addon')
+          // @ts-ignore
+          ?.querySelector('#consent')?.checked
+          if (fileAdded && consentGiven) return true
+          if (consentGiven) return 'You must upload an ID document!'
+          if (fileAdded) return 'You must give consent!'
+          return 'You must upload an ID document and give consent!'
+        }}>
+          <div id="id-addon" style="
+            margin: 2em auto;
+            padding: 2em 2em;
+            border: 2px dashed #979797;
+            border-radius: 10px;
+            color: #979797;
+            max-width: 275px;
+          ">
+            <img src=${fileUpload} alt="upload a file" style="
+              margin-bottom: 1em;
+            "></img>
+            <p
+              style="margin-bottom: 2em;"
+            >Please upload a copy of your valid identification document in PNG, JPEG, or PDF format.</p>
+            
+            <label for="file-upload" style="
+              background: #4169E1;
+              padding: 0.4em 0.8em;
+              border-radius: 5px;
+              color: white;
+            ">
+              Upload File
+            </label>
+            <p id="file-name" style="margin: 2em 0em 0em 0em;"></p>
+            <input id="file-upload" type="file" style="display: none;" @change=${(e) => {
+              e.path[1].querySelector('#file-name').textContent = e.path[0].value.split('\\').at(-1)
+            }}/>
+
           </div>
-        </bldn-request-addon>
-        <bldn-request-addon slot="preFormModule" .onSubmit=${() => false}>
-          <div id="additional-info-module">
-            <label for="fname">First name 2:</label><br />
-            <input type="text" id="fname" name="fname" value="John" /><br />
-            <label for="lname">Last name 2:</label><br />
-            <input type="text" id="lname" name="lname" value="Doe" />
+
+          <div style="margin-bottom: 1em; color: var(--color-dark);">
+            <input id="consent" type="checkbox">
+            <label for="consent">I consent to the automatic processing of my data</label>
           </div>
-        </bldn-request-addon>
-        <bldn-request-addon slot="postFormModule" .onSubmit=${() => false}>
-          <div id="additional-info-module">
-            <label for="fname">First name 1:</label><br />
-            <input type="text" id="fname" name="fname" value="John" /><br />
-            <label for="lname">Last name 1:</label><br />
-            <input type="text" id="lname" name="lname" value="Doe" />
-          </div>
-        </bldn-request-addon>
-        <bldn-request-addon slot="postFormModule" .onSubmit=${() => false}>
-          <div id="additional-info-module">
-            <label for="fname">First name 2:</label><br />
-            <input type="text" id="fname" name="fname" value="John" /><br />
-            <label for="lname">Last name 2:</label><br />
-            <input type="text" id="lname" name="lname" value="Doe" />
+            
           </div>
         </bldn-request-addon>
       </bldn-privacy-portal>

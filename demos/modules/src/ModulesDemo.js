@@ -15,7 +15,7 @@ export class ModulesDemo extends LitElement {
 
   constructor() {
     super();
-    this.selectedDemo = ModuleDemo.basic;
+    this.selectedDemo = ModuleDemo.addons;  // TODO: Change back to default to basic, below too
   }
 
   static get styles() {
@@ -148,9 +148,9 @@ export class ModulesDemo extends LitElement {
     window.history.replaceState(
       null,
       null,
-      `${window.location.origin}/demos/modules/${this.selectedDemo}`
+      `${window.location.origin}/demos/modules/${this.selectedDemo}/privacy`
     );
-    Router.go(`${window.location.origin}/demos/modules/${this.selectedDemo}`);
+    Router.go(`${window.location.origin}/demos/modules/${this.selectedDemo}/privacy`);
   }
 
   render() {

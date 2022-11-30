@@ -203,11 +203,11 @@ export class BldnPrivacyPortal extends CoreConfigurationMixin(LitElement) {
       }
 
       bldn-request-builder,
-      bldn-submitted-requests {
+      bldn-request-viewer {
         margin-top: 2.5em;
       }
 
-      bldn-submitted-requests {
+      bldn-request-viewer {
         padding: 0 10%;
       }
     `,

@@ -12,6 +12,7 @@ export class AppHome extends LitElement {
   static get styles() {
     return css`
       :host {
+        display: block;
         font-size: calc(10px + 2vmin);
       }
       .logo {

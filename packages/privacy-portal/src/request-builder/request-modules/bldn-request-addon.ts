@@ -77,7 +77,7 @@ export class BldnRequestAddon extends LitElement {
       >
         ${when(
           this._error,
-          () => html` <bldn-badge>${this._errorMessage}</bldn-badge> `
+          () => html` <bldn-badge danger>${this._errorMessage}</bldn-badge> `
         )}
         <slot></slot>
       </bldn-nav-wrapper>
@@ -86,11 +86,12 @@ export class BldnRequestAddon extends LitElement {
 
   static styles = css`
     :host {
+      display: block;
       text-align: center;
     }
 
     bldn-badge {
-      margin-bottom: 1em;
+      margin-top: 2em;
     }
   `;
 }

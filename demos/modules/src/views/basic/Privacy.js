@@ -146,58 +146,6 @@ export class AppPrivacy extends LitElement {
         data-categories='["contact", "name", "uid", "other-data"]'
         api-token=${ifDefined(this._apiToken)}
       >
-        <bldn-request-addon slot="preFormModule" .onSubmit=${() => false}>
-          <div id="additional-info-module">
-            <label for="fname">First name 1:</label><br />
-            <input type="text" id="fname" name="fname" value="John" /><br />
-            <label for="lname">Last name 1:</label><br />
-            <input
-              type="text"
-              id="lname"
-              name="lname"
-              value="Doe"
-            /><br /><br />
-          </div>
-        </bldn-request-addon>
-        <bldn-request-addon slot="preFormModule" .onSubmit=${() => false}>
-          <div id="additional-info-module">
-            <label for="fname">First name 2:</label><br />
-            <input type="text" id="fname" name="fname" value="John" /><br />
-            <label for="lname">Last name 2:</label><br />
-            <input
-              type="text"
-              id="lname"
-              name="lname"
-              value="Doe"
-            /><br /><br />
-          </div>
-        </bldn-request-addon>
-        <bldn-request-addon slot="postFormModule" .onSubmit=${() => false}>
-          <div id="additional-info-module">
-            <label for="fname">First name 1:</label><br />
-            <input type="text" id="fname" name="fname" value="John" /><br />
-            <label for="lname">Last name 1:</label><br />
-            <input
-              type="text"
-              id="lname"
-              name="lname"
-              value="Doe"
-            /><br /><br />
-          </div>
-        </bldn-request-addon>
-        <bldn-request-addon slot="postFormModule" .onSubmit=${() => false}>
-          <div id="additional-info-module">
-            <label for="fname">First name 2:</label><br />
-            <input type="text" id="fname" name="fname" value="John" /><br />
-            <label for="lname">Last name 2:</label><br />
-            <input
-              type="text"
-              id="lname"
-              name="lname"
-              value="Doe"
-            /><br /><br />
-          </div>
-        </bldn-request-addon>
       </bldn-privacy-portal>
 
       ${when(
