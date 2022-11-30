@@ -7,9 +7,7 @@ describe('ModulesDemo', () => {
   /** @type {NonNullable<Element>} */
   let element;
   beforeEach(async () => {
-    element = await fixture(
-      html`<modules-demo></modules-demo>`
-    );
+    element = await fixture(html`<modules-demo></modules-demo>`);
   });
 
   it('passes the a11y audit', () => {

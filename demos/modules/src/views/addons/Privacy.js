@@ -127,14 +127,7 @@ export class AppPrivacy extends LitElement {
     // Handle redirect from login page
     const search = new URLSearchParams(window.location.search);
     if (search.has('code') && search.has('state')) {
-      auth0
-        .handleRedirectCallback()
-        .then(result => {
-          console.log(result);
-        })
-        .catch(error => {
-          console.log(error);
-        });
+      auth0.handleRedirectCallback();
     }
 
     // Try to get an auth0 token

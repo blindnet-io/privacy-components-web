@@ -65,7 +65,7 @@ export class ModulesDemo extends LitElement {
     router.setRoutes([
       {
         path: '/',
-        redirect: '/basic'
+        redirect: '/basic',
       },
       {
         path: '/basic',
