@@ -294,8 +294,10 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
     this._uiState = RequestBuilderUIState.edit;
   }
 
-  private handleCancelRequest(e: Event) {
+  private handleReviewBack(e: Event) {
     e.stopPropagation();
+    const { demandGroupIndex } = (e as CustomEvent).detail;
+    this._demandGroupIndex = demandGroupIndex;
     this._uiState =
       this._postAddons.length === 0
         ? RequestBuilderUIState.edit
@@ -381,7 +383,7 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
   private handleModuleBack(e: Event) {
     e.stopPropagation();
     const moduleType = (e.composedPath()[0] as BldnRequestAddon).slot;
-    if (moduleType === 'preFormModule') {
+    if (moduleType === 'preFormAddon') {
       if (this._currentPreAddon === 0) {
         // Reset states and go back to menu
         this._action = undefined;
@@ -391,7 +393,7 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
       } else {
         this._currentPreAddon -= 1;
       }
-    } else if (moduleType === 'postFormModule') {
+    } else if (moduleType === 'postFormAddon') {
       if (this._currentPostAddon === 0) {
         this._uiState = RequestBuilderUIState.edit;
       } else {
@@ -403,13 +405,13 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
   private handleModuleNext(e: Event) {
     e.stopPropagation();
     const moduleType = (e.composedPath()[0] as BldnRequestAddon).slot;
-    if (moduleType === 'preFormModule') {
+    if (moduleType === 'preFormAddon') {
       if (this._currentPreAddon === this._preAddons.length - 1) {
         this._uiState = RequestBuilderUIState.edit;
       } else {
         this._currentPreAddon += 1;
       }
-    } else if (moduleType === 'postFormModule') {
+    } else if (moduleType === 'postFormAddon') {
       if (this._currentPostAddon === this._postAddons.length - 1) {
         this._uiState = RequestBuilderUIState.review;
       } else {
@@ -555,8 +557,8 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
     );
     this.addEventListener('bldn-request-review:edit-demands', this.editDemands);
     this.addEventListener(
-      'bldn-request-review:cancel-request',
-      this.handleCancelRequest
+      'bldn-request-review:back-click',
+      this.handleReviewBack
     );
     this.addEventListener(
       'bldn-request-review:submit-request',
@@ -581,8 +583,8 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
       this.editDemands
     );
     this.removeEventListener(
-      'bldn-request-review:cancel-request',
-      this.handleCancelRequest
+      'bldn-request-review:back-click',
+      this.handleReviewBack
     );
     this.removeEventListener(
       'bldn-request-review:submit-request',

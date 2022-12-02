@@ -42,7 +42,7 @@ const deleteSvg = new URL(
 /**
  * @event {CustomEvent} bldn-request-review:edit-demands
  * @event {CustomEvent} bldn-request-review:delete-demands
- * @event {Event} bldn-request-review:cancel-request'
+ * @event {CustomEvent} bldn-request-review:back-click'
  * @event {Event} bldn-request-review:submit-request'
  */
 @customElement('bldn-request-review')
@@ -78,11 +78,14 @@ export class BldnRequestReview extends LitElement {
     );
   }
 
-  handleCancelClick() {
+  handleBackClick() {
     this.dispatchEvent(
-      new Event('bldn-request-review:cancel-request', {
+      new CustomEvent('bldn-request-review:back-click', {
         bubbles: true,
         composed: true,
+        detail: {
+          demandGroupIndex: 0,
+        },
       })
     );
   }
@@ -382,7 +385,7 @@ export class BldnRequestReview extends LitElement {
       <bldn-nav-wrapper
         left-button=${msg('Back')}
         right-button=${msg('Submit Request')}
-        @bldn-nav-wrapper:left-click=${this.handleCancelClick}
+        @bldn-nav-wrapper:left-click=${this.handleBackClick}
         @bldn-nav-wrapper:right-click=${this.handleSubmitClick}
       >
         <bldn-dropdown class="main-section" mode="major" open>
