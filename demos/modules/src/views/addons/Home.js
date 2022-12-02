@@ -1,3 +1,5 @@
+/* eslint-disable lit-a11y/click-events-have-key-events */
+import { Router } from '@vaadin/router';
 import { LitElement, html, css } from 'lit';
 
 const logo = new URL('../../../assets/blindnet-logo.png', import.meta.url).href;
@@ -21,6 +23,12 @@ export class AppHome extends LitElement {
         max-height: 244px;
         max-width: 100%;
       }
+
+      span {
+        color: -webkit-link;
+        text-decoration: underline;
+        cursor: pointer;
+      }
     `;
   }
 
@@ -38,7 +46,7 @@ export class AppHome extends LitElement {
         Check out
         <a
           class="app-link"
-          href="https://github.com/blindnet-io/privacy-components-web/tree/main/demos/addons"
+          href="https://github.com/blindnet-io/privacy-components-web/tree/main/demos/modules"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -47,7 +55,7 @@ export class AppHome extends LitElement {
         for details and instructions.
       </p>
 
-      <p>🚀 <a class="app-link" href="./privacy">Make a privacy request.</a></p>
+      <p>🚀 <span class="app-link" @click=${() => Router.go(`${window.location.origin}/demos/modules/addons/privacy`)}>Make a privacy request.</span></p>
     `;
   }
 }
