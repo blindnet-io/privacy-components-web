@@ -4,7 +4,7 @@ import 'carbon-web-components/es/components/ui-shell/index.js';
 import { choose } from 'lit/directives/choose.js';
 
 const logo = new URL(
-  '../../../assets/blindnet-logo-cropped.png',
+  '../assets/blindnet-logo-cropped.png',
   import.meta.url
 ).href;
 
