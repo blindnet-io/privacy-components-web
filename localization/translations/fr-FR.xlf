@@ -787,83 +787,83 @@
 </trans-unit>
 <trans-unit id="s4458b825a083bf32">
   <source>Access Demand</source>
-  <target>Demande d'Accès</target>
+  <target>demande d'Accès</target>
 </trans-unit>
 <trans-unit id="s5d0a8873a8f42ed5">
   <source>Delete Demand</source>
-  <target>Demande de Suppression</target>
+  <target>demande de Suppression</target>
 </trans-unit>
 <trans-unit id="s1f6e12ff7db89f1a">
   <source>Modify Demand</source>
-  <target>Demande de Modification</target>
+  <target>demande de Modification</target>
 </trans-unit>
 <trans-unit id="s91a3ac163365cce5">
   <source>Object Demand</source>
-  <target>Demande d'Opposition</target>
+  <target>demande d'Opposition</target>
 </trans-unit>
 <trans-unit id="s22a6bd776f195c07">
   <source>Portability Demand</source>
-  <target>Demande de Portabilité</target>
+  <target>demande de Portabilité</target>
 </trans-unit>
 <trans-unit id="s297342d4b6ea3424">
   <source>Restrict Demand</source>
-  <target>Demande de Restriction</target>
+  <target>demande de Restriction</target>
 </trans-unit>
 <trans-unit id="s22837da638fcc66a">
   <source>Revoke Demand</source>
-  <target>Demande de Révocation</target>
+  <target>demande de Révocation</target>
 </trans-unit>
 <trans-unit id="saf349b7ca2f1b5ce">
   <source>Transparency Demand</source>
-  <target>Demande de Transparence</target>
+  <target>demande de Transparence</target>
 </trans-unit>
 <trans-unit id="sf31b34a597b18b5f">
   <source>Transparency - Data Categories Demand</source>
-  <target>Transparence - Catégories de données</target>
+  <target>demande de Transparence - Catégories de données</target>
 </trans-unit>
 <trans-unit id="sbec2072e6d47df18">
   <source>Transparency - DPO Demand</source>
-  <target>Transparence - Demande DPO</target>
+  <target>demande de Transparence - DPO</target>
 </trans-unit>
 <trans-unit id="s3ab6eb333ca4c106">
   <source>Transparency - Known Demand</source>
-  <target>Transparence - Demande Connaissance</target>
+  <target>demande de Transparence - Connaissance</target>
 </trans-unit>
 <trans-unit id="s71b60b01f673c416">
   <source>Transparency - Legal Bases Demand</source>
-  <target>Transparence - Demande Bases Légales</target>
+  <target>demande de Transparence - Bases Légales</target>
 </trans-unit>
 <trans-unit id="s726641e532d6bd7e">
   <source>Transparency - Organization Demand</source>
-  <target>Transparence - Demande Organisation</target>
+  <target>demande de Transparence - Organisation</target>
 </trans-unit>
 <trans-unit id="s597bfa27b84f363d">
   <source>Transparency - Policy Demand</source>
-  <target>Transparence - Demande Politiques</target>
+  <target>demande de Transparence - Politiques</target>
 </trans-unit>
 <trans-unit id="s24b43708ccb264f0">
   <source>Transparency - Processing Categories Demand</source>
-  <target>Transparence - Demande Catégories de Traitements</target>
+  <target>demande de Transparence - Catégories de Traitements</target>
 </trans-unit>
 <trans-unit id="s99db8323c728b6a2">
   <source>Transparency - Provenance Demand</source>
-  <target>Transparence - Demande Provenance</target>
+  <target>demande de Transparence - Provenance</target>
 </trans-unit>
 <trans-unit id="s121d4949c579d589">
   <source>Transparency - Purpose Demand</source>
-  <target>Transparence - Demande But</target>
+  <target>demande de Transparence - But</target>
 </trans-unit>
 <trans-unit id="se90de8a37c063005">
   <source>Transparency - Retention Demand</source>
-  <target>Transparence - Demande Conservation</target>
+  <target>demande de Transparence - Conservation</target>
 </trans-unit>
 <trans-unit id="sbbaad0d65c8d25aa">
   <source>Transparency - Where Demand</source>
-  <target>Transparence - Demande Où</target>
+  <target>demande de Transparence - Où</target>
 </trans-unit>
 <trans-unit id="sf2f18e811b53b013">
   <source>Transparency - Who Demand</source>
-  <target>Transparence - Demande Qui</target>
+  <target>demande de Transparence - Qui</target>
 </trans-unit>
 <trans-unit id="s7d6780e4032b48f2">
   <source>user</source>
@@ -1201,11 +1201,13 @@
   <source>No demands to review!</source>
   <target>Aucune demande à traiter !</target>
 </trans-unit>
-<trans-unit id="sb51c8a60c26a33b6">
-  <source>Cancel Request</source>
+<trans-unit id="sc16e00a7a8b2fde2">
+  <source>Back</source>
+  <target>Retour</target>
 </trans-unit>
 <trans-unit id="se1ad99292eaa4000">
   <source>Submit Request</source>
+  <target>Envoyer la demande</target>
 </trans-unit>
 <trans-unit id="seb19908ed8209df2">
   <source>Request Summary</source>
@@ -1218,10 +1220,6 @@
 <trans-unit id="s7629854d26f1c5e6">
   <source>I address my Privacy Request to:</source>
   <target>J'adresse ma demande à :</target>
-</trans-unit>
-<trans-unit id="sc16e00a7a8b2fde2">
-  <source>Back</source>
-  <target>Retour</target>
 </trans-unit>
 <trans-unit id="s0fbf6dc6a1966408">
   <source>Next</source>
