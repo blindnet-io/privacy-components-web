@@ -1,0 +1,45 @@
+{
+  "name": "@blindnet/privacy-portal",
+  "version": "0.15.0",
+  "description": "Webcomponent for data subjects to create and monitor privacy requests",
+  "keywords": [],
+  "author": "blindnet <hello@blindnet.io>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blindnet-io/privacy-components-web.git",
+    "directory": "packages/privacy-portal"
+  },
+  "bugs": {
+    "url": "https://github.com/blindnet-io/privacy-components-web/issues"
+  },
+  "homepage": "https://github.com/blindnet-io/privacy-components-web#readme",
+  "scripts": {
+    "localize": "lit-localize extract && lit-localize build",
+    "localize:extract": "lit-localize extract",
+    "localize:build": "lit-localize build"
+  },
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "module": "dist/index.js",
+  "unpkg": "dist/index.core.min.js",
+  "customElements": "dist/custom-elements.json",
+  "directories": {
+    "lib": "dist",
+    "test": "test"
+  },
+  "files": [
+    "dist",
+    "import-map.json"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@blindnet/core": "^0.15.0",
+    "@blindnet/core-ui": "^0.15.0",
+    "@lit/localize": "^0.11.3",
+    "lit": "^2.4.1"
+  }
+}

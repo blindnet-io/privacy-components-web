@@ -765,14 +765,6 @@
   <source>Alerts</source>
   <target>Alertes</target>
 </trans-unit>
-<trans-unit id="sd3b15d6d4ea696f7">
-  <source>My additional message:</source>
-  <target>Mon message additionnel :</target>
-</trans-unit>
-<trans-unit id="sebbb864b5cee4a82">
-  <source>Please note that adding a personalized message might lead to the demand taking longer to be processed</source>
-  <target>Veuillez noter que l'ajout d'un message personnalisé peut entraîner un délai de traitement plus long</target>
-</trans-unit>
 <trans-unit id="sbaace8219b5f4612">
   <source>Select All</source>
   <target>Tout sélectionner</target>
@@ -785,18 +777,6 @@
   <source>Other data type:</source>
   <target>Autre type de donnée :</target>
 </trans-unit>
-<trans-unit id="s40717e0539504811">
-  <source>Specify a date range for the selected data categories:</source>
-  <target>Spécifier une période pour les catgéories de données sélectionnées</target>
-</trans-unit>
-<trans-unit id="sa6ab5184d6315895">
-  <source>From</source>
-  <target>De</target>
-</trans-unit>
-<trans-unit id="s08c83907b56ac0a4">
-  <source>to</source>
-  <target>à</target>
-</trans-unit>
 <trans-unit id="s3b91d548b3c1db64">
   <source>Click to expand</source>
   <target>Cliquez pour développer</target>
@@ -807,83 +787,83 @@
 </trans-unit>
 <trans-unit id="s4458b825a083bf32">
   <source>Access Demand</source>
-  <target>Demande d'Accès</target>
+  <target>demande d'Accès</target>
 </trans-unit>
 <trans-unit id="s5d0a8873a8f42ed5">
   <source>Delete Demand</source>
-  <target>Demande de Suppression</target>
+  <target>demande de Suppression</target>
 </trans-unit>
 <trans-unit id="s1f6e12ff7db89f1a">
   <source>Modify Demand</source>
-  <target>Demande de Modification</target>
+  <target>demande de Modification</target>
 </trans-unit>
 <trans-unit id="s91a3ac163365cce5">
   <source>Object Demand</source>
-  <target>Demande d'Opposition</target>
+  <target>demande d'Opposition</target>
 </trans-unit>
 <trans-unit id="s22a6bd776f195c07">
   <source>Portability Demand</source>
-  <target>Demande de Portabilité</target>
+  <target>demande de Portabilité</target>
 </trans-unit>
 <trans-unit id="s297342d4b6ea3424">
   <source>Restrict Demand</source>
-  <target>Demande de Restriction</target>
+  <target>demande de Restriction</target>
 </trans-unit>
 <trans-unit id="s22837da638fcc66a">
   <source>Revoke Demand</source>
-  <target>Demande de Révocation</target>
+  <target>demande de Révocation</target>
 </trans-unit>
 <trans-unit id="saf349b7ca2f1b5ce">
   <source>Transparency Demand</source>
-  <target>Demande de Transparence</target>
+  <target>demande de Transparence</target>
 </trans-unit>
 <trans-unit id="sf31b34a597b18b5f">
   <source>Transparency - Data Categories Demand</source>
-  <target>Transparence - Catégories de données</target>
+  <target>demande de Transparence - Catégories de données</target>
 </trans-unit>
 <trans-unit id="sbec2072e6d47df18">
   <source>Transparency - DPO Demand</source>
-  <target>Transparence - Demande DPO</target>
+  <target>demande de Transparence - DPO</target>
 </trans-unit>
 <trans-unit id="s3ab6eb333ca4c106">
   <source>Transparency - Known Demand</source>
-  <target>Transparence - Demande Connaissance</target>
+  <target>demande de Transparence - Connaissance</target>
 </trans-unit>
 <trans-unit id="s71b60b01f673c416">
   <source>Transparency - Legal Bases Demand</source>
-  <target>Transparence - Demande Bases Légales</target>
+  <target>demande de Transparence - Bases Légales</target>
 </trans-unit>
 <trans-unit id="s726641e532d6bd7e">
   <source>Transparency - Organization Demand</source>
-  <target>Transparence - Demande Organisation</target>
+  <target>demande de Transparence - Organisation</target>
 </trans-unit>
 <trans-unit id="s597bfa27b84f363d">
   <source>Transparency - Policy Demand</source>
-  <target>Transparence - Demande Politiques</target>
+  <target>demande de Transparence - Politiques</target>
 </trans-unit>
 <trans-unit id="s24b43708ccb264f0">
   <source>Transparency - Processing Categories Demand</source>
-  <target>Transparence - Demande Catégories de Traitements</target>
+  <target>demande de Transparence - Catégories de Traitements</target>
 </trans-unit>
 <trans-unit id="s99db8323c728b6a2">
   <source>Transparency - Provenance Demand</source>
-  <target>Transparence - Demande Provenance</target>
+  <target>demande de Transparence - Provenance</target>
 </trans-unit>
 <trans-unit id="s121d4949c579d589">
   <source>Transparency - Purpose Demand</source>
-  <target>Transparence - Demande But</target>
+  <target>demande de Transparence - But</target>
 </trans-unit>
 <trans-unit id="se90de8a37c063005">
   <source>Transparency - Retention Demand</source>
-  <target>Transparence - Demande Conservation</target>
+  <target>demande de Transparence - Conservation</target>
 </trans-unit>
 <trans-unit id="sbbaad0d65c8d25aa">
   <source>Transparency - Where Demand</source>
-  <target>Transparence - Demande Où</target>
+  <target>demande de Transparence - Où</target>
 </trans-unit>
 <trans-unit id="sf2f18e811b53b013">
   <source>Transparency - Who Demand</source>
-  <target>Transparence - Demande Qui</target>
+  <target>demande de Transparence - Qui</target>
 </trans-unit>
 <trans-unit id="s7d6780e4032b48f2">
   <source>user</source>
@@ -1221,9 +1201,9 @@
   <source>No demands to review!</source>
   <target>Aucune demande à traiter !</target>
 </trans-unit>
-<trans-unit id="sb51c8a60c26a33b6">
-  <source>Cancel Request</source>
-  <target>Annuler la demande</target>
+<trans-unit id="sc16e00a7a8b2fde2">
+  <source>Back</source>
+  <target>Retour</target>
 </trans-unit>
 <trans-unit id="se1ad99292eaa4000">
   <source>Submit Request</source>
@@ -1241,13 +1221,12 @@
   <source>I address my Privacy Request to:</source>
   <target>J'adresse ma demande à :</target>
 </trans-unit>
-<trans-unit id="sc16e00a7a8b2fde2">
-  <source>Back</source>
-  <target>Retour</target>
-</trans-unit>
 <trans-unit id="s0fbf6dc6a1966408">
   <source>Next</source>
   <target>Suivant</target>
+</trans-unit>
+<trans-unit id="s293e3a9c7dea3414">
+  <source>Invalid Input</source>
 </trans-unit>
 <trans-unit id="demand-form-action-sentence-start">
   <source>Details of my</source>
@@ -1257,9 +1236,29 @@
   <source>Other Options</source>
   <target>Autres Options</target>
 </trans-unit>
+<trans-unit id="s40717e0539504811">
+  <source>Specify a date range for the selected data categories:</source>
+  <target>Spécifier une période pour les catgéories de données sélectionnées</target>
+</trans-unit>
+<trans-unit id="sa6ab5184d6315895">
+  <source>From</source>
+  <target>De</target>
+</trans-unit>
+<trans-unit id="s08c83907b56ac0a4">
+  <source>to</source>
+  <target>à</target>
+</trans-unit>
 <trans-unit id="s6303c9c96b50c164">
   <source>My demand applies to data from the following provenance:</source>
   <target>Ma demande s'applique aux données provenant de :</target>
+</trans-unit>
+<trans-unit id="sd3b15d6d4ea696f7">
+  <source>My additional message:</source>
+  <target>Mon message additionnel :</target>
+</trans-unit>
+<trans-unit id="sebbb864b5cee4a82">
+  <source>Please note that adding a personalized message might lead to the demand taking longer to be processed</source>
+  <target>Veuillez noter que l'ajout d'un message personnalisé peut entraîner un délai de traitement plus long</target>
 </trans-unit>
 <trans-unit id="s956cfa37796224d1">
   <source>I want to access data from the following categories:</source>
