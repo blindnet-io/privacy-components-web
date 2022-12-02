@@ -291,6 +291,7 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
     e.stopPropagation();
     const { demandGroupIndex } = (e as CustomEvent).detail;
     this._demandGroupIndex = demandGroupIndex;
+    this._currentPostAddon = 0;
     this._uiState = RequestBuilderUIState.edit;
   }
 
@@ -477,7 +478,7 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
     this.updateDataCategories();
   }
 
-  handlePreModuleSlotChange(e: Event) {
+  handlePreAddonSlotChange(e: Event) {
     const slots = (e.target as HTMLSlotElement).assignedElements();
     if (slots[0] instanceof HTMLSlotElement) {
       const nestedSlots = (slots[0] as HTMLSlotElement).assignedElements();
@@ -504,7 +505,7 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
     }
   }
 
-  handlePostModuleSlotChange(e: Event) {
+  handlePostAddonSlotChange(e: Event) {
     const slots = (e.target as HTMLSlotElement).assignedElements();
     if (slots[0] instanceof HTMLSlotElement) {
       const nestedSlots = (slots[0] as HTMLSlotElement).assignedElements();
@@ -636,7 +637,7 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
             return html`
               <slot
                 name="preFormAddon"
-                @slotchange=${this.handlePreModuleSlotChange}
+                @slotchange=${this.handlePreAddonSlotChange}
                 ><span><!-- Default Slot Content --></span></slot
               >
             `;
@@ -659,7 +660,7 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
             return html`
               <slot
                 name="postFormAddon"
-                @slotchange=${this.handlePostModuleSlotChange}
+                @slotchange=${this.handlePostAddonSlotChange}
                 ><span><!-- Default Slot Content --></span></slot
               >
             `;

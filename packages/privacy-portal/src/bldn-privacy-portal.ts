@@ -2,19 +2,15 @@ import { CoreConfigurationMixin, PrivacyRequestDemand } from '@blindnet/core';
 import { bldnStyles } from '@blindnet/core-ui';
 import { localized, msg } from '@lit/localize';
 import { css, html, LitElement, PropertyValueMap } from 'lit';
-import {
-  customElement,
-  property,
-  queryAssignedElements,
-  state,
-} from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 import './request-builder/bldn-request-builder.js';
-import './request-builder/request-modules/bldn-request-addon.js';
 import './request-viewer/bldn-request-viewer.js';
 import { choose } from 'lit/directives/choose.js';
+import { when } from 'lit/directives/when.js';
 import { setLocale } from './localization.js';
+import { BldnRequestAddon } from './request-builder/request-modules/bldn-request-addon.js';
 
 enum DefaultDataCategories {
   'ALL' = '*',
@@ -56,17 +52,9 @@ export class BldnPrivacyPortal extends CoreConfigurationMixin(LitElement) {
 
   @state() _uiState: PrivacyPortalUIState = PrivacyPortalUIState.createRequest;
 
-  @queryAssignedElements({
-    slot: 'preFormModule',
-    selector: 'bldn-request-module',
-  })
-  _preFormModules!: Array<HTMLElement>;
+  @state() _preAddons: Element[] = [];
 
-  @queryAssignedElements({
-    slot: 'postFormModule',
-    selector: 'bldn-request-module',
-  })
-  _postFormModules!: Array<HTMLElement>;
+  @state() _postAddons: Element[] = [];
 
   constructor() {
     super();
@@ -117,6 +105,30 @@ export class BldnPrivacyPortal extends CoreConfigurationMixin(LitElement) {
     const { token } = (e as CustomEvent).detail;
     if (token) {
       this.apiToken = token;
+    }
+  }
+
+  handlePreAddonSlotChange(e: Event) {
+    const slots = (e.target as HTMLSlotElement).assignedElements();
+    // Check if any addons were slotted
+    if (
+      this._preAddons.length === 0 &&
+      slots.length !== 0 &&
+      slots.every(slot => slot instanceof BldnRequestAddon)
+    ) {
+      this._preAddons = slots;
+    }
+  }
+
+  handlePostAddonSlotChange(e: Event) {
+    const slots = (e.target as HTMLSlotElement).assignedElements();
+    // Check if any addons were slotted
+    if (
+      this._postAddons.length === 0 &&
+      slots.length !== 0 &&
+      slots.every(slot => slot instanceof BldnRequestAddon)
+    ) {
+      this._postAddons = slots;
     }
   }
 
@@ -172,12 +184,30 @@ export class BldnPrivacyPortal extends CoreConfigurationMixin(LitElement) {
               actions=${JSON.stringify(this.actions)}
               @bldn-request-builder:request-sent=${this.handleRequestSent}
             >
-              <slot name="preFormAddon" slot="preFormAddon"
-                ><span><!-- Default Slot Content --></span></slot
-              >
-              <slot name="postFormAddon" slot="postFormAddon"
-                ><span><!-- Default Slot Content --></span></slot
-              >
+              ${when(
+                this._preAddons.length > 0,
+                () => html` ${this._preAddons} `,
+                () => html`
+                  <slot
+                    name="preFormAddon"
+                    slot="preFormAddon"
+                    @slotchange=${this.handlePreAddonSlotChange}
+                    ><span><!-- Default Slot Content --></span></slot
+                  >
+                `
+              )}
+              ${when(
+                this._postAddons.length > 0,
+                () => html` ${this._postAddons} `,
+                () => html`
+                  <slot
+                    name="postFormAddon"
+                    slot="postFormAddon"
+                    @slotchange=${this.handlePostAddonSlotChange}
+                    ><span><!-- Default Slot Content --></span></slot
+                  >
+                `
+              )}
             </bldn-request-builder>
           `,
         ],
