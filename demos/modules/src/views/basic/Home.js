@@ -56,7 +56,15 @@ export class AppHome extends LitElement {
         for details and instructions.
       </p>
 
-      <p>🚀 <span class="app-link" @click=${() => Router.go(`${window.location.origin}/demos/modules/basic/privacy`)}>Make a privacy request.</span></p>
+      <p>
+        🚀
+        <span
+          class="app-link"
+          @click=${() =>
+            Router.go(`${window.location.origin}/demos/modules/basic/privacy`)}
+          >Make a privacy request.</span
+        >
+      </p>
     `;
   }
 }
