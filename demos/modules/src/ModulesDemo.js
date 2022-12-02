@@ -3,10 +3,8 @@ import { Router } from '@vaadin/router';
 import 'carbon-web-components/es/components/ui-shell/index.js';
 import { choose } from 'lit/directives/choose.js';
 
-const logo = new URL(
-  '../assets/blindnet-logo-cropped.png',
-  import.meta.url
-).href;
+const logo = new URL('../assets/blindnet-logo-cropped.png', import.meta.url)
+  .href;
 
 const ModuleDemo = {
   basic: 'basic',
