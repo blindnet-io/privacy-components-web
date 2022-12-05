@@ -12,7 +12,7 @@
     "build:localize": "lerna run localize",
     "build:fix-locales": "node ./tasks/build-fix-locales.js",
     "build:rollup": "rollup -c",
-    "build": "yarn run build:imports && yarn run build:localize && yarn run build:rollup && yarn run build:fix-locales",
+    "build": "yarn run build:imports && yarn run build:rollup && yarn run build:fix-locales",
     "watch": "yarn run build:rollup --configKeep --configRaw --watch",
     "analyze": "lerna exec -- \"cem analyze --litelement\"",
     "start": "wds",

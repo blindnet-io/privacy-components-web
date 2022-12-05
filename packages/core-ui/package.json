@@ -1,0 +1,40 @@
+{
+  "name": "@blindnet/core-ui",
+  "version": "0.15.0",
+  "description": "UI components used by all blindnet web modules",
+  "author": "blindnet <hello@blindnet.io>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blindnet-io/privacy-components-web.git",
+    "directory": "packages/core-ui"
+  },
+  "bugs": {
+    "url": "https://github.com/blindnet-io/privacy-components-web/issues"
+  },
+  "homepage": "https://github.com/blindnet-io/privacy-components-web#readme",
+  "scripts": {
+    "localize": "lit-localize extract && lit-localize build"
+  },
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "module": "dist/index.js",
+  "unpkg": "dist/index.core.min.js",
+  "customElements": "dist/custom-elements.json",
+  "directories": {
+    "lib": "dist",
+    "test": "test"
+  },
+  "files": [
+    "dist",
+    "import-map.json"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@lit/localize": "^0.11.3",
+    "lit": "^2.4.1"
+  }
+}

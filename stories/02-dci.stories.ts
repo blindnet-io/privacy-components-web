@@ -1,10 +1,10 @@
 import { html, TemplateResult } from 'lit';
-import '../packages/dci/dist/index.js';
+import '../packages/bridge/dist/index.js';
 
 export default {
   title: 'Data Consumer Interface (DCI)',
   id: 'dci',
-  component: 'bldn-data-consum',
+  component: 'bldn-bridge',
   argTypes: {},
 };
 
@@ -16,8 +16,6 @@ interface Story<T> {
 
 interface ArgTypes {}
 
-const Template: Story<ArgTypes> = () => html`
-  <bldn-data-consum></bldn-data-consum>
-`;
+const Template: Story<ArgTypes> = () => html` <bldn-bridge></bldn-bridge> `;
 
 export const Regular = Template.bind({});
