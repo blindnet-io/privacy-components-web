@@ -36,6 +36,7 @@
 'h7a93d23c2fe2e792': html`Toutes données qui m'identifient de manière unique`,
 'h84d8977d66f8ae52': html`<b>Tous</b> les buts`,
 'h87332548e751bc1c': html`<b>Autre donnée :</b> Spécifiez un autre type de donnée`,
+'h906586cf73f251ad': html`Révoquer <b>certains</b> consentements (sélectionnez ceux que vous souhaitez <b>révoquer</b>)`,
 'h9210239263c5ae81': html`Données permettant de me contacter`,
 'h9552e7ccf7b9afc6': html`Ce système, tous les systèmes au sein de cette organisation et tous les partenaires avec lesquels des données ont été <b>partagées ou obtenues</b>`,
 'h9c3201e3fb42f57f': html`Obtenues auprès d'un utilisateur`,
@@ -44,10 +45,10 @@
 'ha30c4d3b566b6b1a': html`Annulée`,
 'ha6a83bab31190c68': html`Données sur ma santé`,
 'ha8ea706cb7b3c5f2': html`Toutes les cibles`,
-'ha9713792ec60139d': html`Révoquer <b>certains</b> consentements (sélectionnez ceux que vous souhaitez
-                <b>révoquer</b>)`,
+'haf63d34c8601dd41': html`${0}`,
 'hb2029b140d2b8e3a': html`Ce système`,
 'hba521eb4ef623c9e': html`<b>Toutes</b> les catégories de traitements`,
+'hc10f9a4c8891fc49': html`<b>Toutes</b> les informations relatives aux pratiques de traitement de données et à mes données`,
 'hc70db2f9828c4ea7': html`Obtenues auprès d'un utilisateur du
                   <i>${0}</i> système`,
 'hc7ebaff05b625ee2': html`Obtenues auprès d'un utilisateur, d'un autre système et/ou dérivées de
@@ -118,6 +119,7 @@
 's1f6e12ff7db89f1a': `demande de Modification`,
 's1f8ebb62edb4014b': `Démographiques - Orientation Sexuelle`,
 's208ea5ca39142a3a': `Transparence - Rétention`,
+'s213a15cab3105248': `sont conservées pendant`,
 's2142728a8840d713': `Affiliation adhésion`,
 's21ba09ae7cdd6e66': `Affiliation - Données de Lieu de Travail`,
 's21e36d8fc7bab2d5': `Comportement - Données de Télémétrie`,
@@ -130,6 +132,7 @@
 's255eaeef4249ebf2': `Qui peut accéder aux données que l'organisation a sur moi`,
 's25b9a7c705c6942c': `mois après`,
 's28360fa3d4d84322': `Message optionnel`,
+'s293e3a9c7dea3414': `Entrée non valide`,
 's297342d4b6ea3424': `demande de Restriction`,
 's298104654055b365': `Restriction`,
 's29ec563d56cf6c6b': `Autres Options`,
@@ -413,8 +416,5 @@
 'sfdad6bb711adaff5': `Votre demande d'opposition a été approuvée`,
 'sfef5aebda25a65db': `Erreur lors de l'obtention des détails de la demande. Veuillez actualiser la plage plus tard.`,
 'sff7e60a212b3fa64': `Prendre mes données et les faire transférer ailleurs`,
-'s293e3a9c7dea3414': `Invalid Input`,
-'s213a15cab3105248': `is kept for`,
-'haf63d34c8601dd41': html`${0}`,
     };
   

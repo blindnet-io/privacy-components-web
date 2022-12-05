@@ -110,10 +110,7 @@ export const ACTION_DESCRIPTIONS = {
 
 export const TRANSPARENCY_ACTION_DESCRIPTIONS = {
   TRANSPARENCY: () =>
-    msg(
-      html`<b>All</b> information related to data processing practices and my
-        data`
-    ),
+    msg(html`<b>All</b> information related to data processing practices and my data`),
   OTHER: () =>
     msg(
       'Do or know something else. Please note it may take longer to be answered'
