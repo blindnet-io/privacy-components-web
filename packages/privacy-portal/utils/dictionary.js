@@ -80,8 +80,7 @@ const ACTION_DESCRIPTIONS = {
     'TRANSPARENCY.WHO': () => msg('Who can access the data that the organization has on me'),
 };
 const TRANSPARENCY_ACTION_DESCRIPTIONS = {
-    TRANSPARENCY: () => msg(html `<b>All</b> information related to data processing practices and my
-        data`),
+    TRANSPARENCY: () => msg(html `<b>All</b> information related to data processing practices and my data`),
     OTHER: () => msg('Do or know something else. Please note it may take longer to be answered'),
     'TRANSPARENCY.DATA-CATEGORIES': () => msg('The categories of the data the organization has on me'),
     'TRANSPARENCY.DPO': () => msg('The contact details of the data protection officer'),
