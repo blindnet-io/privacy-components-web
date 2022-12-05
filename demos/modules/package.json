@@ -1,7 +1,7 @@
 {
   "name": "@blindnet-demos/modules",
   "description": "Simple tutorial for the blindnet modules",
-  "version": "0.15.0",
+  "version": "0.16.1",
   "license": "MIT",
   "private": true,
   "type": "module",
@@ -24,9 +24,9 @@
   },
   "dependencies": {
     "@auth0/auth0-spa-js": "^1.22.5",
-    "@blindnet/bridge": "^0.15.0",
-    "@blindnet/core": "^0.15.0",
-    "@blindnet/privacy-portal": "^0.15.0",
+    "@blindnet/bridge": "^0.16.0",
+    "@blindnet/core": "^0.16.0",
+    "@blindnet/privacy-portal": "^0.16.0",
     "@vaadin/router": "^1.7.4",
     "carbon-web-components": "^1.21.0",
     "jwt-decode": "^3.1.2",

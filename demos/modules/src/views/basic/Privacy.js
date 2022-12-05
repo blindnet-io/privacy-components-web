@@ -106,8 +106,8 @@ export class AppPrivacy extends LitElement {
     // Auto click the refresh button every 3 seconds if it exists
     this._intervalId = setInterval(() => {
       const refreshButton = this.renderRoot
-        .querySelector('bldn-priv-request')
-        ?.shadowRoot?.querySelector('bldn-submitted-requests')
+        .querySelector('bldn-privacy-portal')
+        ?.shadowRoot?.querySelector('bldn-request-viewer')
         ?.shadowRoot?.querySelector('bldn-request-status')
         ?.shadowRoot?.querySelector('bldn-dropdown.main-section')
         ?.querySelector('#summary-heading')
