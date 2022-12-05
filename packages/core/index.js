@@ -1,17 +1,6 @@
 export { BlindnetCore } from './BlindnetCore.js';
 export { CoreConfigurationMixin } from './configuration/core-configuration-mixin.js';
 export { ComputationAPI } from './computation/computation-api.js';
-export { DataConsumerAlerts } from './components/bldn-data-consum-alerts.js';
-export { DataConsumerDemandListItem } from './components/bldn-data-consum-demand-list-item.js';
-export { DataConsumerDemandList } from './components/bldn-data-consum-demand-list.js';
-export { DataConsumerRequests } from './components/bldn-data-consum-requests.js';
-export { HorizontalList } from './components/bldn-horizontal-list.js';
-export { ToggleButton } from './components/bldn-toggle-button.js';
-export { BldnButton } from './components/bldn-button.js';
-export { BldnInput } from './components/bldn-input.js';
-export { BldnNavToggle } from './components/bldn-nav-toggle.js';
-export { bldnStyles } from './components/bldn-styles.js';
-export { ACTION_DESCRIPTIONS, ACTION_TITLES, AFTER_TITLES, DATA_CATEGORY_DESCRIPTIONS, DATA_CATEGORY_TITLES, DEMAND_STATUS_DESCRIPTIONS, POLICY_TYPE_TITLES, PROCESSING_CATEGORIES, PROCESSING_CATEGORY_DESCRIPTIONS, PROVENANCE_DESCRIPTIONS, PROVENANCE_DESCRIPTIONS_STATUS_VIEW, PURPOSES, PURPOSE_DESCRIPTIONS, STATUS_DESCRIPTIONS, TARGET_DESCRIPTIONS, TRANSPARENCY_ACTION_DESCRIPTIONS } from './language/dictionary.js';
 export { ApiError } from './models/generated-models/core/ApiError.js';
 export { CancelError, CancelablePromise } from './models/generated-models/core/CancelablePromise.js';
 export { OpenAPI } from './models/generated-models/core/OpenAPI.js';
