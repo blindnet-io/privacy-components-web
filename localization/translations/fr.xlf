@@ -865,6 +865,10 @@
   <source>Transparency - Who Demand</source>
   <target>demande de Transparence - Qui</target>
 </trans-unit>
+<trans-unit id="hc10f9a4c8891fc49">
+  <source><x id="0" equiv-text="&lt;b&gt;"/>All<x id="1" equiv-text="&lt;/b&gt;"/> information related to data processing practices and my data</source>
+  <target><x id="0" equiv-text="&lt;b&gt;"/>Toutes<x id="1" equiv-text="&lt;/b&gt;"/> les informations relatives aux pratiques de traitement de données et à mes données</target>
+</trans-unit>
 <trans-unit id="s7d6780e4032b48f2">
   <source>user</source>
   <target>utilisateur</target>
@@ -1227,6 +1231,7 @@
 </trans-unit>
 <trans-unit id="s293e3a9c7dea3414">
   <source>Invalid Input</source>
+  <target>Entrée non valide</target>
 </trans-unit>
 <trans-unit id="demand-form-action-sentence-start">
   <source>Details of my</source>
@@ -1342,11 +1347,9 @@
   <source>Revoke <x id="0" equiv-text="&lt;b&gt;"/>all<x id="1" equiv-text="&lt;/b&gt;"/> consents</source>
   <target>Révoquer <x id="0" equiv-text="&lt;b&gt;"/>tous<x id="1" equiv-text="&lt;/b&gt;"/> les consentements</target>
 </trans-unit>
-<trans-unit id="ha9713792ec60139d">
-  <source>Revoke <x id="0" equiv-text="&lt;b&gt;"/>specific<x id="1" equiv-text="&lt;/b&gt;"/> consents (select those you wish to
-                <x id="2" equiv-text="&lt;b&gt;"/>revoke<x id="3" equiv-text="&lt;/b&gt;"/>)</source>
-  <target>Révoquer <x id="0" equiv-text="&lt;b&gt;"/>certains<x id="1" equiv-text="&lt;/b&gt;"/> consentements (sélectionnez ceux que vous souhaitez
-                <x id="2" equiv-text="&lt;b&gt;"/>révoquer<x id="3" equiv-text="&lt;/b&gt;"/>)</target>
+<trans-unit id="h906586cf73f251ad">
+  <source>Revoke <x id="0" equiv-text="&lt;b&gt;"/>specific<x id="1" equiv-text="&lt;/b&gt;"/> consents (select those you wish to<x id="2" equiv-text="&lt;b&gt;"/>revoke<x id="3" equiv-text="&lt;/b&gt;"/>)</source>
+  <target>Révoquer <x id="0" equiv-text="&lt;b&gt;"/>certains<x id="1" equiv-text="&lt;/b&gt;"/> consentements (sélectionnez ceux que vous souhaitez <x id="2" equiv-text="&lt;b&gt;"/>révoquer<x id="3" equiv-text="&lt;/b&gt;"/>)</target>
 </trans-unit>
 <trans-unit id="sad3e3c8146fc920f">
   <source>Status</source>
@@ -1366,6 +1369,7 @@
 </trans-unit>
 <trans-unit id="s213a15cab3105248">
   <source>is kept for</source>
+  <target>sont conservées pendant</target>
 </trans-unit>
 <trans-unit id="s25b9a7c705c6942c">
   <source>months after</source>
@@ -1435,6 +1439,7 @@
 </trans-unit>
 <trans-unit id="haf63d34c8601dd41">
   <source><x id="0" equiv-text="${ACTION_TITLES_WITH_DEMAND[demand.requested_action]()}"/></source>
+  <target><x id="0" equiv-text="${ACTION_TITLES_WITH_DEMAND[demand.requested_action]()}"/></target>
 </trans-unit>
 <trans-unit id="h4606c8f9df5fda02">
   <source><x id="0" equiv-text="${ACTION_TITLES[subDemand.requested_action]()}"/>

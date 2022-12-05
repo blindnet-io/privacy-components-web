@@ -28,6 +28,7 @@ custom-elements.json
 build/
 xliff/
 generated/
+dictionary.ts
 import-map.json
 stories-build/
 

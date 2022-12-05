@@ -84,10 +84,8 @@ export class BldnRevokeConsentForm extends ActionForm {
           },
           {
             value: 'some',
-            display: msg(
-              html`Revoke <b>specific</b> consents (select those you wish to
-                <b>revoke</b>)`
-            ),
+            // prettier-ignore
+            display: msg(html`Revoke <b>specific</b> consents (select those you wish to<b>revoke</b>)`),
             checked: this._showEach,
           },
         ]}
