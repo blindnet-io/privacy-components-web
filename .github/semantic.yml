@@ -17,7 +17,7 @@ scopes:
   - '@blindnet/core-ui'
   - '@blindnet/consent-checkbox'
   - '@blindnet/configuration'
-  - '@blindnet-demos/devkit-simple-tutorial'
+  - '@blindnet-demos/modules'
   - '@blindnet-demos/static'
 allowMergeCommits: false
 allowRevertCommits: true
