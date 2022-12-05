@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.16.1](https://github.com/blindnet-io/privacy-components-web/compare/v0.16.0...v0.16.1) (2022-12-05)
+
+### Bug Fixes
+
+- **@blindnet-demos/modules:** fix auto click in demo ([d00a277](https://github.com/blindnet-io/privacy-components-web/commit/d00a277969c393e66bd2678062091ff1fcaa52f2))
+
 # [0.16.0](https://github.com/blindnet-io/privacy-components-web/compare/v0.15.0...v0.16.0) (2022-12-05)
 
 ### Features

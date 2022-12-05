@@ -1,7 +1,7 @@
 {
   "name": "@blindnet-demos/modules",
   "description": "Simple tutorial for the blindnet modules",
-  "version": "0.16.0",
+  "version": "0.16.1",
   "license": "MIT",
   "private": true,
   "type": "module",
