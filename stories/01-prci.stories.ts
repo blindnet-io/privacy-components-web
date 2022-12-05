@@ -1,12 +1,12 @@
 import { html, TemplateResult } from 'lit';
-import '../packages/prci/dist/index.js';
+import '../packages/privacy-portal/dist/index.js';
 import { allLocales } from '../packages/privacy-portal/dist/generated/locale-codes.js';
 import { setLocale } from '../packages/privacy-portal/dist/localization.js';
 
 export default {
   title: 'Privacy Request Capture Interface (PRCI)',
   id: 'prci',
-  component: 'bldn-priv-request',
+  component: 'bldn-privacy-portal',
   argTypes: {
     actions: {
       control: 'text',
@@ -35,34 +35,34 @@ interface ArgTypes {
 }
 
 const RegularTemplate: Story<ArgTypes> = () => html`
-  <bldn-priv-request></bldn-priv-request>
+  <bldn-privacy-portal></bldn-privacy-portal>
 `;
 
 const CustomActionsTemplate: Story<ArgTypes> = ({ actions }: ArgTypes) => html`
-  <bldn-priv-request
+  <bldn-privacy-portal
     actions="${actions || '["access","delete","transparency"]'}"
-  ></bldn-priv-request>
+  ></bldn-privacy-portal>
 `;
 
 const CustomDataCategoriesTemplate: Story<ArgTypes> = ({
   dataCategories,
 }) => html`
-  <bldn-priv-request
+  <bldn-privacy-portal
     data-categories="${dataCategories || ''}"
-  ></bldn-priv-request>
+  ></bldn-privacy-portal>
 `;
 
 const CustomLocaleTemplate: Story<ArgTypes> = ({ locale }: ArgTypes) => {
   setLocale(locale || 'fr');
-  return html` <bldn-priv-request></bldn-priv-request> `;
+  return html` <bldn-privacy-portal></bldn-privacy-portal> `;
 };
 
 const CustomPCETemplate: Story<ArgTypes> = ({
   computationBaseUrl,
 }: ArgTypes) => html`
-  <bldn-priv-request
+  <bldn-privacy-portal
     computation-base-url=${computationBaseUrl || ''}
-  ></bldn-priv-request>
+  ></bldn-privacy-portal>
 `;
 
 export const Regular = RegularTemplate.bind({});
