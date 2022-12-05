@@ -16,8 +16,6 @@ interface Story<T> {
 
 interface ArgTypes {}
 
-const Template: Story<ArgTypes> = () => html`
-  <bldn-bridge></bldn-bridge>
-`;
+const Template: Story<ArgTypes> = () => html` <bldn-bridge></bldn-bridge> `;
 
 export const Regular = Template.bind({});
