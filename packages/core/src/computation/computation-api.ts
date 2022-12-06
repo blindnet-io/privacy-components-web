@@ -2,6 +2,8 @@
 /* eslint-disable camelcase */
 import {
   ApproveDemandPayload,
+  CompletedDemandInfoPayload,
+  CompletedDemandPayload,
   CreatePrivacyRequestPayload,
   DataCategoryResponsePayload,
   DenyDemandPayload,
@@ -351,6 +353,65 @@ export class ComputationAPI {
         throw new Error(response.statusText);
       }
       return response.json() as Promise<PendingDemandDetailsPayload>;
+    });
+  }
+
+  /**
+   * Gets a list of all demands which are pending a response
+   * @returns {CompletedDemandPayload[]}
+   */
+  async getCompletedDemands(newAdminToken?: string) {
+    // Update the admin token if one was passed
+    if (typeof newAdminToken !== 'undefined') {
+      this.setAdminToken(newAdminToken);
+    } else if (!this._adminToken) {
+      throw new Error('You must set an admin token before making API calls!');
+    }
+
+    return fetch(
+      `https://devkit-pce-staging.azurewebsites.net/v0/bridge/completed-requests`,
+      {
+        method: 'GET',
+        headers: {
+          accept: 'application/json',
+          Authorization: `Bearer ${this._adminToken}`,
+        },
+      }
+    ).then(response => {
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+      return response.json() as Promise<CompletedDemandPayload[]>;
+    });
+  }
+
+  /**
+   * Get the info and recomendation for a specific demand
+   * @param {string} id uuid of the demand
+   * @returns {CompletedDemandInfoPayload}
+   */
+  async getCompletedDemandDetails(id: string, newAdminToken?: string) {
+    // Update the admin token if one was passed
+    if (typeof newAdminToken !== 'undefined') {
+      this.setAdminToken(newAdminToken);
+    } else if (!this._adminToken) {
+      throw new Error('You must set an admin token before making API calls!');
+    }
+
+    return fetch(
+      `https://devkit-pce-staging.azurewebsites.net/v0/bridge/completed-requests/${id}`,
+      {
+        method: 'GET',
+        headers: {
+          accept: 'application/json',
+          Authorization: `Bearer ${this._adminToken}`,
+        },
+      }
+    ).then(response => {
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+      return response.json() as Promise<CompletedDemandInfoPayload>;
     });
   }
 

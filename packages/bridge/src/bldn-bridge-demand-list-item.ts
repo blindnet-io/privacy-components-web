@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { msg } from '@lit/localize';
 import { css, html, LitElement, PropertyValueMap } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
@@ -8,6 +9,8 @@ import {
   ComputationAPI,
   PendingDemandDetailsPayload,
   PendingDemandPayload,
+  DataSubjectPayload,
+  CompletedDemandPayload,
   Recommendation,
 } from '@blindnet/core';
 import { bldnStyles } from '@blindnet/core-ui';
@@ -19,9 +22,16 @@ enum DropdownUIState {
   Responded,
 }
 
+interface DisplayedDemand {
+  id: string;
+  date: string;
+  action: PendingDemandPayload.action | CompletedDemandPayload.action;
+  data_subject?: DataSubjectPayload;
+}
+
 @customElement('bldn-bridge-demand-list-item')
 export class BldnBridgeDemandListItem extends LitElement {
-  @property({ type: Object }) demand: PendingDemandPayload | undefined;
+  @property({ type: Object }) demand: DisplayedDemand | undefined;
 
   @state() _demandDetails: PendingDemandDetailsPayload | undefined;
 
@@ -144,7 +154,7 @@ export class BldnBridgeDemandListItem extends LitElement {
   protected willUpdate(
     _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
   ): void {
-    if (_changedProperties.has('demand') && this.demand) {
+    if (_changedProperties.has('_open') && this._open && this.demand) {
       ComputationAPI.getInstance()
         .getPendingDemandDetails(this.demand.id)
         .then(details => {

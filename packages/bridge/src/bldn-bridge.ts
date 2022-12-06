@@ -8,6 +8,7 @@ import './bldn-bridge-requests.js';
 import './bldn-bridge-alerts.js';
 
 import {
+  CompletedDemandPayload,
   ComputationAPI,
   CoreConfigurationMixin,
   PendingDemandPayload,
@@ -24,7 +25,9 @@ enum BridgeUIState {
 export class BldnBridge extends CoreConfigurationMixin(LitElement) {
   @state() _uiState: BridgeUIState = BridgeUIState.requests;
 
-  @state() _demands: PendingDemandPayload[] = [];
+  @state() _pendingDemands: PendingDemandPayload[] = [];
+
+  @state() _completedDemands: CompletedDemandPayload[] = [];
 
   constructor() {
     super();
@@ -55,8 +58,13 @@ export class BldnBridge extends CoreConfigurationMixin(LitElement) {
     if (_changedProperties.has('adminToken') && this.adminToken) {
       ComputationAPI.getInstance()
         .getPendingDemands(this.adminToken)
-        .then(demands => {
-          this._demands = demands;
+        .then(pendingDemands => {
+          this._pendingDemands = pendingDemands;
+        });
+      ComputationAPI.getInstance()
+        .getCompletedDemands(this.adminToken)
+        .then(completedDemands => {
+          this._completedDemands = completedDemands;
         });
     }
   }
@@ -73,7 +81,8 @@ export class BldnBridge extends CoreConfigurationMixin(LitElement) {
           BridgeUIState.requests,
           () =>
             html`<bldn-bridge-requests
-              demands=${JSON.stringify(this._demands)}
+              .pendingDemands=${this._pendingDemands}
+              .completedDemands=${this._completedDemands}
             ></bldn-bridge-requests>`,
         ],
         [
