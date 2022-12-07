@@ -25,6 +25,32 @@ export declare const ACTION_TITLES: {
     OTHER: () => string;
 };
 /**
+ * Mapping of PRIV Actions to corresponding titles.
+ */
+export declare const ACTION_TITLES_WITH_DEMAND: {
+    ACCESS: () => string;
+    DELETE: () => string;
+    MODIFY: () => string;
+    OBJECT: () => string;
+    PORTABILITY: () => string;
+    RESTRICT: () => string;
+    'REVOKE-CONSENT': () => string;
+    TRANSPARENCY: () => string;
+    'TRANSPARENCY.DATA-CATEGORIES': () => string;
+    'TRANSPARENCY.DPO': () => string;
+    'TRANSPARENCY.KNOWN': () => string;
+    'TRANSPARENCY.LEGAL-BASES': () => string;
+    'TRANSPARENCY.ORGANIZATION': () => string;
+    'TRANSPARENCY.POLICY': () => string;
+    'TRANSPARENCY.PROCESSING-CATEGORIES': () => string;
+    'TRANSPARENCY.PROVENANCE': () => string;
+    'TRANSPARENCY.PURPOSE': () => string;
+    'TRANSPARENCY.RETENTION': () => string;
+    'TRANSPARENCY.WHERE': () => string;
+    'TRANSPARENCY.WHO': () => string;
+    OTHER: () => string;
+};
+/**
  * Mapping of PRIV Actions to corresponding descriptions.
  */
 export declare const ACTION_DESCRIPTIONS: {
@@ -66,6 +92,13 @@ export declare const TRANSPARENCY_ACTION_DESCRIPTIONS: {
     'TRANSPARENCY.WHERE': () => string;
     'TRANSPARENCY.WHO': () => string;
 };
+export declare const PROVENANCE_TITLES: {
+    '*': () => string;
+    USER: () => string;
+    'USER.DATA-SUBJECT': () => string;
+    DERIVED: () => string;
+    TRANSFERRED: () => string;
+};
 export declare const PROVENANCE_DESCRIPTIONS: {
     '*': () => string;
     USER: () => string;
@@ -81,6 +114,48 @@ export declare const PROVENANCE_DESCRIPTIONS_STATUS_VIEW: {
     TRANSFERRED: () => string;
 };
 export declare const DATA_CATEGORY_TITLES: {
+    '*': () => string;
+    AFFILIATION: () => string;
+    'AFFILIATION.MEMBERSHIP': () => string;
+    'AFFILIATION.MEMBERSHIP.UNION': () => string;
+    'AFFILIATION.SCHOOL': () => string;
+    'AFFILIATION.WORKPLACE': () => string;
+    BEHAVIOR: () => string;
+    'BEHAVIOR.ACTIVITY': () => string;
+    'BEHAVIOR.CONNECTION': () => string;
+    'BEHAVIOR.PREFERENCE': () => string;
+    'BEHAVIOR.TELEMETRY': () => string;
+    BIOMETRIC: () => string;
+    CONTACT: () => string;
+    'CONTACT.EMAIL': () => string;
+    'CONTACT.ADDRESS': () => string;
+    'CONTACT.PHONE': () => string;
+    DEMOGRAPHIC: () => string;
+    'DEMOGRAPHIC.AGE': () => string;
+    'DEMOGRAPHIC.BELIEFS': () => string;
+    'DEMOGRAPHIC.GENDER': () => string;
+    'DEMOGRAPHIC.ORIGIN': () => string;
+    'DEMOGRAPHIC.RACE': () => string;
+    'DEMOGRAPHIC.SEXUAL-ORIENTATION': () => string;
+    DEVICE: () => string;
+    FINANCIAL: () => string;
+    'FINANCIAL.BANK-ACCOUNT': () => string;
+    GENETIC: () => string;
+    HEALTH: () => string;
+    IMAGE: () => string;
+    LOCATION: () => string;
+    NAME: () => string;
+    PROFILING: () => string;
+    RELATIONSHIPS: () => string;
+    UID: () => string;
+    'UID.ID': () => string;
+    'UID.IP': () => string;
+    'UID.USER-ACCOUNT': () => string;
+    'UID.SOCIAL-MEDIA': () => string;
+    'OTHER-DATA': () => string;
+    'OTHER-DATA.PROOF': () => string;
+};
+export declare const DATA_CATEGORY_TITLES_WITH_DATA: {
     '*': () => string;
     AFFILIATION: () => string;
     'AFFILIATION.MEMBERSHIP': () => string;

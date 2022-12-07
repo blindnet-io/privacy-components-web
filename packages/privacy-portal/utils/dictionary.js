@@ -202,8 +202,7 @@ const DATA_CATEGORY_TITLES_WITH_DATA = {
 };
 const DATA_CATEGORY_DESCRIPTIONS = {
     '*': () => msg(html `<b>All</b> categories of data the organization has on me`),
-    AFFILIATION: () => msg(html `Groups and Organisations I am linked to through work, studies, or
-      membership`),
+    AFFILIATION: () => msg(html `Groups and Organisations I am linked to through work, studies, or membership`),
     'AFFILIATION.MEMBERSHIP': () => msg(html ``),
     'AFFILIATION.MEMBERSHIP.UNION': () => msg(html ``),
     'AFFILIATION.SCHOOL': () => msg(html ``),
@@ -233,10 +232,8 @@ const DATA_CATEGORY_DESCRIPTIONS = {
     IMAGE: () => msg(html `Any graphic representation (e.g., image, video) of me`),
     LOCATION: () => msg(html `Geographic location`),
     NAME: () => msg(html `First names, last names, nicknames, and other names`),
-    PROFILING: () => msg(html `Any data establishing a degree of similarity of with others (e.g.,
-      clusters, user-profiles)`),
-    RELATIONSHIPS: () => msg(html `Data about relationships I have with others, social activity and
-      interaction`),
+    PROFILING: () => msg(html `Any data establishing a degree of similarity of with others (e.g., clusters, user-profiles)`),
+    RELATIONSHIPS: () => msg(html `Data about relationships I have with others, social activity and interaction`),
     UID: () => msg(html `Any data that uniquely identifies me`),
     'UID.ID': () => msg(html ``),
     'UID.IP': () => msg(html ``),
@@ -248,12 +245,9 @@ const TARGET_DESCRIPTIONS = {
     '*': () => msg(html `All targets`),
     SYSTEM: () => msg(html `This system`),
     ORGANIZATION: () => msg(html `This system and all systems within this organization`),
-    PARTNERS: () => msg(html `This system, all systems within this organization, and all partners
-        systems where data has been <b>shared or obtained</b>`),
-    'PARTNERS.DOWNWARD': () => msg(html `This system, all systems within this organization, and all partners
-        systems with which data has been <b>shared</b>`),
-    'PARTNERS.UPWARD': () => msg(html `This system, all systems within this organization, and all partners
-        systems from which data has been <b>obtained</b>`),
+    PARTNERS: () => msg(html `Systems belonging to any Organization with which the data is exchanged`),
+    'PARTNERS.DOWNWARD': () => msg(html `Systems belonging to any Organization with which the data is <b>shared</b>`),
+    'PARTNERS.UPWARD': () => msg(html `Systems belonging to any Organization from which the data is <b>obtained</b>`),
 };
 const STATUS_DESCRIPTIONS = {
     IN_PROCESSING: () => msg(html `In processing`),

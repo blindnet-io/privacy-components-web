@@ -8,7 +8,7 @@ import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
 import { choose } from 'lit/directives/choose.js';
 import '@blindnet/core-ui';
-import { ACTION_TITLES_WITH_DEMAND, DEMAND_STATUS_DESCRIPTIONS, ACTION_TITLES, ACTION_DESCRIPTIONS, DATA_CATEGORY_TITLES_WITH_DATA, POLICY_TYPE_TITLES, AFTER_TITLES } from '../utils/dictionary.js';
+import { ACTION_TITLES_WITH_DEMAND, DEMAND_STATUS_DESCRIPTIONS, ACTION_DESCRIPTIONS, DATA_CATEGORY_TITLES_WITH_DATA, POLICY_TYPE_TITLES, AFTER_TITLES } from '../utils/dictionary.js';
 
 const linkSvg = new URL(new URL('../assets/akar-icons_link-chain.svg', import.meta.url).href, import.meta.url).href;
 const downloadSvg = new URL(new URL('../assets/akar-icons_download.svg', import.meta.url).href, import.meta.url).href;
@@ -222,8 +222,7 @@ let BldnRequestStatus = class BldnRequestStatus extends CoreConfigurationMixin(L
                     <bldn-dropdown>
                       <span slot="heading"
                         ><strong
-                          >${msg(html `${ACTION_TITLES[subDemand.requested_action]()}
-                            Demand`)}&nbsp;&nbsp;&nbsp;<span
+                          >${msg(html `${ACTION_TITLES_WITH_DEMAND[subDemand.requested_action]()}`)}&nbsp;&nbsp;&nbsp;<span
                             class=${classMap(subClasses)}
                             >${DEMAND_STATUS_DESCRIPTIONS[subDemand.status]()}</span
                           ></strong
