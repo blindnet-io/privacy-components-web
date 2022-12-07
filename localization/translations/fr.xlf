@@ -84,7 +84,7 @@
 </trans-unit>
 <trans-unit id="sefcd28524d5a7a14">
   <source>Other Demand</source>
-  <target>Autre Demande</target>
+  <target>demande Autre</target>
 </trans-unit>
 <trans-unit id="s4458b825a083bf32">
   <source>Access Demand</source>
@@ -1200,11 +1200,11 @@
 </trans-unit>
 <trans-unit id="seb19908ed8209df2">
   <source>Request Summary</source>
-  <target>Résumé de la Demande</target>
+  <target>Résumé de la demande</target>
 </trans-unit>
 <trans-unit id="saedc3af85cfe6dc7">
   <source>Request Target</source>
-  <target>Cible de la Demande</target>
+  <target>Cible de la demande</target>
 </trans-unit>
 <trans-unit id="s7629854d26f1c5e6">
   <source>I address my Privacy Request to:</source>
@@ -1431,12 +1431,6 @@
 <trans-unit id="haf63d34c8601dd41">
   <source><x id="0" equiv-text="${ACTION_TITLES_WITH_DEMAND[demand.requested_action]()}"/></source>
   <target><x id="0" equiv-text="${ACTION_TITLES_WITH_DEMAND[demand.requested_action]()}"/></target>
-</trans-unit>
-<trans-unit id="h4606c8f9df5fda02">
-  <source><x id="0" equiv-text="${ACTION_TITLES[subDemand.requested_action]()}"/>
-                            Demand</source>
-  <target><x id="0" equiv-text="${ACTION_TITLES[subDemand.requested_action]()}"/>
-                            Demande</target>
 </trans-unit>
 <trans-unit id="sfef5aebda25a65db">
   <source>Error getting request details. Please refresh later.</source>
