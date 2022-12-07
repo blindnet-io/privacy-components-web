@@ -21,7 +21,7 @@ export class DataConsumerInterfaceService {
   > {
     return __request(OpenAPI, {
       method: 'GET',
-      url: '/v0/consumer-interface/pending-requests',
+      url: '/v0/bridge/pending-requests',
     });
   }
 
@@ -36,7 +36,7 @@ export class DataConsumerInterfaceService {
   ): CancelablePromise<PendingDemandDetailsPayload> {
     return __request(OpenAPI, {
       method: 'GET',
-      url: '/v0/consumer-interface/pending-requests/{demandId}',
+      url: '/v0/bridge/pending-requests/{demandId}',
       path: {
         demandId: demandId,
       },
@@ -57,7 +57,7 @@ export class DataConsumerInterfaceService {
   ): CancelablePromise<any> {
     return __request(OpenAPI, {
       method: 'POST',
-      url: '/v0/consumer-interface/pending-requests/approve',
+      url: '/v0/bridge/pending-requests/approve',
       body: requestBody,
       mediaType: 'application/json',
     });
@@ -74,7 +74,7 @@ export class DataConsumerInterfaceService {
   ): CancelablePromise<any> {
     return __request(OpenAPI, {
       method: 'POST',
-      url: '/v0/consumer-interface/pending-requests/deny',
+      url: '/v0/bridge/pending-requests/deny',
       body: requestBody,
       mediaType: 'application/json',
     });
