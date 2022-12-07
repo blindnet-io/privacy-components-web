@@ -67,7 +67,7 @@ function main() {
 
     // copy translations to modules demo - gh pages path issue
     fs.copy(
-      path.join(rootDir, '/packages/privacy-portal/src/generated'),
+      path.join(rootDir, '/packages/privacy-portal/dist/generated'),
       path.join(bundleDirPath, '/demos/modules/generated')
     ),
 
