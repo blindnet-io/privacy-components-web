@@ -1,27 +1,27 @@
 // Do not modify this file by hand!
 // Re-generate this file by running lit-localize.
-
 /**
  * The locale code that templates in this source code are written in.
  */
-export const sourceLocale = `en-US`;
-
+const sourceLocale = `en-US`;
 /**
  * The other locale codes that this application is localized into. Sorted
  * lexicographically.
  */
-export const targetLocales = [
-  `fr`,
-  `fr-CA`,
-  `fr-FR`,
-] as const;
-
+const targetLocales = [
+    `fr`,
+    `fr-CA`,
+    `fr-FR`,
+];
 /**
  * All valid project locale codes. Sorted lexicographically.
  */
-export const allLocales = [
-  `en-US`,
-  `fr`,
-  `fr-CA`,
-  `fr-FR`,
-] as const;
+const allLocales = [
+    `en-US`,
+    `fr`,
+    `fr-CA`,
+    `fr-FR`,
+];
+
+export { allLocales, sourceLocale, targetLocales };
+//# sourceMappingURL=locale-codes.js.map
