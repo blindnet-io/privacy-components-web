@@ -308,7 +308,7 @@ export class ComputationAPI {
     }
 
     return fetch(
-      `https://devkit-pce-staging.azurewebsites.net/v0/consumer-interface/pending-requests`,
+      `https://devkit-pce-staging.azurewebsites.net/v0/bridge/pending-requests`,
       {
         method: 'GET',
         headers: {
@@ -338,7 +338,7 @@ export class ComputationAPI {
     }
 
     return fetch(
-      `https://devkit-pce-staging.azurewebsites.net/v0/consumer-interface/pending-requests/${id}`,
+      `https://devkit-pce-staging.azurewebsites.net/v0/bridge/pending-requests/${id}`,
       {
         method: 'GET',
         headers: {
@@ -385,7 +385,7 @@ export class ComputationAPI {
     const payload: ApproveDemandPayload = { id, msg, lang };
 
     return fetch(
-      `https://devkit-pce-staging.azurewebsites.net/v0/consumer-interface/pending-requests/approve`,
+      `https://devkit-pce-staging.azurewebsites.net/v0/bridge/pending-requests/approve`,
       {
         method: 'POST',
         headers: {
@@ -432,7 +432,7 @@ export class ComputationAPI {
     const payload: DenyDemandPayload = { id, motive, msg, lang };
 
     return fetch(
-      `https://devkit-pce-staging.azurewebsites.net/v0/consumer-interface/pending-requests/deny`,
+      `https://devkit-pce-staging.azurewebsites.net/v0/bridge/pending-requests/deny`,
       {
         method: 'POST',
         headers: {
