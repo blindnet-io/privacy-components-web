@@ -337,8 +337,9 @@ export class BldnRequestStatus extends CoreConfigurationMixin(LitElement) {
                       <span slot="heading"
                         ><strong
                           >${msg(
-                            html`${ACTION_TITLES[subDemand.requested_action]()}
-                            Demand`
+                            html`${ACTION_TITLES_WITH_DEMAND[
+                              subDemand.requested_action
+                            ]()}`
                           )}&nbsp;&nbsp;&nbsp;<span
                             class=${classMap(subClasses)}
                             >${DEMAND_STATUS_DESCRIPTIONS[

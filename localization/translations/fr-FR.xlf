@@ -86,6 +86,86 @@
   <source>Other Demand</source>
   <target>Autre Demande</target>
 </trans-unit>
+<trans-unit id="s4458b825a083bf32">
+  <source>Access Demand</source>
+  <target>demande d'Accès</target>
+</trans-unit>
+<trans-unit id="s5d0a8873a8f42ed5">
+  <source>Delete Demand</source>
+  <target>demande de Suppression</target>
+</trans-unit>
+<trans-unit id="s1f6e12ff7db89f1a">
+  <source>Modify Demand</source>
+  <target>demande de Modification</target>
+</trans-unit>
+<trans-unit id="s91a3ac163365cce5">
+  <source>Object Demand</source>
+  <target>demande d'Opposition</target>
+</trans-unit>
+<trans-unit id="s22a6bd776f195c07">
+  <source>Portability Demand</source>
+  <target>demande de Portabilité</target>
+</trans-unit>
+<trans-unit id="s297342d4b6ea3424">
+  <source>Restrict Demand</source>
+  <target>demande de Restriction</target>
+</trans-unit>
+<trans-unit id="s22837da638fcc66a">
+  <source>Revoke Demand</source>
+  <target>demande de Révocation</target>
+</trans-unit>
+<trans-unit id="saf349b7ca2f1b5ce">
+  <source>Transparency Demand</source>
+  <target>demande de Transparence</target>
+</trans-unit>
+<trans-unit id="sf31b34a597b18b5f">
+  <source>Transparency - Data Categories Demand</source>
+  <target>demande de Transparence - Catégories de données</target>
+</trans-unit>
+<trans-unit id="sbec2072e6d47df18">
+  <source>Transparency - DPO Demand</source>
+  <target>demande de Transparence - DPO</target>
+</trans-unit>
+<trans-unit id="s3ab6eb333ca4c106">
+  <source>Transparency - Known Demand</source>
+  <target>demande de Transparence - Connaissance</target>
+</trans-unit>
+<trans-unit id="s71b60b01f673c416">
+  <source>Transparency - Legal Bases Demand</source>
+  <target>demande de Transparence - Bases Légales</target>
+</trans-unit>
+<trans-unit id="s726641e532d6bd7e">
+  <source>Transparency - Organization Demand</source>
+  <target>demande de Transparence - Organisation</target>
+</trans-unit>
+<trans-unit id="s597bfa27b84f363d">
+  <source>Transparency - Policy Demand</source>
+  <target>demande de Transparence - Politiques</target>
+</trans-unit>
+<trans-unit id="s24b43708ccb264f0">
+  <source>Transparency - Processing Categories Demand</source>
+  <target>demande de Transparence - Catégories de Traitements</target>
+</trans-unit>
+<trans-unit id="s99db8323c728b6a2">
+  <source>Transparency - Provenance Demand</source>
+  <target>demande de Transparence - Provenance</target>
+</trans-unit>
+<trans-unit id="s121d4949c579d589">
+  <source>Transparency - Purpose Demand</source>
+  <target>demande de Transparence - But</target>
+</trans-unit>
+<trans-unit id="se90de8a37c063005">
+  <source>Transparency - Retention Demand</source>
+  <target>demande de Transparence - Conservation</target>
+</trans-unit>
+<trans-unit id="sbbaad0d65c8d25aa">
+  <source>Transparency - Where Demand</source>
+  <target>demande de Transparence - Où</target>
+</trans-unit>
+<trans-unit id="sf2f18e811b53b013">
+  <source>Transparency - Who Demand</source>
+  <target>demande de Transparence - Qui</target>
+</trans-unit>
 <trans-unit id="sa8fb9f24637f10f5">
   <source>Access my data</source>
   <target>Accéder à mes données</target>
@@ -170,10 +250,29 @@
   <source>Who can access the data that the organization has on me</source>
   <target>Qui peut accéder aux données que l'organisation a sur moi</target>
 </trans-unit>
-<trans-unit id="h47caddfa59939013">
-  <source><x id="0" equiv-text="&lt;b&gt;"/>All<x id="1" equiv-text="&lt;/b&gt;"/> information related to data processing practices and my
-        data</source>
+<trans-unit id="hc10f9a4c8891fc49">
+  <source><x id="0" equiv-text="&lt;b&gt;"/>All<x id="1" equiv-text="&lt;/b&gt;"/> information related to data processing practices and my data</source>
   <target><x id="0" equiv-text="&lt;b&gt;"/>Toutes<x id="1" equiv-text="&lt;/b&gt;"/> les informations relatives aux pratiques de traitement de données et à mes données</target>
+</trans-unit>
+<trans-unit id="scbf29ce484222325">
+  <source></source>
+  <target/>
+</trans-unit>
+<trans-unit id="s7d6780e4032b48f2">
+  <source>user</source>
+  <target>utilisateur</target>
+</trans-unit>
+<trans-unit id="s9c662c11ea400adb">
+  <source>user - data subject</source>
+  <target>utilisateur - personne concernée</target>
+</trans-unit>
+<trans-unit id="s147b846f3bed0096">
+  <source>derived</source>
+  <target>dérivées</target>
+</trans-unit>
+<trans-unit id="s92cb628ac6c248ad">
+  <source>transferred</source>
+  <target>transférées</target>
 </trans-unit>
 <trans-unit id="s3fc1f890d4f5a074">
   <source>All provenances</source>
@@ -211,21 +310,45 @@
   <source>Obtained by transfer from another system</source>
   <target>Obtenues par un transfert depuis un autre système</target>
 </trans-unit>
-<trans-unit id="scbf29ce484222325">
-  <source></source>
-  <target/>
-</trans-unit>
 <trans-unit id="s63ce35e313760199">
   <source>Affiliation</source>
   <target>Affiliation</target>
 </trans-unit>
-<trans-unit id="s2142728a8840d713">
-  <source>Affiliation membership</source>
+<trans-unit id="s8db5bd427e71652a">
+  <source>Affiliation - Membership</source>
   <target>Affiliation adhésion</target>
+</trans-unit>
+<trans-unit id="se025d2a5dd4128f5">
+  <source>Affiliation - Membership Union</source>
+  <target>Affiliation - Adhésion Syndicale</target>
+</trans-unit>
+<trans-unit id="se9a6555c13f02262">
+  <source>Affiliation - School</source>
+  <target>Affiliation - Ecole</target>
+</trans-unit>
+<trans-unit id="s2480bc720a26e622">
+  <source>Affiliation - Workplace</source>
+  <target>Affiliation - Lieu de Travail</target>
 </trans-unit>
 <trans-unit id="sf4c59c00ddcda487">
   <source>Behavior</source>
   <target>Comportement</target>
+</trans-unit>
+<trans-unit id="sa27cc41810878675">
+  <source>Behavior - Activity</source>
+  <target>Comportement - Activité</target>
+</trans-unit>
+<trans-unit id="sd5e82049916f5aa0">
+  <source>Behavior - Connection</source>
+  <target>Comportement - Connexion</target>
+</trans-unit>
+<trans-unit id="s3b9d3842690b4065">
+  <source>Behavior - Preference</source>
+  <target>Comportement - Préférence</target>
+</trans-unit>
+<trans-unit id="sb237ed4890fc3b37">
+  <source>Behavior - Telemetry</source>
+  <target>Comportement - Télémétrie</target>
 </trans-unit>
 <trans-unit id="s0bc8fc90c7fe8285">
   <source>Biometric</source>
@@ -235,9 +358,45 @@
   <source>Contact</source>
   <target>Contact</target>
 </trans-unit>
+<trans-unit id="sa1c91e686db3bd4c">
+  <source>Contact - Email</source>
+  <target>Contact - Email</target>
+</trans-unit>
+<trans-unit id="s9869411458b789f4">
+  <source>Contact - Address</source>
+  <target>Contact - Adresse</target>
+</trans-unit>
+<trans-unit id="sede62db83f81a130">
+  <source>Contact - Phone</source>
+  <target>Contact - Téléphone</target>
+</trans-unit>
 <trans-unit id="sfa4fa48e6eecb702">
   <source>Demographic</source>
   <target>Démographique</target>
+</trans-unit>
+<trans-unit id="sba276cb8c1f20862">
+  <source>Demographic - Age</source>
+  <target>Démographiques - Âge</target>
+</trans-unit>
+<trans-unit id="s754bfbdde3c2fbbf">
+  <source>Demographic - Beliefs</source>
+  <target>Démographiques - Croyances</target>
+</trans-unit>
+<trans-unit id="s51aff46c003815da">
+  <source>Demographic - Gender</source>
+  <target>Démographiques - Genre</target>
+</trans-unit>
+<trans-unit id="sc012f988b7ad6aed">
+  <source>Demographic - Origin</source>
+  <target>Démographiques - Origine</target>
+</trans-unit>
+<trans-unit id="sc701a36eb0707b6e">
+  <source>Demographic - Race</source>
+  <target>Démographiques - Race</target>
+</trans-unit>
+<trans-unit id="s1f8ebb62edb4014b">
+  <source>Demographic - Sexual Orientation</source>
+  <target>Démographiques - Orientation Sexuelle</target>
 </trans-unit>
 <trans-unit id="s0b0a02a4470de153">
   <source>Device</source>
@@ -283,6 +442,22 @@
   <source>UID</source>
   <target>Identifiant Unique</target>
 </trans-unit>
+<trans-unit id="s0651438e4c8377c7">
+  <source>UID - ID</source>
+  <target>Identifiant Unique - Identification</target>
+</trans-unit>
+<trans-unit id="s06512f8e4c8355cb">
+  <source>UID - IP</source>
+  <target>Identifiant Unique - Adresse IP</target>
+</trans-unit>
+<trans-unit id="s2fa47f3acd802112">
+  <source>UID - User Account</source>
+  <target>Identifiant Unique - Compte Utilisateur</target>
+</trans-unit>
+<trans-unit id="sc1628adf9b7d6b65">
+  <source>UID - Social Media</source>
+  <target>Identifiant Unique - Réseaux Sociaux</target>
+</trans-unit>
 <trans-unit id="sc9e494c8346b7cb5">
   <source>Other</source>
   <target>Autre</target>
@@ -291,13 +466,168 @@
   <source>Other - Proof</source>
   <target>Autre - Preuve</target>
 </trans-unit>
+<trans-unit id="se22c8d93a5dec6c3">
+  <source>Affiliation data</source>
+  <target>Données d'Affiliation</target>
+</trans-unit>
+<trans-unit id="sfcfd5cc8ded3a99e">
+  <source>Affiliation - Membership data</source>
+  <target>Affiliation - Données d'Adhésion</target>
+</trans-unit>
+<trans-unit id="sb3e8587e0fb82077">
+  <source>Affiliation - Membership Union data</source>
+  <target>Affiliation - Données d'Adhésion Syndicale</target>
+</trans-unit>
+<trans-unit id="sba4d027000b24726">
+  <source>Affiliation - School data</source>
+  <target>Affiliation - Données d'École</target>
+</trans-unit>
+<trans-unit id="s21ba09ae7cdd6e66">
+  <source>Affiliation - Workplace data</source>
+  <target>Affiliation - Données de Lieu de Travail</target>
+</trans-unit>
+<trans-unit id="s3da20143f9e8ada5">
+  <source>Behavior data</source>
+  <target>Données de Comportement</target>
+</trans-unit>
+<trans-unit id="s7c3c0641612548f7">
+  <source>Behavior - Activity data</source>
+  <target>Comportement - Données d'Activité</target>
+</trans-unit>
+<trans-unit id="s1d678178a2cacb88">
+  <source>Behavior - Connection data</source>
+  <target>Comportement - Données de Connexion</target>
+</trans-unit>
+<trans-unit id="s9d64b343d41708a7">
+  <source>Behavior - Preference data</source>
+  <target>Comportement - Données de Préférence</target>
+</trans-unit>
+<trans-unit id="s21e36d8fc7bab2d5">
+  <source>Behavior - Telemetry data</source>
+  <target>Comportement - Données de Télémétrie</target>
+</trans-unit>
+<trans-unit id="sd146a706d91d6dc7">
+  <source>Biometric data</source>
+  <target>Données Biométriques</target>
+</trans-unit>
+<trans-unit id="s6474bdc2902b6b69">
+  <source>Contact data</source>
+  <target>Données de Contact</target>
+</trans-unit>
+<trans-unit id="s0183ba7ba54416cc">
+  <source>Contact - Email data</source>
+  <target>Contact - Données d'Email</target>
+</trans-unit>
+<trans-unit id="s3c4b723da364f824">
+  <source>Contact - Address data</source>
+  <target>Contact - Données d'Adresse</target>
+</trans-unit>
+<trans-unit id="s964d2cfe826f7218">
+  <source>Contact - Phone data</source>
+  <target>Contact - Données de Téléphone</target>
+</trans-unit>
+<trans-unit id="sb9586fe24efc93c6">
+  <source>Demographic data</source>
+  <target>Données Démographiques</target>
+</trans-unit>
+<trans-unit id="sd5b7c7380eaa3926">
+  <source>Demographic - Age data</source>
+  <target>Démographiques - Données sur l'Âge</target>
+</trans-unit>
+<trans-unit id="s58db29275a7c5acd">
+  <source>Demographic - Beliefs data</source>
+  <target>Démographiques - Données sur les Croyances</target>
+</trans-unit>
+<trans-unit id="s7df54bbc72821f4e">
+  <source>Demographic - Gender data</source>
+  <target>Démographiques - Données sur le Genre</target>
+</trans-unit>
+<trans-unit id="s8db6d10d5c9641df">
+  <source>Demographic - Origin data</source>
+  <target>Démographiques - Données sur l'Origine</target>
+</trans-unit>
+<trans-unit id="s8cb671d3ccc0163a">
+  <source>Demographic - Race data</source>
+  <target>Démographiques - Données sur la Race</target>
+</trans-unit>
+<trans-unit id="sbd5cf6928792aa61">
+  <source>Demographic - Sexual Orientation data</source>
+  <target>Démographiques - Données sur l'Orientation Sexuelle</target>
+</trans-unit>
+<trans-unit id="sc30e2031cb4c1e39">
+  <source>Device data</source>
+  <target>Données d'Appareil</target>
+</trans-unit>
+<trans-unit id="sbbb81705e6790a3c">
+  <source>Financial data</source>
+  <target>Données Financières</target>
+</trans-unit>
+<trans-unit id="s628e070280d4ffef">
+  <source>Finacial bank account data</source>
+  <target>Données Fiancières de compte en banque</target>
+</trans-unit>
+<trans-unit id="sbbc22dd988ec7fc4">
+  <source>Genetic data</source>
+  <target>Données Génétiques</target>
+</trans-unit>
+<trans-unit id="se2c51ad0e243477d">
+  <source>Health data</source>
+  <target>Données de Santé</target>
+</trans-unit>
+<trans-unit id="s6549b89e26be06ee">
+  <source>Image data</source>
+  <target>Données d'Images</target>
+</trans-unit>
+<trans-unit id="sb48ca5b949c9e482">
+  <source>Location data</source>
+  <target>Données de Localisation</target>
+</trans-unit>
+<trans-unit id="se9d3fd22de82a3a2">
+  <source>Name data</source>
+  <target>Données de Noms</target>
+</trans-unit>
+<trans-unit id="sbfbdf997d43c2403">
+  <source>Profiling data</source>
+  <target>Données de Profilage</target>
+</trans-unit>
+<trans-unit id="s1f6d6c826285a0d0">
+  <source>Relationships data</source>
+  <target>Données de Relations</target>
+</trans-unit>
+<trans-unit id="s9cf1313e5cd787ff">
+  <source>UID data</source>
+  <target>Données d'Identifiant Unique</target>
+</trans-unit>
+<trans-unit id="s3e43bbb829de6465">
+  <source>UID - ID data</source>
+  <target>Identifiant Unique - Données d'Identification</target>
+</trans-unit>
+<trans-unit id="s5a48b3d79e3d57e1">
+  <source>UID - IP data</source>
+  <target>Identifiant Unique - Données d'Adresse IP</target>
+</trans-unit>
+<trans-unit id="s89ae1e885dc56196">
+  <source>UID - User Account data</source>
+  <target>Identifiant Unique - Données de Compte Utilisateur</target>
+</trans-unit>
+<trans-unit id="s09e91b2be10ba9a7">
+  <source>UID - Social Media data</source>
+  <target>Identifiant Unique - Données de Réseaux Sociaux</target>
+</trans-unit>
+<trans-unit id="s2e39367a8c5564b7">
+  <source>Other data</source>
+  <target>Autres données</target>
+</trans-unit>
+<trans-unit id="s712b5f5ca69a98bc">
+  <source>Other - Proof data</source>
+  <target>Autres - Données de Preuve</target>
+</trans-unit>
 <trans-unit id="h2aec9ed333a3965d">
   <source><x id="0" equiv-text="&lt;b&gt;"/>All<x id="1" equiv-text="&lt;/b&gt;"/> categories of data the organization has on me</source>
   <target><x id="0" equiv-text="&lt;b&gt;"/>Toutes<x id="1" equiv-text="&lt;/b&gt;"/> les catégories de données que l'organisation a sur moi</target>
 </trans-unit>
-<trans-unit id="ha029657b4c716b1c">
-  <source>Groups and Organisations I am linked to through work, studies, or
-      membership</source>
+<trans-unit id="h3b9dc17f10e07926">
+  <source>Groups and Organisations I am linked to through work, studies, or membership</source>
   <target>Groupes et organisations auxquels je suis lié par le travail, les études ou l'adhésion</target>
 </trans-unit>
 <trans-unit id="hcbf29ce484222325">
@@ -348,14 +678,12 @@
   <source>First names, last names, nicknames, and other names</source>
   <target>Prénoms, Noms, surnoms et autres noms</target>
 </trans-unit>
-<trans-unit id="hd50ab52715fef8a9">
-  <source>Any data establishing a degree of similarity of with others (e.g.,
-      clusters, user-profiles)</source>
+<trans-unit id="h46d4e4cd0e183b3b">
+  <source>Any data establishing a degree of similarity of with others (e.g., clusters, user-profiles)</source>
   <target>Toutes données établissant un degré de similitude avec d'autres (par exemple, clusters, profils d'utilisateurs)</target>
 </trans-unit>
-<trans-unit id="h708a9ebbef41c270">
-  <source>Data about relationships I have with others, social activity and
-      interaction</source>
+<trans-unit id="h4fdba56f59d8bc7e">
+  <source>Data about relationships I have with others, social activity and interaction</source>
   <target>Les données sur les relations que j'ai avec les autres, activité sociale et interaction</target>
 </trans-unit>
 <trans-unit id="h7a93d23c2fe2e792">
@@ -378,20 +706,17 @@
   <source>This system and all systems within this organization</source>
   <target>Ce système et tous les systèmes au sein de cette organisation</target>
 </trans-unit>
-<trans-unit id="h9552e7ccf7b9afc6">
-  <source>This system, all systems within this organization, and all partners
-        systems where data has been <x id="0" equiv-text="&lt;b&gt;"/>shared or obtained<x id="1" equiv-text="&lt;/b&gt;"/></source>
-  <target>Ce système, tous les systèmes au sein de cette organisation et tous les partenaires avec lesquels des données ont été <x id="0" equiv-text="&lt;b&gt;"/>partagées ou obtenues<x id="1" equiv-text="&lt;/b&gt;"/></target>
+<trans-unit id="hb4eea33f13078f57">
+  <source>Systems belonging to any Organization with which the data is exchanged</source>
+  <target>Les systèmes des organisations lesquelles les données sont échangées</target>
 </trans-unit>
-<trans-unit id="hcd600f5012ef03c7">
-  <source>This system, all systems within this organization, and all partners
-        systems with which data has been <x id="0" equiv-text="&lt;b&gt;"/>shared<x id="1" equiv-text="&lt;/b&gt;"/></source>
-  <target>Ce système, tous les systèmes au sein de cette organisation et tous les systèmes partenaires avec lesquels des données ont été <x id="0" equiv-text="&lt;b&gt;"/>partagées<x id="1" equiv-text="&lt;/b&gt;"/></target>
+<trans-unit id="hd49a74581eccc66c">
+  <source>Systems belonging to any Organization with which the data is <x id="0" equiv-text="&lt;b&gt;"/>shared<x id="1" equiv-text="&lt;/b&gt;"/></source>
+  <target>Les systèmes des organisations avec lesquelles les données sont <x id="0" equiv-text="&lt;b&gt;"/>partagées<x id="1" equiv-text="&lt;/b&gt;"/></target>
 </trans-unit>
-<trans-unit id="he7ee03a3b8cd0b3a">
-  <source>This system, all systems within this organization, and all partners
-        systems from which data has been <x id="0" equiv-text="&lt;b&gt;"/>obtained<x id="1" equiv-text="&lt;/b&gt;"/></source>
-  <target>Ce système, tous les systèmes au sein de cette organisation et tous les systèmes partenaires avec lesquels des données ont été <x id="0" equiv-text="&lt;b&gt;"/>obtenues<x id="1" equiv-text="&lt;/b&gt;"/></target>
+<trans-unit id="he85e9df1dd39383d">
+  <source>Systems belonging to any Organization from which the data is <x id="0" equiv-text="&lt;b&gt;"/>obtained<x id="1" equiv-text="&lt;/b&gt;"/></source>
+  <target>Les systèmes des organisations avec lesquelles les données sont <x id="0" equiv-text="&lt;b&gt;"/>obtenues<x id="1" equiv-text="&lt;/b&gt;"/></target>
 </trans-unit>
 <trans-unit id="hd63ace037da055b1">
   <source>In processing</source>
@@ -785,346 +1110,6 @@
   <source>Arrow to expand or collapse the dropdown</source>
   <target>Flèche pour développer ou réduire la liste déroulante</target>
 </trans-unit>
-<trans-unit id="s4458b825a083bf32">
-  <source>Access Demand</source>
-  <target>demande d'Accès</target>
-</trans-unit>
-<trans-unit id="s5d0a8873a8f42ed5">
-  <source>Delete Demand</source>
-  <target>demande de Suppression</target>
-</trans-unit>
-<trans-unit id="s1f6e12ff7db89f1a">
-  <source>Modify Demand</source>
-  <target>demande de Modification</target>
-</trans-unit>
-<trans-unit id="s91a3ac163365cce5">
-  <source>Object Demand</source>
-  <target>demande d'Opposition</target>
-</trans-unit>
-<trans-unit id="s22a6bd776f195c07">
-  <source>Portability Demand</source>
-  <target>demande de Portabilité</target>
-</trans-unit>
-<trans-unit id="s297342d4b6ea3424">
-  <source>Restrict Demand</source>
-  <target>demande de Restriction</target>
-</trans-unit>
-<trans-unit id="s22837da638fcc66a">
-  <source>Revoke Demand</source>
-  <target>demande de Révocation</target>
-</trans-unit>
-<trans-unit id="saf349b7ca2f1b5ce">
-  <source>Transparency Demand</source>
-  <target>demande de Transparence</target>
-</trans-unit>
-<trans-unit id="sf31b34a597b18b5f">
-  <source>Transparency - Data Categories Demand</source>
-  <target>demande de Transparence - Catégories de données</target>
-</trans-unit>
-<trans-unit id="sbec2072e6d47df18">
-  <source>Transparency - DPO Demand</source>
-  <target>demande de Transparence - DPO</target>
-</trans-unit>
-<trans-unit id="s3ab6eb333ca4c106">
-  <source>Transparency - Known Demand</source>
-  <target>demande de Transparence - Connaissance</target>
-</trans-unit>
-<trans-unit id="s71b60b01f673c416">
-  <source>Transparency - Legal Bases Demand</source>
-  <target>demande de Transparence - Bases Légales</target>
-</trans-unit>
-<trans-unit id="s726641e532d6bd7e">
-  <source>Transparency - Organization Demand</source>
-  <target>demande de Transparence - Organisation</target>
-</trans-unit>
-<trans-unit id="s597bfa27b84f363d">
-  <source>Transparency - Policy Demand</source>
-  <target>demande de Transparence - Politiques</target>
-</trans-unit>
-<trans-unit id="s24b43708ccb264f0">
-  <source>Transparency - Processing Categories Demand</source>
-  <target>demande de Transparence - Catégories de Traitements</target>
-</trans-unit>
-<trans-unit id="s99db8323c728b6a2">
-  <source>Transparency - Provenance Demand</source>
-  <target>demande de Transparence - Provenance</target>
-</trans-unit>
-<trans-unit id="s121d4949c579d589">
-  <source>Transparency - Purpose Demand</source>
-  <target>demande de Transparence - But</target>
-</trans-unit>
-<trans-unit id="se90de8a37c063005">
-  <source>Transparency - Retention Demand</source>
-  <target>demande de Transparence - Conservation</target>
-</trans-unit>
-<trans-unit id="sbbaad0d65c8d25aa">
-  <source>Transparency - Where Demand</source>
-  <target>demande de Transparence - Où</target>
-</trans-unit>
-<trans-unit id="sf2f18e811b53b013">
-  <source>Transparency - Who Demand</source>
-  <target>demande de Transparence - Qui</target>
-</trans-unit>
-<trans-unit id="hc10f9a4c8891fc49">
-  <source><x id="0" equiv-text="&lt;b&gt;"/>All<x id="1" equiv-text="&lt;/b&gt;"/> information related to data processing practices and my data</source>
-  <target><x id="0" equiv-text="&lt;b&gt;"/>Toutes<x id="1" equiv-text="&lt;/b&gt;"/> les informations relatives aux pratiques de traitement de données et à mes données</target>
-</trans-unit>
-<trans-unit id="s7d6780e4032b48f2">
-  <source>user</source>
-  <target>utilisateur</target>
-</trans-unit>
-<trans-unit id="s9c662c11ea400adb">
-  <source>user - data subject</source>
-  <target>utilisateur - personne concernée</target>
-</trans-unit>
-<trans-unit id="s147b846f3bed0096">
-  <source>derived</source>
-  <target>dérivées</target>
-</trans-unit>
-<trans-unit id="s92cb628ac6c248ad">
-  <source>transferred</source>
-  <target>transférées</target>
-</trans-unit>
-<trans-unit id="s8db5bd427e71652a">
-  <source>Affiliation - Membership</source>
-  <target>Affiliation adhésion</target>
-</trans-unit>
-<trans-unit id="se025d2a5dd4128f5">
-  <source>Affiliation - Membership Union</source>
-  <target>Affiliation - Adhésion Syndicale</target>
-</trans-unit>
-<trans-unit id="se9a6555c13f02262">
-  <source>Affiliation - School</source>
-  <target>Affiliation - Ecole</target>
-</trans-unit>
-<trans-unit id="s2480bc720a26e622">
-  <source>Affiliation - Workplace</source>
-  <target>Affiliation - Lieu de Travail</target>
-</trans-unit>
-<trans-unit id="sa27cc41810878675">
-  <source>Behavior - Activity</source>
-  <target>Comportement - Activité</target>
-</trans-unit>
-<trans-unit id="sd5e82049916f5aa0">
-  <source>Behavior - Connection</source>
-  <target>Comportement - Connexion</target>
-</trans-unit>
-<trans-unit id="s3b9d3842690b4065">
-  <source>Behavior - Preference</source>
-  <target>Comportement - Préférence</target>
-</trans-unit>
-<trans-unit id="sb237ed4890fc3b37">
-  <source>Behavior - Telemetry</source>
-  <target>Comportement - Télémétrie</target>
-</trans-unit>
-<trans-unit id="sa1c91e686db3bd4c">
-  <source>Contact - Email</source>
-  <target>Contact - Email</target>
-</trans-unit>
-<trans-unit id="s9869411458b789f4">
-  <source>Contact - Address</source>
-  <target>Contact - Adresse</target>
-</trans-unit>
-<trans-unit id="sede62db83f81a130">
-  <source>Contact - Phone</source>
-  <target>Contact - Téléphone</target>
-</trans-unit>
-<trans-unit id="sba276cb8c1f20862">
-  <source>Demographic - Age</source>
-  <target>Démographiques - Âge</target>
-</trans-unit>
-<trans-unit id="s754bfbdde3c2fbbf">
-  <source>Demographic - Beliefs</source>
-  <target>Démographiques - Croyances</target>
-</trans-unit>
-<trans-unit id="s51aff46c003815da">
-  <source>Demographic - Gender</source>
-  <target>Démographiques - Genre</target>
-</trans-unit>
-<trans-unit id="sc012f988b7ad6aed">
-  <source>Demographic - Origin</source>
-  <target>Démographiques - Origine</target>
-</trans-unit>
-<trans-unit id="sc701a36eb0707b6e">
-  <source>Demographic - Race</source>
-  <target>Démographiques - Race</target>
-</trans-unit>
-<trans-unit id="s1f8ebb62edb4014b">
-  <source>Demographic - Sexual Orientation</source>
-  <target>Démographiques - Orientation Sexuelle</target>
-</trans-unit>
-<trans-unit id="s0651438e4c8377c7">
-  <source>UID - ID</source>
-  <target>Identifiant Unique - Identification</target>
-</trans-unit>
-<trans-unit id="s06512f8e4c8355cb">
-  <source>UID - IP</source>
-  <target>Identifiant Unique - Adresse IP</target>
-</trans-unit>
-<trans-unit id="s2fa47f3acd802112">
-  <source>UID - User Account</source>
-  <target>Identifiant Unique - Compte Utilisateur</target>
-</trans-unit>
-<trans-unit id="sc1628adf9b7d6b65">
-  <source>UID - Social Media</source>
-  <target>Identifiant Unique - Réseaux Sociaux</target>
-</trans-unit>
-<trans-unit id="se22c8d93a5dec6c3">
-  <source>Affiliation data</source>
-  <target>Données d'Affiliation</target>
-</trans-unit>
-<trans-unit id="sfcfd5cc8ded3a99e">
-  <source>Affiliation - Membership data</source>
-  <target>Affiliation - Données d'Adhésion</target>
-</trans-unit>
-<trans-unit id="sb3e8587e0fb82077">
-  <source>Affiliation - Membership Union data</source>
-  <target>Affiliation - Données d'Adhésion Syndicale</target>
-</trans-unit>
-<trans-unit id="sba4d027000b24726">
-  <source>Affiliation - School data</source>
-  <target>Affiliation - Données d'École</target>
-</trans-unit>
-<trans-unit id="s21ba09ae7cdd6e66">
-  <source>Affiliation - Workplace data</source>
-  <target>Affiliation - Données de Lieu de Travail</target>
-</trans-unit>
-<trans-unit id="s3da20143f9e8ada5">
-  <source>Behavior data</source>
-  <target>Données de Comportement</target>
-</trans-unit>
-<trans-unit id="s7c3c0641612548f7">
-  <source>Behavior - Activity data</source>
-  <target>Comportement - Données d'Activité</target>
-</trans-unit>
-<trans-unit id="s1d678178a2cacb88">
-  <source>Behavior - Connection data</source>
-  <target>Comportement - Données de Connexion</target>
-</trans-unit>
-<trans-unit id="s9d64b343d41708a7">
-  <source>Behavior - Preference data</source>
-  <target>Comportement - Données de Préférence</target>
-</trans-unit>
-<trans-unit id="s21e36d8fc7bab2d5">
-  <source>Behavior - Telemetry data</source>
-  <target>Comportement - Données de Télémétrie</target>
-</trans-unit>
-<trans-unit id="sd146a706d91d6dc7">
-  <source>Biometric data</source>
-  <target>Données Biométriques</target>
-</trans-unit>
-<trans-unit id="s6474bdc2902b6b69">
-  <source>Contact data</source>
-  <target>Données de Contact</target>
-</trans-unit>
-<trans-unit id="s0183ba7ba54416cc">
-  <source>Contact - Email data</source>
-  <target>Contact - Données d'Email</target>
-</trans-unit>
-<trans-unit id="s3c4b723da364f824">
-  <source>Contact - Address data</source>
-  <target>Contact - Données d'Adresse</target>
-</trans-unit>
-<trans-unit id="s964d2cfe826f7218">
-  <source>Contact - Phone data</source>
-  <target>Contact - Données de Téléphone</target>
-</trans-unit>
-<trans-unit id="sb9586fe24efc93c6">
-  <source>Demographic data</source>
-  <target>Données Démographiques</target>
-</trans-unit>
-<trans-unit id="sd5b7c7380eaa3926">
-  <source>Demographic - Age data</source>
-  <target>Démographiques - Données sur l'Âge</target>
-</trans-unit>
-<trans-unit id="s58db29275a7c5acd">
-  <source>Demographic - Beliefs data</source>
-  <target>Démographiques - Données sur les Croyances</target>
-</trans-unit>
-<trans-unit id="s7df54bbc72821f4e">
-  <source>Demographic - Gender data</source>
-  <target>Démographiques - Données sur le Genre</target>
-</trans-unit>
-<trans-unit id="s8db6d10d5c9641df">
-  <source>Demographic - Origin data</source>
-  <target>Démographiques - Données sur l'Origine</target>
-</trans-unit>
-<trans-unit id="s8cb671d3ccc0163a">
-  <source>Demographic - Race data</source>
-  <target>Démographiques - Données sur la Race</target>
-</trans-unit>
-<trans-unit id="sbd5cf6928792aa61">
-  <source>Demographic - Sexual Orientation data</source>
-  <target>Démographiques - Données sur l'Orientation Sexuelle</target>
-</trans-unit>
-<trans-unit id="sc30e2031cb4c1e39">
-  <source>Device data</source>
-  <target>Données d'Appareil</target>
-</trans-unit>
-<trans-unit id="sbbb81705e6790a3c">
-  <source>Financial data</source>
-  <target>Données Financières</target>
-</trans-unit>
-<trans-unit id="s628e070280d4ffef">
-  <source>Finacial bank account data</source>
-  <target>Données Fiancières de compte en banque</target>
-</trans-unit>
-<trans-unit id="sbbc22dd988ec7fc4">
-  <source>Genetic data</source>
-  <target>Données Génétiques</target>
-</trans-unit>
-<trans-unit id="se2c51ad0e243477d">
-  <source>Health data</source>
-  <target>Données de Santé</target>
-</trans-unit>
-<trans-unit id="s6549b89e26be06ee">
-  <source>Image data</source>
-  <target>Données d'Images</target>
-</trans-unit>
-<trans-unit id="sb48ca5b949c9e482">
-  <source>Location data</source>
-  <target>Données de Localisation</target>
-</trans-unit>
-<trans-unit id="se9d3fd22de82a3a2">
-  <source>Name data</source>
-  <target>Données de Noms</target>
-</trans-unit>
-<trans-unit id="sbfbdf997d43c2403">
-  <source>Profiling data</source>
-  <target>Données de Profilage</target>
-</trans-unit>
-<trans-unit id="s1f6d6c826285a0d0">
-  <source>Relationships data</source>
-  <target>Données de Relations</target>
-</trans-unit>
-<trans-unit id="s9cf1313e5cd787ff">
-  <source>UID data</source>
-  <target>Données d'Identifiant Unique</target>
-</trans-unit>
-<trans-unit id="s3e43bbb829de6465">
-  <source>UID - ID data</source>
-  <target>Identifiant Unique - Données d'Identification</target>
-</trans-unit>
-<trans-unit id="s5a48b3d79e3d57e1">
-  <source>UID - IP data</source>
-  <target>Identifiant Unique - Données d'Adresse IP</target>
-</trans-unit>
-<trans-unit id="s89ae1e885dc56196">
-  <source>UID - User Account data</source>
-  <target>Identifiant Unique - Données de Compte Utilisateur</target>
-</trans-unit>
-<trans-unit id="s09e91b2be10ba9a7">
-  <source>UID - Social Media data</source>
-  <target>Identifiant Unique - Données de Réseaux Sociaux</target>
-</trans-unit>
-<trans-unit id="s2e39367a8c5564b7">
-  <source>Other data</source>
-  <target>Autres données</target>
-</trans-unit>
-<trans-unit id="s712b5f5ca69a98bc">
-  <source>Other - Proof data</source>
-  <target>Autres - Données de Preuve</target>
-</trans-unit>
 <trans-unit id="s3176f9811c35d533">
   <source>Data Categories</source>
   <target>Catégories de données</target>
@@ -1293,31 +1278,37 @@
   <source>I restrict the processing of my data to the following</source>
   <target>Je limite le traitement de mes données à</target>
 </trans-unit>
-<trans-unit id="hf460bedf6edf9f04">
-  <source>
-          Data from
-          <x id="0" equiv-text="&lt;span class=&quot;scope-counter&quot;&gt;&lt;b&gt;${this._dataCategories.size === 1 &amp;&amp;&#10;    this._dataCategories.has('*')&#10;    ? 'all'&#10;    : this._dataCategories.size}&lt;/b&gt;&lt;/span&gt;"/>
-          categories, processed in
-          <x id="1" equiv-text="&lt;span class=&quot;scope-counter&quot;&gt;&lt;b&gt;${this._processingCategories.size === 1 &amp;&amp;&#10;    this._processingCategories.has(PrivacyScopeRestriction.pc._)&#10;    ? 'all'&#10;    : this._processingCategories.size}&lt;/b&gt;&lt;/span&gt;"/>
-          ways, for
-          <x id="2" equiv-text="&lt;span class=&quot;scope-counter&quot;&gt;&lt;b&gt;${this._purposes.size === 1 &amp;&amp;&#10;    this._purposes.has(PrivacyScopeRestriction.pp._)&#10;    ? 'all'&#10;    : this._purposes.size}&lt;/b&gt;&lt;/span&gt;"/>
-          purposes
-        </source>
-  <target>
-          Données de
-          <x id="0" equiv-text="&lt;span class=&quot;scope-counter&quot;&gt;&lt;b&gt;${this._dataCategories.size === 1 &amp;&amp;&#10;    this._dataCategories.has('*')&#10;    ? 'all'&#10;    : this._dataCategories.size}&lt;/b&gt;&lt;/span&gt;"/>
-          catégories, traitées de
-          <x id="1" equiv-text="&lt;span class=&quot;scope-counter&quot;&gt;&lt;b&gt;${this._processingCategories.size === 1 &amp;&amp;&#10;    this._processingCategories.has(PrivacyScopeRestriction.pc._)&#10;    ? 'all'&#10;    : this._processingCategories.size}&lt;/b&gt;&lt;/span&gt;"/>
-          façons, pour
-          <x id="2" equiv-text="&lt;span class=&quot;scope-counter&quot;&gt;&lt;b&gt;${this._purposes.size === 1 &amp;&amp;&#10;    this._purposes.has(PrivacyScopeRestriction.pp._)&#10;    ? 'all'&#10;    : this._purposes.size}&lt;/b&gt;&lt;/span&gt;"/>
-          buts
-        </target>
+<trans-unit id="s53798af48c8d38b3">
+  <source>Data from</source>
+  <target>Données de</target>
 </trans-unit>
-<trans-unit id="h67e8c8ac8d7bb0d9">
-  <source>A <x id="0" equiv-text="&lt;b&gt;&lt;i&gt;"/>Privacy Scope<x id="1" equiv-text="&lt;/i&gt;&lt;/b&gt;"/> describes one or more types of
-              data (<x id="2" equiv-text="&lt;i&gt;"/>data categories<x id="3" equiv-text="&lt;/i&gt;"/>), how it is processed (<x id="4" equiv-text="&lt;i&gt;"/>processing categories<x id="5" equiv-text="&lt;/i&gt;"/>), and why it is processed that way (<x id="6" equiv-text="&lt;i&gt;"/>purposes of processing<x id="7" equiv-text="&lt;/i&gt;"/>).</source>
-  <target>Un <x id="0" equiv-text="&lt;b&gt;&lt;i&gt;"/>périmètre<x id="1" equiv-text="&lt;/i&gt;&lt;/b&gt;"/> décrit un ou plusieurs types de
-              données (<x id="2" equiv-text="&lt;i&gt;"/>catégories de données<x id="3" equiv-text="&lt;/i&gt;"/>), comment elles sont traitées (<x id="4" equiv-text="&lt;i&gt;"/>catégories de traitement<x id="5" equiv-text="&lt;/i&gt;"/>), et pourquoi elles sont traitées (<x id="6" equiv-text="&lt;i&gt;"/>buts du traitement<x id="7" equiv-text="&lt;/i&gt;"/>).</target>
+<trans-unit id="all-data-categories">
+  <source>all</source>
+  <target>toutes</target>
+</trans-unit>
+<trans-unit id="s5abf9a69c993d10e">
+  <source>categories, processed in</source>
+  <target>catégories, traitées de</target>
+</trans-unit>
+<trans-unit id="all-processing-categories">
+  <source>all</source>
+  <target>toutes les</target>
+</trans-unit>
+<trans-unit id="s04129b8e2aaf7a04">
+  <source>ways, for</source>
+  <target>façons, pour</target>
+</trans-unit>
+<trans-unit id="all-purposes-of-processing">
+  <source>all</source>
+  <target>tous les</target>
+</trans-unit>
+<trans-unit id="sfd968ce52407d076">
+  <source>purposes</source>
+  <target>buts</target>
+</trans-unit>
+<trans-unit id="h2732ad22070975bb">
+  <source>A <x id="0" equiv-text="&lt;b&gt;&lt;i&gt;"/>Privacy Scope<x id="1" equiv-text="&lt;/i&gt;&lt;/b&gt;"/> describes one or more types of data (<x id="2" equiv-text="&lt;i&gt;"/>data categories<x id="3" equiv-text="&lt;/i&gt;"/>), how it is processed (<x id="4" equiv-text="&lt;i&gt;"/>processing categories<x id="5" equiv-text="&lt;/i&gt;"/>), and why it is processed that way (<x id="6" equiv-text="&lt;i&gt;"/>purposes of processing<x id="7" equiv-text="&lt;/i&gt;"/>).</source>
+  <target>Un <x id="0" equiv-text="&lt;b&gt;&lt;i&gt;"/>périmètre<x id="1" equiv-text="&lt;/i&gt;&lt;/b&gt;"/> décrit un ou plusieurs types de données (<x id="2" equiv-text="&lt;i&gt;"/>catégories de données<x id="3" equiv-text="&lt;/i&gt;"/>), comment elles sont traitées (<x id="4" equiv-text="&lt;i&gt;"/>catégories de traitement<x id="5" equiv-text="&lt;/i&gt;"/>), et pourquoi elles sont traitées (<x id="6" equiv-text="&lt;i&gt;"/>buts du traitement<x id="7" equiv-text="&lt;/i&gt;"/>).</target>
 </trans-unit>
 <trans-unit id="sb5a6f73a21ad7dc5">
   <source>Expand a dropdown to customise your scope</source>

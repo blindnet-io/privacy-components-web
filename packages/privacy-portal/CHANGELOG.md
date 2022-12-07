@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.16.3](https://github.com/blindnet-io/privacy-components-web/compare/v0.16.2...v0.16.3) (2022-12-07)
+
+### Bug Fixes
+
+- **@blindnet/privacy-portal:** fix lit-localize + prettier issue ([d216b01](https://github.com/blindnet-io/privacy-components-web/commit/d216b01a34d178a6b8062f72692a33d64dc77ab8))
+
 ## [0.16.2](https://github.com/blindnet-io/privacy-components-web/compare/v0.16.1...v0.16.2) (2022-12-05)
 
 ### Bug Fixes
