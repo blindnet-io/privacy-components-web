@@ -14,7 +14,6 @@ export declare const templates: {
     h3c711aa2f112dd02: import("lit-html").TemplateResult<1>;
     h3e84c2b5bd403e6a: import("lit-html").TemplateResult<1>;
     h44e758245f098aed: import("lit-html").TemplateResult<1>;
-    h4606c8f9df5fda02: import("lit-html").TemplateResult<1>;
     h46d4e4cd0e183b3b: import("lit-html").TemplateResult<1>;
     h4cdb7d228db17962: import("lit-html").TemplateResult<1>;
     h4fdba56f59d8bc7e: import("lit-html").TemplateResult<1>;

@@ -179,11 +179,7 @@ let BldnPrivacyScopePicker = class BldnPrivacyScopePicker extends LitElement {
       ${when(this._showTooltip, () => html `
         <div id='tooltip'>
           <img src=${tooltipIcon} alt='info box'></img>
-          <span>${msg(html `A <b><i>Privacy Scope</i></b> describes one or more types of
-              data (<i>data categories</i>), how it is processed (<i
-                >processing categories</i
-              >), and why it is processed that way (<i>purposes of processing</i
-              >).`)}</span>
+          <span>${msg(html `A <b><i>Privacy Scope</i></b> describes one or more types of data (<i>data categories</i>), how it is processed (<i>processing categories</i>), and why it is processed that way (<i>purposes of processing</i>).`)}</span>
         </div>
       `)}
       <p id="expand-tip">

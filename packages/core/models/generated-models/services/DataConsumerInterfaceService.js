@@ -10,7 +10,7 @@ class DataConsumerInterfaceService {
     static getV0ConsumerInterfacePendingRequests() {
         return request(OpenAPI, {
             method: 'GET',
-            url: '/v0/consumer-interface/pending-requests',
+            url: '/v0/bridge/pending-requests',
         });
     }
     /**
@@ -22,7 +22,7 @@ class DataConsumerInterfaceService {
     static getV0ConsumerInterfacePendingRequestsDemandid(demandId) {
         return request(OpenAPI, {
             method: 'GET',
-            url: '/v0/consumer-interface/pending-requests/{demandId}',
+            url: '/v0/bridge/pending-requests/{demandId}',
             path: {
                 demandId: demandId,
             },
@@ -40,7 +40,7 @@ class DataConsumerInterfaceService {
     static postV0ConsumerInterfacePendingRequestsApprove(requestBody) {
         return request(OpenAPI, {
             method: 'POST',
-            url: '/v0/consumer-interface/pending-requests/approve',
+            url: '/v0/bridge/pending-requests/approve',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -54,7 +54,7 @@ class DataConsumerInterfaceService {
     static postV0ConsumerInterfacePendingRequestsDeny(requestBody) {
         return request(OpenAPI, {
             method: 'POST',
-            url: '/v0/consumer-interface/pending-requests/deny',
+            url: '/v0/bridge/pending-requests/deny',
             body: requestBody,
             mediaType: 'application/json',
         });

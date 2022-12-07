@@ -234,7 +234,7 @@ class ComputationAPI {
         else if (!this._adminToken) {
             throw new Error('You must set an admin token before making API calls!');
         }
-        return fetch(`https://devkit-pce-staging.azurewebsites.net/v0/consumer-interface/pending-requests`, {
+        return fetch(`https://devkit-pce-staging.azurewebsites.net/v0/bridge/pending-requests`, {
             method: 'GET',
             headers: {
                 accept: 'application/json',
@@ -260,7 +260,7 @@ class ComputationAPI {
         else if (!this._adminToken) {
             throw new Error('You must set an admin token before making API calls!');
         }
-        return fetch(`https://devkit-pce-staging.azurewebsites.net/v0/consumer-interface/pending-requests/${id}`, {
+        return fetch(`https://devkit-pce-staging.azurewebsites.net/v0/bridge/pending-requests/${id}`, {
             method: 'GET',
             headers: {
                 accept: 'application/json',
@@ -295,7 +295,7 @@ class ComputationAPI {
             msg = undefined;
         }
         const payload = { id, msg, lang };
-        return fetch(`https://devkit-pce-staging.azurewebsites.net/v0/consumer-interface/pending-requests/approve`, {
+        return fetch(`https://devkit-pce-staging.azurewebsites.net/v0/bridge/pending-requests/approve`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -330,7 +330,7 @@ class ComputationAPI {
             throw TypeError('You must pass an ID of the demand to deny.');
         }
         const payload = { id, motive, msg, lang };
-        return fetch(`https://devkit-pce-staging.azurewebsites.net/v0/consumer-interface/pending-requests/deny`, {
+        return fetch(`https://devkit-pce-staging.azurewebsites.net/v0/bridge/pending-requests/deny`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
