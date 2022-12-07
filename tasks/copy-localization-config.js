@@ -11,7 +11,7 @@ Promise.all(
     .readdirSync('./packages')
     .map(async pkg =>
       fs.copy(
-        './localization/lit-localize.json',
+        './localization/lit-localize-packages.json',
         `./packages/${pkg}/lit-localize.json`
       )
     )
