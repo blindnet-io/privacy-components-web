@@ -93,23 +93,6 @@ async function main(commandLineArgs) {
       ...(configRaw
         ? []
         : [
-            // bundle with bare import specifiers for external dependencies
-            // can be used with unpkg very experimental ?module option
-            {
-              ...baseBundleConfig,
-              external,
-              output: [
-                {
-                  // @ts-ignore
-                  ...baseBundleConfig.output[0],
-                  file: path.join(
-                    basePath,
-                    directories.output,
-                    'index.core.min.js'
-                  ),
-                },
-              ],
-            },
             // bundle with all dependencies
             // Warning: heavy file, only use when using a single component in a simple HTML page
             {
@@ -128,31 +111,6 @@ async function main(commandLineArgs) {
               plugins: [
                 nodeResolve(),
                 // @ts-ignore
-                ...baseBundleConfig.plugins,
-              ],
-            },
-            // bundle with external dependencies pointing to unpkg
-            // can be used as an alternative to unpkg's very experimental ?module option, or when self hosting the bundle
-            {
-              ...baseBundleConfig,
-              external,
-              output: [
-                {
-                  // @ts-ignore
-                  ...baseBundleConfig.output[0],
-                  file: path.join(
-                    basePath,
-                    directories.output,
-                    'index.mapped.min.js'
-                  ),
-                  paths,
-                },
-              ],
-              plugins: [
-                // rollup-plugin-import-map doesn't recognize generic maps and isn't actively maintained
-                // see: https://github.com/trygve-lie/rollup-plugin-import-map/issues/14
-                // see the paths function instead
-                // rollupImportMapPlugin(path.join(basePath, 'import-map.json')),
                 ...baseBundleConfig.plugins,
               ],
             },

@@ -29,6 +29,7 @@ build/
 xliff/
 generated/
 dictionary.ts
+bldn-privacy-scope-picker.ts
 import-map.json
 stories-build/
 
