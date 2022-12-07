@@ -2,8 +2,8 @@ import { html, TemplateResult } from 'lit';
 import '../packages/bridge/dist/index.js';
 
 export default {
-  title: 'Data Consumer Interface (DCI)',
-  id: 'dci',
+  title: 'Blindnet Bridge',
+  id: 'bridge',
   component: 'bldn-bridge',
   argTypes: {},
 };

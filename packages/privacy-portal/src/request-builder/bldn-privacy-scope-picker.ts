@@ -209,36 +209,30 @@ export class BldnPrivacyScopePicker extends LitElement {
     return html`
       <p><b>${this.getModeTemplate()}</b></p>
       <p id="scope-summary">
-        ${msg(html`
-          Data from
-          <span class="scope-counter"
-            ><b
-              >${this._dataCategories.size === 1 &&
-              this._dataCategories.has('*')
-                ? 'all'
-                : this._dataCategories.size}</b
-            ></span
-          >
-          categories, processed in
-          <span class="scope-counter"
-            ><b
-              >${this._processingCategories.size === 1 &&
-              this._processingCategories.has(PrivacyScopeRestriction.pc._)
-                ? 'all'
-                : this._processingCategories.size}</b
-            ></span
-          >
-          ways, for
-          <span class="scope-counter"
-            ><b
-              >${this._purposes.size === 1 &&
-              this._purposes.has(PrivacyScopeRestriction.pp._)
-                ? 'all'
-                : this._purposes.size}</b
-            ></span
-          >
-          purposes
-        `)}
+        ${msg('Data from')}&nbsp;
+        <span class="scope-counter"
+          ><b
+            >${this._dataCategories.size === 1 && this._dataCategories.has('*')
+              ? msg('all', { id: 'all-data-categories' })
+              : this._dataCategories.size}</b
+          ></span
+        >&nbsp; ${msg('categories, processed in')}&nbsp;
+        <span class="scope-counter"
+          ><b
+            >${this._processingCategories.size === 1 &&
+            this._processingCategories.has(PrivacyScopeRestriction.pc._)
+              ? msg('all', { id: 'all-processing-categories' })
+              : this._processingCategories.size}</b
+          ></span
+        >&nbsp; ${msg('ways, for')}&nbsp;
+        <span class="scope-counter"
+          ><b
+            >${this._purposes.size === 1 &&
+            this._purposes.has(PrivacyScopeRestriction.pp._)
+              ? msg('all', { id: 'all-purposes-of-processing' })
+              : this._purposes.size}</b
+          ></span
+        >&nbsp; ${msg('purposes')}
       </p>
       ${when(
         this._showTooltip,

@@ -65,7 +65,13 @@ function main() {
     // copy storybook build to the root of the bundle
     fs.copy(path.resolve(rootDir, 'storybook-static'), bundleDirPath),
 
-    // write custom 404 page to root of bundle
+    // copy translations to modules demo - gh pages path issue
+    fs.copy(
+      path.join(rootDir, '/packages/privacy-portal/src/generated'),
+      path.join(bundleDirPath, '/demos/modules/generated')
+    ),
+
+    // write custom 404 page to root of bundle - another gh pages path issue
     fs.copy(
       path.resolve(rootDir, 'pages-static/404.html'),
       path.resolve(bundleDirPath, './404.html')
