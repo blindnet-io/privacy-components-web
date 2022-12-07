@@ -60,6 +60,13 @@ jobs:
           git push origin main --follow-tags
           yarn lerna publish from-git --yes
 
+      - name: Publish (develop) 📦
+        if: github.ref == 'refs/heads/develop'
+        run: |
+          yarn lerna publish --loglevel silly \
+           --canary --yes --no-git-tag-version --no-push \
+           --dist-tag next --preid beta-$(git rev-parse --short HEAD)
+
       - name: Update develop (from main) 🔀
         if: github.ref == 'refs/heads/main'
         # updating the repo in case it has been changed after the initial checkout step
@@ -69,10 +76,3 @@ jobs:
           git merge main
           git push origin HEAD:develop
           git checkout main
-
-      - name: Publish (beta) 📦
-        if: github.ref == 'refs/heads/develop'
-        run: |
-          yarn lerna publish --loglevel silly \
-           --canary --yes --no-git-tag-version --no-push \
-           --dist-tag next --preid beta-$(git rev-parse --short HEAD)
