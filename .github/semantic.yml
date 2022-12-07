@@ -18,7 +18,7 @@ scopes:
   - '@blindnet/consent-checkbox'
   - '@blindnet/configuration'
   - '@blindnet-demos/modules'
-  - '@blindnet-demos/static'
+  - '@blindnet-demos/dpo'
 allowMergeCommits: false
 allowRevertCommits: true
 targetUrl: 'https://github.com/blindnet-io/privacy-components-web/blob/main/CONTRIBUTING.md#-commit-message-guidelines'
