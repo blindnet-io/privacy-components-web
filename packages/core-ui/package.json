@@ -1,6 +1,6 @@
 {
   "name": "@blindnet/core-ui",
-  "version": "0.16.3",
+  "version": "0.17.0",
   "description": "UI components used by all blindnet web modules",
   "author": "blindnet <hello@blindnet.io>",
   "license": "MIT",

@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.17.0](https://github.com/blindnet-io/privacy-components-web/compare/v0.16.3...v0.17.0) (2022-12-07)
+
+### Bug Fixes
+
+- **@blindnet-demos/devkit-simple-tutorial:** fix logo path ([af64441](https://github.com/blindnet-io/privacy-components-web/commit/af6444186879a39ad9c9639f26c439ff7125a04e))
+- **@blindnet-demos/modules:** fix bug with translations copy to build folder for gh pages demo ([4e680c0](https://github.com/blindnet-io/privacy-components-web/commit/4e680c01a15b72906e30d244bf43ecadc7dc893a))
+- **@blindnet/privacy-portal:** fix prettier + translations bug ([28e18a9](https://github.com/blindnet-io/privacy-components-web/commit/28e18a94166ee214894fbc9069eead534ee667e6))
+
+### Features
+
+- **@blindnet/core:** update PCE bridge route ([6cac7be](https://github.com/blindnet-io/privacy-components-web/commit/6cac7be9c7084c9bec37406a4351b7e9eaa99ac9))
+- **@blindnet/privacy-portal:** privacy request addons ([b721e38](https://github.com/blindnet-io/privacy-components-web/commit/b721e38d0b185eb0b995adb6c1b7bdd361b4928e))
+- **@blindnet/privacy-portal:** updated translations ([2e2b843](https://github.com/blindnet-io/privacy-components-web/commit/2e2b84326b0683d3c43975cfc1da57355eb30b7f))
+
 ## [0.16.3](https://github.com/blindnet-io/privacy-components-web/compare/v0.16.2...v0.16.3) (2022-12-07)
 
 ### Bug Fixes

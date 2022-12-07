@@ -1,6 +1,6 @@
 {
   "name": "@blindnet/configuration",
-  "version": "0.16.3",
+  "version": "0.17.0",
   "description": "Web components for configurating blindnet modules",
   "author": "blindnet <hello@blindnet.io>",
   "license": "MIT",
