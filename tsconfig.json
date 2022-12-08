@@ -25,6 +25,7 @@
   "exclude": [
     "**/dist/**/*",
     "build/**/*",
+    "demos/dpo/**/*",
     "storybook-static/**/*",
     "**/node_modules/**/*",
     "**/stories-build/**",
