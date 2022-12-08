@@ -91,26 +91,87 @@
               id="privacy-portal"
               data-categories='["contact", "name", "uid", "other-data"]'
             >
-              <bldn-request-addon id="addon" slot="preFormAddon">
-                <!-- Addon styles -->
-                <style></style>
-
-                <!-- Addon HTML -->
-                <div id="file-input" class="mb-3">
-                  <label for="formFile" class="form-label"
-                    >Default file input example</label
-                  >
-                  <input class="form-control" type="file" id="formFile" />
-                </div>
-
-                <!-- Addon submit function -->
-                <script>
-                  function validateFileInput() {
-                    const file = document.getElementById('formFile');
-                    return file !== null && file.value !== '' ? true : 'Bad';
+              <!-- Addon wrapper element -->
+              <bldn-request-addon id="id-addon" slot="postFormAddon">
+                <!-- Must load bootstrap and apply styles within shadow DOM -->
+                <link
+                  href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+                  rel="stylesheet"
+                  integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+                  crossorigin="anonymous"
+                />
+                <style>
+                  #id-addon-container {
+                    max-width: 400px;
+                    padding: 2em;
+                    margin: 2em auto 1em auto;
+                    border: 2px dashed #979797;
+                    border-radius: 10px;
+                    color: #1f1f1f;
+                    font-size: 1em;
                   }
 
-                  document.getElementById('addon').onSubmit = validateFileInput;
+                  .mb-3 {
+                    margin: 2em auto 2em auto !important;
+                    max-width: 75%;
+                  }
+
+                  h2 {
+                    font-size: 1.25em;
+                    margin-bottom: 1em;
+                  }
+
+                  p {
+                    margin-bottom: 1em;
+                  }
+                </style>
+
+                <!-- Define a template for our addon -->
+                <div id="id-addon-container">
+                  <h2>ID Document + Consent</h2>
+                  <p>
+                    Please upload a copy of your valid identification document
+                    and review the consent.
+                  </p>
+                  <div class="mb-3">
+                    <input class="form-control" type="file" id="id-file" />
+                  </div>
+                  <p>
+                    <label for="consent">
+                      <input id="consent" type="checkbox" />
+                      I consent to the automatic processing of my data
+                    </label>
+                  </p>
+                </div>
+
+                <!-- Submit function for addon -->
+                <script>
+                  /**
+                   * Verify that a file was uploaded
+                   */
+                  function verifyFileInput() {
+                    // Get each consent input
+                    const consentInput = this.querySelector('#consent');
+                    const fileInput = this.querySelector('#id-file');
+
+                    // Check if a file was added and consent accepted, returning a custom error message if not
+                    if (
+                      consentInput &&
+                      fileInput &&
+                      consentInput.checked &&
+                      fileInput.value !== ''
+                    )
+                      return true;
+                    if (consentInput.checked)
+                      return 'You must upload an ID document!';
+                    if (fileInput.value !== '')
+                      return 'You must accept the consent!';
+                    return 'You must upload an ID document and accept the consent!';
+                  }
+
+                  // Add listener to the Privacy Portal element
+                  document.getElementById('id-addon').onSubmit =
+                    verifyFileInput;
                 </script>
               </bldn-request-addon>
             </bldn-privacy-portal>
