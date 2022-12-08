@@ -66,7 +66,7 @@ And add the associated custom element to your page:
 
 ### Npm/Yarn
 
-Use [npm][npm] or [yarn][yarn] to install the component you need:
+Use [npm][npm] or [yarn][yarn] to install the module you need:
 
 ```bash
 npm i @blindnet/<component-name> # for example @blindnet/prci
@@ -74,7 +74,7 @@ npm i @blindnet/<component-name> # for example @blindnet/prci
 yarn add @blindnet/<component-name>
 ```
 
-To use a component, simply import the associated package, and add the associated custom element to your document.
+To use a module, simply import the associated package, and add the associated custom element to your document.
 
 For example, when using the `<bldn-privacy-portal>` component:
 
@@ -88,7 +88,7 @@ For example, when using the `<bldn-privacy-portal>` component:
 
 ### Advanced Usage
 
-All privacy components for the web are delivered with four different builds to fit every need:
+All modules for the web are delivered with two different builds:
 
 `/dist/index.js` (and related files):
 
@@ -103,7 +103,7 @@ All privacy components for the web are delivered with four different builds to f
 
 #### Import Maps
 
-An [import map](https://github.com/WICG/import-maps) (`/import-map.json`) is provided with each component as an **example** to use with the "raw" and `core` builds to customize the URL associated with each dependency's bare module specifier.
+An [import map](https://github.com/WICG/import-maps) (`/import-map.json`) is provided with each module as an **example** to use with the "raw" and `core` builds to customize the URL associated with each dependency's bare module specifier.
 
 > **Warning**
 >
@@ -115,7 +115,7 @@ An [import map](https://github.com/WICG/import-maps) (`/import-map.json`) is pro
 
 > **Warning**
 >
-> Privacy Components for the web are still at a very early stage of development. Expect incomplete documentation and breaking changes on a regular basis.
+> The blindnet web modules are still at a very early stage of development. There may be breaking changes during this period.
 
 ## Community
 
@@ -139,7 +139,7 @@ For more information on how to contribute to this project, see [CONTRIBUTING.md]
 
 ## License
 
-The blindnet devkit Privacy Components for the Web project is available under [MIT][license] (and [here](https://github.com/blindnet-io/openness-framework/blob/main/docs/decision-records/DR-0001-oss-license.md) is why).
+The blindnet web modules project is available under [MIT][license] (and [here](https://github.com/blindnet-io/openness-framework/blob/main/docs/decision-records/DR-0001-oss-license.md) is why).
 
 <!-- project's URLs -->
 
