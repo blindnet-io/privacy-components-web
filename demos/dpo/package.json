@@ -1,6 +1,6 @@
 {
   "name": "@blindnet-demos/dpo",
-  "version": "0.18.0",
+  "version": "0.18.1",
   "private": true,
   "license": "MIT",
   "description": "Blindnet DPO Demo"
