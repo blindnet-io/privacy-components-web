@@ -1,0 +1,91 @@
+@font-face {
+  font-family: 'Work Sans';
+  src: url('../fonts/WorkSans-Medium.woff2') format('woff2'),
+    url('../fonts/WorkSans-Medium.woff') format('woff'),
+    url('../fonts/WorkSans-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Work Sans';
+  src: url('../fonts/WorkSans-Light.woff2') format('woff2'),
+    url('../fonts/WorkSans-Light.woff') format('woff'),
+    url('../fonts/WorkSans-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abril Fatface';
+  src: url('../fonts/AbrilFatface-Regular.woff2') format('woff2'),
+    url('../fonts/AbrilFatface-Regular.woff') format('woff'),
+    url('../fonts/AbrilFatface-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Work Sans';
+  src: url('../fonts/WorkSans-Bold.woff2') format('woff2'),
+    url('../fonts/WorkSans-Bold.woff') format('woff'),
+    url('../fonts/WorkSans-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+h1 {
+  font-family: 'Abril Fatface';
+  font-weight: 900;
+  font-size: 60px;
+  text-align: center;
+}
+
+h2 {
+  font-family: 'Abril Fatface';
+  font-weight: 900;
+  font-size: 30px;
+  text-align: center;
+}
+
+h3 {
+  font-family: 'Work Sans';
+  font-weight: 500;
+  font-size: 30px;
+  text-align: center;
+}
+
+.btn {
+  font-family: 'Work Sans';
+  font-weight: 500;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+body {
+  font-family: 'Work Sans';
+  font-weight: 300;
+  font-size: 16px;
+}
+
+b {
+  font-weight: 500;
+}
+
+.footer_img {
+  height: 16px;
+}
+
+.unifont {
+  font-size: 1rem;
+  font-weight: 300;
+}
+.hidden {
+  display: none;
+}
