@@ -69,7 +69,7 @@ And add the associated custom element to your page:
 Use [npm][npm] or [yarn][yarn] to install the module you need:
 
 ```bash
-npm i @blindnet/<component-name> # for example @blindnet/prci
+npm i @blindnet/<component-name> # for example @blindnet/privacy-portal
 # OR
 yarn add @blindnet/<component-name>
 ```
