@@ -1,8 +1,7 @@
 # README
 
 <h1 align="center">
-  blindnet devkit<br />
-  Privacy Components for the web
+  Blindnet Web Modules
 </h1>
 
 <p align=center><img src="https://user-images.githubusercontent.com/7578400/163277439-edd00509-1d1b-4565-a0d3-49057ebeb92a.png#gh-light-mode-only" height="80" /></p>
@@ -17,52 +16,52 @@
 </p>
 
 <p align="center">
-  <!-- FIXME -->
-  <!-- <a href="https://blindnet.dev/docs">Documentation</a>  -->
-  <!-- &nbsp;•&nbsp; -->
+  <a href="https://blindnet.dev/docs">Documentation</a>
+  &nbsp;•&nbsp;
   <a href="https://github.com/blindnet-io/{project-short-name}/issues">Submit an Issue</a>
   &nbsp;•&nbsp;
   <a href="https://join.slack.com/t/blindnet/shared_invite/zt-1arqlhqt3-A8dPYXLbrnqz1ZKsz6ItOg">Online Chat</a>
   &nbsp;•&nbsp;
-  <a href="https://pc4w.blindnet.dev/demos/devkit-simple-tutorial/">Demo</a>
+  <a href="https://pc4w.blindnet.dev/demos/modules/basic">Demo</a>
   <br>
   <br>
 </p>
 
 ## Components
 
-The Privacy Components for the web are implemented as a collection of web components, with associated npm packages.
+The Blindnet Web Modules are implemented as a collection of web components, with associated npm packages.
 
-| Component             | Npm Package        | Purpose               |
-| --------------------- | ------------------ | --------------------- |
-| `<bldn-priv-request>` | @blindnet/prci     | Make privacy requests |
-| 🚧 👷                 | _and more soon..._ |                       |
+| Component               | Npm Package              | Purpose                         |
+| ----------------------- | ------------------------ | ------------------------------- |
+| `<bldn-privacy-portal>` | @blindnet/privacy-portal | Make and track privacy requests |
+| `<bldn-bridge>`         | @blindnet/bridge         | Respond to privacy requests     |
+| 🚧 👷                   | _and more soon..._       |                                 |
 
-<!-- FIXME: ## Get Started
+## Get Started
 
-:rocket: Check out our [Quick Start Guide](https://blindnet.dev/docs/quickstart) to get started in a snap. -->
+:rocket: Check out our [Intro Tutorial](https://blindnet.dev/docs/tutorials/intro/) to get started in a snap.
 
 ## Installation & Usage
 
 ### CDN
 
-Embedding the Privacy Components for the web into your website can be done by just adding a simple script to your HTML document.
+You can embed the Blindnet Web Modules in your website through a script import or by including the appropriate package as a project dependency.
 
-We recommend using the Unpkg CDN for even more simplicity and better performance.
+We recommend using the [jsdelivr](https://www.jsdelivr.com/) CDN for even more simplicity and better performance.
 
-For example, if you want to display the PRCI component on your web page, just add the following script tag:
+For example, if you want to add our Privacy Portal to your web page, just add the following script tag:
 
 ```html
 <script
-  src="https://unpkg.com/@blindnet/prci/dist/index.core.min.js?module"
+  src="https://cdn.jsdelivr.net/npm/@blindnet/privacy-portal/dist/index.all.min.js"
   type="module"
 ></script>
 ```
 
-And add the associated custom element to the page:
+And add the associated custom element to your page:
 
 ```html
-<bldn-priv-request></bldn-priv-request>
+<bldn-privacy-portal></bldn-privacy-portal>
 ```
 
 ### Npm/Yarn
@@ -77,14 +76,14 @@ yarn add @blindnet/<component-name>
 
 To use a component, simply import the associated package, and add the associated custom element to your document.
 
-For example, when using the `PRCI` component:
+For example, when using the `<bldn-privacy-portal>` component:
 
 ```html
 <script type="module">
-  import '@blindnet/priv-request/prci';
+  import '@blindnet/privacy-portal';
 </script>
 
-<bldn-priv-request></bldn-priv-request>
+<bldn-privacy-portal></bldn-privacy-portal>
 ```
 
 ### Advanced Usage
@@ -102,18 +101,6 @@ All privacy components for the web are delivered with four different builds to f
 
 - self-sufficient bundle with all dependencies included
 
-`/dist/index.mapped.min.js`:
-
-- minimal bundle with external dependencies specified as Unpkg URLs
-  (e.g. `import { html, LitElement } from 'https://unpkg.com/lit@~2.2.8/index.js?module'`)
-- for self-hosting, without using a custom build system
-
-`/dist/index.core.min.js`:
-
-- minimal bundle with external dependencies specified as [bare module specifiers](https://html.spec.whatwg.org/multipage/webappapis.html#resolve-a-module-specifier)\
-  (e.g. `import { html, LitElement } from 'lit';`)
-- for direct import from the Unpkg CDN with the [`?module` option](https://unpkg.com/#query-params)
-
 #### Import Maps
 
 An [import map](https://github.com/WICG/import-maps) (`/import-map.json`) is provided with each component as an **example** to use with the "raw" and `core` builds to customize the URL associated with each dependency's bare module specifier.
@@ -124,7 +111,7 @@ An [import map](https://github.com/WICG/import-maps) (`/import-map.json`) is pro
 
 ### Documentation
 
-📑 Components' API reference, developer documentation, and complementary docs are provided via Storybook on [blindnet-io.github.io/privacy-components-web/](https://blindnet-io.github.io/privacy-components-web/).
+📑 Components' API reference, developer documentation, and complementary docs are provided on [blindnet.dev](https://blindnet.dev/docs/interfaces/).
 
 > **Warning**
 >

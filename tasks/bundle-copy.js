@@ -52,12 +52,12 @@ function main() {
       ['demos'],
       true,
       '@blindnet-demos/*',
-      '@blindnet-demos/static',
+      '@blindnet-demos/dpo',
       ['dist']
     ),
 
     // copy static demos
-    copyPkgsToBundle(['demos'], true, '@blindnet-demos/*static*'),
+    copyPkgsToBundle(['demos'], true, '@blindnet-demos/*dpo*'),
 
     // copy public packages
     copyPkgsToBundle(['packages'], true, '@blindnet/*', [], ['dist'], false),
