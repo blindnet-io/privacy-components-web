@@ -31,7 +31,7 @@ export class BldnBridgeDemandList extends LitElement {
           <div id="list__row--heading">
             <span class="list__date-col"><b>${msg('Created')}</b></span>
             <span><b>${msg('Data Subject')}</b></span>
-            <span><b>${msg('Action')}</b></span>
+            <span><b>${msg('Type')}</b></span>
           </div>
           <div id="list__items">
             ${map(
