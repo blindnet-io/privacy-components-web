@@ -6,10 +6,7 @@ import { PrivacyRequestDemand } from '@blindnet/core';
 import '@blindnet/core-ui';
 
 import '../bldn-nav-wrapper.js';
-import {
-  ACTION_TITLES,
-  ACTION_TITLES_WITH_DEMAND,
-} from '../../utils/dictionary.js';
+import { ACTION_TITLES_WITH_DEMAND } from '../../utils/dictionary.js';
 
 /**
  * Abstract class for a form that allows the user to create or edit a demand.

@@ -1110,6 +1110,10 @@
   <source>Arrow to expand or collapse the dropdown</source>
   <target>Flèche pour développer ou réduire la liste déroulante</target>
 </trans-unit>
+<trans-unit id="h017b508a9792dc7f">
+  <source>This system, all systems within this organization, and all partner systems where data has been <x id="0" equiv-text="&lt;b&gt;"/>shared or obtained<x id="1" equiv-text="&lt;/b&gt;"/></source>
+  <target>Ce système, tous les systèmes au sein de cette organisation et tous les partenaires avec lesquels des données ont été <x id="0" equiv-text="&lt;b&gt;"/>partagées ou obtenues<x id="1" equiv-text="&lt;/b&gt;"/></target>
+</trans-unit>
 <trans-unit id="s3176f9811c35d533">
   <source>Data Categories</source>
   <target>Catégories de données</target>
