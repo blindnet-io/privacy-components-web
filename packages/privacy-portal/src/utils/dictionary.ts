@@ -26,7 +26,7 @@ export const ACTION_TITLES = {
   'TRANSPARENCY.RETENTION': () => msg('Transparency - Retention'),
   'TRANSPARENCY.WHERE': () => msg('Transparency - Where'),
   'TRANSPARENCY.WHO': () => msg('Transparency - Who'),
-  OTHER: () => msg('Other Demand'),
+  OTHER: () => msg('Other'),
 };
 
 /**
@@ -318,7 +318,7 @@ export const TARGET_DESCRIPTIONS = {
   '*': () => msg(html`All targets`),
   SYSTEM: () => msg(html`This system`),
   ORGANIZATION: () => msg(html`This system and all systems within this organization`),
-  PARTNERS: () => msg(html`Systems belonging to any Organization with which the data is exchanged`),
+  PARTNERS: () => msg(html`This system, all systems within this organization, and all partner systems where data has been <b>shared or obtained</b>`),
   'PARTNERS.DOWNWARD': () => msg(html`Systems belonging to any Organization with which the data is <b>shared</b>`),
   'PARTNERS.UPWARD': () => msg(html`Systems belonging to any Organization from which the data is <b>obtained</b>`),
 };

@@ -20,7 +20,6 @@ import { choose } from 'lit/directives/choose.js';
 import '@blindnet/core-ui';
 import {
   ACTION_DESCRIPTIONS,
-  ACTION_TITLES,
   ACTION_TITLES_WITH_DEMAND,
   AFTER_TITLES,
   DATA_CATEGORY_TITLES_WITH_DATA,
