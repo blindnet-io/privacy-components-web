@@ -26,7 +26,7 @@ export const ACTION_TITLES = {
   'TRANSPARENCY.RETENTION': () => msg('Transparency - Retention'),
   'TRANSPARENCY.WHERE': () => msg('Transparency - Where'),
   'TRANSPARENCY.WHO': () => msg('Transparency - Who'),
-  OTHER: () => msg('Other Demand'),
+  'OTHER-DEMAND': () => msg('Other'),
 };
 
 /**
@@ -55,7 +55,7 @@ export const ACTION_TITLES_WITH_DEMAND = {
   'TRANSPARENCY.RETENTION': () => msg('Transparency - Retention Demand'),
   'TRANSPARENCY.WHERE': () => msg('Transparency - Where Demand'),
   'TRANSPARENCY.WHO': () => msg('Transparency - Who Demand'),
-  OTHER: () => msg('Other Demand'),
+  'OTHER-DEMAND': () => msg('Other Demand'),
 };
 
 /**
@@ -74,7 +74,7 @@ export const ACTION_DESCRIPTIONS = {
     msg(
       'Demand information related to data processing practices and know if the system has data on me'
     ),
-  OTHER: () =>
+  'OTHER-DEMAND': () =>
     msg(
       'Do or know something else. Please note it may take longer to be answered'
     ),
@@ -318,7 +318,7 @@ export const TARGET_DESCRIPTIONS = {
   '*': () => msg(html`All targets`),
   SYSTEM: () => msg(html`This system`),
   ORGANIZATION: () => msg(html`This system and all systems within this organization`),
-  PARTNERS: () => msg(html`Systems belonging to any Organization with which the data is exchanged`),
+  PARTNERS: () => msg(html`This system, all systems within this organization, and all partner systems where data has been <b>shared or obtained</b>`),
   'PARTNERS.DOWNWARD': () => msg(html`Systems belonging to any Organization with which the data is <b>shared</b>`),
   'PARTNERS.UPWARD': () => msg(html`Systems belonging to any Organization from which the data is <b>obtained</b>`),
 };

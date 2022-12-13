@@ -20,7 +20,6 @@ import { choose } from 'lit/directives/choose.js';
 import '@blindnet/core-ui';
 import {
   ACTION_DESCRIPTIONS,
-  ACTION_TITLES,
   ACTION_TITLES_WITH_DEMAND,
   AFTER_TITLES,
   DATA_CATEGORY_TITLES_WITH_DATA,
@@ -433,13 +432,18 @@ export class BldnRequestStatus extends CoreConfigurationMixin(LitElement) {
           () => html`
             ${when(
               demand.data,
-              () => html`
-                <bldn-button mode='link-icon' @bldn-button:click=${() =>
-                  this.handleDownloadClick(demand)}>
-                  <img src=${downloadSvg} alt='download your data'></img>
-                  <span>${msg('Download your data.')}</span>
-                </bldn-button>
-              `,
+              () =>
+                // TODO: change this
+                when(
+                  demand.data!.startsWith('http'),
+                  () => html`
+                  <bldn-button mode='link-icon' @bldn-button:click=${() =>
+                    this.handleDownloadClick(demand)}>
+                    <img src=${downloadSvg} alt='download your data'></img>
+                    <span>${msg('Download your data.')}</span>
+                  </bldn-button>`,
+                  () => html`<p>${msg('No data was found for the user.')}</p>`
+                ),
               () =>
                 html`<p>
                   ${msg(

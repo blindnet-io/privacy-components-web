@@ -16,7 +16,6 @@ import { choose } from 'lit/directives/choose.js';
 import './bldn-nav-wrapper.js';
 import '@blindnet/core-ui';
 import {
-  ACTION_TITLES,
   ACTION_TITLES_WITH_DEMAND,
   DATA_CATEGORY_DESCRIPTIONS,
   DATA_CATEGORY_TITLES,
@@ -423,13 +422,13 @@ export class BldnRequestReview extends LitElement {
           <span slot="heading"><strong>${msg('Request Target')}</strong></span>
           <p>${msg('I address my Privacy Request to:')}</p>
           <bldn-radio-list
-            .choices=${Object.values(CreatePrivacyRequestPayload.target).map(
-              target => ({
+            .choices=${Object.values(CreatePrivacyRequestPayload.target)
+              .filter(t => t !== CreatePrivacyRequestPayload.target._)
+              .map(target => ({
                 display: TARGET_DESCRIPTIONS[target](),
                 value: target,
                 checked: target === CreatePrivacyRequestPayload.target.PARTNERS,
-              })
-            )}
+              }))}
             @bldn-radio-list:choice-change=${this.handleTargetChange}
           ></bldn-radio-list>
         </bldn-dropdown>
