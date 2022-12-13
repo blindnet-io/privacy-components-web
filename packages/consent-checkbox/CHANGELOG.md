@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.19.0](https://github.com/blindnet-io/privacy-components-web/compare/v0.18.0...v0.19.0) (2022-12-13)
+
+### Bug Fixes
+
+- **@blindnet/privacy-portal:** [#268](https://github.com/blindnet-io/privacy-components-web/issues/268) msg when no data link is returned ([b9b4aaa](https://github.com/blindnet-io/privacy-components-web/commit/b9b4aaa1fbdf165aedffe141b8e5307869154c28))
+
+### Features
+
+- **@blindnet/privacy-portal:** update action name and remove all target ([f8e57ec](https://github.com/blindnet-io/privacy-components-web/commit/f8e57ecf172ab2e552294c2b1422fb525cb677d9))
+
 # [0.18.0](https://github.com/blindnet-io/privacy-components-web/compare/v0.17.0...v0.18.0) (2022-12-08)
 
 **Note:** Version bump only for package @blindnet/consent-checkbox

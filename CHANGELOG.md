@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.19.0](https://github.com/blindnet-io/privacy-components-web/compare/v0.18.0...v0.19.0) (2022-12-13)
+
+### Bug Fixes
+
+- **@blindnet-demos/dpo:** fix back button for dpo demo ([9ef093b](https://github.com/blindnet-io/privacy-components-web/commit/9ef093b64939c2c0ea2c9d84ab394d7b3f767596))
+- **@blindnet-demos/dpo:** fix bridge login and redirect path ([765fdfd](https://github.com/blindnet-io/privacy-components-web/commit/765fdfdd5e8043a273cc075e596c67221e6b755c))
+- **@blindnet-demos/dpo:** fix dpo demo addon ([801bafa](https://github.com/blindnet-io/privacy-components-web/commit/801bafa4c630f08f6ea0e16dc372884d8ba8be3a))
+- **@blindnet-demos/modules:** [#283](https://github.com/blindnet-io/privacy-components-web/issues/283) participation recorded message ([353d390](https://github.com/blindnet-io/privacy-components-web/commit/353d390b4f0189e0c2c08be66423b817879807c5))
+- **@blindnet/core:** other demand label ([98e35a5](https://github.com/blindnet-io/privacy-components-web/commit/98e35a5676962cc2b9b37e2cf3dcdbc064edf803))
+- **@blindnet/privacy-portal:** [#268](https://github.com/blindnet-io/privacy-components-web/issues/268) msg when no data link is returned ([b9b4aaa](https://github.com/blindnet-io/privacy-components-web/commit/b9b4aaa1fbdf165aedffe141b8e5307869154c28))
+
+### Features
+
+- **@blindnet/privacy-portal:** update action name and remove all target ([f8e57ec](https://github.com/blindnet-io/privacy-components-web/commit/f8e57ecf172ab2e552294c2b1422fb525cb677d9))
+
 # [0.18.0](https://github.com/blindnet-io/privacy-components-web/compare/v0.17.0...v0.18.0) (2022-12-08)
 
 ### Features

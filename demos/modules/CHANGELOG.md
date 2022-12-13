@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.19.0](https://github.com/blindnet-io/privacy-components-web/compare/v0.18.0...v0.19.0) (2022-12-13)
+
+### Bug Fixes
+
+- **@blindnet-demos/modules:** [#283](https://github.com/blindnet-io/privacy-components-web/issues/283) participation recorded message ([353d390](https://github.com/blindnet-io/privacy-components-web/commit/353d390b4f0189e0c2c08be66423b817879807c5))
+
 # [0.18.0](https://github.com/blindnet-io/privacy-components-web/compare/v0.17.0...v0.18.0) (2022-12-08)
 
 ### Features

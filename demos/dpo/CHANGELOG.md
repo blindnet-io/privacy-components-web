@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.19.0](https://github.com/blindnet-io/privacy-components-web/compare/v0.18.0...v0.19.0) (2022-12-13)
+
+### Bug Fixes
+
+- **@blindnet-demos/dpo:** fix back button for dpo demo ([9ef093b](https://github.com/blindnet-io/privacy-components-web/commit/9ef093b64939c2c0ea2c9d84ab394d7b3f767596))
+- **@blindnet-demos/dpo:** fix bridge login and redirect path ([765fdfd](https://github.com/blindnet-io/privacy-components-web/commit/765fdfdd5e8043a273cc075e596c67221e6b755c))
+- **@blindnet-demos/dpo:** fix dpo demo addon ([801bafa](https://github.com/blindnet-io/privacy-components-web/commit/801bafa4c630f08f6ea0e16dc372884d8ba8be3a))
+
 # [0.18.0](https://github.com/blindnet-io/privacy-components-web/compare/v0.17.0...v0.18.0) (2022-12-08)
 
 ### Features
