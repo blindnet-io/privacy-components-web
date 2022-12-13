@@ -346,12 +346,6 @@ export class AppParticipateForm extends LitElement {
           subtitle="Please correct below errors."
         ></bx-inline-notification>
 
-        <bx-inline-notification
-          id="notification-success"
-          kind="success"
-          title="Participation recorded!"
-        ></bx-inline-notification>
-
         <bx-form-item>
           <bx-input
             id="input-firstname"
@@ -436,6 +430,12 @@ export class AppParticipateForm extends LitElement {
             >Clear Values</bx-btn
           >
         </div>
+
+        <bx-inline-notification
+          id="notification-success"
+          kind="success"
+          title="Participation recorded!"
+        ></bx-inline-notification>
       </form>
     `;
   }
