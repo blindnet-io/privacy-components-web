@@ -1472,6 +1472,9 @@
   <source>Download your data.</source>
   <target>Télécharger vos données</target>
 </trans-unit>
+<trans-unit id="s317675f587378dd4">
+  <source>No data was found for the user.</source>
+</trans-unit>
 <trans-unit id="s3137e812940ae6b7">
   <source>Obtaining data, please wait and refresh the page later.</source>
   <target>Vos données sont en cours d'obtention, veuillez patienter et ne pas actualiser la page</target>
