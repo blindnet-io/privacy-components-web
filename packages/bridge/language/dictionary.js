@@ -25,7 +25,7 @@ const ACTION_TITLES = {
     'TRANSPARENCY.RETENTION': () => msg('Transparency - Retention'),
     'TRANSPARENCY.WHERE': () => msg('Transparency - Where'),
     'TRANSPARENCY.WHO': () => msg('Transparency - Who'),
-    OTHER: () => msg('Other Demand'),
+    'OTHER-DEMAND': () => msg('Other Demand'),
 };
 /**
  * Mapping of PRIV Actions to corresponding titles.
@@ -51,7 +51,7 @@ const ACTION_TITLES_WITH_DEMAND = {
     'TRANSPARENCY.RETENTION': () => msg('Transparency - Retention Demand'),
     'TRANSPARENCY.WHERE': () => msg('Transparency - Where Demand'),
     'TRANSPARENCY.WHO': () => msg('Transparency - Who Demand'),
-    OTHER: () => msg('Other Demand'),
+    'OTHER-DEMAND': () => msg('Other Demand'),
 };
 /**
  * Mapping of PRIV Actions to corresponding descriptions.
@@ -65,7 +65,7 @@ const ACTION_DESCRIPTIONS = {
     RESTRICT: () => msg('Restrict processing of my data to a particular scope'),
     'REVOKE-CONSENT': () => msg('Revoke previously given consent for data processing'),
     TRANSPARENCY: () => msg('Demand information related to data processing practices and know if the system has data on me'),
-    OTHER: () => msg('Do or know something else. Please note it may take longer to be answered'),
+    'OTHER-DEMAND': () => msg('Do or know something else. Please note it may take longer to be answered'),
     'TRANSPARENCY.DATA-CATEGORIES': () => msg('The categories of the data the organization has on me'),
     'TRANSPARENCY.DPO': () => msg('The contact details of the data protection officer'),
     'TRANSPARENCY.KNOWN': () => msg('If the organization has data on me'),

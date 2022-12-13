@@ -300,12 +300,13 @@ let BldnRequestStatus = class BldnRequestStatus extends CoreConfigurationMixin(L
             [
                 PrivacyResponsePayload.requested_action.ACCESS,
                 () => html `
-            ${when(demand.data, () => html `
-                <bldn-button mode='link-icon' @bldn-button:click=${() => this.handleDownloadClick(demand)}>
-                  <img src=${downloadSvg} alt='download your data'></img>
-                  <span>${msg('Download your data.')}</span>
-                </bldn-button>
-              `, () => html `<p>
+            ${when(demand.data, () => 
+                // TODO: change this
+                when(demand.data.startsWith('http'), () => html `
+                  <bldn-button mode='link-icon' @bldn-button:click=${() => this.handleDownloadClick(demand)}>
+                    <img src=${downloadSvg} alt='download your data'></img>
+                    <span>${msg('Download your data.')}</span>
+                  </bldn-button>`, () => html `<p>${msg('No data was found for the user.')}</p>`), () => html `<p>
                   ${msg('Obtaining data, please wait and refresh the page later.')}
                 </p>`)}
           `,

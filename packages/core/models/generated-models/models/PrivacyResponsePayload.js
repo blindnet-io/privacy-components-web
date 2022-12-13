@@ -24,7 +24,7 @@ var PrivacyResponsePayload;
         requested_action["TRANSPARENCY_RETENTION"] = "TRANSPARENCY.RETENTION";
         requested_action["TRANSPARENCY_WHERE"] = "TRANSPARENCY.WHERE";
         requested_action["TRANSPARENCY_WHO"] = "TRANSPARENCY.WHO";
-        requested_action["OTHER"] = "OTHER";
+        requested_action["OTHER"] = "OTHER-DEMAND";
     })(PrivacyResponsePayload.requested_action || (PrivacyResponsePayload.requested_action = {}));
     (function (status) {
         status["GRANTED"] = "GRANTED";

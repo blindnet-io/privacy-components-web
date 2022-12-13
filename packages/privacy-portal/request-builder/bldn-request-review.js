@@ -287,7 +287,9 @@ let BldnRequestReview = class BldnRequestReview extends LitElement {
           <span slot="heading"><strong>${msg('Request Target')}</strong></span>
           <p>${msg('I address my Privacy Request to:')}</p>
           <bldn-radio-list
-            .choices=${Object.values(CreatePrivacyRequestPayload.target).map(target => ({
+            .choices=${Object.values(CreatePrivacyRequestPayload.target)
+            .filter(t => t !== CreatePrivacyRequestPayload.target._)
+            .map(target => ({
             display: TARGET_DESCRIPTIONS[target](),
             value: target,
             checked: target === CreatePrivacyRequestPayload.target.PARTNERS,

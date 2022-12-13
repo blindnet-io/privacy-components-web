@@ -22,7 +22,7 @@ export declare const ACTION_TITLES: {
     'TRANSPARENCY.RETENTION': () => string;
     'TRANSPARENCY.WHERE': () => string;
     'TRANSPARENCY.WHO': () => string;
-    OTHER: () => string;
+    'OTHER-DEMAND': () => string;
 };
 /**
  * Mapping of PRIV Actions to corresponding titles.
@@ -48,7 +48,7 @@ export declare const ACTION_TITLES_WITH_DEMAND: {
     'TRANSPARENCY.RETENTION': () => string;
     'TRANSPARENCY.WHERE': () => string;
     'TRANSPARENCY.WHO': () => string;
-    OTHER: () => string;
+    'OTHER-DEMAND': () => string;
 };
 /**
  * Mapping of PRIV Actions to corresponding descriptions.
@@ -62,7 +62,7 @@ export declare const ACTION_DESCRIPTIONS: {
     RESTRICT: () => string;
     'REVOKE-CONSENT': () => string;
     TRANSPARENCY: () => string;
-    OTHER: () => string;
+    'OTHER-DEMAND': () => string;
     'TRANSPARENCY.DATA-CATEGORIES': () => string;
     'TRANSPARENCY.DPO': () => string;
     'TRANSPARENCY.KNOWN': () => string;

@@ -27,6 +27,6 @@ export declare namespace PendingDemandPayload {
         TRANSPARENCY_RETENTION = "TRANSPARENCY.RETENTION",
         TRANSPARENCY_WHERE = "TRANSPARENCY.WHERE",
         TRANSPARENCY_WHO = "TRANSPARENCY.WHO",
-        OTHER = "OTHER"
+        OTHER = "OTHER-DEMAND"
     }
 }

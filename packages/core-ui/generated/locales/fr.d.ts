@@ -4,6 +4,7 @@ export declare const templates: {
     'all-purposes-of-processing': string;
     'demand-form-action-sentence-start': string;
     h00995735c540a9b2: import("lit-html").TemplateResult<1>;
+    h017b508a9792dc7f: import("lit-html").TemplateResult<1>;
     h13d5761d00e9feca: import("lit-html").TemplateResult<1>;
     h19239c6c3bcb708a: import("lit-html").TemplateResult<1>;
     h1c2eb9adfca54c27: import("lit-html").TemplateResult<1>;
@@ -392,4 +393,5 @@ export declare const templates: {
     sfdad6bb711adaff5: string;
     sfef5aebda25a65db: string;
     sff7e60a212b3fa64: string;
+    s317675f587378dd4: string;
 };

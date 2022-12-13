@@ -24,7 +24,7 @@ var PendingDemandDetailsPayload;
         action["TRANSPARENCY_RETENTION"] = "TRANSPARENCY.RETENTION";
         action["TRANSPARENCY_WHERE"] = "TRANSPARENCY.WHERE";
         action["TRANSPARENCY_WHO"] = "TRANSPARENCY.WHO";
-        action["OTHER"] = "OTHER";
+        action["OTHER"] = "OTHER-DEMAND";
     })(PendingDemandDetailsPayload.action || (PendingDemandDetailsPayload.action = {}));
 })(PendingDemandDetailsPayload = PendingDemandDetailsPayload || (PendingDemandDetailsPayload = {}));
 

@@ -11,6 +11,7 @@ const templates = {
     'demand-form-action-sentence-start': `Détails de ma`,
     'h00995735c540a9b2': html `L'organisation <strong>n'a pas</strong> de
                           données sur vous`,
+    'h017b508a9792dc7f': html `Ce système, tous les systèmes au sein de cette organisation et tous les partenaires avec lesquels des données ont été <b>partagées ou obtenues</b>`,
     'h13d5761d00e9feca': html `Ce système et tous les systèmes au sein de cette organisation`,
     'h19239c6c3bcb708a': html `Toutes représentations graphiques (image, vidéo) de moi`,
     'h1c2eb9adfca54c27': html `Toutes les informations permettant de me classer dans une catégorie démographique`,
@@ -405,6 +406,7 @@ const templates = {
     'sfdad6bb711adaff5': `Votre demande d'opposition a été approuvée`,
     'sfef5aebda25a65db': `Erreur lors de l'obtention des détails de la demande. Veuillez actualiser la plage plus tard.`,
     'sff7e60a212b3fa64': `Prendre mes données et les faire transférer ailleurs`,
+    's317675f587378dd4': `No data was found for the user.`,
 };
 
 export { templates };

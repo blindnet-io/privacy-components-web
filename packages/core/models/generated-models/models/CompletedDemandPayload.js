@@ -24,7 +24,7 @@ var CompletedDemandPayload;
         action["TRANSPARENCY_RETENTION"] = "TRANSPARENCY.RETENTION";
         action["TRANSPARENCY_WHERE"] = "TRANSPARENCY.WHERE";
         action["TRANSPARENCY_WHO"] = "TRANSPARENCY.WHO";
-        action["OTHER"] = "OTHER";
+        action["OTHER"] = "OTHER-DEMAND";
     })(CompletedDemandPayload.action || (CompletedDemandPayload.action = {}));
     (function (status) {
         status["GRANTED"] = "GRANTED";
