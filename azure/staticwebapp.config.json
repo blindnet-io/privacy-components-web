@@ -1,0 +1,19 @@
+{
+  "routes": [
+    {
+      "route": "/demos",
+      "rewrite": "/demos/modules/index.html"
+    },
+    {
+      "route": "/demos/dpo*",
+      "rewrite": "/demos/dpo/index.html"
+    },
+    {
+      "route": "/demos/modules*",
+      "rewrite": "/demos/modules/index.html"
+    }
+  ],
+  "navigationFallback": {
+    "rewrite": "/index.html"
+  }
+}
