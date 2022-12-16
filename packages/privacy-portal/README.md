@@ -1,11 +1,11 @@
-# `@blindnet/prci`
+# `@blindnet/privacy-portal`
 
 > Webcomponent for data subjects to create and monitor privacy requests.
 
 ## Usage
 
 ```js
-import '@blindnet/prci';
+import '@blindnet/privacy-portal';
 ```
 
 ```html

@@ -219,8 +219,8 @@ The scope should be the name of the npm package affected as perceived by the per
 The following is the list of supported scopes:
 
 - **@blindnet/core**
-- **@blindnet/prci**
-- **@blindnet/dci**
+- **@blindnet/privacy-portal**
+- **@blindnet/bridge**
 - **@blindnet-demos/devkit-simple-tutorial**
 - **@blindnet-demos/static**
 
@@ -237,12 +237,12 @@ The subject contains succinct description of the change:
 
 Examples of valid commit messages:
 
-- `fix(@blindnet/prci): prevent the flubber from grassing`
+- `fix(@blindnet/privacy-portal): prevent the flubber from grassing`
 - `refactor(@blindnet/core): move all JSON classes together`
 
 Examples of invalid commit messages:
 
-- `fix(@blindnet/prci): add a new XYZ property`
+- `fix(@blindnet/privacy-portal): add a new XYZ property`
 
   This is a feature, not a fix.
 
