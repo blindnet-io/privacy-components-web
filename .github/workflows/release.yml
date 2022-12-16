@@ -35,7 +35,18 @@ jobs:
           yarn typecheck
           yarn test
 
-      - name: Deploy 🚀
+      - name: Deploy develop 🚀
+        if: github.ref == 'refs/heads/develop'
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_TOKEN_STAGING }}
+          action: 'upload'
+          skip_app_build: true
+          skip_api_build: true
+          app_location: '/build'
+          output_location: ''
+
+      - name: Deploy main 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         # only update the documentation for stable releases
         if: github.ref == 'refs/heads/main'
