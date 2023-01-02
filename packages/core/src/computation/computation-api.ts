@@ -18,8 +18,7 @@ export class ComputationAPI {
   static readonly MOCK_URL =
     'https://stoplight.io/mocks/blindnet/product-management:open-api/74767654';
 
-  static readonly DEFAULT_URL =
-    'https://devkit-pce-staging.azurewebsites.net/v0';
+  static readonly PRODUCTION_URL = 'https://computing.blindnet.io/';
 
   /**
    * @param baseURL base URL (schema + host + port + base-path) to call
@@ -30,7 +29,8 @@ export class ComputationAPI {
     adminToken?: string
   ) {
     if (!baseURL) {
-      this._baseURL = ComputationAPI.DEFAULT_URL;
+      // Default to production URL
+      this._baseURL = ComputationAPI.PRODUCTION_URL;
     } else if (baseURL === 'false') {
       this._baseURL = ComputationAPI.MOCK_URL;
     } else {
