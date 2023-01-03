@@ -5,7 +5,7 @@
 export type Provenance = {
   id: string;
   provenance: Provenance.provenance;
-  system?: string;
+  system: string;
 };
 
 export namespace Provenance {

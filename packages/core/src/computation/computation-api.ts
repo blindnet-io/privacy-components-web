@@ -12,6 +12,7 @@ import {
   PendingDemandPayload,
   PrivacyResponsePayload,
   RequestHistoryPayload,
+  TimelineEventsPayload,
 } from '../models/generated-models/index.js';
 
 export class ComputationAPI {
@@ -412,6 +413,29 @@ export class ComputationAPI {
         throw new Error(response.statusText);
       }
       return response.json() as Promise<CompletedDemandInfoPayload>;
+    });
+  }
+
+  async getDemandTimeline(userId: string): Promise<TimelineEventsPayload> {
+    if (userId === undefined) {
+      return Promise.reject(
+        new Error('userId undefined when fetching timeline')
+      );
+    }
+
+    const endpoint = `/bridge/timeline/${userId}`;
+
+    return fetch(this.fullURL(endpoint), {
+      method: 'GET',
+      headers: {
+        accept: 'application/json',
+        Authorization: `Bearer ${this._adminToken}`,
+      },
+    }).then(response => {
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+      return response.json() as Promise<TimelineEventsPayload>;
     });
   }
 

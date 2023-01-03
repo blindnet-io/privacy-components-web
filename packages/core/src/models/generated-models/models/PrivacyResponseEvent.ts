@@ -2,18 +2,16 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import type { Restrictions } from './Restrictions.js';
-
-export type PrivacyRequestDemand = {
+export type PrivacyResponseEvent = {
   id: string;
-  action: PrivacyRequestDemand.action;
-  message?: string;
-  language?: string;
-  data?: Array<string>;
-  restrictions?: Restrictions;
+  demand_id: string;
+  action: PrivacyResponseEvent.action;
+  includes?: Array<any>;
+  date: string;
+  status: PrivacyResponseEvent.status;
 };
 
-export namespace PrivacyRequestDemand {
+export namespace PrivacyResponseEvent {
   export enum action {
     ACCESS = 'ACCESS',
     DELETE = 'DELETE',
@@ -36,5 +34,13 @@ export namespace PrivacyRequestDemand {
     TRANSPARENCY_WHERE = 'TRANSPARENCY.WHERE',
     TRANSPARENCY_WHO = 'TRANSPARENCY.WHO',
     OTHER_DEMAND = 'OTHER-DEMAND',
+  }
+
+  export enum status {
+    GRANTED = 'GRANTED',
+    DENIED = 'DENIED',
+    PARTIALLY_GRANTED = 'PARTIALLY-GRANTED',
+    UNDER_REVIEW = 'UNDER-REVIEW',
+    CANCELED = 'CANCELED',
   }
 }

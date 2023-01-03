@@ -200,7 +200,7 @@ export class BldnRequestReview extends LitElement {
 
       const hasAdditionalMessage =
         demandGroup[0].message &&
-        demandGroup[0].action !== PrivacyRequestDemand.action.OTHER;
+        demandGroup[0].action !== PrivacyRequestDemand.action.OTHER_DEMAND;
 
       return html`
         ${choose(
@@ -290,7 +290,7 @@ export class BldnRequestReview extends LitElement {
               `,
             ],
             [
-              PrivacyRequestDemand.action.OTHER,
+              PrivacyRequestDemand.action.OTHER_DEMAND,
               () => html`
                 <p>${msg('Details of my demand:')}</p>
                 <i>${demandGroup[0].message}</i>

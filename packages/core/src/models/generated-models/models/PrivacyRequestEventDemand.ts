@@ -2,18 +2,12 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import type { Restrictions } from './Restrictions.js';
-
-export type PrivacyRequestDemand = {
+export type PrivacyRequestEventDemand = {
   id: string;
-  action: PrivacyRequestDemand.action;
-  message?: string;
-  language?: string;
-  data?: Array<string>;
-  restrictions?: Restrictions;
+  action: PrivacyRequestEventDemand.action;
 };
 
-export namespace PrivacyRequestDemand {
+export namespace PrivacyRequestEventDemand {
   export enum action {
     ACCESS = 'ACCESS',
     DELETE = 'DELETE',

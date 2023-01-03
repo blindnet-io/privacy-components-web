@@ -8,5 +8,7 @@ export type DemandResolutionStrategy = {
   transparency: DemandResolution;
   access: DemandResolution;
   delete: DemandResolution;
-  consents: DemandResolution;
+  revoke_consent: DemandResolution;
+  object_scope: DemandResolution;
+  restrict_scope: DemandResolution;
 };

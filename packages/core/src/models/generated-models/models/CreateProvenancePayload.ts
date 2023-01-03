@@ -17,7 +17,7 @@ export type CreateProvenancePayload = {
   /**
    * id of the system data category originated from. null for own system
    */
-  system?: string;
+  system: string;
 };
 
 export namespace CreateProvenancePayload {

@@ -129,7 +129,6 @@
 's29ec563d56cf6c6b': `Autres Options`,
 's2a32ad5ec5fc7e5c': `Il n'y a pas de source de données vous concernant`,
 's2a880deefa02ab59': `Profilage`,
-'s2b7bb3f9a459d7dd': `Historique bientôt disponible !`,
 's2e39367a8c5564b7': `Autres données`,
 's2fa47f3acd802112': `Identifiant Unique - Compte Utilisateur`,
 's3137e812940ae6b7': `Vos données sont en cours d'obtention, veuillez patienter et ne pas actualiser la page`,

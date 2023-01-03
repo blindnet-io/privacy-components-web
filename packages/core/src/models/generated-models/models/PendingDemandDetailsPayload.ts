@@ -9,6 +9,8 @@ export type PendingDemandDetailsPayload = {
   id: string;
   date: string;
   action: PendingDemandDetailsPayload.action;
+  message?: string;
+  language?: string;
   data_subject?: DataSubjectPayload;
   recommendation?: Recommendation;
 };
@@ -35,6 +37,6 @@ export namespace PendingDemandDetailsPayload {
     TRANSPARENCY_RETENTION = 'TRANSPARENCY.RETENTION',
     TRANSPARENCY_WHERE = 'TRANSPARENCY.WHERE',
     TRANSPARENCY_WHO = 'TRANSPARENCY.WHO',
-    OTHER = 'OTHER-DEMAND',
+    OTHER_DEMAND = 'OTHER-DEMAND',
   }
 }

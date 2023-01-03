@@ -2,6 +2,6 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type GiveConsentPayload = {
-  consentId: string;
+export type CreateApplicationPayload = {
+  app_id: string;
 };
