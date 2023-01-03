@@ -1,7 +1,7 @@
 // @ts-nocheck
 /* eslint-disable no-console */
 /**
- * Use the staging api link for staging demo
+ * Modify build directory to use the staging API url in staging demo
  */
 
 // eslint-disable-next-line import/no-extraneous-dependencies

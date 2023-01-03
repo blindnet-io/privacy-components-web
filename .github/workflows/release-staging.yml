@@ -2,7 +2,6 @@ name: Release
 on:
   push:
     branches:
-      - main
       - develop
 permissions:
   contents: write
@@ -35,11 +34,10 @@ jobs:
           yarn typecheck
           yarn test
 
-      - name: Deploy develop 🚀
-        if: github.ref == 'refs/heads/develop'
+      - name: Deploy (develop) 🚀
         steps:
           - name: Modify Build Directory for Staging
-            run: 'yarn build:staging'
+            run: 'yarn bundle:staging'
           - name: Deploy Static Azure App
             uses: Azure/static-web-apps-deploy@v1
             with:
@@ -49,13 +47,6 @@ jobs:
               skip_api_build: true
               app_location: '/build'
               output_location: ''
-
-      - name: Deploy main 🚀
-        uses: JamesIves/github-pages-deploy-action@v4
-        # only update the documentation for stable releases
-        if: github.ref == 'refs/heads/main'
-        with:
-          folder: build
 
       - name: Configure git and npm ⚙️
         env:
@@ -68,26 +59,8 @@ jobs:
           git remote set-url origin https://x-access-token:${{ secrets.BOT_PAT }}@github.com/${{ github.repository }}
           echo "//registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN" > .npmrc
 
-      - name: Version and publish (main) 📦
-        if: github.ref == 'refs/heads/main'
-        run: |
-          yarn lerna version --conventional-graduate --force-publish --yes --no-push
-          git push origin main --follow-tags
-          yarn lerna publish from-git --yes
-
       - name: Publish (develop) 📦
-        if: github.ref == 'refs/heads/develop'
         run: |
           yarn lerna publish --loglevel silly \
            --canary --yes --no-git-tag-version --no-push \
            --dist-tag next --preid beta-$(git rev-parse --short HEAD)
-
-      - name: Update develop (from main) 🔀
-        if: github.ref == 'refs/heads/main'
-        # updating the repo in case it has been changed after the initial checkout step
-        run: |
-          git fetch origin
-          git checkout origin/develop
-          git merge main
-          git push origin HEAD:develop
-          git checkout main

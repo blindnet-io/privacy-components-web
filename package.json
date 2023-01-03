@@ -12,7 +12,6 @@
     "build:localize": "lit-localize extract --config localization/lit-localize-global.json && node ./tasks/copy-localization-config.js && lerna run localize:build",
     "build:rollup": "rollup -c",
     "build:fix-locales": "node ./tasks/build-fix-locales.js",
-    "build:staging": "node ./tasks/build-staging.js",
     "build": "yarn run build:imports && yarn build:localize && yarn run build:rollup && yarn run build:fix-locales",
     "watch": "yarn run build:rollup --configKeep --configRaw --watch",
     "analyze": "lerna exec -- \"cem analyze --litelement\"",
@@ -42,6 +41,7 @@
     "ignore-sync": "ignore-sync .",
     "bundle:build-demos": "lerna run build --scope \"@blindnet-demos/*\"",
     "bundle:copy": "node ./tasks/bundle-copy.js && node ./tasks/copy-azure-settings.js",
+    "bundle:staging": "node ./tasks/bundle-staging.js",
     "bundle": "yarn bundle:build-demos && yarn storybook:build && yarn bundle:copy"
   },
   "dependencies": {
