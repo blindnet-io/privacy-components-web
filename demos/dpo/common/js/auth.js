@@ -33,7 +33,7 @@ async function renderLoggedInState() {
 
     // Exchange auth0 token for blindnet token from backend
     const blindnetToken = await fetch(
-      'https://blindnet-connector-demo.azurewebsites.net//auth/token',
+      'https://blindnet-connector-demo.azurewebsites.net/auth/token',
       {
         method: 'GET',
         headers,

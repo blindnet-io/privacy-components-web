@@ -85,7 +85,7 @@ export class AppPrivacy extends LitElement {
     };
 
     return fetch(
-      'https://blindnet-connector-demo.azurewebsites.net//auth/token',
+      'https://blindnet-connector-demo.azurewebsites.net/auth/token',
       {
         method: 'GET',
         headers,
