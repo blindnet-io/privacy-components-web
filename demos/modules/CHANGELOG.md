@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.19.2](https://github.com/blindnet-io/privacy-components-web/compare/v0.19.1...v0.19.2) (2023-01-06)
+
+### Bug Fixes
+
+- **@demos:** auth0 audience ([1ebaa7a](https://github.com/blindnet-io/privacy-components-web/commit/1ebaa7a225e50059cecd12e7dd51e721ca890f1a))
+
 ## [0.19.1](https://github.com/blindnet-io/privacy-components-web/compare/v0.19.0...v0.19.1) (2023-01-06)
 
 **Note:** Version bump only for package @blindnet-demos/modules

@@ -12,7 +12,7 @@ import '@blindnet/privacy-portal';
 const auth0 = new Auth0Client({
   domain: 'blindnet.eu.auth0.com',
   client_id: '1C0uhFCpzvJAkFi4uqoq2oAWSgQicqHc',
-  audience: 'https://blindnet-connector-demo.azurewebsites.net/',
+  audience: 'https://blindnet-connector-demo.azurewebsites.net',
   redirect_uri: `${window.location.origin}/demos/modules/basic/privacy`,
   authorizationParams: {
     redirect_uri: `${window.location.origin}/demos/modules/basic/privacy`,
