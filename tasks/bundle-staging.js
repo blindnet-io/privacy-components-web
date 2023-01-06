@@ -9,8 +9,14 @@ import replace from 'replace-in-file';
 
 const options = {
   files: 'build/demos/**/*',
-  from: 'computation-base-url="https://computing.blindnet.io/v0/"',
-  to: 'computation-base-url="https://stage.computing.blindnet.io/v0/"',
+  from: [
+    'computation-base-url="https://computing.blindnet.io/v0/"',
+    /blindnet-connector-demo.azurewebsites.net/g,
+  ],
+  to: [
+    'computation-base-url="https://stage.computing.blindnet.io/v0/"',
+    /blindnet-connector-demo-staging.azurewebsites.net/g,
+  ],
 };
 
 replace(options)
