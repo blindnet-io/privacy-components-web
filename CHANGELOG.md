@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.19.3](https://github.com/blindnet-io/privacy-components-web/compare/v0.19.2...v0.19.3) (2023-01-06)
+
+### Bug Fixes
+
+- **@demos:** develop urls ([56792f5](https://github.com/blindnet-io/privacy-components-web/commit/56792f5c1f37664abafec041ff2ca4d9341d1e63))
+
 ## [0.19.2](https://github.com/blindnet-io/privacy-components-web/compare/v0.19.1...v0.19.2) (2023-01-06)
 
 ### Bug Fixes
