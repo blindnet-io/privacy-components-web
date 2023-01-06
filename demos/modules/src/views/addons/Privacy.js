@@ -15,7 +15,7 @@ const fileUpload = new URL('../../../assets/file-upload.svg', import.meta.url)
 const auth0 = new Auth0Client({
   domain: 'blindnet.eu.auth0.com',
   client_id: '1C0uhFCpzvJAkFi4uqoq2oAWSgQicqHc',
-  audience: 'https://blindnet-connector-demo.azurewebsites.net/',
+  audience: 'https://blindnet-connector-demo.azurewebsites.net',
   redirect_uri: `${window.location.origin}/demos/modules/addons/privacy`,
   authorizationParams: {
     redirect_uri: `${window.location.origin}/demos/modules/addons/privacy`,
