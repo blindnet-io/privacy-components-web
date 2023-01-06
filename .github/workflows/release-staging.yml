@@ -1,0 +1,66 @@
+name: Release
+on:
+  push:
+    branches:
+      - develop
+permissions:
+  contents: write
+jobs:
+  release:
+    concurrency: ci-${{ github.ref }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+        with:
+          # Checkout all branches and tags
+          fetch-depth: 0
+          # use a dedicated access token to allow bypassing branches restrictions when pushing
+          token: ${{ secrets.BOT_PAT }}
+
+      - name: Install dependencies 🔧
+        run: |
+          yarn install --frozen-lockfile
+
+      - name: Build 👷‍♀
+        run: |
+          yarn build
+          yarn bundle
+
+      - name: Check ✅
+        run: |
+          yarn lint
+          yarn typecheck
+          yarn test
+
+      - name: Modify Build Directory for Staging
+        run: |
+          yarn bundle:staging
+
+      - name: Deploy to Azure 🚀
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_TOKEN_STAGING }}
+          action: 'upload'
+          skip_app_build: true
+          skip_api_build: true
+          app_location: '/build'
+          output_location: ''
+
+      - name: Configure git and npm ⚙️
+        env:
+          # automation token
+          # see https://github.com/lerna/lerna/issues/2788#issuecomment-1192788964
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+        run: |
+          git config --global user.name "blindnet bot"
+          git config --global user.email "dev@blindnet.io"
+          git remote set-url origin https://x-access-token:${{ secrets.BOT_PAT }}@github.com/${{ github.repository }}
+          echo "//registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN" > .npmrc
+
+      - name: Publish (develop) 📦
+        run: |
+          yarn lerna publish --loglevel silly \
+           --canary --yes --no-git-tag-version --no-push \
+           --dist-tag next --preid beta-$(git rev-parse --short HEAD)

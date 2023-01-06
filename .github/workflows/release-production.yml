@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - main
-      - develop
 permissions:
   contents: write
 jobs:
@@ -35,12 +34,15 @@ jobs:
           yarn typecheck
           yarn test
 
-      - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@v4
-        # only update the documentation for stable releases
-        if: github.ref == 'refs/heads/main'
+      - name: Deploy to Azure 🚀
+        uses: Azure/static-web-apps-deploy@v1
         with:
-          folder: build
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_TOKEN_PRODUCTION }}
+          action: 'upload'
+          skip_app_build: true
+          skip_api_build: true
+          app_location: '/build'
+          output_location: ''
 
       - name: Configure git and npm ⚙️
         env:
@@ -54,21 +56,12 @@ jobs:
           echo "//registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN" > .npmrc
 
       - name: Version and publish (main) 📦
-        if: github.ref == 'refs/heads/main'
         run: |
           yarn lerna version --conventional-graduate --force-publish --yes --no-push
           git push origin main --follow-tags
           yarn lerna publish from-git --yes
 
-      - name: Publish (develop) 📦
-        if: github.ref == 'refs/heads/develop'
-        run: |
-          yarn lerna publish --loglevel silly \
-           --canary --yes --no-git-tag-version --no-push \
-           --dist-tag next --preid beta-$(git rev-parse --short HEAD)
-
       - name: Update develop (from main) 🔀
-        if: github.ref == 'refs/heads/main'
         # updating the repo in case it has been changed after the initial checkout step
         run: |
           git fetch origin

@@ -1,0 +1,27 @@
+{
+  "routes": [
+    {
+      "route": "/demos",
+      "rewrite": "/demos/modules/index.html"
+    },
+    {
+      "route": "/demos/dpo/bridge*",
+      "rewrite": "/demos/dpo/bridge/index.html"
+    },
+    {
+      "route": "/demos/dpo/privacy-portal*",
+      "rewrite": "/demos/dpo/privacy-portal/index.html"
+    },
+    {
+      "route": "/demos/modules/basic*",
+      "rewrite": "/demos/modules/index.html"
+    },
+    {
+      "route": "/demos/modules/addons*",
+      "rewrite": "/demos/modules/index.html"
+    }
+  ],
+  "navigationFallback": {
+    "rewrite": "/index.html"
+  }
+}
