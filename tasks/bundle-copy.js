@@ -65,16 +65,10 @@ function main() {
     // copy storybook build to the root of the bundle
     fs.copy(path.resolve(rootDir, 'storybook-static'), bundleDirPath),
 
-    // copy translations to modules demo - gh pages path issue
+    // copy translations to modules demo, NOTE: may not be needed once moved to Azure
     fs.copy(
       path.join(rootDir, '/packages/privacy-portal/dist/generated'),
       path.join(bundleDirPath, '/demos/modules/generated')
-    ),
-
-    // write custom 404 page to root of bundle - another gh pages path issue
-    fs.copy(
-      path.resolve(rootDir, 'pages-static/404.html'),
-      path.resolve(bundleDirPath, './404.html')
     ),
   ]);
 }
