@@ -22,7 +22,7 @@
   &nbsp;•&nbsp;
   <a href="https://join.slack.com/t/blindnet/shared_invite/zt-1arqlhqt3-A8dPYXLbrnqz1ZKsz6ItOg">Online Chat</a>
   &nbsp;•&nbsp;
-  <span>Demo (<a href="https://pc4w.blindnet.dev/demos/modules/basic">Main</a> | <a href="https://stage.pc4w.blindnet.dev/">Develop</a> | <a href="https://pc4w.blindnet.dev/demos/dpo">DPO</a>)</span>
+  <span>Demo (<a href="https://pc4w.blindnet.dev/demos/modules/basic">Main</a> | <a href="https://stage.pc4w.blindnet.dev/demos/modules/basic">Develop</a> | <a href="https://pc4w.blindnet.dev/demos/dpo">DPO Main</a> | <a href="https://stage.pc4w.blindnet.dev/demos/dpo">DPO Develop</a>)</span>
   <br>
   <br>
 </p>
