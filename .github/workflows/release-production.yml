@@ -34,11 +34,15 @@ jobs:
           yarn typecheck
           yarn test
 
-      - name: Deploy (main) 🚀
-        uses: JamesIves/github-pages-deploy-action@v4
-        # only update the documentation for stable releases
+      - name: Deploy to Azure 🚀
+        uses: Azure/static-web-apps-deploy@v1
         with:
-          folder: build
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_TOKEN_PRODUCTION }}
+          action: 'upload'
+          skip_app_build: true
+          skip_api_build: true
+          app_location: '/build'
+          output_location: ''
 
       - name: Configure git and npm ⚙️
         env:
