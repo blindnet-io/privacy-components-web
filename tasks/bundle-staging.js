@@ -15,7 +15,7 @@ const options = {
   ],
   to: [
     'computation-base-url="https://stage.computing.blindnet.io/v0/"',
-    /blindnet-connector-demo-staging.azurewebsites.net/g,
+    'blindnet-connector-demo-staging.azurewebsites.net',
   ],
 };
 
