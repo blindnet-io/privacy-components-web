@@ -37,7 +37,7 @@ jobs:
       - name: Modify Build Directory for Staging
         run: |
           yarn bundle:staging
-      
+
       - name: Deploy to Azure 🚀
         uses: Azure/static-web-apps-deploy@v1
         with:
