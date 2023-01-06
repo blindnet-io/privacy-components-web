@@ -34,19 +34,19 @@ jobs:
           yarn typecheck
           yarn test
 
-      - name: Deploy (develop) 🚀
-        steps:
-          - name: Modify Build Directory for Staging
-            run: 'yarn bundle:staging'
-          - name: Deploy Static Azure App
-            uses: Azure/static-web-apps-deploy@v1
-            with:
-              azure_static_web_apps_api_token: ${{ secrets.AZURE_TOKEN_STAGING }}
-              action: 'upload'
-              skip_app_build: true
-              skip_api_build: true
-              app_location: '/build'
-              output_location: ''
+      - name: Modify Build Directory for Staging
+        run: |
+          yarn bundle:staging
+
+      - name: Deploy to Azure 🚀
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_TOKEN_STAGING }}
+          action: 'upload'
+          skip_app_build: true
+          skip_api_build: true
+          app_location: '/build'
+          output_location: ''
 
       - name: Configure git and npm ⚙️
         env:
