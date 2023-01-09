@@ -1,7 +1,8 @@
 // @ts-nocheck
 /* eslint-disable no-console */
 /**
- * Modify build directory to use the staging API url in staging demo
+ * Modify build directory to switch the staging API url for the
+ * production when building the production demo.
  */
 
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -10,12 +11,12 @@ import replace from 'replace-in-file';
 const options = {
   files: 'build/demos/**/*',
   from: [
-    'computation-base-url="https://computing.blindnet.io/v0/"',
-    /blindnet-connector-demo.azurewebsites.net/g,
+    'computation-base-url="https://stage.computing.blindnet.io/v0/"',
+    /blindnet-connector-demo-staging.azurewebsites.net/g,
   ],
   to: [
-    'computation-base-url="https://stage.computing.blindnet.io/v0/"',
-    'blindnet-connector-demo-staging.azurewebsites.net',
+    'computation-base-url="https://computing.blindnet.io/v0/"',
+    /blindnet-connector-demo.azurewebsites.net/g,
   ],
 };
 
