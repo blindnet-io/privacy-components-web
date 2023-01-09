@@ -154,10 +154,13 @@ export class AppParticipateForm extends LitElement {
     if (this._files.length === 0) return;
     formData.set('proof', this._files[0].file);
 
-    await fetch('https://blindnet-connector-demo.azurewebsites.net/form', {
-      method: 'POST',
-      body: formData,
-    });
+    await fetch(
+      'https://blindnet-connector-demo-staging.azurewebsites.net/form',
+      {
+        method: 'POST',
+        body: formData,
+      }
+    );
 
     this._notificationSuccess.open = true;
   }
@@ -173,7 +176,7 @@ export class AppParticipateForm extends LitElement {
       // Authorization: `Bearer ${this._apiToken}`,
     };
     await fetch(
-      'https://stage.computing.blindnet.io/v0/user-events/consent/public',
+      'https://stage.stage.computing.blindnet.io/v0/user-events/consent/public',
       {
         method: 'POST',
         headers,
@@ -298,7 +301,7 @@ export class AppParticipateForm extends LitElement {
     };
 
     return fetch(
-      'https://blindnet-connector-demo.azurewebsites.net/auth/token',
+      'https://blindnet-connector-demo-staging.azurewebsites.net/auth/token',
       {
         method: 'GET',
         headers,
