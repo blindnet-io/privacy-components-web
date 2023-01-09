@@ -46,7 +46,7 @@ export class AppBackOffice extends LitElement {
    */
   async getBlindnetAdminToken(username, password) {
     return fetch(
-      'https://blindnet-connector-demo.azurewebsites.net/auth/admin/token',
+      'https://blindnet-connector-demo-staging.azurewebsites.net/auth/admin/token',
       {
         method: 'POST',
         body: JSON.stringify({
