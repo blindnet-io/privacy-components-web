@@ -1,6 +1,13 @@
 /* eslint-disable camelcase */
 import { msg } from '@lit/localize';
-import { css, html, LitElement, PropertyValueMap } from 'lit';
+import {
+  css,
+  html,
+  HTMLTemplateResult,
+  LitElement,
+  PropertyValueMap,
+  TemplateResult,
+} from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
 import { map } from 'lit/directives/map.js';
@@ -35,13 +42,61 @@ interface DisplayedDemand {
   data_subject?: DataSubjectPayload;
 }
 
+type TimelineEvent =
+  | PrivacyRequestEvent
+  | PrivacyResponseEvent
+  | GivenConsentEvent
+  | RevokedConsentEvent
+  | LegalBaseEvent
+  | { date: string; dateObj: Date };
+
+// Below are 5 functions to use when determining which HTML template to render for an event
+// NOTE: These are only correct when used in the order in getEventTemplate()
+
+function isRequestEvent(event: TimelineEvent): event is PrivacyRequestEvent {
+  if ((event as PrivacyRequestEvent).target) {
+    return true;
+  }
+  return false;
+}
+
+function isResponseEvent(event: TimelineEvent): event is PrivacyResponseEvent {
+  if ((event as PrivacyResponseEvent).action) {
+    return true;
+  }
+  return false;
+}
+
+function isGivenConsentEvent(event: TimelineEvent): event is GivenConsentEvent {
+  if ((event as GivenConsentEvent).scope) {
+    return true;
+  }
+  return false;
+}
+
+function isRevokedConsentEvent(
+  event: TimelineEvent
+): event is RevokedConsentEvent {
+  if ((event as RevokedConsentEvent).date) {
+    return true;
+  }
+  return false;
+}
+
+function isLegalBaseEvent(event: TimelineEvent): event is LegalBaseEvent {
+  if ((event as LegalBaseEvent).type) {
+    return true;
+  }
+  return false;
+}
+
 @customElement('bldn-bridge-demand-list-item')
 export class BldnBridgeDemandListItem extends LitElement {
   @property({ type: Object }) demand: DisplayedDemand | undefined;
 
   @state() _demandDetails: PendingDemandDetailsPayload | undefined;
 
-  @state() _demandTimeline: TimelineEventsPayload | undefined;
+  @state() _demandTimeline: TimelineEvent[] | undefined;
 
   @state() _open = false;
 
@@ -50,6 +105,8 @@ export class BldnBridgeDemandListItem extends LitElement {
   @state() _selectedResponseType: Recommendation.status | undefined = undefined;
 
   @state() _message: string = '';
+
+  @state() _firstTimelineEventIndex: number = 0;
 
   isRecommended(): boolean {
     return (
@@ -95,6 +152,20 @@ export class BldnBridgeDemandListItem extends LitElement {
       default:
         break;
     }
+  }
+
+  handlePreviousEventsClick() {
+    this._firstTimelineEventIndex = Math.max(
+      0,
+      this._firstTimelineEventIndex - 5
+    );
+  }
+
+  handleNextEventsClick() {
+    this._firstTimelineEventIndex = Math.min(
+      this._demandTimeline!.length - 6,
+      this._firstTimelineEventIndex + 5
+    ); // VERIFY THIS
   }
 
   // Uses inline SVGs so we can adjust the colour
@@ -179,18 +250,9 @@ export class BldnBridgeDemandListItem extends LitElement {
         ComputationAPI.getInstance()
           .getDemandTimeline(this.demand.data_subject?.id)
           .then(timeline => {
-            this._demandTimeline = timeline;
-            console.log(this._demandTimeline);
+            let events: TimelineEvent[] = [];
 
-            let events: Array<
-              | PrivacyRequestEvent
-              | PrivacyResponseEvent
-              | GivenConsentEvent
-              | RevokedConsentEvent
-              | LegalBaseEvent
-              | { date: string; dateObj: Date }
-            > = [];
-
+            // Add a date object to each event and sort
             events = events
               .concat(
                 timeline.requests!,
@@ -205,8 +267,7 @@ export class BldnBridgeDemandListItem extends LitElement {
               }))
               .sort((e1, e2) => e1.dateObj.getTime() - e2.dateObj.getTime());
 
-            // Now do some kind of while loop to pop from events and get templates
-            // based on which type of event it is
+            this._demandTimeline = events;
           });
       }
     }
@@ -306,8 +367,91 @@ export class BldnBridgeDemandListItem extends LitElement {
     `;
   }
 
+  // TO TEST:
+  // - Previous events button should dissapear when on first 5 events
+  // - Next events button should dissapear when on last 5 events
+  // - Events properly increment to the next 5, check index updates in the on click functions
   getTimelineTemplate() {
-    return html``;
+    return html`
+      ${when(
+        this._demandTimeline,
+        () => html`
+          ${when(
+            this._firstTimelineEventIndex !== 0,
+            () => html`
+              <button @click=${this.handlePreviousEventsClick}>
+                ${msg('Show previous 5 events')}
+              </button>
+            `
+          )}
+          ${map(
+            this._demandTimeline?.slice(
+              this._firstTimelineEventIndex,
+              this._firstTimelineEventIndex + 5
+            ),
+            event => this.getEventTemplate(event)
+          )}
+          ${when(
+            this._firstTimelineEventIndex + 5 < this._demandTimeline!.length,
+            () => html`
+              <button @click=${this.handleNextEventsClick}>
+                ${msg('Show next 5 events')}
+              </button>
+            `
+          )}
+        `,
+        () => html` ${msg('No events to display!')} `
+      )}
+    `;
+  }
+
+  getEventTemplate(event: TimelineEvent): TemplateResult<1 | 2> {
+    // Determine which event template to use based on event type
+    if (isRequestEvent(event)) {
+      return this.getPrivacyRequestEventTemplate(event);
+    }
+    if (isResponseEvent(event)) {
+      return this.getPrivacyResponseEventTemplate(event);
+    }
+    if (isLegalBaseEvent(event)) {
+      return this.getLegalBaseEventTemplate(event);
+    }
+    if (isGivenConsentEvent(event)) {
+      return this.getGivenConsentEventTemplate(event);
+    }
+    if (isRevokedConsentEvent(event)) {
+      return this.getRevokedConsentEventTemplate(event);
+    }
+
+    return html`Using other template<br />`;
+  }
+
+  getPrivacyRequestEventTemplate(
+    event: PrivacyRequestEvent
+  ): TemplateResult<1 | 2> {
+    return html`Using Privacy Request Event Template<br />`;
+  }
+
+  getPrivacyResponseEventTemplate(
+    event: PrivacyResponseEvent
+  ): TemplateResult<1 | 2> {
+    return html`Using Privacy Response Event Template<br />`;
+  }
+
+  getGivenConsentEventTemplate(
+    event: GivenConsentEvent
+  ): TemplateResult<1 | 2> {
+    return html`Using Given Consent Event Template<br />`;
+  }
+
+  getRevokedConsentEventTemplate(
+    event: RevokedConsentEvent
+  ): TemplateResult<1 | 2> {
+    return html`Using Revoked Consent Event Template<br />`;
+  }
+
+  getLegalBaseEventTemplate(event: LegalBaseEvent): TemplateResult<1 | 2> {
+    return html`Using Legal Base Event Template<br />`;
   }
 
   render() {
