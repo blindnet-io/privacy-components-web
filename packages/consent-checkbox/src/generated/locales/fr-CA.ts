@@ -129,7 +129,6 @@
 's29ec563d56cf6c6b': `Autres Options`,
 's2a32ad5ec5fc7e5c': `Il n'y a pas de source de données vous concernant`,
 's2a880deefa02ab59': `Profilage`,
-'s2b7bb3f9a459d7dd': `Historique bientôt disponible !`,
 's2e39367a8c5564b7': `Autres données`,
 's2fa47f3acd802112': `Identifiant Unique - Compte Utilisateur`,
 's3137e812940ae6b7': `Vos données sont en cours d'obtention, veuillez patienter et ne pas actualiser la page`,
@@ -283,7 +282,6 @@
 'sa27cc41810878675': `Comportement - Activité`,
 'sa2a57f4ca828f912': str`De ${0} à ${1}`,
 'sa30c4d3b566b6b1a': `Annulée`,
-'sa442044b586ec8bf': `Action`,
 'sa58a43eaa517ec9e': `Réponse`,
 'sa6ab5184d6315895': `De`,
 'sa7ee6646f0fd7ced': `Où sont stockées les données me concernant`,
@@ -347,6 +345,7 @@
 'sd146a706d91d6dc7': `Données Biométriques`,
 'sd1c189abaf754629': `Pour combien de temps sont conservées les données me concernant`,
 'sd22025af1f467374': `Je voudrais savoir :`,
+'sd2223afb7d6b100d': `Type`,
 'sd256a1527b556494': `Génétique`,
 'sd25a75c08073005d': `Personne concernée`,
 'sd34681e25ec9a24f': `Marketing`,
@@ -410,6 +409,9 @@
 'sfdad6bb711adaff5': `Votre demande d'opposition a été approuvée`,
 'sfef5aebda25a65db': `Erreur lors de l'obtention des détails de la demande. Veuillez actualiser la plage plus tard.`,
 'sff7e60a212b3fa64': `Prendre mes données et les faire transférer ailleurs`,
+'sf4a1596b084a80cb': `Show previous 5 events`,
+'s605c649dc507a7e7': `Show next 5 events`,
+'s922272b2380415cd': `No events to display!`,
 's317675f587378dd4': `No data was found for the user.`,
     };
   

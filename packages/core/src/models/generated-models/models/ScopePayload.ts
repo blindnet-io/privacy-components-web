@@ -3,45 +3,39 @@
 /* eslint-disable */
 
 export type ScopePayload = {
-  dc: string;
-  pc: ScopePayload.pc;
-  pp: ScopePayload.pp;
+  data_categories?: Array<string>;
+  processing_categories?: Array<
+    | '*'
+    | 'ANONYMIZATION'
+    | 'AUTOMATED-INFERENCE'
+    | 'AUTOMATED-DECISION-MAKING'
+    | 'COLLECTION'
+    | 'GENERATING'
+    | 'PUBLISHING'
+    | 'STORING'
+    | 'SHARING'
+    | 'USING'
+    | 'OTHER-PROCESSING'
+  >;
+  processing_purposes?: Array<
+    | '*'
+    | 'ADVERTISING'
+    | 'COMPLIANCE'
+    | 'EMPLOYMENT'
+    | 'JUSTICE'
+    | 'MARKETING'
+    | 'MEDICAL'
+    | 'PERSONALIZATION'
+    | 'PUBLIC-INTERESTS'
+    | 'RESEARCH'
+    | 'SALE'
+    | 'SECURITY'
+    | 'SERVICES'
+    | 'SERVICES.ADDITIONAL-SERVICES'
+    | 'SERVICES.BASIC-SERVICE'
+    | 'SOCIAL-PROTECTION'
+    | 'TRACKING'
+    | 'VITAL-INTERESTS'
+    | 'OTHER-PURPOSE'
+  >;
 };
-
-export namespace ScopePayload {
-  export enum pc {
-    _ = '*',
-    ANONYMIZATION = 'ANONYMIZATION',
-    AUTOMATED_INFERENCE = 'AUTOMATED-INFERENCE',
-    AUTOMATED_DECISION_MAKING = 'AUTOMATED-DECISION-MAKING',
-    COLLECTION = 'COLLECTION',
-    GENERATING = 'GENERATING',
-    PUBLISHING = 'PUBLISHING',
-    STORING = 'STORING',
-    SHARING = 'SHARING',
-    USING = 'USING',
-    OTHER_PROCESSING = 'OTHER-PROCESSING',
-  }
-
-  export enum pp {
-    _ = '*',
-    ADVERTISING = 'ADVERTISING',
-    COMPLIANCE = 'COMPLIANCE',
-    EMPLOYMENT = 'EMPLOYMENT',
-    JUSTICE = 'JUSTICE',
-    MARKETING = 'MARKETING',
-    MEDICAL = 'MEDICAL',
-    PERSONALIZATION = 'PERSONALIZATION',
-    PUBLIC_INTERESTS = 'PUBLIC-INTERESTS',
-    RESEARCH = 'RESEARCH',
-    SALE = 'SALE',
-    SECURITY = 'SECURITY',
-    SERVICES = 'SERVICES',
-    SERVICES_ADDITIONAL_SERVICES = 'SERVICES.ADDITIONAL-SERVICES',
-    SERVICES_BASIC_SERVICE = 'SERVICES.BASIC-SERVICE',
-    SOCIAL_PROTECTION = 'SOCIAL-PROTECTION',
-    TRACKING = 'TRACKING',
-    VITAL_INTERESTS = 'VITAL-INTERESTS',
-    OTHER_PURPOSE = 'OTHER-PURPOSE',
-  }
-}

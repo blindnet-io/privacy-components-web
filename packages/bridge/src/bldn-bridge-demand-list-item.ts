@@ -1,5 +1,13 @@
+/* eslint-disable camelcase */
 import { msg } from '@lit/localize';
-import { css, html, LitElement, PropertyValueMap } from 'lit';
+import {
+  css,
+  html,
+  HTMLTemplateResult,
+  LitElement,
+  PropertyValueMap,
+  TemplateResult,
+} from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
 import { map } from 'lit/directives/map.js';
@@ -8,7 +16,15 @@ import {
   ComputationAPI,
   PendingDemandDetailsPayload,
   PendingDemandPayload,
+  DataSubjectPayload,
+  CompletedDemandPayload,
   Recommendation,
+  TimelineEventsPayload,
+  PrivacyRequestEvent,
+  PrivacyResponseEvent,
+  GivenConsentEvent,
+  RevokedConsentEvent,
+  LegalBaseEvent,
 } from '@blindnet/core';
 import { bldnStyles } from '@blindnet/core-ui';
 import { ACTION_TITLES } from './language/dictionary.js';
@@ -19,11 +35,103 @@ enum DropdownUIState {
   Responded,
 }
 
+interface DisplayedDemand {
+  id: string;
+  date: string;
+  action: PendingDemandPayload.action | CompletedDemandPayload.action;
+  data_subject?: DataSubjectPayload;
+}
+
+type TimelineEvent =
+  | PrivacyRequestEvent
+  | PrivacyResponseEvent
+  | GivenConsentEvent
+  | RevokedConsentEvent
+  | LegalBaseEvent
+  | { date: string; dateObj: Date };
+
+// Below are 5 functions to use when determining which HTML template to render for an event
+// NOTE: These are only correct when used in the order in getEventTemplate()
+
+function isRequestEvent(event: TimelineEvent): event is PrivacyRequestEvent {
+  if ((event as PrivacyRequestEvent).target) {
+    return true;
+  }
+  return false;
+}
+
+function isResponseEvent(event: TimelineEvent): event is PrivacyResponseEvent {
+  if ((event as PrivacyResponseEvent).action) {
+    return true;
+  }
+  return false;
+}
+
+function isGivenConsentEvent(event: TimelineEvent): event is GivenConsentEvent {
+  if ((event as GivenConsentEvent).scope) {
+    return true;
+  }
+  return false;
+}
+
+function isRevokedConsentEvent(
+  event: TimelineEvent
+): event is RevokedConsentEvent {
+  if ((event as RevokedConsentEvent).date) {
+    return true;
+  }
+  return false;
+}
+
+function isLegalBaseEvent(event: TimelineEvent): event is LegalBaseEvent {
+  if ((event as LegalBaseEvent).type) {
+    return true;
+  }
+  return false;
+}
+
+const consentGivenIcon = new URL('./assets/consent-given.svg', import.meta.url)
+  .href;
+
+const consentRevokedIcon = new URL(
+  './assets/consent-revoked.svg',
+  import.meta.url
+).href;
+
+const legalBaseIcon = new URL('./assets/legal-base.svg', import.meta.url).href;
+
+const requestSubmittedIcon = new URL(
+  './assets/request-submitted.svg',
+  import.meta.url
+).href;
+
+const responseDeniedIcon = new URL(
+  './assets/response-denied.svg',
+  import.meta.url
+).href;
+
+const responseGrantedIcon = new URL(
+  './assets/response-granted.svg',
+  import.meta.url
+).href;
+
+const expandEvenIcon = new URL(
+  './assets/expand.svg',
+  import.meta.url
+).href;
+
+const closeEventIcon = new URL(
+  './assets/close.svg',
+  import.meta.url
+).href;
+
 @customElement('bldn-bridge-demand-list-item')
 export class BldnBridgeDemandListItem extends LitElement {
-  @property({ type: Object }) demand: PendingDemandPayload | undefined;
+  @property({ type: Object }) demand: DisplayedDemand | undefined;
 
   @state() _demandDetails: PendingDemandDetailsPayload | undefined;
+
+  @state() _demandTimeline: TimelineEvent[] | undefined;
 
   @state() _open = false;
 
@@ -32,6 +140,8 @@ export class BldnBridgeDemandListItem extends LitElement {
   @state() _selectedResponseType: Recommendation.status | undefined = undefined;
 
   @state() _message: string = '';
+
+  @state() _firstTimelineEventIndex: number = 0;
 
   isRecommended(): boolean {
     return (
@@ -77,6 +187,20 @@ export class BldnBridgeDemandListItem extends LitElement {
       default:
         break;
     }
+  }
+
+  handlePreviousEventsClick() {
+    this._firstTimelineEventIndex = Math.max(
+      0,
+      this._firstTimelineEventIndex - 5
+    );
+  }
+
+  handleNextEventsClick() {
+    this._firstTimelineEventIndex = Math.min(
+      this._demandTimeline!.length - 6,
+      this._firstTimelineEventIndex + 5
+    ); // VERIFY THIS
   }
 
   // Uses inline SVGs so we can adjust the colour
@@ -144,7 +268,8 @@ export class BldnBridgeDemandListItem extends LitElement {
   protected willUpdate(
     _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
   ): void {
-    if (_changedProperties.has('demand') && this.demand) {
+    if (_changedProperties.has('_open') && this._open && this.demand) {
+      // Get details about this demand
       ComputationAPI.getInstance()
         .getPendingDemandDetails(this.demand.id)
         .then(details => {
@@ -154,10 +279,36 @@ export class BldnBridgeDemandListItem extends LitElement {
               this._demandDetails!.recommendation?.status;
           }
         });
+
+      // Get timeline info for this demand
+      if (this.demand.data_subject?.id) {
+        ComputationAPI.getInstance()
+          .getDemandTimeline(this.demand.data_subject?.id)
+          .then(timeline => {
+            let events: TimelineEvent[] = [];
+
+            // Add a date object to each event and sort
+            events = events
+              .concat(
+                timeline.requests!,
+                timeline.responses!,
+                timeline.given_consents!,
+                timeline.revoked_consents!,
+                timeline.legal_bases!
+              )
+              .map(e => ({
+                ...e,
+                dateObj: new Date(e.date),
+              }))
+              .sort((e1, e2) => e1.dateObj.getTime() - e2.dateObj.getTime());
+
+            this._demandTimeline = events;
+          });
+      }
     }
   }
 
-  render() {
+  getRespondTemplate() {
     // List of status, css class, and display message objects for each response option
     const responseStatusOptions: {
       respStatus: Recommendation.status;
@@ -177,6 +328,168 @@ export class BldnBridgeDemandListItem extends LitElement {
       },
     ];
 
+    return html`
+      <div id="dropdown__response-ctr">
+        <span id="dropdown__response-heading"
+          >${msg('Response')}
+          -${when(
+            this.isRecommended(),
+            () => html`
+              <span id="dropdown__response-heading--recommended">
+                ${msg('Recommended')}
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 12 12"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M6 1C3.24 1 1 3.24 1 6C1 8.76 3.24 11 6 11C8.76 11 11 8.76 11 6C11 3.24 8.76 1 6 1ZM5 8.5L2.5 6L3.205 5.295L5 7.085L8.795 3.29L9.5 4L5 8.5Z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </span>
+            `,
+            () => html`
+              <span id="dropdown__response-heading--not-recommended">
+                ${msg('Not Recommended')}
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 12 12"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M6 1C3.235 1 1 3.235 1 6C1 8.765 3.235 11 6 11C8.765 11 11 8.765 11 6C11 3.235 8.765 1 6 1ZM8.5 7.795L7.795 8.5L6 6.705L4.205 8.5L3.5 7.795L5.295 6L3.5 4.205L4.205 3.5L6 5.295L7.795 3.5L8.5 4.205L6.705 6L8.5 7.795Z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </span>
+            `
+          )}</span
+        >
+        <textarea
+          placeholder=${msg('Optional Message')}
+          @input=${this.handleMessageInput}
+        ></textarea>
+        <div id="dropdown__response-btns">
+          ${map(
+            responseStatusOptions,
+            option => html`
+              <button
+                class="response-btn response-btn--${option.class} ${this
+                  ._selectedResponseType === option.respStatus
+                  ? 'response-btn--selected'
+                  : ''}"
+                @click=${() => {
+                  this._selectedResponseType = option.respStatus;
+                }}
+              >
+                ${this.getRadioSVG(
+                  this._selectedResponseType === option.respStatus
+                )}
+                <span>${option.display}</span>
+              </button>
+            `
+          )}
+        </div>
+      </div>
+      <bldn-button @click=${this.handleSubmitClick}
+        >${msg('Submit')}</bldn-button
+      >
+    `;
+  }
+
+  // TO TEST:
+  // - Previous events button should dissapear when on first 5 events
+  // - Next events button should dissapear when on last 5 events
+  // - Events properly increment to the next 5, check index updates in the on click functions
+  getTimelineTemplate() {
+    return html`
+      ${when(
+        this._demandTimeline,
+        () => html`
+          ${when(
+            this._firstTimelineEventIndex !== 0,
+            () => html`
+              <button @click=${this.handlePreviousEventsClick}>
+                ${msg('Show previous 5 events')}
+              </button>
+            `
+          )}
+          ${map(
+            this._demandTimeline?.slice(
+              this._firstTimelineEventIndex,
+              this._firstTimelineEventIndex + 5
+            ),
+            event => this.getEventTemplate(event)
+          )}
+          ${when(
+            this._firstTimelineEventIndex + 5 < this._demandTimeline!.length,
+            () => html`
+              <button @click=${this.handleNextEventsClick}>
+                ${msg('Show next 5 events')}
+              </button>
+            `
+          )}
+        `,
+        () => html` ${msg('No events to display!')} `
+      )}
+    `;
+  }
+
+  getEventTemplate(event: TimelineEvent): TemplateResult<1 | 2> {
+    // Determine which event template to use based on event type
+    if (isRequestEvent(event)) {
+      return this.getPrivacyRequestEventTemplate(event);
+    }
+    if (isResponseEvent(event)) {
+      return this.getPrivacyResponseEventTemplate(event);
+    }
+    if (isLegalBaseEvent(event)) {
+      return this.getLegalBaseEventTemplate(event);
+    }
+    if (isGivenConsentEvent(event)) {
+      return this.getGivenConsentEventTemplate(event);
+    }
+    if (isRevokedConsentEvent(event)) {
+      return this.getRevokedConsentEventTemplate(event);
+    }
+
+    return html`Using other template<br />`;
+  }
+
+  getPrivacyRequestEventTemplate(
+    event: PrivacyRequestEvent
+  ): TemplateResult<1 | 2> {
+    return html`Using Privacy Request Event Template<br />`;
+  }
+
+  getPrivacyResponseEventTemplate(
+    event: PrivacyResponseEvent
+  ): TemplateResult<1 | 2> {
+    return html`Using Privacy Response Event Template<br />`;
+  }
+
+  getGivenConsentEventTemplate(
+    event: GivenConsentEvent
+  ): TemplateResult<1 | 2> {
+    return html`Using Given Consent Event Template<br />`;
+  }
+
+  getRevokedConsentEventTemplate(
+    event: RevokedConsentEvent
+  ): TemplateResult<1 | 2> {
+    return html`Using Revoked Consent Event Template<br />`;
+  }
+
+  getLegalBaseEventTemplate(event: LegalBaseEvent): TemplateResult<1 | 2> {
+    return html`Using Legal Base Event Template<br />`;
+  }
+
+  render() {
     return html`
       ${when(
         this.demand !== undefined,
@@ -212,91 +525,8 @@ export class BldnBridgeDemandListItem extends LitElement {
                   @bldn-toggle-button-change=${this.handleDropdownToggleChange}
                 ></bldn-toggle-button>
                 ${choose(this._dropdownUiState, [
-                  [
-                    DropdownUIState.Respond,
-                    () => html`
-                      <div id="dropdown__response-ctr">
-                        <span id="dropdown__response-heading"
-                          >${msg('Response')}
-                          -${when(
-                            this.isRecommended(),
-                            () => html`
-                              <span
-                                id="dropdown__response-heading--recommended"
-                              >
-                                ${msg('Recommended')}
-                                <svg
-                                  width="12"
-                                  height="12"
-                                  viewBox="0 0 12 12"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    d="M6 1C3.24 1 1 3.24 1 6C1 8.76 3.24 11 6 11C8.76 11 11 8.76 11 6C11 3.24 8.76 1 6 1ZM5 8.5L2.5 6L3.205 5.295L5 7.085L8.795 3.29L9.5 4L5 8.5Z"
-                                    fill="currentColor"
-                                  />
-                                </svg>
-                              </span>
-                            `,
-                            () => html`
-                              <span
-                                id="dropdown__response-heading--not-recommended"
-                              >
-                                ${msg('Not Recommended')}
-                                <svg
-                                  width="12"
-                                  height="12"
-                                  viewBox="0 0 12 12"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    d="M6 1C3.235 1 1 3.235 1 6C1 8.765 3.235 11 6 11C8.765 11 11 8.765 11 6C11 3.235 8.765 1 6 1ZM8.5 7.795L7.795 8.5L6 6.705L4.205 8.5L3.5 7.795L5.295 6L3.5 4.205L4.205 3.5L6 5.295L7.795 3.5L8.5 4.205L6.705 6L8.5 7.795Z"
-                                    fill="currentColor"
-                                  />
-                                </svg>
-                              </span>
-                            `
-                          )}</span
-                        >
-                        <textarea
-                          placeholder=${msg('Optional Message')}
-                          @input=${this.handleMessageInput}
-                        ></textarea>
-                        <div id="dropdown__response-btns">
-                          ${map(
-                            responseStatusOptions,
-                            option => html`
-                              <button
-                                class="response-btn response-btn--${option.class} ${this
-                                  ._selectedResponseType === option.respStatus
-                                  ? 'response-btn--selected'
-                                  : ''}"
-                                @click=${() => {
-                                  this._selectedResponseType =
-                                    option.respStatus;
-                                }}
-                              >
-                                ${this.getRadioSVG(
-                                  this._selectedResponseType ===
-                                    option.respStatus
-                                )}
-                                <span>${option.display}</span>
-                              </button>
-                            `
-                          )}
-                        </div>
-                      </div>
-                      <bldn-button @click=${this.handleSubmitClick}
-                        >${msg('Submit')}</bldn-button
-                      >
-                    `,
-                  ],
-                  [
-                    DropdownUIState.History,
-                    () => html`${msg('History view coming soon!')}`,
-                  ],
+                  [DropdownUIState.Respond, () => this.getRespondTemplate()],
+                  [DropdownUIState.History, () => this.getTimelineTemplate()],
                   [
                     DropdownUIState.Responded,
                     () => html`${msg('Response Submmitted')} 📨`,

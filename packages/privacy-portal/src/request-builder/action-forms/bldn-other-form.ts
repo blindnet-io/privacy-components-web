@@ -9,7 +9,8 @@ import { ActionForm } from './bldn-action-form.js';
  */
 @customElement('bldn-other-form')
 export class BldnOtherForm extends ActionForm {
-  action: PrivacyRequestDemand.action = PrivacyRequestDemand.action.OTHER;
+  action: PrivacyRequestDemand.action =
+    PrivacyRequestDemand.action.OTHER_DEMAND;
 
   // Remove other options dropdown for this form
   includeOptions: boolean = false;
@@ -38,7 +39,7 @@ export class BldnOtherForm extends ActionForm {
     return [
       {
         id: '',
-        action: PrivacyRequestDemand.action.OTHER,
+        action: PrivacyRequestDemand.action.OTHER_DEMAND,
       },
     ];
   }

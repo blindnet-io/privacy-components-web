@@ -423,7 +423,7 @@ export class BldnRequestStatus extends CoreConfigurationMixin(LitElement) {
 
   // NOTE: For now, we assume demand.data is a JSON file
   getGrantedResponseTemplate(demand: PrivacyResponsePayload) {
-    const answer = JSON.parse(demand.answer);
+    const answer = JSON.parse(demand.answer || '');
 
     return html`
       ${choose(demand.requested_action, [
@@ -466,7 +466,7 @@ export class BldnRequestStatus extends CoreConfigurationMixin(LitElement) {
           () => html` <p>${msg('Your object demand has been granted')}</p> `,
         ],
         [
-          PrivacyResponsePayload.requested_action.OTHER,
+          PrivacyResponsePayload.requested_action.OTHER_DEMAND,
           () => html` <p>${msg('Your demand has been granted.')}</p> `,
         ],
         [

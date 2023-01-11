@@ -10,7 +10,7 @@ export type CompletedDemandInfoPayload = {
   action: CompletedDemandInfoPayload.action;
   status: CompletedDemandInfoPayload.status;
   motive?: CompletedDemandInfoPayload.motive;
-  answer?: any;
+  answer?: string;
   request_message?: string;
   request_lang?: string;
   response_message?: string;
@@ -39,7 +39,7 @@ export namespace CompletedDemandInfoPayload {
     TRANSPARENCY_RETENTION = 'TRANSPARENCY.RETENTION',
     TRANSPARENCY_WHERE = 'TRANSPARENCY.WHERE',
     TRANSPARENCY_WHO = 'TRANSPARENCY.WHO',
-    OTHER = 'OTHER-DEMAND',
+    OTHER_DEMAND = 'OTHER-DEMAND',
   }
 
   export enum status {

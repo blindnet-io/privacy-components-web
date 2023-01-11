@@ -8,7 +8,7 @@ export type PrivacyResponsePayload = {
   requested_action: PrivacyResponsePayload.requested_action;
   status: PrivacyResponsePayload.status;
   motive?: PrivacyResponsePayload.motive;
-  answer?: any;
+  answer?: string;
   message?: string;
   lang?: string;
   includes?: Array<any>;
@@ -37,7 +37,7 @@ export namespace PrivacyResponsePayload {
     TRANSPARENCY_RETENTION = 'TRANSPARENCY.RETENTION',
     TRANSPARENCY_WHERE = 'TRANSPARENCY.WHERE',
     TRANSPARENCY_WHO = 'TRANSPARENCY.WHO',
-    OTHER = 'OTHER-DEMAND',
+    OTHER_DEMAND = 'OTHER-DEMAND',
   }
 
   export enum status {

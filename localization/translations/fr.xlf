@@ -1050,9 +1050,14 @@
   <source>Submit</source>
   <target>Envoyer</target>
 </trans-unit>
-<trans-unit id="s2b7bb3f9a459d7dd">
-  <source>History view coming soon!</source>
-  <target>Historique bientôt disponible !</target>
+<trans-unit id="sf4a1596b084a80cb">
+  <source>Show previous 5 events</source>
+</trans-unit>
+<trans-unit id="s605c649dc507a7e7">
+  <source>Show next 5 events</source>
+</trans-unit>
+<trans-unit id="s922272b2380415cd">
+  <source>No events to display!</source>
 </trans-unit>
 <trans-unit id="s61d28f3db3da4264">
   <source>Response Submmitted</source>
@@ -1066,9 +1071,9 @@
   <source>Data Subject</source>
   <target>Personne concernée</target>
 </trans-unit>
-<trans-unit id="sa442044b586ec8bf">
-  <source>Action</source>
-  <target>Action</target>
+<trans-unit id="sd2223afb7d6b100d">
+  <source>Type</source>
+  <target>Type</target>
 </trans-unit>
 <trans-unit id="sb852d100f91db23f">
   <source>No requests to display.</source>

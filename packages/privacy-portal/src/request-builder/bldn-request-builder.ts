@@ -229,7 +229,7 @@ export class BldnRequestBuilder extends CoreConfigurationMixin(LitElement) {
           `,
         ],
         [
-          PrivacyRequestDemand.action.OTHER,
+          PrivacyRequestDemand.action.OTHER_DEMAND,
           () => html`
             <bldn-other-form
               data-categories=${JSON.stringify(this._allowedDataCategories)}

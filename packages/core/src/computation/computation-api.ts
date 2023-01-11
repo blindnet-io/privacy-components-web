@@ -2,6 +2,8 @@
 /* eslint-disable camelcase */
 import {
   ApproveDemandPayload,
+  CompletedDemandInfoPayload,
+  CompletedDemandPayload,
   CreatePrivacyRequestPayload,
   DataCategoryResponsePayload,
   DenyDemandPayload,
@@ -10,15 +12,18 @@ import {
   PendingDemandPayload,
   PrivacyResponsePayload,
   RequestHistoryPayload,
+  TimelineEventsPayload,
 } from '../models/generated-models/index.js';
 
 export class ComputationAPI {
   private static instance: ComputationAPI | null = null;
 
+  static readonly VERSION = 'v0';
+
   static readonly MOCK_URL =
     'https://stoplight.io/mocks/blindnet/product-management:open-api/74767654';
 
-  static readonly PRODUCTION_URL = 'https://computing.blindnet.io/';
+  static readonly STAGING_URL = 'https://stage.computing.blindnet.io/';
 
   /**
    * @param baseURL base URL (schema + host + port + base-path) to call
@@ -30,7 +35,7 @@ export class ComputationAPI {
   ) {
     if (!baseURL) {
       // Default to production URL
-      this._baseURL = ComputationAPI.PRODUCTION_URL;
+      this._baseURL = ComputationAPI.STAGING_URL;
     } else if (baseURL === 'false') {
       this._baseURL = ComputationAPI.MOCK_URL;
     } else {
@@ -59,7 +64,10 @@ export class ComputationAPI {
 
   private fullURL(endpoint: string) {
     // endpoint should always have one leading slash
-    return `${this._baseURL}${endpoint.replace(/^\/*/, '/')}`;
+    return `${this._baseURL}/${ComputationAPI.VERSION}${endpoint.replace(
+      /^\/*/,
+      '/'
+    )}`;
   }
 
   /**
@@ -199,26 +207,6 @@ export class ComputationAPI {
 
   // Privacy Request Endpoints
 
-  // private preProcessRequest(
-  //   request: CreatePrivacyRequestPayload
-  // ): CreatePrivacyRequestPayload {
-  //   // If all privacy scopes provided, this is the same as no restriction
-  //   const allDataCategories = Object.values(DATA_CATEGORY).filter(
-  //     dc => dc !== DATA_CATEGORY.ALL && !dc.includes('.')
-  //   );
-  //   request.demands!.forEach(d => {
-  //     if (d.restrictions && d.restrictions.privacy_scope) {
-  //       const demandDcs = d.restrictions.privacy_scope!.map(psr => psr.dc);
-  //       if (allDataCategories.every(dc => demandDcs.includes(dc))) {
-  //         const demand = d;
-  //         delete demand.restrictions!.privacy_scope;
-  //       }
-  //     }
-  //   });
-
-  //   return request;
-  // }
-
   /**
    * Send a PrivacyRequest to the privacy-request API
    * @param {CreatePrivacyRequestPayload} request Request body to send
@@ -307,16 +295,15 @@ export class ComputationAPI {
       throw new Error('You must set an admin token before making API calls!');
     }
 
-    return fetch(
-      `https://devkit-pce-staging.azurewebsites.net/v0/bridge/pending-requests`,
-      {
-        method: 'GET',
-        headers: {
-          accept: 'application/json',
-          Authorization: `Bearer ${this._adminToken}`,
-        },
-      }
-    ).then(response => {
+    const endpoint = `/bridge/pending-requests`;
+
+    return fetch(this.fullURL(endpoint), {
+      method: 'GET',
+      headers: {
+        accept: 'application/json',
+        Authorization: `Bearer ${this._adminToken}`,
+      },
+    }).then(response => {
       if (!response.ok) {
         throw new Error(response.statusText);
       }
@@ -337,20 +324,99 @@ export class ComputationAPI {
       throw new Error('You must set an admin token before making API calls!');
     }
 
-    return fetch(
-      `https://devkit-pce-staging.azurewebsites.net/v0/bridge/pending-requests/${id}`,
-      {
-        method: 'GET',
-        headers: {
-          accept: 'application/json',
-          Authorization: `Bearer ${this._adminToken}`,
-        },
-      }
-    ).then(response => {
+    const endpoint = `/bridge/pending-requests/${id}`;
+
+    return fetch(this.fullURL(endpoint), {
+      method: 'GET',
+      headers: {
+        accept: 'application/json',
+        Authorization: `Bearer ${this._adminToken}`,
+      },
+    }).then(response => {
       if (!response.ok) {
         throw new Error(response.statusText);
       }
       return response.json() as Promise<PendingDemandDetailsPayload>;
+    });
+  }
+
+  /**
+   * Gets a list of all demands which are pending a response
+   * @returns {CompletedDemandPayload[]}
+   */
+  async getCompletedDemands(newAdminToken?: string) {
+    // Update the admin token if one was passed
+    if (typeof newAdminToken !== 'undefined') {
+      this.setAdminToken(newAdminToken);
+    } else if (!this._adminToken) {
+      throw new Error('You must set an admin token before making API calls!');
+    }
+
+    const endpoint = `/bridge/completed-requests`;
+
+    return fetch(this.fullURL(endpoint), {
+      method: 'GET',
+      headers: {
+        accept: 'application/json',
+        Authorization: `Bearer ${this._adminToken}`,
+      },
+    }).then(response => {
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+      return response.json() as Promise<CompletedDemandPayload[]>;
+    });
+  }
+
+  /**
+   * Get the info and recomendation for a specific demand
+   * @param {string} id uuid of the demand
+   * @returns {CompletedDemandInfoPayload}
+   */
+  async getCompletedDemandDetails(id: string, newAdminToken?: string) {
+    // Update the admin token if one was passed
+    if (typeof newAdminToken !== 'undefined') {
+      this.setAdminToken(newAdminToken);
+    } else if (!this._adminToken) {
+      throw new Error('You must set an admin token before making API calls!');
+    }
+
+    const endpoint = `/bridge/completed-requests/${id}`;
+
+    return fetch(this.fullURL(endpoint), {
+      method: 'GET',
+      headers: {
+        accept: 'application/json',
+        Authorization: `Bearer ${this._adminToken}`,
+      },
+    }).then(response => {
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+      return response.json() as Promise<CompletedDemandInfoPayload>;
+    });
+  }
+
+  async getDemandTimeline(userId: string): Promise<TimelineEventsPayload> {
+    if (userId === undefined) {
+      return Promise.reject(
+        new Error('userId undefined when fetching timeline')
+      );
+    }
+
+    const endpoint = `/bridge/timeline/${userId}`;
+
+    return fetch(this.fullURL(endpoint), {
+      method: 'GET',
+      headers: {
+        accept: 'application/json',
+        Authorization: `Bearer ${this._adminToken}`,
+      },
+    }).then(response => {
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+      return response.json() as Promise<TimelineEventsPayload>;
     });
   }
 
@@ -384,17 +450,16 @@ export class ComputationAPI {
 
     const payload: ApproveDemandPayload = { id, msg, lang };
 
-    return fetch(
-      `https://devkit-pce-staging.azurewebsites.net/v0/bridge/pending-requests/approve`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${this._adminToken}`,
-        },
-        body: JSON.stringify(payload),
-      }
-    ).then(response => {
+    const endpoint = `/bridge/pending-requests/approve`;
+
+    return fetch(this.fullURL(endpoint), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this._adminToken}`,
+      },
+      body: JSON.stringify(payload),
+    }).then(response => {
       if (!response.ok) {
         throw new Error(response.statusText);
       }
@@ -431,17 +496,16 @@ export class ComputationAPI {
 
     const payload: DenyDemandPayload = { id, motive, msg, lang };
 
-    return fetch(
-      `https://devkit-pce-staging.azurewebsites.net/v0/bridge/pending-requests/deny`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${this._adminToken}`,
-        },
-        body: JSON.stringify(payload),
-      }
-    ).then(response => {
+    const endpoint = `/bridge/pending-requests/deny`;
+
+    return fetch(this.fullURL(endpoint), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this._adminToken}`,
+      },
+      body: JSON.stringify(payload),
+    }).then(response => {
       if (!response.ok) {
         throw new Error(response.statusText);
       }
@@ -454,16 +518,15 @@ export class ComputationAPI {
    * Get consents given by the user authenticated by the current token
    */
   async getUserConsents(): Promise<GivenConsentsPayload[]> {
-    return fetch(
-      `https://devkit-pce-staging.azurewebsites.net/v0/user/consents`,
-      {
-        method: 'GET',
-        headers: {
-          accept: 'application/json',
-          Authorization: `Bearer ${this._apiToken}`,
-        },
-      }
-    ).then(response => {
+    const endpoint = `/user/consents`;
+
+    return fetch(this.fullURL(endpoint), {
+      method: 'GET',
+      headers: {
+        accept: 'application/json',
+        Authorization: `Bearer ${this._apiToken}`,
+      },
+    }).then(response => {
       if (!response.ok) {
         throw new Error(response.statusText);
       }
