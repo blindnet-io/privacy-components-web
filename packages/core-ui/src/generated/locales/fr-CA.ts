@@ -409,6 +409,9 @@
 'sfdad6bb711adaff5': `Votre demande d'opposition a été approuvée`,
 'sfef5aebda25a65db': `Erreur lors de l'obtention des détails de la demande. Veuillez actualiser la plage plus tard.`,
 'sff7e60a212b3fa64': `Prendre mes données et les faire transférer ailleurs`,
+'sf4a1596b084a80cb': `Show previous 5 events`,
+'s605c649dc507a7e7': `Show next 5 events`,
+'s922272b2380415cd': `No events to display!`,
 's317675f587378dd4': `No data was found for the user.`,
     };
   

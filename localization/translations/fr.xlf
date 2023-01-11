@@ -1050,6 +1050,15 @@
   <source>Submit</source>
   <target>Envoyer</target>
 </trans-unit>
+<trans-unit id="sf4a1596b084a80cb">
+  <source>Show previous 5 events</source>
+</trans-unit>
+<trans-unit id="s605c649dc507a7e7">
+  <source>Show next 5 events</source>
+</trans-unit>
+<trans-unit id="s922272b2380415cd">
+  <source>No events to display!</source>
+</trans-unit>
 <trans-unit id="s61d28f3db3da4264">
   <source>Response Submmitted</source>
   <target>Réponse envoyée</target>

@@ -115,6 +115,16 @@ const responseGrantedIcon = new URL(
   import.meta.url
 ).href;
 
+const expandEvenIcon = new URL(
+  './assets/expand.svg',
+  import.meta.url
+).href;
+
+const closeEventIcon = new URL(
+  './assets/close.svg',
+  import.meta.url
+).href;
+
 @customElement('bldn-bridge-demand-list-item')
 export class BldnBridgeDemandListItem extends LitElement {
   @property({ type: Object }) demand: DisplayedDemand | undefined;
