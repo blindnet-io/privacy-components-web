@@ -90,6 +90,31 @@ function isLegalBaseEvent(event: TimelineEvent): event is LegalBaseEvent {
   return false;
 }
 
+const consentGivenIcon = new URL('./assets/consent-given.svg', import.meta.url)
+  .href;
+
+const consentRevokedIcon = new URL(
+  './assets/consent-revoked.svg',
+  import.meta.url
+).href;
+
+const legalBaseIcon = new URL('./assets/legal-base.svg', import.meta.url).href;
+
+const requestSubmittedIcon = new URL(
+  './assets/request-submitted.svg',
+  import.meta.url
+).href;
+
+const responseDeniedIcon = new URL(
+  './assets/response-denied.svg',
+  import.meta.url
+).href;
+
+const responseGrantedIcon = new URL(
+  './assets/response-granted.svg',
+  import.meta.url
+).href;
+
 @customElement('bldn-bridge-demand-list-item')
 export class BldnBridgeDemandListItem extends LitElement {
   @property({ type: Object }) demand: DisplayedDemand | undefined;
