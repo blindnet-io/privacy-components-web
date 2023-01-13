@@ -20,7 +20,7 @@ export class ComputationAPI {
   static readonly MOCK_URL =
     'https://stoplight.io/mocks/blindnet/product-management:open-api/74767654';
 
-  static readonly STAGING_URL = 'https://stage.computing.blindnet.io/';
+  static readonly STAGING_URL = 'https://stage.computing.blindnet.io';
 
   /**
    * @param baseURL base URL (schema + host + port + base-path) to call
