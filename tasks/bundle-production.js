@@ -1,8 +1,7 @@
 // @ts-nocheck
 /* eslint-disable no-console */
 /**
- * Modify build directory to switch the staging API url for the
- * production when building the production demo.
+ * Modify demo build directory for production
  */
 
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -11,12 +10,14 @@ import replace from 'replace-in-file';
 const options = {
   files: 'build/demos/**/*',
   from: [
-    'computation-base-url="https://stage.computing.blindnet.io/v0/"',
+    'computation-base-url="https://stage.computing.blindnet.io"',
     /blindnet-connector-demo-staging.azurewebsites.net/g,
+    /1C0uhFCpzvJAkFi4uqoq2oAWSgQicqHc/g, // Auth0 staging app client ID
   ],
   to: [
-    'computation-base-url="https://computing.blindnet.io/v0/"',
-    /blindnet-connector-demo.azurewebsites.net/g,
+    'computation-base-url="https://computing.blindnet.io"', // Point all blindnet modules to production PCE
+    'blindnet-connector-demo.azurewebsites.net', // Point any other URLs to production backend
+    'Q4KiSJ5vF1HCcWyNPYZLzQmNzt3YLszz', // Auth0 production app client ID
   ],
 };
 
