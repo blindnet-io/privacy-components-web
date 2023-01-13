@@ -1,13 +1,13 @@
-# `@blindnet/core-ui`
+# `@blindnet/configuration`
 
-> Collection of UI components used in blindnet web modules
+> Module allowing configuration of other blindnet web components and modules
 
 ## Usage
 
 ```js
-import '@blindnet/core-ui';
+import '@blindnet/configuration';
 ```
 
 ```html
-<bldn-badge></bldn-badge>
+<bldn-configuration></bldn-configuration>
 ```

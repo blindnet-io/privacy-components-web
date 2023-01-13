@@ -1,11 +1,9 @@
 # `@blindnet/core`
 
-> Core shared library
+> Core library for API and synchronized component configuration
 
 ## Usage
 
 ```js
 import core from '@blindnet/core';
-
-// TODO: DEMONSTRATE API
 ```
