@@ -139,6 +139,7 @@
 's34474de8cf6c9fc9': `Pubilicté`,
 's34596f334f77ca12': `Chargement des détails de la demande...`,
 's3572e59cf0dcad41': `Le traitement est nécessaire à l'exécution d'une mission effectuée dans l'intérêt public ou dans l'exercice d'une autorité publique`,
+'s35d23ecadfe4eebb': `Vous n'avez donné aucun consentement`,
 's36d273fcd01916af': `En cours de traitement`,
 's381b5599a35bcd11': `Votre demande de portabilité a été approuvée`,
 's38ad01608e1ddf20': `Je sélectionne le`,
