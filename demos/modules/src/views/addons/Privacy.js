@@ -155,7 +155,7 @@ export class AppPrivacy extends LitElement {
     return html`
 
       <bldn-privacy-portal
-        computation-base-url="https://stage.computing.blindnet.io/v0/"
+        computation-base-url="https://stage.computing.blindnet.io"
         data-categories='["contact", "name", "uid", "other-data"]'
         api-token=${ifDefined(this._apiToken)}
       >
