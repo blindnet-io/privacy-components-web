@@ -3,6 +3,13 @@ import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { bldnStyles } from './bldn-styles.js';
 
+/**
+ * Custom input component
+ *
+ * @element bldn-input
+ *
+ * @fires bldn-input:input - Data entered/changed
+ */
 @customElement('bldn-input')
 export class BldnInput extends LitElement {
   @property({ type: String, reflect: true }) mode:

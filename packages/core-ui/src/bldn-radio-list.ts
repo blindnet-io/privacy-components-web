@@ -10,7 +10,9 @@ interface Choice {
 /**
  * Radio list with optional prompt.
  *
- * @event {CustomEvent} bldn-radio-list:choice-change - Fired when the list choice changess
+ * @element bldn-radio-list
+ *
+ * @fires bldn-radio-list:choice-change - Selected choice changes
  */
 @customElement('bldn-radio-list')
 export class BldnRadioList extends LitElement {
