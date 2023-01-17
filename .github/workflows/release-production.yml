@@ -34,7 +34,7 @@ jobs:
           yarn typecheck
           yarn test
 
-      - name: Modify Build Directory for Staging
+      - name: Modify Build Directory for Production
         run: |
           yarn bundle:production
 
