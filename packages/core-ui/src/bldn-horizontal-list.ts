@@ -9,13 +9,6 @@ interface Choice {
   selected?: boolean;
 }
 
-/**
- * Horizontal menu list that highlists the selected choice.
- *
- * @element bldn-horizontal-list
- *
- * @fires bldn-horizontal-list:choice-change - A new choice is selected
- */
 @customElement('bldn-horizontal-list')
 export class HorizontalList extends LitElement {
   @property({ type: Array }) choices: Choice[] = [];

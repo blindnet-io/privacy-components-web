@@ -1346,10 +1346,6 @@
   <source>Revoke <x id="0" equiv-text="&lt;b&gt;"/>specific<x id="1" equiv-text="&lt;/b&gt;"/> consents (select those you wish to<x id="2" equiv-text="&lt;b&gt;"/>revoke<x id="3" equiv-text="&lt;/b&gt;"/>)</source>
   <target>Révoquer <x id="0" equiv-text="&lt;b&gt;"/>certains<x id="1" equiv-text="&lt;/b&gt;"/> consentements (sélectionnez ceux que vous souhaitez <x id="2" equiv-text="&lt;b&gt;"/>révoquer<x id="3" equiv-text="&lt;/b&gt;"/>)</target>
 </trans-unit>
-<trans-unit id="s35d23ecadfe4eebb">
-  <source>You have not given any consents</source>
-  <target>Vous n'avez donné aucun consentement</target>
-</trans-unit>
 <trans-unit id="sad3e3c8146fc920f">
   <source>Status</source>
   <target>Statut</target>

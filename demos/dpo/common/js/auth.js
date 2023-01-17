@@ -1,7 +1,7 @@
 const auth0 = new window.Auth0Client({
   domain: 'blindnet.eu.auth0.com',
   client_id: '1C0uhFCpzvJAkFi4uqoq2oAWSgQicqHc',
-  audience: 'https://blindnet-connector-demo-staging.azurewebsites.net',
+  audience: 'https://blindnet-connector-demo.azurewebsites.net',
   redirect_uri: `${window.location.origin}/demos/dpo/privacy-portal`,
   authorizationParams: {
     redirect_uri: `${window.location.origin}/demos/dpo/privacy-portal`,
@@ -33,7 +33,7 @@ async function renderLoggedInState() {
 
     // Exchange auth0 token for blindnet token from backend
     const blindnetToken = await fetch(
-      'https://blindnet-connector-demo-staging.azurewebsites.net/auth/token',
+      'https://blindnet-connector-demo.azurewebsites.net/auth/token',
       {
         method: 'GET',
         headers,

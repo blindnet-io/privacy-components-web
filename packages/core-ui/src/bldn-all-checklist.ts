@@ -53,12 +53,8 @@ enum SelectionState {
 }
 
 /**
- * Checklist component including a select all option.
- *
- * @element bldn-all-checklist
- *
- * @fires bldn-all-checklist:choice-select - Choice is selected
- * @fires bldn-all-checklist:choice-deselect - Choice is deselected
+ * @event {CustomEvent} bldn-all-checklist:choice-select - Fired when a choice is selected
+ * @event {CustomEvent} bldn-all-checklist:choice-deselect - Fired when a choice is deselected
  */
 @customElement('bldn-all-checklist')
 export class BldnAllChecklist extends LitElement {

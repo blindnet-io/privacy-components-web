@@ -34,10 +34,6 @@ jobs:
           yarn typecheck
           yarn test
 
-      - name: Modify Build Directory for Staging
-        run: |
-          yarn bundle:production
-
       - name: Deploy to Azure 🚀
         uses: Azure/static-web-apps-deploy@v1
         with:

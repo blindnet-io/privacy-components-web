@@ -1,6 +1,6 @@
 # `@blindnet/privacy-portal`
 
-> Webcomponent for creating and monitoring privacy requests.
+> Webcomponent for data subjects to create and monitor privacy requests.
 
 ## Usage
 
@@ -9,5 +9,5 @@ import '@blindnet/privacy-portal';
 ```
 
 ```html
-<bldn-privacy-portal></bldn-privacy-portal>
+<bldn-priv-request></bldn-priv-request>
 ```

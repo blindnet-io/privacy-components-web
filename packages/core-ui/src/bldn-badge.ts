@@ -2,30 +2,25 @@ import { css, CSSResultGroup, html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 
-/**
- * Notification badge component with different modes.
- *
- * @element bldn-badge
- */
 @customElement('bldn-badge')
 export class BldnBadge extends LitElement {
   /**
-   * @prop {Boolean} neutral - Badge should have a neutral (non-colored) display
+   * @prop neutral - Badge should have a neutral (non-colored) display
    *
    * This prop takes priority over the others if multiple are set.
    */
   @property({ type: Boolean }) neutral: boolean = false;
 
-  /** @prop {Boolean} info - Badge should indicate some info */
+  /** @prop info - Badge should indicate some info */
   @property({ type: Boolean }) info: boolean = false;
 
-  /** @prop {Boolean} success - Badge should indicate success */
+  /** @prop success - Badge should indicate success */
   @property({ type: Boolean }) success: boolean = false;
 
-  /** @prop {Boolean} warning - Badge should indicate a warning */
+  /** @prop warning - Badge should indicate a warning */
   @property({ type: Boolean }) warning: boolean = false;
 
-  /** @prop {Boolean} danger - Badge should indicate danger */
+  /** @prop danger - Badge should indicate danger */
   @property({ type: Boolean }) danger: boolean = false;
 
   render() {

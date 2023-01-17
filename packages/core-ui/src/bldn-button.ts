@@ -2,13 +2,6 @@ import { css, html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { bldnStyles } from './bldn-styles.js';
 
-/**
- * Button component with different modes.
- *
- * @element bldn-button
- *
- * @fires bldn-button:click - Button is clicked
- */
 @customElement('bldn-button')
 export class BldnButton extends LitElement {
   @property({ type: String, reflect: true }) mode:

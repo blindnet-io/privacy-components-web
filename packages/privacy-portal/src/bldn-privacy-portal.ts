@@ -37,29 +37,17 @@ enum PrivacyPortalUIState {
   submittedRequests,
 }
 
-/**
- * Webcomponent for creating and monitoring privacy requests.
- *
- * @element bldn-privacy-portal
- *
- * @slot preFormAddon - A <bldn-request-addon> to occur after the action menu, before the request form
- * @slot postFormAddon - A <bldn-request-addon> to occur after the action menu, after the request form, before submitting
- *
- */
 @localized()
 @customElement('bldn-privacy-portal')
 export class BldnPrivacyPortal extends CoreConfigurationMixin(LitElement) {
-  /** @prop {Array} actions - List of allowed PRIV actions for the request builder */
+  /** @prop */
   @property({ type: Array }) actions: PrivacyRequestDemand.action[] = [];
 
-  /** @prop {Array} dataCategories - List of allowed data categories for the request builder */
+  /** @prop */
   @property({ type: Array, attribute: 'data-categories' })
   dataCategories: string[] = Object.values(DefaultDataCategories);
 
-  /**
-   * @prop {Array} requestId - ID of a previous request. If set, the portal will immediately
-   * display the status page for this request.
-   */
+  /** @prop */
   @property({ type: Array }) requestId: undefined | string;
 
   @state() _uiState: PrivacyPortalUIState = PrivacyPortalUIState.createRequest;
