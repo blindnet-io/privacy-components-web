@@ -12,6 +12,16 @@ const smallArrowSvg = new URL(
   import.meta.url
 ).href;
 
+/**
+ * Dropdown component with slots for content. Content is toggled by
+ * clicking arrow icon on the right side.
+ *
+ * @element bldn-dropdown
+ *
+ * @slot - Content of the dropdown
+ * @slot heading - Header to display when dropdown is closed
+ *
+ */
 @customElement('bldn-dropdown')
 export class BldnDropdown extends LitElement {
   /** @prop */

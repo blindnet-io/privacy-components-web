@@ -19,6 +19,11 @@ enum BridgeUIState {
   alerts,
 }
 
+/**
+ * Webcomponent for responding to privacy requests.
+ *
+ * @element bldn-bridge
+ */
 @localized()
 @customElement('bldn-bridge')
 export class BldnBridge extends CoreConfigurationMixin(LitElement) {

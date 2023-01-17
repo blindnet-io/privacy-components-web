@@ -8,6 +8,13 @@ interface Tile {
   value: string;
 }
 
+/**
+ * Menu of tiles with titles and descriptions
+ *
+ * @element bldn-tile-menu
+ *
+ * @fires bldn-tile-menu:tile-click - One of the tiles is clicked
+ */
 @customElement('bldn-tile-menu')
 export class BldnTileMenu extends LitElement {
   @property({ type: Array }) tiles: Tile[] = [];
