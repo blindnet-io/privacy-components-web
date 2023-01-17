@@ -1,6 +1,6 @@
 # `@blindnet/consent-checkbox`
 
-> Collection of UI components used in blindnet web modules
+> WIP: Component providing a simple form checkbox that registers consent with a Blindnet privacy computation engine.
 
 ## Usage
 

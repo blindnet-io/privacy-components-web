@@ -6,6 +6,7 @@ export * from './bldn-input.js';
 export * from './bldn-nav-toggle.js';
 export * from './bldn-styles.js';
 export * from './bldn-all-checklist.js';
+export * from './bldn-checklist.js';
 export * from './bldn-dropdown.js';
 export * from './bldn-radio-list.js';
 export * from './bldn-tile-menu.js';

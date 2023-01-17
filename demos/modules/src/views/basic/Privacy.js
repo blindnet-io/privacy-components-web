@@ -12,7 +12,7 @@ import '@blindnet/privacy-portal';
 const auth0 = new Auth0Client({
   domain: 'blindnet.eu.auth0.com',
   client_id: '1C0uhFCpzvJAkFi4uqoq2oAWSgQicqHc',
-  audience: 'https://blindnet-connector-demo.azurewebsites.net',
+  audience: 'https://blindnet-connector-demo-staging.azurewebsites.net',
   redirect_uri: `${window.location.origin}/demos/modules/basic/privacy`,
   authorizationParams: {
     redirect_uri: `${window.location.origin}/demos/modules/basic/privacy`,
@@ -84,7 +84,7 @@ export class AppPrivacy extends LitElement {
     };
 
     return fetch(
-      'https://blindnet-connector-demo.azurewebsites.net/auth/token',
+      'https://blindnet-connector-demo-staging.azurewebsites.net/auth/token',
       {
         method: 'GET',
         headers,
@@ -155,7 +155,7 @@ export class AppPrivacy extends LitElement {
 
     return html`
       <bldn-privacy-portal
-        computation-base-url="https://computing.blindnet.io/v0/"
+        computation-base-url="https://stage.computing.blindnet.io"
         data-categories='["contact", "name", "uid", "other-data"]'
         api-token=${ifDefined(this._apiToken)}
       >

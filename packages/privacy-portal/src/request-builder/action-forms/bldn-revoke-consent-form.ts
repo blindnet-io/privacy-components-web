@@ -94,23 +94,33 @@ export class BldnRevokeConsentForm extends ActionForm {
       ${when(
         this._showEach,
         () => html`
-          <bldn-checklist
-            .choices=${this._consents.map(c => ({
-              value: c.id,
-              display: html`${c.name} -
-                <i
-                  >${msg(
-                    html`Given on ${new Date(c.date).toLocaleString()}`
-                  )}</i
-                >`,
-              checked:
-                this.demands.findIndex(
-                  d => d.restrictions!.consent!.id === c.id
-                ) > -1,
-            }))}
-            @bldn-checklist:choice-select=${this.addConsent}
-            @bldn-checklist:choice-deselect=${this.removeConsent}
-          ></bldn-checklist>
+          ${when(
+            this._consents.length > 0,
+            () => html`
+              <bldn-checklist
+                .choices=${this._consents.map(c => ({
+                  value: c.id,
+                  display: html`${c.name} -
+                    <i
+                      >${msg(
+                        html`Given on ${new Date(c.date).toLocaleString()}`
+                      )}</i
+                    >`,
+                  checked:
+                    this.demands.findIndex(
+                      d => d.restrictions!.consent!.id === c.id
+                    ) > -1,
+                }))}
+                @bldn-checklist:choice-select=${this.addConsent}
+                @bldn-checklist:choice-deselect=${this.removeConsent}
+              ></bldn-checklist>
+            `,
+            () => html`
+              <bldn-badge danger
+                >${msg('You have not given any consents')}</bldn-badge
+              >
+            `
+          )}
         `
       )}
     `;
@@ -249,6 +259,10 @@ export class BldnRevokeConsentForm extends ActionForm {
         margin-left: 1.5em;
         /* padding-bottom: 1em; */
         margin-bottom: 1em;
+      }
+
+      .content {
+        text-align: center;
       }
     `,
   ];

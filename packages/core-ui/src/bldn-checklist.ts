@@ -9,10 +9,12 @@ interface Choice {
 }
 
 /**
- * Simple checklist component
+ * Checklist component
  *
- * @event {CustomEvent} bldn-checklist:choice-select
- * @event {CustomEvent} bldn-checklist:choice-deselect
+ * @element bldn-checklist
+ *
+ * @fires bldn-checklist:choice-select - Choice is selected
+ * @fires bldn-checklist:choice-deselect - Choice is deselected
  */
 @customElement('bldn-checklist')
 export class BldnChecklist extends LitElement {

@@ -7,6 +7,13 @@ interface Option {
   checked?: boolean;
 }
 
+/**
+ * Navigation toggle component for the top of a page
+ *
+ * @element bldn-nav-toggle
+ *
+ * @fires bldn-nav-toggle:click - Option is clicked
+ */
 @customElement('bldn-nav-toggle')
 export class BldnNavToggle extends LitElement {
   @property({ type: Array }) left: Option = {

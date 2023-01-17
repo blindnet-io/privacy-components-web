@@ -2,6 +2,17 @@ import { css, html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { bldnStyles } from './bldn-styles.js';
 
+/**
+ * Smaller toggle button
+ *
+ * @element bldn-toggle-button
+ *
+ * @fires bldn-toggle-button-change - Choice is changed
+ *
+ * TODO
+ * - Combine this component with bldn-nav-toggle
+ * - Change event name to match standard --> bldn-toggle-button:change
+ */
 @customElement('bldn-toggle-button')
 export class ToggleButton extends LitElement {
   @property({ type: String, attribute: 'left' }) left: string = '';
