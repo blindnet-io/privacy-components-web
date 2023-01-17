@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.19.4](https://github.com/blindnet-io/privacy-components-web/compare/v0.19.3...v0.19.4) (2023-01-17)
+
+### Bug Fixes
+
+- **@blindnet/privacy-portal:** fix revoke consent issue ([bc44f0c](https://github.com/blindnet-io/privacy-components-web/commit/bc44f0c9e1fdc5b26976d5f4cb561babd43a29ab))
+
 ## [0.19.3](https://github.com/blindnet-io/privacy-components-web/compare/v0.19.2...v0.19.3) (2023-01-06)
 
 ### Bug Fixes

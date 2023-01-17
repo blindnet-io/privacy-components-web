@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.19.4](https://github.com/blindnet-io/privacy-components-web/compare/v0.19.3...v0.19.4) (2023-01-17)
+
+**Note:** Version bump only for package @blindnet/configuration
+
 # [0.19.0](https://github.com/blindnet-io/privacy-components-web/compare/v0.18.0...v0.19.0) (2022-12-13)
 
 ### Bug Fixes
