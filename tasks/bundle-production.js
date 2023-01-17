@@ -10,14 +10,16 @@ import replace from 'replace-in-file';
 const options = {
   files: 'build/demos/**/*',
   from: [
-    'computation-base-url="https://stage.computing.blindnet.io"',
+    /stage.computing.blindnet.io/g,
     /blindnet-connector-demo-staging.azurewebsites.net/g,
     /1C0uhFCpzvJAkFi4uqoq2oAWSgQicqHc/g, // Auth0 staging app client ID
+    /28b5bee0-9db8-40ec-840e-64eafbfb9ddd/g, // Staging consent ID
   ],
   to: [
-    'computation-base-url="https://computing.blindnet.io"', // Point all blindnet modules to production PCE
+    'computing.blindnet.io', // Point all blindnet modules to production PCE
     'blindnet-connector-demo.azurewebsites.net', // Point any other URLs to production backend
     'Q4KiSJ5vF1HCcWyNPYZLzQmNzt3YLszz', // Auth0 production app client ID
+    '3b60d2dc-bbe7-4bd8-8429-8952263b41ea', // Production consent ID
   ],
 };
 
